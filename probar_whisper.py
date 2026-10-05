@@ -30,6 +30,8 @@ def vram_mb():
 if __name__ == "__main__":
     vram_inicial = vram_mb()
     t = time.perf_counter()
+    from guardia_juego import exigir_gpu_libre
+    exigir_gpu_libre("Whisper")
     modelo = WhisperModel("small", device="cuda", compute_type="float16")
     carga = time.perf_counter() - t
     vram_modelo = vram_mb()

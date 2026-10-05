@@ -150,7 +150,7 @@ def crear_transcriptor():
         if a.vision is None:
             sys.exit("motor_transcripcion=gemma necesita el mmproj (config.json -> mmproj).")
         return TranscriptorNativo(a.llm, a.vision, CONFIG_VOZ["ctx_transcripcion"], CONFIG_VOZ["lote_transcripcion"])
-    return TranscriptorWhisper(CONFIG_VOZ["whisper_modelo"], tipo=CONFIG_VOZ["whisper_tipo"])
+    return TranscriptorWhisper(CONFIG_VOZ["whisper_modelo"], tipo=CONFIG_VOZ["whisper_tipo"], esperar_juego=True)
 
 
 def preparar():

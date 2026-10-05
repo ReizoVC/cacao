@@ -380,7 +380,7 @@ _sugerencia = {"pendiente": None}  # la última mostrada, para saber si Reizo la
 
 # parámetros y avisos de versión en modelo.py y config.json (LlamaRapida sobrescribe un método interno
 # de llama-cpp-python 0.3.36). La visión usa el handler multimodal solo cuando el historial tiene una imagen.
-llm = crear_llm(CONFIG)
+llm = crear_llm(CONFIG, esperar_juego=True)  # con un juego abierto espera a que se cierre
 vision = ManejadorVision(CONFIG["mmproj"]) if CONFIG.get("mmproj") else None
 _presupuesto_imagen = 560
 emergencia = Emergencia(CATALOGO["limites"]["atajo_emergencia"])
@@ -686,7 +686,7 @@ def descargar_modelos():
 def cargar_modelos():
     """Al cerrar el juego: vuelve a cargar Gemma con los mismos parámetros y lo conecta de nuevo."""
     global llm
-    llm = crear_llm(CONFIG)
+    llm = crear_llm(CONFIG, esperar_juego=True)
     llm.interrumpir = emergencia.comprobar
     for _, cargar in EXTRAS_MODO_JUEGO:
         cargar()
