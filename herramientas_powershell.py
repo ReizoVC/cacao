@@ -53,6 +53,54 @@ def nombra_archivo_sensible(comando):
     return False
 
 
+# Consultas que escriben archivos: si el comando solo lee (sus cmdlets son de lectura: Get-, Select-, Where-...),
+# no tiene por qué guardar nada en disco. Se rechaza la salida a archivo (Out-File, Set-Content, Add-Content,
+# Tee-Object, Export-*, y las redirecciones > y >>) y el modelo puede repetirlo sin ella. Si el comando ya modifica
+# algo (New-Item, Copy-Item...) o solo escribe un texto fijo ("hola" > x.txt), escribir es la tarea y decide el sí.
+SALIDAS_A_ARCHIVO = {"out-file", "set-content", "add-content", "tee-object", "sc", "ac", "tee"}
+VERBOS_LECTURA = {"get", "select", "where", "sort", "measure", "format", "group", "test", "resolve", "find",
+                  "search", "compare", "convertto", "convertfrom", "foreach", "write", "join", "split", "out",
+                  "show", "read", "trace", "debug", "wait", "use", "limit", "skip"}
+# > y >> a un archivo (también 1>, 2>, *>), no la fusión de flujos (2>&1) ni el descarte (> $null)
+RE_REDIRECCION = re.compile(r"(?:\d|\*)?>>?(?!&)\s*(?!\$null\b)(\S+)", re.I)
+
+
+def _sin_cadenas(comando):
+    return re.sub(r"'[^']*'|\"(?:`.|[^\"`])*\"", "''", comando)
+
+
+def _cabezas(codigo):
+    """Primera palabra de cada tramo del comando (tras inicio, |, ;, (, { o $( ), sin las redirecciones."""
+    sin_redir = RE_REDIRECCION.sub(" ", codigo)
+    return [t.split()[0].lower() for t in re.split(r"[|;({]|\$\(", sin_redir) if t.split()]
+
+
+def escribe_en_consulta(comando):
+    """Si el comando solo consulta y aun así escribe en un archivo, devuelve qué lo escribe; si no, None.
+    Consulta: cada tramo empieza por un cmdlet de lectura (Get-, Select-...), un alias o una variable. Si algún
+    tramo es un cmdlet que modifica (New-Item, Copy-Item...) o todo es texto fijo ('hola' > x.txt), escribir es
+    la tarea y no se considera consulta."""
+    codigo = _sin_cadenas(comando)
+    cabezas = _cabezas(codigo)
+    salidas = [c for c in cabezas if c in SALIDAS_A_ARCHIVO or c.startswith("export-")]
+    redirecciones = [m.group(0).strip() for m in RE_REDIRECCION.finditer(codigo)]
+    if not salidas and not redirecciones:
+        return None
+    resto = [c for c in cabezas if c not in SALIDAS_A_ARCHIVO and not c.startswith("export-")]
+    lectura = []
+    for c in resto:
+        if c in ("''",) or re.fullmatch(r"[\d.]+", c):
+            continue  # texto o número fijo
+        verbo = c.split("-")[0] if re.fullmatch(r"[a-z]+-[a-z0-9]+", c) else None
+        if verbo is not None and verbo not in VERBOS_LECTURA:
+            return None  # el comando ya modifica algo: escribir puede ser parte de la tarea
+        lectura.append(c)
+    if not lectura:
+        return None  # solo texto fijo: guardar es la tarea
+    nombres = {"sc": "Set-Content", "ac": "Add-Content", "tee": "Tee-Object"}
+    return ", ".join(dict.fromkeys(nombres.get(s, s.title()) for s in salidas)) or redirecciones[0]
+
+
 def planificar_powershell(comando, motivo=""):
     """Devuelve (plan, None) o (None, resultado de error/bloqueo). No ejecuta nada."""
     comando = (comando or "").strip()
@@ -70,6 +118,10 @@ def planificar_powershell(comando, motivo=""):
     if nombra_archivo_sensible(comando):
         return None, {"ok": False, "bloqueado": True,
                       "error": "El comando nombra un archivo que parece tener contraseñas o claves; no lo ejecuto."}
+    escritura = escribe_en_consulta(comando)
+    if escritura:  # sin "bloqueado": no corta la tarea, el modelo puede repetirlo sin guardar nada
+        return None, {"ok": False, "error": f"Es una consulta y no debe escribir archivos ({escritura}). Repite el "
+                                            "comando sin guardar en un archivo: su salida ya te llega."}
     return {"comando": comando, "motivo": motivo.strip(), "timeout_s": TIMEOUT_S}, None
 
 
