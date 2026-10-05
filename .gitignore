@@ -20,3 +20,11 @@ voz_pruebas/
 voz_registro/
 errores_llama.log
 memoria_prueba.db
+
+# Fase 6: hábitos y wiki (datos personales; el vault tiene su propio git local) y sus copias de prueba
+habitos.db*
+habitos_prueba.db*
+memoria/
+memoria_prueba/
+PAUSA_HABITOS
+registro_habitos.log
