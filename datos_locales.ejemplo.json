@@ -1,0 +1,5 @@
+{
+ "nota": "Copia este archivo como datos_locales.json (excluido de git) y pon nombres reales de TU PC. Si falta, las pruebas usan nombres genéricos y se saltan las que necesitan un archivo real.",
+ "sensible_en_descargas": "un archivo sensible que exista en Descargas, p. ej. passwords.csv",
+ "titulo_ventana_sensible": "el título de una ventana con un archivo sensible, p. ej. claves.env: Bloc de notas"
+}

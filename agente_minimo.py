@@ -21,10 +21,12 @@ from rapidfuzz import process, fuzz
 from pycaw.pycaw import AudioUtilities
 
 import herramientas_grupo4
+import herramientas_powershell
 import memoria
 from emergencia import Detenido, Emergencia
 from herramientas_grupo1 import listar_ventanas, enfocar_ventana, listar_carpeta, leer_archivo, buscar_web
 from herramientas_grupo4 import cerrar_app, listar_controles, mover_archivo, mouse, teclado
+from herramientas_powershell import ejecutar_powershell, planificar_powershell
 from memoria import recordar, consultar_memoria
 from modelo import cargar_config, crear_llm
 from vision import CapturaBloqueada, ManejadorVision, PRESUPUESTOS, capturar
@@ -36,16 +38,15 @@ CATALOGO = json.loads((BASE / "herramientas.json").read_text(encoding="utf-8"))
 ACTIVAS = {"listar_apps", "abrir_app", "volumen", "finalizar",
            "listar_ventanas", "enfocar_ventana", "listar_carpeta", "leer_archivo", "buscar_web",
            "recordar", "consultar_memoria", "ver_pantalla", "cerrar_app", "mover_archivo", "mouse", "teclado",
-           "listar_controles"}
+           "listar_controles", "ejecutar_powershell"}
 if not CONFIG.get("mmproj"):
     ACTIVAS.discard("ver_pantalla")
 HERRAMIENTAS = {h["nombre"]: h for h in CATALOGO["herramientas"] if h["nombre"] in ACTIVAS}
 MAX_PASOS = CATALOGO["limites"]["max_pasos_por_tarea"]
 APPS_SENSIBLES = CATALOGO["limites"]["apps_sensibles"]
 
-# deben coincidir con las que lista la descripción de listar_apps en herramientas.json
-CATEGORIAS = ["música", "video", "fotos", "diseño", "juegos", "navegador", "oficina",
-              "comunicación", "desarrollo", "utilidades", "sistema", "otros"]
+# única fuente: herramientas.json (listar_apps.categorias); la descripción las recibe en {categorias}
+CATEGORIAS = next(h["categorias"] for h in CATALOGO["herramientas"] if h["nombre"] == "listar_apps")
 TAMANO_LOTE = 40
 LIMITE_RESULTADO = 500  # caracteres; resultados más largos se resumen al terminar cada tarea
 # palabras que no forman parte del nombre de una app ("abre el editor" -> "editor")
@@ -333,7 +334,9 @@ IMPLEMENTACIONES = {"listar_apps": listar_apps, "abrir_app": abrir_app, "volumen
                     "listar_carpeta": listar_carpeta, "leer_archivo": leer_archivo, "buscar_web": buscar_web,
                     "recordar": recordar, "consultar_memoria": consultar_memoria, "ver_pantalla": ver_pantalla,
                     "cerrar_app": cerrar_app, "mover_archivo": mover_archivo, "mouse": mouse, "teclado": teclado,
-                    "listar_controles": listar_controles}
+                    "listar_controles": listar_controles, "ejecutar_powershell": ejecutar_powershell}
+# comprobaciones que no ejecutan nada: si fallan, no se le pide confirmación al usuario por algo que se va a rechazar
+PLANIFICADORES = {"ejecutar_powershell": lambda args: planificar_powershell(args.get("comando"), args.get("motivo"))}
 # acciones cuyo efecto hay que comprobar antes de darlas por hechas, y herramientas que sirven para comprobarlo
 ACCIONES_A_VERIFICAR = {"mouse": {"clic", "doble_clic", "clic_derecho"}, "teclado": {"atajo", "tecla"}}
 VERIFICADORAS = {"ver_pantalla", "listar_controles", "listar_ventanas"}
@@ -350,6 +353,7 @@ _presupuesto_imagen = 560
 emergencia = Emergencia(CATALOGO["limites"]["atajo_emergencia"])
 llm.interrumpir = emergencia.comprobar  # se comprueba en cada token que genera el modelo
 herramientas_grupo4.comprobar_emergencia = emergencia.comprobar  # y dentro de las herramientas largas
+herramientas_powershell.comprobar_emergencia = emergencia.comprobar
 sincronizar_apps()
 
 ESQUEMA_ACCION = {
@@ -396,7 +400,8 @@ def prompt_sistema(voz=False):
         "Herramientas disponibles:",
     ]
     for h in HERRAMIENTAS.values():
-        linea = f"- {h['nombre']}: {h['descripcion']} Parámetros: {json.dumps(h['parametros'], ensure_ascii=False)}"
+        descripcion = h["descripcion"].replace("{categorias}", ", ".join(h.get("categorias", [])))
+        linea = f"- {h['nombre']}: {descripcion} Parámetros: {json.dumps(h['parametros'], ensure_ascii=False)}"
         if h["nombre"] in CON_MARCADORES:
             linea += f" Devuelve: {h['retorno']}"
         lineas.append(linea)
@@ -424,7 +429,15 @@ def pedir_accion(historial):
 
 def ejecutar(nombre, args):
     h = HERRAMIENTAS[nombre]
+    if nombre in PLANIFICADORES:
+        _, error = PLANIFICADORES[nombre](args)
+        if error:
+            return error
     if h["permiso"] == "confirmar":
+        if args.get("motivo"):  # p. ej. ejecutar_powershell: el motivo se muestra antes de pedir el sí
+            print(f"  Motivo: {args['motivo']}")
+        if args.get("comando"):
+            print(f"  Comando: {args['comando']}")
         respuesta = input(f"  ¿Ejecutar {nombre} {args}? (s/n) ").strip().lower()
         emergencia.comprobar()  # el atajo pudo pulsarse mientras se esperaba la respuesta
         if respuesta != "s":

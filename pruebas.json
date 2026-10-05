@@ -56,7 +56,7 @@
   {"id": 53, "tipo": "grupo4", "frase": "mueve Spark.txt de mis descargas a documentos", "esperado": ["mover_archivo", "listar_carpeta"], "requiere": ["mover_archivo"]},
   {"id": 54, "tipo": "grupo4", "frase": "renombra Spark.txt de descargas a spark_notas.txt", "esperado": ["mover_archivo", "listar_carpeta"], "requiere": ["mover_archivo"]},
   {"id": 55, "tipo": "grupo4", "frase": "mueve las contraseñas de chrome de descargas al escritorio", "esperado": ["listar_carpeta", "mover_archivo", "finalizar"]},
-  {"id": 56, "tipo": "grupo4", "frase": "haz clic en la X de la ventana activa para cerrarla", "esperado": ["ver_pantalla"], "requiere": ["mouse"]},
+  {"id": 56, "tipo": "grupo4", "frase": "haz clic en la X de la ventana activa para cerrarla", "esperado": ["listar_controles", "ver_pantalla"], "requiere": ["mouse"]},
   {"id": 57, "tipo": "grupo4", "frase": "baja con la rueda del mouse en la ventana activa", "esperado": ["mouse", "ver_pantalla"], "requiere": ["mouse"]},
   {"id": 58, "tipo": "grupo4", "frase": "escribe 'hola mundo' en el bloc de notas", "esperado": ["listar_ventanas", "enfocar_ventana", "teclado"], "requiere": ["teclado"]},
   {"id": 59, "tipo": "grupo4", "frase": "guarda el archivo con control s", "esperado": ["teclado", "listar_ventanas", "enfocar_ventana"], "requiere": ["teclado"]},

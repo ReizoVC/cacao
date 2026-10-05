@@ -6,6 +6,7 @@ Pruebas sin modelo del grupo 4. No cierra apps, no mueve archivos del usuario, n
   - la interrupción de teclado se prueba con el envío de teclas reemplazado por una función que solo cuenta.
 Uso: .venv\\Scripts\\python probar_grupo4.py
 """
+import json
 import tempfile
 import time
 from pathlib import Path
@@ -17,6 +18,10 @@ import herramientas_grupo4 as g4
 from emergencia import Detenido
 
 fallos = []
+# nombres reales de archivos sensibles de este PC: en datos_locales.json (excluido de git), nunca en el código
+_ruta_locales = Path(__file__).with_name("datos_locales.json")
+LOCALES = json.loads(_ruta_locales.read_text(encoding="utf-8")) if _ruta_locales.exists() else {}
+TITULO_SENSIBLE = LOCALES.get("titulo_ventana_sensible", "claves-prueba.env: Bloc de notas")
 
 
 def comprobar(nombre, condicion, detalle=""):
@@ -47,7 +52,8 @@ if __name__ == "__main__":
     if any(v["proceso"].lower() == "windowsterminal.exe" for v in ventanas):
         anterior = g4.os.environ.get("WT_SESSION")
         g4.os.environ["WT_SESSION"] = anterior or "prueba"  # como si el agente corriera dentro de la terminal
-        tipo, r = resultado(g4.planificar_cierre(proceso="WindowsTerminal"))
+        wt = next(v for v in ventanas if v["proceso"].lower() == "windowsterminal.exe")
+        tipo, r = resultado(g4.planificar_cierre(id_ventana=wt["id_ventana"]))  # por id: vale con 1 o varias ventanas
         comprobar("Windows Terminal protegida si el asistente corre dentro (WT_SESSION)", tipo == "bloqueado",
                   r.get("error"))
         if anterior is None:
@@ -81,6 +87,10 @@ if __name__ == "__main__":
              ("C:/Windows/win.ini", "Documentos", "bloqueado"),
              ("Documentos", "Escritorio", "bloqueado"),                          # carpeta raíz permitida
              ("Descargas/no_existe_123.txt", "Documentos", "error")]
+    if LOCALES.get("sensible_en_descargas"):  # un archivo sensible real: patrón sensible en el origen
+        casos.append((f"Descargas/{LOCALES['sensible_en_descargas']}", "Escritorio", "bloqueado"))
+    else:
+        print("SALTA archivo sensible real en Descargas (falta datos_locales.json)")
     for origen, destino, esperado in casos:
         tipo, r = resultado(g4.planificar_movimiento(origen, destino))
         detalle = r.get("error") if isinstance(r, dict) else f"{r[0]} -> {r[1]}"
@@ -194,7 +204,16 @@ if __name__ == "__main__":
         comprobar("'Cerrar' exacto gana a 'Cerrar pestaña'", tipo == "plan" and r["control"].startswith("Cerrar ("), r)
         tipo, r = resultado(g4.planificar_mouse("clic", control="Botón que no existe", id_ventana=terminal["id_ventana"]))
         comprobar("control inexistente -> error", tipo == "error", r.get("error"))
-        tipo, r = resultado(g4.planificar_mouse("clic", control="Aumento", id_ventana=terminal["id_ventana"]))
+        # ambigüedad con controles sintéticos: no depende de qué botones tenga la terminal abierta
+        controles_reales = g4._controles
+        g4._controles = lambda _h: ([{"nombre": "Aumentar zoom", "tipo": "Button", "centro": [10, 10],
+                                      "habilitado": True},
+                                     {"nombre": "Aumentar tamaño de fuente", "tipo": "Button", "centro": [50, 10],
+                                      "habilitado": True}], None)
+        try:
+            tipo, r = resultado(g4.planificar_mouse("clic", control="Aumentar", id_ventana=terminal["id_ventana"]))
+        finally:
+            g4._controles = controles_reales
         comprobar("nombre ambiguo -> error con opciones", tipo == "error" and "coincidencias" in r, r.get("coincidencias"))
         original = g4.es_titulo_sensible
         g4.es_titulo_sensible = lambda _t: True  # como si la ventana se llamara "claves.kdbx - KeePass"
@@ -214,7 +233,7 @@ if __name__ == "__main__":
     comprobar("pantalla completa: tapa la ventana sensible", tapadas == ["claves.kdbx - KeePass"]
               and imagen.getpixel((140, 140)) == (0, 0, 0) and imagen.getpixel((300, 200)) == (255, 255, 255))
     imagen = Image.new("RGB", (400, 300), (255, 255, 255))
-    ventanas = [(9, "Calculadora", (0, 0, 400, 300)), (1, "claves-prueba.env: Bloc de notas", (50, 50, 150, 150))]
+    ventanas = [(9, "Calculadora", (0, 0, 400, 300)), (1, TITULO_SENSIBLE, (50, 50, 150, 150))]
     tapadas = vision.tapar_sensibles(imagen, zona, ventanas, hwnd_capturada=9)
     comprobar("ventana activa: no tapa las sensibles que quedan debajo (no se ven)", tapadas == [])
     imagen = Image.new("RGB", (400, 300), (255, 255, 255))
@@ -223,7 +242,7 @@ if __name__ == "__main__":
     comprobar("ventana activa: tapa la parte de una sensible que está encima", tapadas == ["id_rsa - Visual Studio Code"]
               and imagen.getpixel((350, 250)) == (0, 0, 0) and imagen.getpixel((100, 100)) == (255, 255, 255))
     titulo_real = vision.win32gui.GetWindowText
-    vision.win32gui.GetWindowText = lambda _h: "claves-prueba.env: Bloc de notas"
+    vision.win32gui.GetWindowText = lambda _h: TITULO_SENSIBLE
     try:
         vision.capturar("ventana_activa")
         comprobar("ventana activa sensible -> rechaza la captura", False, "capturó")

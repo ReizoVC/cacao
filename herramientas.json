@@ -183,7 +183,9 @@
       "winget", "msiexec", "choco ", "Install-", "Uninstall-",
       "Set-ExecutionPolicy", "Set-MpPreference", "netsh", "bcdedit",
       "Invoke-WebRequest", "iwr ", "curl ", "Start-BitsTransfer",
-      "Invoke-Expression", "iex "
+      "Invoke-Expression", "iex ",
+      "ri ", "rd ", "Remove-ItemProperty", "Clear-Content", "Clear-RecycleBin", "Stop-Process", "kill ",
+      "-EncodedCommand", "-enc ", "RunAs", "Start-Process"
     ]
   },
 
@@ -191,7 +193,9 @@
     {
       "nombre": "listar_apps",
       "permiso": "libre",
-      "descripcion": "Busca aplicaciones instaladas (Menú Inicio y Tienda) por nombre o por categoría. Categorías: música, video, fotos, diseño, juegos, navegador, oficina, comunicación, desarrollo, utilidades, sistema, otros. Para preguntas como '¿qué apps de música tengo?' pasa la categoría en 'filtro'. Sin filtro solo devuelve cuántas apps hay por categoría. Úsala antes de abrir una app si no estás seguro de su nombre exacto.",
+      "categorias": ["música", "video", "fotos", "diseño", "juegos", "navegador", "oficina", "comunicación", "desarrollo", "utilidades", "sistema", "otros"],
+      "categorias_nota": "Única lista de categorías: agente_minimo.py la usa para clasificar las apps y la pone en la descripción en lugar de {categorias}.",
+      "descripcion": "Busca aplicaciones instaladas (Menú Inicio y Tienda) por nombre o por categoría. Categorías: {categorias}. Para preguntas como '¿qué apps de música tengo?' pasa la categoría en 'filtro'. Sin filtro solo devuelve cuántas apps hay por categoría. Úsala antes de abrir una app si no estás seguro de su nombre exacto.",
       "parametros": {
         "type": "object",
         "properties": {

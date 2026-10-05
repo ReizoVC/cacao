@@ -6,6 +6,7 @@ en otra ventana. Todo queda en resultados_real_<prueba>.json.
 Uso: .venv\\Scripts\\python prueba_real.py 1|2|3
 """
 import json
+import re
 import sys
 import time
 from pathlib import Path
@@ -81,7 +82,15 @@ def politica_2(nombre, args):
     return False, "herramienta no prevista en esta prueba"
 
 
+def politica_ps(nombre, args):
+    """Prueba de PowerShell: solo Get-Date (con -Format opcional), que no cambia nada."""
+    comando = (args.get("comando") or "").strip()
+    ok = nombre == "ejecutar_powershell" and re.fullmatch(r"Get-Date(\s+-Format\s+(['\"])[^'\"]*)?", comando, re.I)
+    return bool(ok), f"{nombre}: {comando!r}"
+
+
 POLITICAS = {"1": lambda n, a_: (False, "la prueba 1 no usa herramientas con confirmación"),
+             "ps": politica_ps,
              "2": politica_2,
              "2m": politica_2,
              "3": lambda n, a_: (False, "la prueba 3 no usa herramientas con confirmación")}
@@ -169,6 +178,8 @@ if __name__ == "__main__":
                 "haz clic en el menú Archivo del Bloc de notas",
                 "cierra ese menú con la tecla escape",
                 "cierra la ventana del bloc de notas que abriste"])
+    elif prueba == "ps":  # ejecutar_powershell real, solo con Get-Date
+        correr(["usa PowerShell para decirme la fecha y la hora exactas de este equipo"])
     elif prueba == "3":
         listo = a.emergencia.iniciar()
         print(f"Atajo registrado: {listo}. Tareas de varios pasos en bucle hasta que pulses {a.emergencia.atajo} "
