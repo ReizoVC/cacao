@@ -9,6 +9,7 @@ import sys
 import traceback
 from datetime import datetime, timedelta
 
+import deteccion
 import entrada
 import habitos
 import simular_habitos as sim
@@ -123,8 +124,122 @@ def prueba_fuente_real():
        (v is None or {"hwnd", "pid", "exe_ruta", "aumid"} <= set(v)) and isinstance(f.bloqueada(), bool))
 
 
+# ---------- 2. condiciones de la reflexión ----------
+
+class RelojFalso:
+    def __init__(self):
+        self.t = 0.0
+
+    def __call__(self):
+        return self.t
+
+    def dormir(self, s):
+        self.t += s
+
+
+class SistemaFalso:
+    """idle: segundos sin entrada al empezar; crece con el reloj salvo que haya 'entrada_en' (instante de una tecla)."""
+
+    def __init__(self, reloj, idle=900, pantalla=False, procesos=(), audio=(), gpu=5, entrada_en=None):
+        self.reloj, self.idle0, self.pantalla, self.procesos = reloj, idle, pantalla, list(procesos)
+        self.audio_fijo, self.gpu, self.entrada_en = (audio if callable(audio) else list(audio)), gpu, entrada_en
+
+    def segundos_sin_entrada(self):
+        t = self.reloj()
+        if self.entrada_en is not None and t >= self.entrada_en:
+            return t - self.entrada_en
+        return self.idle0 + t
+
+    def pantalla_completa(self):
+        return self.pantalla
+
+    def ejecutables(self):
+        return self.procesos
+
+    def audio(self):
+        return self.audio_fijo(self.reloj()) if callable(self.audio_fijo) else self.audio_fijo
+
+    def uso_gpu(self):
+        return self.gpu
+
+
+STEAM_BANDEJA = [r"C:\Program Files (x86)\Steam\steam.exe", r"C:\Program Files (x86)\Steam\bin\cef\steamwebhelper.exe",
+                 r"C:\Windows\explorer.exe"]
+VLC = (r"C:\Program Files\VideoLAN\VLC\vlc.exe", None, 0.3)
+SPOTIFY = (sim.V["spotify"][0], None, 0.4)
+CHROME = (sim.V["chrome"][0], None, 0.4)
+DISCORD = (r"C:\Users\sim\AppData\Local\Discord\app-1\Discord.exe", None, 0.2)
+
+
+def prueba_condiciones():
+    c = habitos.Clasificador(sim.CATEGORIAS_SIM)
+
+    def motivo(**kw):
+        r = RelojFalso()
+        v = deteccion.Vigilante(SistemaFalso(r, **kw), c, habitos.MW, reloj=r, dormir=r.dormir)
+        return v.motivo_para_no_empezar()
+
+    ok("arranca: todo tranquilo con Steam en la bandeja", motivo(procesos=STEAM_BANDEJA) is None)
+    ok("no arranca: actividad hace 5 min", motivo(idle=300) == "actividad reciente")
+    ok("no arranca: pantalla completa", motivo(pantalla=True) == "pantalla completa")
+    ok("no arranca: juego en marcha (aunque no esté al frente)",
+       (motivo(procesos=STEAM_BANDEJA + [sim.V["hades"][0]]) or "").startswith("juego abierto"))
+    ok("arranca: suena música (Spotify)", motivo(audio=[SPOTIFY]) is None)
+    ok("arranca: suena el navegador sin pantalla completa", motivo(audio=[CHROME]) is None)
+    ok("no arranca: suena un video (VLC)", (motivo(audio=[VLC]) or "").startswith("audio"))
+    ok("no arranca: suena una llamada (comunicación)", (motivo(audio=[DISCORD]) or "").startswith("audio"))
+    ok("arranca: un pitido de video de 1 s no cuenta",
+       motivo(audio=lambda t: [VLC] if 3 <= t < 4 else []) is None)
+    ok("no arranca: GPU ocupada", (motivo(gpu=60) or "").startswith("GPU"))
+    ok("no arranca: tocas el mando mientras mide", motivo(entrada_en=12) == "actividad reciente")
+
+
+def prueba_guardia():
+    import threading
+    import time
+    c = habitos.Clasificador(sim.CATEGORIAS_SIM)
+    casos = [("teclado o mando", dict(entrada_en=0.3), "actividad"),
+             ("pantalla completa", dict(), "pantalla completa"),
+             ("juego que se abre", dict(), "juego abierto"),
+             ("video que empieza", dict(), "audio")]
+    for nombre, kw, esperado in casos:
+        inicio = time.monotonic()
+        reloj = lambda: time.monotonic() - inicio  # noqa: E731
+        s = SistemaFalso(reloj, **kw)
+        if nombre == "pantalla completa":
+            threading.Timer(0.3, lambda: setattr(s, "pantalla", True)).start()
+        if nombre == "juego que se abre":
+            threading.Timer(0.3, lambda: s.procesos.append(sim.V["hades"][0])).start()
+        if nombre == "video que empieza":
+            s.audio_fijo = lambda t: [VLC] if t >= 0.3 else []
+        v = deteccion.Vigilante(s, c, {"reflexion": {**habitos.MW["reflexion"], "audio_min_s": 0.3}}, reloj=reloj)
+        parar = threading.Event()
+        with deteccion.Guardia(v, parar, intervalo_s=0.05, cada_procesos_s=0.1) as g:
+            parar.wait(3)
+        demora = time.monotonic() - inicio
+        ok(f"guardia: se detiene por {nombre}", parar.is_set() and esperado in (g.motivo or ""),
+           f"{g.motivo}, {demora:.2f} s desde el inicio")
+    s = SistemaFalso(lambda: 0.0)
+    parar = threading.Event()
+    with deteccion.Guardia(deteccion.Vigilante(s, c, habitos.MW), parar, intervalo_s=0.05) as g:
+        parar.wait(0.5)
+    ok("guardia: sin motivos no para", not parar.is_set())
+
+
+def prueba_sistema_real():
+    s = deteccion.SistemaWindows(entrada.MonitorEntrada())
+    pc, ex, au, gpu = s.pantalla_completa(), s.ejecutables(), s.audio(), s.uso_gpu()
+    ok("sistema real: consultas de solo lectura", isinstance(pc, bool) and len(ex) > 10 and isinstance(au, list),
+       f"pantalla_completa={pc}, {len(ex)} procesos, {len(au)} sesiones de audio activas, GPU {gpu} %")
+    v = deteccion.Vigilante(s, habitos.Clasificador(), habitos.MW)
+    juego = v.juego_abierto()
+    ok("sistema real: ningún proceso abierto ahora cuenta como juego (Steam/Epic en la bandeja no)", juego is None,
+       "hay uno" if juego else "")
+
+
 SECCIONES = {"entrada": prueba_entrada, "clasificador": prueba_clasificador, "privacidad": prueba_privacidad,
-             "simulacion": prueba_simulacion, "fuente_real": prueba_fuente_real}
+             "simulacion": prueba_simulacion, "fuente_real": prueba_fuente_real,
+             "condiciones": prueba_condiciones, "guardia": prueba_guardia, "sistema_real": prueba_sistema_real}
 
 if __name__ == "__main__":
     elegidas = sys.argv[1:] or list(SECCIONES)

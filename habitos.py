@@ -131,7 +131,8 @@ class Clasificador:
     def __init__(self, categorias=None):
         if categorias is None:
             categorias = json.loads(RUTA_CATEGORIAS.read_text(encoding="utf-8")) if RUTA_CATEGORIAS.exists() else {}
-        self.lanzadores = {x.lower() for x in MW["lanzadores"]}
+        # lanzadores (Steam, Epic...) y programas que viven en carpetas de juegos sin serlo (Wallpaper Engine)
+        self.lanzadores = {x.lower() for x in MW["lanzadores"] + MW.get("no_son_juegos", [])}
         self.carpetas_tipicas = [normalizar(x) for x in MW["carpetas_juegos"]]
         self.overrides = {k.lower(): v for k, v in MW["categorias_procesos"].items()}
         self.por_exe, self.por_aumid, self.por_familia = {}, {}, {}
