@@ -1,0 +1,238 @@
+"""
+Pruebas sin modelo del grupo 4. No cierra apps, no mueve archivos del usuario, no toca mouse ni teclado:
+  - cerrar_app, mover_archivo, mouse y teclado se prueban con sus planificar_* (validan y calculan, sin efectos);
+  - mover_archivo real se prueba solo con archivos de prueba en una carpeta temporal que pasa a ser la única
+    "permitida" durante la prueba;
+  - la interrupción de teclado se prueba con el envío de teclas reemplazado por una función que solo cuenta.
+Uso: .venv\\Scripts\\python probar_grupo4.py
+"""
+import tempfile
+import time
+from pathlib import Path
+
+import psutil
+
+import herramientas_grupo1 as g1
+import herramientas_grupo4 as g4
+from emergencia import Detenido
+
+fallos = []
+
+
+def comprobar(nombre, condicion, detalle=""):
+    print(f"{'OK ' if condicion else 'MAL'} {nombre}{': ' + str(detalle) if detalle else ''}")
+    if not condicion:
+        fallos.append(nombre)
+
+
+def resultado(plan_error):
+    plan, error = plan_error
+    if error:
+        return "bloqueado" if error.get("bloqueado") else "error", error
+    return "plan", plan
+
+
+if __name__ == "__main__":
+    print("-- cerrar_app (solo planes; lee las ventanas reales)")
+    ventanas = g1.listar_ventanas()
+    print("   ventanas abiertas:", [(v["proceso"], v["titulo"][:30]) for v in ventanas])
+    explorer = next((p.pid for p in psutil.process_iter(["name"]) if p.info["name"] == "explorer.exe"), None)
+    tipo, r = resultado(g4.planificar_cierre(pid=explorer))
+    comprobar("explorer.exe (pid) está protegido", tipo == "bloqueado", r.get("error"))
+    propias = [v for v in ventanas if v["pid"] in g4._ancestros_propios()]
+    if propias:
+        tipo, r = resultado(g4.planificar_cierre(proceso=propias[0]["proceso"]))
+        comprobar(f"la ventana donde corre el asistente ({propias[0]['proceso']}) está protegida",
+                  tipo == "bloqueado", r.get("error"))
+    if any(v["proceso"].lower() == "windowsterminal.exe" for v in ventanas):
+        anterior = g4.os.environ.get("WT_SESSION")
+        g4.os.environ["WT_SESSION"] = anterior or "prueba"  # como si el agente corriera dentro de la terminal
+        tipo, r = resultado(g4.planificar_cierre(proceso="WindowsTerminal"))
+        comprobar("Windows Terminal protegida si el asistente corre dentro (WT_SESSION)", tipo == "bloqueado",
+                  r.get("error"))
+        if anterior is None:
+            del g4.os.environ["WT_SESSION"]
+    tipo, r = resultado(g4.planificar_cierre(proceso="app_que_no_existe"))
+    comprobar("app que no está abierta -> error con la lista de ventanas", tipo == "error", r.get("error"))
+    tipo, r = resultado(g4.planificar_cierre())
+    comprobar("sin proceso ni pid -> error", tipo == "error")
+    por_pid = {}
+    for v in ventanas:
+        por_pid.setdefault(v["pid"], []).append(v)
+    varias = next((vs for vs in por_pid.values() if len(vs) > 1), None)
+    if varias:  # p. ej. dos ventanas del Bloc de notas en un solo proceso
+        tipo, r = resultado(g4.planificar_cierre(pid=varias[0]["pid"]))
+        comprobar("varias ventanas del mismo proceso -> pide id_ventana", tipo == "error" and "coincidencias" in r)
+        tipo, r = resultado(g4.planificar_cierre(id_ventana=varias[0]["id_ventana"]))
+        comprobar("con id_ventana cierra solo esa ventana", tipo == "plan" and r["ventanas"] == [varias[0]["id_ventana"]]
+                  and r["otras_del_proceso"], r)
+    otras = [v for v in ventanas if v["pid"] not in g4._ancestros_propios()
+             and v["proceso"].lower() not in g4.PROTEGIDOS]
+    if otras:
+        tipo, r = resultado(g4.planificar_cierre(proceso=otras[0]["proceso"]))
+        comprobar(f"plan para {otras[0]['proceso']} (no se cierra)", tipo in ("plan", "error"), r)
+
+    print("\n-- mover_archivo (solo planes sobre las carpetas reales)")
+    casos = [("Descargas/Spark.txt", "Documentos", "plan"),
+             ("Descargas/Spark.txt", "spark_notas.txt", "plan"),
+             ("Descargas/Spark.txt", "Descargas/Libro1.csv", "error"),           # destino existe: no sobrescribe
+             ("Descargas/Spark.txt", "Escritorio/passwords.txt", "bloqueado"),  # patrón sensible en el destino
+             ("Descargas/Spark.txt", "C:/Windows/Spark.txt", "bloqueado"),      # fuera de las permitidas
+             ("C:/Windows/win.ini", "Documentos", "bloqueado"),
+             ("Documentos", "Escritorio", "bloqueado"),                          # carpeta raíz permitida
+             ("Descargas/no_existe_123.txt", "Documentos", "error")]
+    for origen, destino, esperado in casos:
+        tipo, r = resultado(g4.planificar_movimiento(origen, destino))
+        detalle = r.get("error") if isinstance(r, dict) else f"{r[0]} -> {r[1]}"
+        comprobar(f"{origen} -> {destino} = {esperado}", tipo == esperado, detalle)
+
+    print("\n-- mover_archivo real, solo en una carpeta temporal con archivos de prueba")
+    with tempfile.TemporaryDirectory() as tmp:
+        caja = Path(tmp).resolve()
+        originales = g1.CARPETAS_PERMITIDAS, g4.CARPETAS_PERMITIDAS
+        g1.CARPETAS_PERMITIDAS = g4.CARPETAS_PERMITIDAS = [caja]
+        try:
+            (caja / "a.txt").write_text("A", encoding="utf-8")
+            (caja / "b.txt").write_text("B", encoding="utf-8")
+            (caja / "sub").mkdir()
+            r = g4.mover_archivo(str(caja / "a.txt"), str(caja / "b.txt"))
+            comprobar("no sobrescribe un archivo existente", not r["ok"] and
+                      (caja / "b.txt").read_text(encoding="utf-8") == "B" and (caja / "a.txt").exists(), r)
+            r = g4.mover_archivo(str(caja / "a.txt"), "c.txt")
+            comprobar("renombra con solo un nombre nuevo", r["ok"] and (caja / "c.txt").exists(), r)
+            r = g4.mover_archivo(str(caja / "c.txt"), str(caja / "sub"))
+            comprobar("mueve dentro de una carpeta existente", r["ok"] and (caja / "sub" / "c.txt").exists(), r)
+            r = g4.mover_archivo(str(caja / "sub"), str(caja / "sub" / "dentro"))
+            comprobar("no mueve una carpeta dentro de sí misma", not r["ok"], r.get("error"))
+            (caja / "token_api.txt").write_text("x", encoding="utf-8")
+            r = g4.mover_archivo(str(caja / "token_api.txt"), "otro.txt")
+            comprobar("no mueve un archivo sensible", r.get("bloqueado") and (caja / "token_api.txt").exists(), r)
+        finally:
+            g1.CARPETAS_PERMITIDAS, g4.CARPETAS_PERMITIDAS = originales
+
+    print("\n-- mouse: conversión de coordenadas (capturas sintéticas, sin mover el cursor)")
+    ahora = time.time()
+    pantalla_4k = {"ancho": 1920, "alto": 1080, "origen": (0, 0), "escala": 0.5, "momento": ahora}
+    ventana = {"ancho": 800, "alto": 600, "origen": (500, 300), "escala": 1.0, "momento": ahora}
+    izquierda = {"ancho": 1920, "alto": 1080, "origen": (-1920, 0), "escala": 0.5, "momento": ahora}
+    conversiones = [
+        ("4K reducida a 1920, proceso DPI-aware", (100, 50, pantalla_4k, True, None), (200, 100)),
+        ("4K reducida, proceso NO DPI-aware con escalado 150 %", (100, 50, pantalla_4k, False, 144), (133, 67)),
+        ("4K reducida, NO DPI-aware con escalado 125 %", (960, 540, pantalla_4k, False, 120), (1536, 864)),
+        ("ventana activa con origen (500, 300), sin reducir", (10, 20, ventana, True, None), (510, 320)),
+        ("monitor a la izquierda del principal (origen negativo)", (100, 100, izquierda, True, None), (-1720, 200)),
+    ]
+    for nombre, (x, y, cap, consciente, dpi), esperado in conversiones:
+        obtenido = g4.a_pantalla(x, y, cap, consciente=consciente, dpi=dpi)
+        comprobar(nombre, obtenido == esperado, f"{obtenido} (esperado {esperado})")
+    tipo, r = resultado(g4.planificar_mouse("clic", 100, 50, captura=pantalla_4k))
+    comprobar("plan de clic (con el modo DPI real de este proceso)", tipo == "plan", r)
+    for nombre, args, esperado in [
+            ("clic sin captura previa", dict(accion="clic", x=1, y=1, captura=None), "error"),
+            ("clic fuera de la captura", dict(accion="clic", x=2000, y=10, captura=pantalla_4k), "error"),
+            ("captura de hace 3 minutos", dict(accion="clic", x=1, y=1, captura=pantalla_4k, ahora=ahora + 180),
+             "error"),
+            ("clic sin coordenadas", dict(accion="clic", captura=pantalla_4k), "error"),
+            ("desplazar sin coordenadas", dict(accion="desplazar", cantidad=-3), "plan"),
+            ("desplazar sin cantidad", dict(accion="desplazar"), "error"),
+            ("acción desconocida", dict(accion="arrastrar", x=1, y=1, captura=pantalla_4k), "error")]:
+        if args.get("captura", "x") is None:
+            g4.vision.ultima_captura = None
+        tipo, r = resultado(g4.planificar_mouse(**args))
+        comprobar(nombre, tipo == esperado, r.get("error") if isinstance(r, dict) and "error" in r else r)
+    print(f"   este proceso DPI-aware: {g4.proceso_dpi_aware()}; DPI del monitor principal: {g4.dpi_en(0, 0)}")
+
+    print("\n-- teclado (solo planes)")
+    for nombre, args, esperado in [
+            ("escribir texto con tildes", dict(accion="escribir", texto="hola, ¿qué tal? ñandú"), "plan"),
+            ("atajo ctrl+s", dict(accion="atajo", teclas=["ctrl", "s"]), "plan"),
+            ("tecla Enter (mayúsculas)", dict(accion="tecla", teclas=["Enter"]), "plan"),
+            ("atajo con 'Mayús' y 'Control'", dict(accion="atajo", teclas=["Control", "Mayús", "t"]), "plan"),
+            ("win+r (Ejecutar) bloqueado", dict(accion="atajo", teclas=["win", "r"]), "bloqueado"),
+            ("win+x bloqueado", dict(accion="atajo", teclas=["win", "x"]), "bloqueado"),
+            ("el propio atajo de emergencia bloqueado", dict(accion="atajo", teclas=["ctrl", "alt", "shift", "q"]),
+             "bloqueado"),
+            ("tecla desconocida", dict(accion="tecla", teclas=["hyper"]), "error"),
+            ("texto demasiado largo", dict(accion="escribir", texto="x" * 2001), "error"),
+            ("escribir sin texto", dict(accion="escribir"), "error")]:
+        tipo, r = resultado(g4.planificar_teclado(**args))
+        comprobar(nombre, tipo == esperado, r.get("error") if isinstance(r, dict) and "error" in r else "")
+
+    print("\n-- teclado: el atajo de emergencia corta a mitad de un texto (sin enviar teclas)")
+    enviadas = []
+    enviar_real, par_real, comprobar_real, modo_real = g4._enviar, g4._enviar_par, g4.comprobar_emergencia, g4.MODO_ESCRIBIR
+    g4._enviar = lambda **kw: enviadas.append(kw)
+    g4._enviar_par = lambda scan: enviadas.extend([scan, scan])  # bajar y subir
+    g4.MODO_ESCRIBIR, g4.PAUSA_TECLEO = "teclear", 0
+
+    def corta_tras_40():
+        if len(enviadas) >= 80:  # 40 caracteres = 80 eventos (bajar y subir)
+            raise Detenido("atajo simulado")
+
+    g4.comprobar_emergencia = corta_tras_40
+    try:
+        g4.teclado("escribir", texto="a" * 200)
+        comprobar("se detuvo a mitad del texto", False, "no se detuvo")
+    except Detenido:
+        comprobar("se detuvo a mitad del texto", len(enviadas) < 400, f"{len(enviadas) // 2} de 200 caracteres")
+    finally:
+        g4._enviar, g4._enviar_par, g4.comprobar_emergencia, g4.MODO_ESCRIBIR = (enviar_real, par_real,
+                                                                                  comprobar_real, modo_real)
+
+    print("\n-- listar_controles y clic por nombre (UI Automation, solo lectura)")
+    terminal = next((v for v in g1.listar_ventanas() if v["proceso"].lower() == "windowsterminal.exe"), None)
+    if terminal:
+        controles = g4.listar_controles(terminal["id_ventana"])
+        nombres = [c["nombre"] for c in controles] if isinstance(controles, list) else controles
+        comprobar("lista los controles de Windows Terminal", isinstance(controles, list) and "Minimizar" in nombres,
+                  nombres)
+        tipo, r = resultado(g4.planificar_mouse("clic", control="Minimizar", id_ventana=terminal["id_ventana"]))
+        boton = next(c for c in controles if c["nombre"] == "Minimizar")
+        comprobar("clic por nombre: apunta al centro del botón, sin captura", tipo == "plan" and
+                  r["pantalla"] == tuple(boton["centro"]), r)
+        tipo, r = resultado(g4.planificar_mouse("clic", control="Cerrar", id_ventana=terminal["id_ventana"]))
+        comprobar("'Cerrar' exacto gana a 'Cerrar pestaña'", tipo == "plan" and r["control"].startswith("Cerrar ("), r)
+        tipo, r = resultado(g4.planificar_mouse("clic", control="Botón que no existe", id_ventana=terminal["id_ventana"]))
+        comprobar("control inexistente -> error", tipo == "error", r.get("error"))
+        tipo, r = resultado(g4.planificar_mouse("clic", control="Aumento", id_ventana=terminal["id_ventana"]))
+        comprobar("nombre ambiguo -> error con opciones", tipo == "error" and "coincidencias" in r, r.get("coincidencias"))
+        original = g4.es_titulo_sensible
+        g4.es_titulo_sensible = lambda _t: True  # como si la ventana se llamara "claves.kdbx - KeePass"
+        r = g4.listar_controles(terminal["id_ventana"])
+        g4.es_titulo_sensible = original
+        comprobar("ventana con título sensible -> no se inspecciona", isinstance(r, dict) and r.get("bloqueado"), r)
+    r = g4.listar_controles(123456789)
+    comprobar("ventana inexistente -> error", isinstance(r, dict) and not r.get("ok", True), r.get("error"))
+
+    print("\n-- ver_pantalla con ventanas sensibles (imágenes y ventanas sintéticas)")
+    from PIL import Image
+    import vision
+    zona = {"left": 0, "top": 0, "width": 400, "height": 300}
+    imagen = Image.new("RGB", (400, 300), (255, 255, 255))
+    ventanas = [(1, "claves.kdbx - KeePass", (50, 50, 150, 150)), (2, "Calculadora", (0, 0, 400, 300))]
+    tapadas = vision.tapar_sensibles(imagen, zona, ventanas)
+    comprobar("pantalla completa: tapa la ventana sensible", tapadas == ["claves.kdbx - KeePass"]
+              and imagen.getpixel((140, 140)) == (0, 0, 0) and imagen.getpixel((300, 200)) == (255, 255, 255))
+    imagen = Image.new("RGB", (400, 300), (255, 255, 255))
+    ventanas = [(9, "Calculadora", (0, 0, 400, 300)), (1, "claves-prueba.env: Bloc de notas", (50, 50, 150, 150))]
+    tapadas = vision.tapar_sensibles(imagen, zona, ventanas, hwnd_capturada=9)
+    comprobar("ventana activa: no tapa las sensibles que quedan debajo (no se ven)", tapadas == [])
+    imagen = Image.new("RGB", (400, 300), (255, 255, 255))
+    ventanas = [(1, "id_rsa - Visual Studio Code", (300, 200, 600, 500)), (9, "Calculadora", (0, 0, 400, 300))]
+    tapadas = vision.tapar_sensibles(imagen, zona, ventanas, hwnd_capturada=9)
+    comprobar("ventana activa: tapa la parte de una sensible que está encima", tapadas == ["id_rsa - Visual Studio Code"]
+              and imagen.getpixel((350, 250)) == (0, 0, 0) and imagen.getpixel((100, 100)) == (255, 255, 255))
+    titulo_real = vision.win32gui.GetWindowText
+    vision.win32gui.GetWindowText = lambda _h: "claves-prueba.env: Bloc de notas"
+    try:
+        vision.capturar("ventana_activa")
+        comprobar("ventana activa sensible -> rechaza la captura", False, "capturó")
+    except vision.CapturaBloqueada as e:
+        comprobar("ventana activa sensible -> rechaza la captura", True, e)
+    finally:
+        vision.win32gui.GetWindowText = titulo_real
+    _, info = vision.capturar("completa")
+    comprobar("captura real de la pantalla: sin ventanas sensibles abiertas, no tapa nada",
+              info["ventanas_tapadas"] == 0, info["ventanas_tapadas"])
+
+    print(f"\n{'TODO OK' if not fallos else f'{len(fallos)} fallos: {fallos}'}")

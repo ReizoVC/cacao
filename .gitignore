@@ -1,0 +1,17 @@
+# Modelos (GGUF, varios GB) y entorno virtual
+modelos/
+.venv/
+__pycache__/
+*.pyc
+
+# Datos personales de este PC
+memoria.db
+apps_categorias.json
+
+# Resultados de pruebas: incluyen listas de apps, títulos de ventanas, nombres de archivos y carpetas de este PC
+resultados_*.json
+resultados_*.md
+
+# Archivos temporales de las pruebas
+REANUDAR
+*.wav
