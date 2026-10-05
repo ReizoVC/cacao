@@ -383,10 +383,95 @@ def prueba_wiki():
        and autor_reizo != "Asistente", f"Reizo como {autor_reizo!r}")
 
 
+# ---------- 4. sugerencias y procedencia de las memorias ----------
+
+def prueba_sugerencias():
+    import sugerencias as sg
+    wiki_temporal()
+    bases_temporales()
+    wiki.asegurar_vault(HOY)
+    r = sim.simular(HOY, dias=7, semilla=11)
+    medianoche = HOY.replace(hour=0, minute=0)
+    act = habitos.actividad_por_hora(medianoche - timedelta(days=7), medianoche)
+    cand = sg.candidatas(act, HOY, r["clasificador"])
+    spotify = [c for c in cand if c["nombre"] == "Spotify"]
+    ok("candidatas: Spotify a las 9 con apoyo 5 de 7", spotify and spotify[0]["hora"] == 9
+       and spotify[0]["apoyo"] == 5, str([(c["nombre"], c["hora"], c["apoyo"]) for c in cand][:8]))
+    ok("candidatas: nada sin apoyo suficiente (Hades 2 días, Steam)", not any(c["nombre"] in ("Hades", "Steam")
+                                                                            for c in cand))
+    sg.actualizar(cand, HOY)
+    lunes = datetime(2026, 10, 5, 9, 20)
+    abierta = {"Code.exe"}
+    s1 = sg.elegir(lunes, en_marcha=lambda app: app in abierta)
+    ok("elegir: a las 9, no sugiere una app que ya está abierta", s1 and s1["nombre"] == "Spotify", str(s1))
+    id1 = sg.registrar_mostrada(s1["clave"], lunes)
+    ok("elegir: con 2 h de separación", sg.elegir(lunes.replace(hour=10)) is None)
+    s2 = sg.elegir(lunes.replace(hour=13, minute=5))
+    ok("elegir: otra a las 13", s2 is not None and s2["hora"] == 13, str(s2))
+    sg.registrar_mostrada(s2["clave"], lunes.replace(hour=13, minute=5))
+    ok("elegir: máximo 2 al día", sg.elegir(lunes.replace(hour=16)) is None)
+
+    ok("bloquear: sin una sugerencia reciente, error",
+       not sg.herramienta("bloquear", ahora=lunes.replace(hour=15))["ok"])
+    r_b = sg.herramienta("bloquear", ahora=lunes.replace(hour=13, minute=10))
+    ok("bloquear: la última mostrada", r_b["ok"] and "13:00" in r_b["bloqueada"], str(r_b))
+    martes = datetime(2026, 10, 6, 13, 5)
+    s3 = sg.elegir(martes)
+    ok("bloqueada: no vuelve a salir al día siguiente", not s3 or s3["clave"] != s2["clave"], str(s3))
+    lista = sg.herramienta("listar", ahora=martes)
+    ok("listar: numeradas, con fecha", lista["sugerencias"][0]["numero"] == 1
+       and "bloqueada desde 2026-10-05" in lista["sugerencias"][0]["estado"], str(lista))
+    ok("desbloquear por número", sg.herramienta("desbloquear", numero=1, ahora=martes)["ok"]
+       and sg.herramienta("listar", ahora=martes)["sugerencias"] == [])
+
+    # pausa tras 3 ignoradas seguidas
+    for d in range(3):
+        dia = datetime(2026, 10, 6 + d, 9, 20)
+        m = sg.registrar_mostrada(s1["clave"], dia)
+        hasta = sg.registrar_resultado(m, "ignorada", dia)
+    ok("ignorada 3 veces seguidas: pausada 30 días", hasta and hasta.date() == datetime(2026, 11, 7).date(), str(hasta))
+    ok("pausada: no sale", (sg.elegir(datetime(2026, 10, 12, 9, 20), en_marcha=lambda a: a in abierta) or {}).get(
+        "clave") != s1["clave"])
+    ok("desbloquear por texto reactiva la pausada",
+       sg.herramienta("desbloquear", texto="spotify", ahora=datetime(2026, 10, 12, 9, 0))["ok"])
+    m = sg.registrar_mostrada(s1["clave"], datetime(2026, 10, 13, 9, 20))
+    ok("reactivada: una ignorada más no vuelve a pausarla",
+       sg.registrar_resultado(m, "ignorada", datetime(2026, 10, 13, 9, 20)) is None)
+
+    # casilla en rutinas.md
+    sg.registrar_mostrada(s1["clave"], datetime(2026, 10, 14, 9, 20))
+    sg.herramienta("bloquear", ahora=datetime(2026, 10, 14, 9, 25))
+    wiki.escribir("rutinas", {"sugerencias_bloqueadas": sg.seccion_bloqueadas(HOY)}, ahora=HOY)
+    p = wiki.ruta("rutinas")
+    p.write_text(p.read_text(encoding="utf-8").replace("- [ ] Desbloquear", "- [x] Desbloquear"), encoding="utf-8")
+    envejecer(p)
+    hechas = sg.aplicar_casillas(datetime(2026, 10, 15, 8, 0))
+    ok("casilla marcada en Obsidian: se desbloquea y la sección se rehace", hechas and not sg.bloqueadas()
+       and "[x]" not in p.read_text(encoding="utf-8"), str(hechas))
+    ok("casillas: la sección de bloqueadas nunca se congela", ("rutinas", "sugerencias_bloqueadas")
+       not in wiki.congeladas())
+
+
+def prueba_memoria_origen():
+    wiki_temporal()
+    memoria.recordar("Los viernes juego con amigos", "habito")
+    memoria.recordar("Prefiere respuestas cortas", "preferencia", origen="confirmado")
+    con = sqlite3.connect(memoria.RUTA)
+    con.execute("INSERT INTO memorias (dato, categoria, fecha, origen) VALUES ('Reizo odia Spotify', 'otro', "
+                "'2026-10-05 10:00', 'sin_confirmar')")
+    con.commit()
+    con.close()
+    datos = [m["dato"] for m in memoria.memorias_para_reflexion()]
+    ok("memorias para la wiki: directas y confirmadas, nunca sin confirmar",
+       datos == ["Los viernes juego con amigos", "Prefiere respuestas cortas"], str(datos))
+
+
 SECCIONES = {"entrada": prueba_entrada, "clasificador": prueba_clasificador, "privacidad": prueba_privacidad,
              "simulacion": prueba_simulacion, "fuente_real": prueba_fuente_real,
              "condiciones": prueba_condiciones, "guardia": prueba_guardia, "sistema_real": prueba_sistema_real,
-             "wiki": prueba_wiki}
+             "wiki": prueba_wiki,
+             "sugerencias": prueba_sugerencias,
+             "memoria_origen": prueba_memoria_origen}
 
 if __name__ == "__main__":
     elegidas = sys.argv[1:] or list(SECCIONES)

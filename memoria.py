@@ -47,7 +47,9 @@ def _conectar():
                            argumentos TEXT,
                            motivo TEXT)""")
         columnas = {fila[1] for fila in con.execute("PRAGMA table_info(memorias)")}
-        for columna in ("termino", "significado"):  # agregadas para los alias; las bases viejas se actualizan
+        # termino/significado: para los alias; origen (Fase 6): 'directo' o 'confirmado' (tras contenido externo,
+        # Reizo vio el dato y dijo que sí). Las bases viejas se actualizan; NULL = guardada antes de la Fase 6
+        for columna in ("termino", "significado", "origen"):
             if columna not in columnas:
                 con.execute(f"ALTER TABLE memorias ADD COLUMN {columna} TEXT")
         yield con
@@ -56,7 +58,8 @@ def _conectar():
         con.close()
 
 
-def recordar(dato: str, categoria: str = "otro", termino: str = "", significado: str = ""):
+def recordar(dato: str, categoria: str = "otro", termino: str = "", significado: str = "", origen: str = "directo"):
+    """'origen' lo pone el ejecutor, nunca el modelo (agente_minimo quita ese argumento de lo que pide el modelo)."""
     dato = " ".join(dato.split())
     if not dato:
         return {"ok": False, "error": "El dato está vacío."}
@@ -66,9 +69,10 @@ def recordar(dato: str, categoria: str = "otro", termino: str = "", significado:
         for id_, texto in con.execute("SELECT id, dato FROM memorias"):
             if _normalizar(texto) == _normalizar(dato):
                 return {"ok": True, "id": id_, "nota": "Ya lo tenía guardado."}
-        cur = con.execute("INSERT INTO memorias (dato, categoria, fecha, termino, significado) VALUES (?, ?, ?, ?, ?)",
+        cur = con.execute("INSERT INTO memorias (dato, categoria, fecha, termino, significado, origen) "
+                          "VALUES (?, ?, ?, ?, ?, ?)",
                           (dato, categoria, datetime.now().strftime("%Y-%m-%d %H:%M"),
-                           termino.strip() or None, significado.strip() or None))
+                           termino.strip() or None, significado.strip() or None, origen))
         return {"ok": True, "id": cur.lastrowid}
 
 
@@ -93,6 +97,17 @@ def memorias_para_prompt():
         filas = con.execute(f"SELECT dato FROM memorias WHERE categoria IN ({','.join('?' * len(EN_PROMPT))}) "
                             "ORDER BY id", EN_PROMPT).fetchall()
     return [d for (d,) in filas]
+
+
+def memorias_para_reflexion():
+    """[{id, dato, categoria, fecha}] que pueden alimentar la wiki: origen directo o confirmado (o anteriores a la
+    Fase 6). Nunca las que quedaron sin confirmar."""
+    if not RUTA.exists():
+        return []
+    with _conectar() as con:
+        filas = con.execute("SELECT id, dato, categoria, fecha FROM memorias WHERE origen IS NULL "
+                            "OR origen IN ('directo', 'confirmado') ORDER BY id").fetchall()
+    return [{"id": i, "dato": d, "categoria": c, "fecha": f} for i, d, c, f in filas]
 
 
 def resolver_alias(nombre):
