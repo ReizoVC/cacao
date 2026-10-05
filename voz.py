@@ -165,6 +165,8 @@ def preparar():
     ruta_voz = Path(CONFIG_VOZ["piper_voz"])
     locutor = Locutor(ruta_voz if ruta_voz.is_absolute() else BASE / ruta_voz, CONFIG_VOZ["velocidad"])
     planificador, aviso = a.iniciar_memoria_wiki()
+    if hasattr(transcriptor, "descargar"):  # el modo juego también libera Whisper
+        a.EXTRAS_MODO_JUEGO.append((transcriptor.descargar, transcriptor.cargar))
     if aviso:
         print(f"Asistente: {aviso}")
     historial = [{"role": "system", "content": a.prompt_sistema(voz=True)}]
@@ -217,6 +219,9 @@ def filtrar(audio, soltado, transcriptor):
     Devuelve (datos para el registro, texto o None si se descartó)."""
     analisis = analizar_audio(audio)
     datos = {"hora": time.strftime("%Y-%m-%d %H:%M:%S"), **analisis}
+    if a._modo_juego is not None and a._modo_juego.en_pausa():  # Whisper está descargado
+        datos["freno"] = "modo_juego"
+        return datos, None
     if analisis["voz_s"] < CONFIG_VOZ["min_voz_s"]:
         datos["freno"] = "silencio"
         print(f"  (descartado sin transcribir: {analisis['voz_s']} s de voz)", flush=True)
@@ -249,6 +254,8 @@ def bucle(medir=0):
         comando_actual.clear()
         if texto is None:
             registrar(n, audio, datos)
+            if datos.get("freno") == "modo_juego":
+                locutor.hablar(limpiar_para_voz(a._modo_juego.mensaje()))  # Piper va en la CPU
             continue
         t_transcrito = time.perf_counter()
         orden = normalizar(texto)

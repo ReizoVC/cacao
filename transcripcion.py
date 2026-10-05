@@ -142,5 +142,12 @@ class TranscriptorWhisper:
             return ""
         return texto
 
+    def descargar(self):
+        """Modo juego: libera la VRAM; los pesos se vuelven a leer del disco al cargar."""
+        self.modelo.model.unload_model()
+
+    def cargar(self):
+        self.modelo.model.load_model()
+
     def cerrar(self):
         self.modelo = None

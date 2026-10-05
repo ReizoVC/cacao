@@ -12,6 +12,7 @@ Requiere en la misma carpeta: config.json, herramientas.json, modelo.py, muestre
 herramientas_grupo1.py, herramientas_grupo4.py, memoria.py y emergencia.py.
 Las categorías de las apps se guardan en apps_categorias.json y solo se calculan para apps nuevas.
 """
+import gc
 import json
 import re
 import subprocess
@@ -368,6 +369,10 @@ TEXTO_EXTERNO = {"leer_archivo", "buscar_web", "ver_pantalla", "ejecutar_powersh
 GUARDAN_SOBRE_REIZO = {"recordar", "sugerencias", "registro_habitos"}
 SOLO_CONSULTAN = {("sugerencias", "listar"), ("registro_habitos", "estado")}
 _tarea = {"contaminada": False, "herramientas": []}  # de la tarea en curso (atender la reinicia)
+_modo_juego = None  # modo_juego.ModoJuego, lo crea iniciar_memoria_wiki
+_planificador = None
+# (descargar, cargar) de otros modelos en la GPU que el modo juego también libera (voz.py añade Whisper)
+EXTRAS_MODO_JUEGO = []
 _sugerencia = {"pendiente": None}  # la última mostrada, para saber si Reizo la aceptó, la ignoró o la bloqueó
 
 
@@ -665,6 +670,30 @@ def agregar_sugerencia(respuesta, historial):
     return f"{respuesta} {s['texto']}"
 
 
+def descargar_modelos():
+    """Modo juego: libera la VRAM (Gemma, el contexto de visión y los extras como Whisper)."""
+    global llm
+    if vision is not None:
+        vision.cerrar()  # libera el mmproj; se vuelve a crear con la primera captura
+        vision.verbose = False
+    for descargar, _ in EXTRAS_MODO_JUEGO:
+        descargar()
+    llm.close()
+    llm = None
+    gc.collect()
+
+
+def cargar_modelos():
+    """Al cerrar el juego: vuelve a cargar Gemma con los mismos parámetros y lo conecta de nuevo."""
+    global llm
+    llm = crear_llm(CONFIG)
+    llm.interrumpir = emergencia.comprobar
+    for _, cargar in EXTRAS_MODO_JUEGO:
+        cargar()
+    if _planificador is not None:
+        _planificador.llm = llm
+
+
 def iniciar_memoria_wiki():
     """Vault, casillas de desbloqueo, aviso del último lint y el hilo que reflexiona cuando no se usa el PC.
     Devuelve (planificador, aviso o None)."""
@@ -678,12 +707,25 @@ def iniciar_memoria_wiki():
     vigilante = Vigilante(SistemaWindows(MonitorEntrada().iniciar()), clasificador, CONFIG["memoria_wiki"])
     planificador = Planificador(llm, vigilante, emergencia.comprobar, clasificador, lint=Lint(),
                                 detenido=emergencia.detenido).iniciar()
+    global _modo_juego, _planificador
+    _planificador = planificador
+    cfg = CONFIG.get("modo_juego", {})
+    if cfg.get("activo", True):
+        from modo_juego import ModoJuego
+        _modo_juego = ModoJuego(vigilante, planificador.cerrojo, descargar_modelos, cargar_modelos,
+                                parar_reflexion=planificador.parar.set, intervalo_s=cfg.get("intervalo_s", 5),
+                                confirmar=cfg.get("confirmar", 2)).iniciar()
     return planificador, aviso_de_revision()
 
 
 def atender_con_memoria(pedido, historial, planificador, voz=False):
-    """atender() con el modelo reservado (detiene la reflexión si estaba en curso) y la sugerencia del momento."""
+    """atender() con el modelo reservado (detiene la reflexión si estaba en curso) y la sugerencia del momento.
+    En modo juego el modelo está descargado: se avisa de la pausa sin llamarlo."""
+    if _modo_juego is not None and _modo_juego.en_pausa():
+        return _modo_juego.mensaje()
     with planificador.pedido():
+        if _modo_juego is not None and _modo_juego.en_pausa():  # entró en modo juego mientras esperaba
+            return _modo_juego.mensaje()
         if planificador.indice_cambiado:  # terminó una reflexión: el índice del prompt cambió
             historial[0]["content"] = prompt_sistema(voz)
             planificador.indice_cambiado = False
