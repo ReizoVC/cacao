@@ -259,10 +259,12 @@ def prueba_sistema_real():
     pc, ex, au, gpu = s.pantalla_completa(), s.ejecutables(), s.audio(), s.uso_gpu()
     ok("sistema real: consultas de solo lectura", isinstance(pc, bool) and len(ex) > 10 and isinstance(au, list),
        f"pantalla_completa={pc}, {len(ex)} procesos, {len(au)} sesiones de audio activas, GPU {gpu} %")
-    v = deteccion.Vigilante(s, habitos.Clasificador(), habitos.MW)
-    juego = v.juego_abierto()
-    ok("sistema real: ningún proceso abierto ahora cuenta como juego (Steam/Epic en la bandeja no)", juego is None,
-       "hay uno" if juego else "")
+    # puede haber un juego abierto de verdad (p. ej. Roblox): solo se exige que lanzadores y Wallpaper Engine no cuenten
+    clasificador = habitos.Clasificador()
+    juegos = [r.replace("\\", "/").rsplit("/", 1)[-1].lower() for r in ex if clasificador.es_juego(r)]
+    excluidos = {x.lower() for x in habitos.MW["lanzadores"] + habitos.MW["no_son_juegos"]}
+    ok("sistema real: lanzadores y Wallpaper Engine nunca cuentan como juego", not set(juegos) & excluidos,
+       f"juegos abiertos ahora: {sorted(set(juegos)) or 'ninguno'}")
 
 
 # ---------- 3. núcleo de la wiki ----------
