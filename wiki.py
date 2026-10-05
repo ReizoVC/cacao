@@ -471,7 +471,7 @@ def indice_texto():
         texto.append(l)
         total += len(l) + 1
     n = len(list((VAULT / MIS_NOTAS).rglob("*.md"))) if (VAULT / MIS_NOTAS).exists() else 0
-    extra = f"- {MIS_NOTAS}/: {n} notas de Reizo"
+    extra = f"- {MIS_NOTAS}/: {n} {'nota' if n == 1 else 'notas'} de Reizo"
     if n and total + len(extra) <= LIMITES["indice_max"]:
         texto.append(extra)
     return "\n".join(texto)

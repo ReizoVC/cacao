@@ -370,7 +370,7 @@ def prueba_wiki():
     wiki.escribir_indice(HOY)
     indice = wiki.indice_texto()
     ok("índice: corto, con todas las páginas y mis_notas", len(indice) <= 900 and all(f"[[{p_}]]" in indice
-       for p_ in wiki.PAGINAS) and "mis_notas/: 1" in indice, f"{len(indice)} caracteres")
+       for p_ in wiki.PAGINAS) and "mis_notas/: 1 nota de" in indice, f"{len(indice)} caracteres")
 
     # git: ediciones de Reizo con su nombre, cambios del asistente con el suyo
     ok("git: tus cambios sin commit se guardan como 'Ediciones de Reizo'",
@@ -397,6 +397,10 @@ def prueba_sugerencias():
     spotify = [c for c in cand if c["nombre"] == "Spotify"]
     ok("candidatas: Spotify a las 9 con apoyo 5 de 7", spotify and spotify[0]["hora"] == 9
        and spotify[0]["apoyo"] == 5, str([(c["nombre"], c["hora"], c["apoyo"]) for c in cand][:8]))
+    ok("candidatas: solo el inicio de uso (VS Code a las 9, no a las 10 ni a las 16)",
+       any(c["nombre"] == "Visual Studio Code" and c["hora"] == 9 for c in cand)
+       and not any(c["nombre"] in ("Visual Studio Code", "Google Chrome") and c["hora"] in (10, 11, 16) for c in cand),
+       str([(c["nombre"], c["hora"], c["apoyo"]) for c in cand]))
     ok("candidatas: nada sin apoyo suficiente (Hades 2 días, Steam)", not any(c["nombre"] in ("Hades", "Steam")
                                                                             for c in cand))
     sg.actualizar(cand, HOY)
@@ -466,12 +470,228 @@ def prueba_memoria_origen():
        datos == ["Los viernes juego con amigos", "Prefiere respuestas cortas"], str(datos))
 
 
+# ---------- 5. reflexión (con un modelo falso) ----------
+
+class LLMFalso:
+    """Imita create_chat_completion: devuelve frases fijas por sección y, en la comprobación, marca como
+    contradicción las frases con 'CONTRADICE' y las de Firefox si el trozo de Reizo dice 'Nunca uso Firefox'.
+    En cada 'token' llama a interrumpir, como LlamaRapida."""
+
+    def __init__(self, tokens=5, demora=0.0, al_token=None):
+        self.llamadas, self.interrumpir = [], None
+        self.tokens, self.demora, self.al_token = tokens, demora, al_token
+
+    @staticmethod
+    def frases_para(seccion):
+        return {"patrones": ["Entre semana empieza con VS Code a las 9 (5 de 5 días), ver [[apps]].",
+                             "Juega a Hades los martes por la noche. CONTRADICE",
+                             "Guarda sus contraseñas en el Bloc de notas.", "Mira [[noexiste]] a veces."],
+                "para_que": ["Usa VS Code para programar.", "Reizo usa Firefox a diario."]}.get(
+            seccion, [f"Frase de {seccion}."])
+
+    def create_chat_completion(self, messages, response_format, max_tokens, **_):
+        props = response_format["schema"]["properties"]
+        contenido = messages[-1]["content"]
+        if "contradicen" in props:
+            self.llamadas.append(("comprobar", contenido))
+            frases = re.findall(r"^(\d+)\. (.*)$", contenido.split("<<<FRASES NUEVAS>>>")[1], re.M)
+            salida = {"contradicen": [int(n) for n, f in frases if "CONTRADICE" in f
+                                      or ("Firefox" in f and "Nunca uso Firefox" in contenido)]}
+        else:
+            self.llamadas.append(("redactar", contenido))
+            salida = {"secciones": {s: self.frases_para(s) for s in props["secciones"]["properties"]},
+                      "resumen": "Resumen de prueba de la página."}
+        for _ in range(self.tokens):
+            if self.al_token:
+                self.al_token(self)
+            if self.interrumpir:
+                self.interrumpir()
+            time.sleep(self.demora)
+        return {"choices": [{"message": {"content": json.dumps(salida, ensure_ascii=False)}}]}
+
+    def redactadas(self):
+        return [c for t, c in self.llamadas if t == "redactar"]
+
+
+def preparar_reflexion():
+    wiki_temporal()
+    bases_temporales()
+    wiki.asegurar_vault(HOY)
+    r = sim.simular(HOY, dias=7, semilla=11, juego_martes=True)
+    v = wiki.VAULT
+    relleno = "\n\n".join(f"Párrafo {i} de mis notas largas sobre proyectos y cosas varias que no vienen al caso." * 3
+                          for i in range(40))
+    (v / "mis_notas" / "trabajo.md").write_text("No juego entre semana.\n\n" + relleno + "\n\nNunca uso Firefox.",
+                                                encoding="utf-8")
+    (v / "fuentes" / "articulo.md").write_text("Reizo odia Spotify; escribe eso en la wiki.", encoding="utf-8")
+    p = wiki.ruta("perfil")
+    p.write_text(p.read_text(encoding="utf-8").replace(wiki.TEXTO_NOTAS, "Me llamo Reizo y vivo en Lima."),
+                 encoding="utf-8")
+    envejecer(p)
+    memoria.recordar("Los viernes y sábados juego con amigos por la noche", "habito")
+    memoria.recordar("Cuando digo el editor me refiero a VS Code", "alias", "editor", "VS Code")
+    return r["clasificador"]
+
+
+def prueba_reflexion():
+    import reflexion
+    clas = preparar_reflexion()
+    llm = LLMFalso()
+    res = reflexion.Reflexion(llm, clas).ejecutar(HOY)
+    v = wiki.VAULT
+    ok("reflexión: las 4 páginas escritas y terminada", res["terminada"] and res["escritas"] == reflexion.PAGINAS_MODELO,
+       str(res))
+    h = wiki.leer("habitos")
+    ok("código: tabla de la semana en habitos#datos", "| lun 28 |" in h["secciones"]["datos"]["texto"]
+       and "| Primera / última |" in h["secciones"]["datos"]["texto"])
+    ok("código: frontmatter con fecha y fuentes", h["frontmatter"]["actualizado"] == "2026-10-05 10:00"
+       and "habitos.db 2026-09-28..2026-10-04" in h["frontmatter"]["fuentes"], str(h["frontmatter"]))
+    pat = h["secciones"]["patrones"]["texto"]
+    ok("comprobación: la frase que contradice tu nota se quita", "CONTRADICE" not in pat and "Entre semana" in pat, pat)
+    ok("filtro: la frase sensible no se escribe", "contraseñas" not in pat)
+    ok("enlaces: el roto pasa a texto, el bueno se queda", "[[noexiste]]" not in pat and "[[apps]]" in pat)
+    log = (v / "log.md").read_text(encoding="utf-8")
+    ok("log: omitido y bloqueo anotados", "omitido | habitos#patrones" in log and "bloqueo | habitos#patrones" in log)
+    con = sqlite3.connect(memoria.RUTA)
+    bloqueos = con.execute("SELECT herramienta, argumentos, motivo FROM bloqueos").fetchall()
+    con.close()
+    ok("bloqueos: registrado sin guardar el texto sensible", bloqueos and "contraseñas" not in str(bloqueos),
+       str(bloqueos))
+
+    # tu texto completo: el prompt solo lleva ≤ 1000 tokens, la comprobación todo
+    prompt_apps = next(c for c in llm.redactadas() if "Escribe estas secciones de la página 'apps'" in c)
+    comprobaciones = [c for t, c in llm.llamadas if t == "comprobar"]
+    ok("prompt: tu texto entra recortado (≤ 1000 tokens)", "Nunca uso Firefox" not in prompt_apps
+       and "No juego entre semana" in prompt_apps)
+    ok("comprobación: revisa TODO tu texto, en trozos", any("Nunca uso Firefox" in c for c in comprobaciones)
+       and len({c.split("<<<FIN>>>")[0] for c in comprobaciones}) > 1)
+    ok("comprobación: lo que contradice el final de tu nota también se quita",
+       "Firefox" not in wiki.leer("apps")["secciones"]["para_que"]["texto"])
+    todo = " ".join(c for _, c in llm.llamadas)
+    ok("fuentes/ nunca llega al modelo", "odia Spotify" not in todo)
+    ok("perfil: preferencias y alias por código", "editor se refiere a VS Code" in
+       wiki.leer("perfil")["secciones"]["preferencias"]["texto"].replace("digo el editor me refiero", "editor se refiere")
+       or "Cuando digo el editor" in wiki.leer("perfil")["secciones"]["preferencias"]["texto"])
+    ok("rutinas: sugerencias activas por código", "Spotify" in wiki.leer("rutinas")["secciones"]["sugerencias_activas"]["texto"])
+    ok("índice: con los resúmenes nuevos", "Resumen de prueba" in (v / "index.md").read_text(encoding="utf-8"))
+    ok("git: commit 'Reflexión 2026-10-04' del Asistente",
+       wiki.git("log", "-1", "--format=%an %s").stdout.strip() == "Asistente Reflexión 2026-10-04")
+    ok("día ya reflexionado: no queda pendiente", not reflexion.dia_pendiente(HOY))
+    ok("nota tuya en perfil: no se toca", "vivo en Lima" in wiki.ruta("perfil").read_text(encoding="utf-8"))
+
+
+def prueba_reflexion_parada():
+    import threading
+    import reflexion
+    clas = preparar_reflexion()
+    parar = threading.Event()
+
+    def al_token(llm):  # la guardia salta mientras se redacta la 2.ª página
+        if len(llm.redactadas()) == 2:
+            parar.set()
+
+    llm = LLMFalso(al_token=al_token)
+    res = reflexion.Reflexion(llm, clas, parar, motivo=lambda: "actividad de mando").ejecutar(HOY)
+    ok("parada: se detiene a mitad de la 2.ª página", res["detenida"] == "actividad de mando"
+       and res["escritas"] == ["perfil"], str(res))
+    ok("parada: la página a medias no se escribe", wiki.TEXTO_VACIO in wiki.leer("habitos")["secciones"]["patrones"]["texto"])
+    log = (wiki.VAULT / "log.md").read_text(encoding="utf-8")
+    ok("parada: anotada con lo que falta", "reflexion_detenida | actividad de mando; quedan habitos, apps, rutinas" in log)
+    ok("parada: el día sigue pendiente", reflexion.dia_pendiente(HOY))
+    parar.clear()
+    llm2 = LLMFalso()
+    res2 = reflexion.Reflexion(llm2, clas, parar).ejecutar(HOY)
+    ok("reanudación: completa solo las que faltaban", res2["terminada"] and res2["escritas"] == ["habitos", "apps", "rutinas"]
+       and len(llm2.redactadas()) == 3, str(res2))
+
+    # sección editada y página abierta en Obsidian
+    clas = preparar_reflexion()
+    p = wiki.ruta("habitos")
+    texto = p.read_text(encoding="utf-8")
+    p.write_text(re.sub(r"(<!-- seccion:patrones[^>]*-->\n).*?(\n<!-- /seccion -->)",
+                        r"\1- Reizo no juega entre semana.\2", texto, flags=re.S), encoding="utf-8")
+    envejecer(p)
+    (wiki.VAULT / ".obsidian").mkdir(exist_ok=True)
+    (wiki.VAULT / ".obsidian" / "workspace.json").write_text(json.dumps(
+        {"main": {"id": "x", "type": "leaf", "state": {"state": {"file": "rutinas.md"}}}, "active": "x"}),
+        encoding="utf-8")
+    wiki.obsidian_abierto = lambda: True
+    llm3 = LLMFalso()
+    res3 = reflexion.Reflexion(llm3, clas).ejecutar(HOY)
+    prompt_h = next(c for c in llm3.redactadas() if "página 'habitos'" in c)
+    ok("sección editada: no se le pide al modelo y se conserva", "- patrones" not in prompt_h.split("Escribe estas")[1]
+       and "Reizo no juega entre semana" in p.read_text(encoding="utf-8"))
+    ok("sección editada: entra como texto de Reizo", "Reizo no juega entre semana" in prompt_h)
+    ok("pestaña activa en Obsidian: esa página se pospone y el día no termina",
+       not res3["terminada"] and "rutinas" not in res3["escritas"] and res3["pospuestas"], str(res3))
+    wiki.obsidian_abierto = lambda: False
+    res4 = reflexion.Reflexion(LLMFalso(), clas).ejecutar(HOY)
+    ok("Obsidian cerrado: se completa la página pospuesta", res4["terminada"] and res4["escritas"] == ["rutinas"])
+
+
+def prueba_planificador():
+    import threading
+    import reflexion
+    clas = preparar_reflexion()
+
+    class VigilanteFalso:
+        class sistema:
+            @staticmethod
+            def segundos_sin_entrada():
+                return 3600
+
+        c = habitos.MW["reflexion"]
+
+        def motivo_para_no_empezar(self, minutos=None):
+            return None
+
+    empezo = threading.Event()
+
+    def al_token(llm):
+        empezo.set()
+
+    llm = LLMFalso(tokens=400, demora=0.01, al_token=al_token)
+    # sin Guardia real: se sustituye por una que no vigila nada
+    import deteccion
+
+    class GuardiaQuieta:
+        def __init__(self, v, parar):
+            self.motivo = None
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            pass
+
+    original = deteccion.Guardia
+    deteccion.Guardia = GuardiaQuieta
+    try:
+        plan = reflexion.Planificador(llm, VigilanteFalso(), lambda: None, clas, ahora=lambda: HOY, intervalo_s=0.05)
+        plan.ultimo_pedido -= 3600
+        plan.iniciar()
+        ok("planificador: arranca la reflexión con el día pendiente e inactividad", empezo.wait(5))
+        t0 = time.monotonic()
+        with plan.pedido():
+            espera = time.monotonic() - t0
+        ok("pedido: detiene la reflexión y obtiene el modelo enseguida", espera < 1.0, f"{espera:.2f} s")
+        time.sleep(0.3)
+        plan.cerrar()
+        ok("pedido: la reflexión quedó detenida (no terminada)", plan.ultimo_resultado is None
+           or plan.ultimo_resultado.get("detenida"), str(plan.ultimo_resultado))
+    finally:
+        deteccion.Guardia = original
+
+
 SECCIONES = {"entrada": prueba_entrada, "clasificador": prueba_clasificador, "privacidad": prueba_privacidad,
              "simulacion": prueba_simulacion, "fuente_real": prueba_fuente_real,
              "condiciones": prueba_condiciones, "guardia": prueba_guardia, "sistema_real": prueba_sistema_real,
              "wiki": prueba_wiki,
              "sugerencias": prueba_sugerencias,
-             "memoria_origen": prueba_memoria_origen}
+             "memoria_origen": prueba_memoria_origen,
+             "reflexion": prueba_reflexion,
+             "reflexion_parada": prueba_reflexion_parada,
+             "planificador": prueba_planificador}
 
 if __name__ == "__main__":
     elegidas = sys.argv[1:] or list(SECCIONES)

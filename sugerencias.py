@@ -2,8 +2,9 @@
 Fase 6: sugerencias (diseno_fase6.md §5). Solo sugieren, nunca ejecutan: si Reizo dice "sí", su "sí" es un pedido
 nuevo para el agente, con sus permisos normales.
 
-  - Candidatas: las calcula el código desde el registro de hábitos: una app usada ≥ 5 min en la misma hora en al
-    menos apoyo_min de los últimos ventana_dias días. El modelo no inventa rutinas.
+  - Candidatas: las calcula el código desde el registro de hábitos: una app que se EMPIEZA a usar (≥ 5 min, sin uso
+    en las 2 horas anteriores) en la misma hora en al menos apoyo_min de los últimos ventana_dias días. El modelo no
+    inventa rutinas.
   - Se muestran solo cuando Reizo habla con el agente, en la hora de la rutina, como una línea al final de la
     respuesta: como mucho max_dia al día, con separacion_h entre una y otra, una vez al día cada una y nunca si la
     app ya está abierta.
@@ -66,7 +67,10 @@ def candidatas(actividad, hoy, clasificador):
     dias_con_datos = {d for (d, _, _) in actividad if d >= desde}
     apoyo = {}
     for (dia, hora, app), minutos in actividad.items():
-        if dia >= desde and minutos >= MINUTOS_PARA_CONTAR:
+        # solo cuenta el INICIO de uso: la app no se usó en las 2 horas anteriores de ese día (si no, "a las 16
+        # sueles abrir Chrome" saldría para cada hora en que Chrome sigue abierto)
+        sigue = any(actividad.get((dia, hora - k, app), 0) > 0 for k in (1, 2))
+        if dia >= desde and minutos >= MINUTOS_PARA_CONTAR and not sigue:
             apoyo.setdefault((app, hora), set()).add(dia)
     salida = []
     for (app, hora), dias in apoyo.items():
