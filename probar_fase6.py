@@ -166,11 +166,35 @@ class RelojFalso:
 
 
 class SistemaFalso:
-    """idle: segundos sin entrada al empezar; crece con el reloj salvo que haya 'entrada_en' (instante de una tecla)."""
+    """idle: segundos sin entrada al empezar; crece con el reloj salvo que haya 'entrada_en' (instante de una tecla).
+    procs: rutas de los procesos abiertos. ventanas: rutas con una ventana visible (None = todas). gpu_proc: {ruta: %}
+    de uso de GPU por proceso; gpu: uso total."""
 
-    def __init__(self, reloj, idle=900, pantalla=False, procesos=(), audio=(), gpu=5, entrada_en=None):
-        self.reloj, self.idle0, self.pantalla, self.procesos = reloj, idle, pantalla, list(procesos)
+    def __init__(self, reloj, idle=900, pantalla=False, procesos=(), audio=(), gpu=5, entrada_en=None, ventanas=None,
+                 gpu_proc=None):
+        self.reloj, self.idle0, self.pantalla, self.procs = reloj, idle, pantalla, list(procesos)
         self.audio_fijo, self.gpu, self.entrada_en = (audio if callable(audio) else list(audio)), gpu, entrada_en
+        self.ventanas = None if ventanas is None else set(ventanas)
+        self.gpu_proc = dict(gpu_proc or {})
+        self.pids = {}  # ruta -> pid; un proceso que se cierra y vuelve a abrir recibe otro pid
+        self._siguiente = 1000
+
+    def _pid(self, ruta):
+        if ruta not in self.pids:
+            self.pids[ruta], self._siguiente = self._siguiente, self._siguiente + 1
+        return self.pids[ruta]
+
+    def reabrir(self, ruta):
+        self.pids.pop(ruta, None)
+
+    def procesos(self):
+        return [(self._pid(r), r) for r in self.procs]
+
+    def pids_con_ventana(self):
+        return {self._pid(r) for r in self.procs if self.ventanas is None or r in self.ventanas}
+
+    def gpu_por_pid(self):
+        return {self._pid(r): v for r, v in self.gpu_proc.items() if r in self.procs}
 
     def segundos_sin_entrada(self):
         t = self.reloj()
@@ -182,7 +206,7 @@ class SistemaFalso:
         return self.pantalla
 
     def ejecutables(self):
-        return self.procesos
+        return list(self.procs)
 
     def audio(self):
         return self.audio_fijo(self.reloj()) if callable(self.audio_fijo) else self.audio_fijo
@@ -237,10 +261,11 @@ def prueba_guardia():
         if nombre == "pantalla completa":
             threading.Timer(0.3, lambda: setattr(s, "pantalla", True)).start()
         if nombre == "juego que se abre":
-            threading.Timer(0.3, lambda: s.procesos.append(sim.V["hades"][0])).start()
+            threading.Timer(0.3, lambda: s.procs.append(sim.V["hades"][0])).start()
         if nombre == "video que empieza":
             s.audio_fijo = lambda t: [VLC] if t >= 0.3 else []
-        v = deteccion.Vigilante(s, c, {"reflexion": {**habitos.MW["reflexion"], "audio_min_s": 0.3}}, reloj=reloj)
+        v = deteccion.Vigilante(s, c, {"reflexion": {**habitos.MW["reflexion"], "audio_min_s": 0.3},
+                                       "juegos": {"muestreo_s": 0.1}}, reloj=reloj)
         parar = threading.Event()
         with deteccion.Guardia(v, parar, intervalo_s=0.05, cada_procesos_s=0.1) as g:
             parar.wait(3)

@@ -1,7 +1,7 @@
 """
 Modo juego: pruebas de la lógica con juego SIMULADO (sin modelo) y, con --medir, cuánto tarda en descargar y recargar
 Gemma (+ visión) y Whisper de verdad, con el mismo juego simulado. No abre ningún juego ni toca nada del PC: el
-"juego" es una lista de procesos falsa.
+"juego" es una lista de procesos falsa, con ventanas y uso de GPU simulados y un reloj simulado.
 Uso: .venv\\Scripts\\python probar_modo_juego.py [--medir | --medir-whisper]
 """
 import ast
@@ -28,76 +28,133 @@ def ok(nombre, condicion, detalle=""):
     print(f"{'OK   ' if condicion else 'FALLO'} {nombre}{f'  ({detalle})' if detalle else ''}", flush=True)
 
 
-def vigilante_falso(procesos):
-    sistema = SistemaFalso(lambda: 0.0, procesos=procesos)
-    return deteccion.Vigilante(sistema, habitos.Clasificador(sim.CATEGORIAS_SIM), habitos.MW), sistema
+class Reloj:
+    def __init__(self):
+        self.t = 0.0
+
+    def __call__(self):
+        return self.t
+
+
+HADES = sim.V["hades"][0]
+ROBLOX = r"C:\Users\sim\AppData\Local\Roblox\Versions\version-1\RobloxPlayerBeta.exe"
+
+
+def escenario(procesos=(), ventanas=(), gpu_proc=None):
+    """Sistema falso con reloj simulado; el modo juego comprueba cada 5 s (avanzar() mueve el reloj)."""
+    reloj = Reloj()
+    s = SistemaFalso(reloj, procesos=STEAM_BANDEJA + [WALLPAPER] + list(procesos), ventanas=ventanas,
+                     gpu_proc=gpu_proc)
+    clasificador = habitos.Clasificador({**sim.CATEGORIAS_SIM, ROBLOX: {"nombre": "Roblox", "categoria": "juegos"}})
+    v = deteccion.Vigilante(s, clasificador, habitos.MW, reloj=reloj)
+    llamadas = []
+    m = ModoJuego(v, threading.Lock(), lambda: llamadas.append("descargar"), lambda: llamadas.append("cargar"),
+                  confirmar=2, anotar=lambda *_: None, reloj=reloj)
+
+    def avanzar(segundos):
+        """Avanza el reloj de 5 en 5 s, con una comprobación del modo juego en cada paso."""
+        for _ in range(int(segundos // 5)):
+            reloj.t += 5
+            m.comprobar()
+
+    return s, v, m, llamadas, avanzar, reloj
+
+
+def vigilante_falso(procesos):  # para las mediciones: un juego con ventana visible
+    s, v, m, _, avanzar, reloj = escenario(procesos)
+    return v, s
 
 
 def pruebas_logica():
-    v, s = vigilante_falso(STEAM_BANDEJA + [WALLPAPER])
-    llamadas = []
-    cerrojo = threading.Lock()
-    paradas = []
-    m = ModoJuego(v, cerrojo, lambda: llamadas.append("descargar"), lambda: llamadas.append("cargar"),
-                  parar_reflexion=lambda: paradas.append(1), confirmar=2, anotar=lambda *_: None)
-    for _ in range(3):
-        m.comprobar()
-    ok("Steam en la bandeja y Wallpaper Engine no son juego", m.estado == NORMAL and not llamadas)
-    s.procesos.append(sim.V["hades"][0])
-    m.comprobar()
-    ok("una sola comprobación con juego no basta (evita parpadeos)", m.estado == NORMAL and not llamadas)
-    m.comprobar()
-    ok("dos seguidas: descarga, para la reflexión y queda en pausa", m.estado == JUEGO and llamadas == ["descargar"]
-       and paradas and m.en_pausa() == "Hades", m.en_pausa())
-    ok("mensaje de pausa con el nombre del juego", "Hades" in m.mensaje() and "pausa" in m.mensaje())
-    s.procesos.remove(sim.V["hades"][0])
-    m.comprobar()
-    s.procesos.append(sim.V["hades"][0])  # el juego se reinicia: no recarga
-    m.comprobar()
-    s.procesos.remove(sim.V["hades"][0])
-    m.comprobar()
-    ok("un reinicio del juego no provoca recarga", m.estado == JUEGO and llamadas == ["descargar"])
-    m.comprobar()
-    ok("dos seguidas sin juego: recarga y vuelve a normal", m.estado == NORMAL and llamadas == ["descargar", "cargar"]
-       and m.en_pausa() is None)
+    # 1. juego activo (ventana visible)
+    s, v, m, llamadas, avanzar, reloj = escenario([HADES], ventanas=[HADES])
+    avanzar(5)
+    ok("activo: una sola comprobación no basta", m.estado == NORMAL and not llamadas)
+    avanzar(5)
+    ok("activo: con ventana visible entra en pausa a los 10 s", m.estado == JUEGO and llamadas == ["descargar"]
+       and m.en_pausa() == "Hades", m.en_pausa())
+
+    # 2. minimizado un momento: sin ventana ni GPU durante 90 s, luego vuelve
+    s.ventanas = set()
+    avanzar(90)
+    ok("minimizado 90 s: sigue en pausa (margen de 2 min)", m.estado == JUEGO and llamadas == ["descargar"])
+    s.ventanas = {HADES}
+    avanzar(60)
+    ok("vuelve a la ventana: sigue en pausa, sin recargas", m.estado == JUEGO and llamadas == ["descargar"])
+
+    # 3. se cierra a la bandeja (el proceso sigue): termina tras 2 min sin señales
+    s.ventanas = set()
+    avanzar(115)
+    ok("en la bandeja: aún en pausa a los 115 s", m.estado == JUEGO)
+    avanzar(20)
+    ok("en la bandeja: recarga tras 2 min sin ventana ni GPU", m.estado == NORMAL
+       and llamadas == ["descargar", "cargar"], f"{reloj.t:.0f} s")
     ok("tiempos registrados", [t["accion"] for t in m.tiempos] == ["descargar", "cargar"])
 
-    # no descarga a mitad de un pedido: espera al cerrojo
-    s.procesos.append(sim.V["hades"][0])
-    cerrojo.acquire()
-    hilo = threading.Thread(target=lambda: (m.comprobar(), m.comprobar()))
-    hilo.start()
-    time.sleep(0.3)
-    a_mitad = list(llamadas)
-    cerrojo.release()
-    hilo.join(2)
-    ok("con un pedido en curso, espera a que termine para descargar", a_mitad == ["descargar", "cargar"]
-       and llamadas[-1] == "descargar")
+    # 4. en la bandeja desde el principio (Roblox al cerrarlo): nunca es un juego activo
+    s, v, m, llamadas, avanzar, _ = escenario([ROBLOX], ventanas=[])
+    avanzar(300)
+    ok("Roblox en la bandeja 5 min: nunca pausa", m.estado == NORMAL and not llamadas and v.juego_abierto() is None)
 
-    # si la recarga falla, sigue en pausa y lo reintenta
-    s.procesos.remove(sim.V["hades"][0])
-    fallos = {"n": 1}
+    # 5. GPU: sostenida sin ventana (minimizado pero renderizando) sí; un pico suelto no
+    s, v, m, llamadas, avanzar, _ = escenario([HADES], ventanas=[], gpu_proc={HADES: 40})
+    avanzar(30)
+    ok("GPU sostenida sin ventana: juego activo", m.estado == JUEGO)
+    s, v, m, llamadas, avanzar, _ = escenario([HADES], ventanas=[], gpu_proc={HADES: 0})
+    avanzar(10)
+    s.gpu_proc[HADES] = 60
+    avanzar(5)
+    s.gpu_proc[HADES] = 0
+    avanzar(60)
+    ok("un pico de GPU de 5 s: no es juego activo", m.estado == NORMAL and not llamadas)
 
-    def cargar_que_falla():
-        if fallos["n"]:
-            fallos["n"] -= 1
-            raise RuntimeError("CUDA ocupada")
-        llamadas.append("cargar")
+    # 6. comandos "estoy jugando" / "ya terminé"
+    s, v, m, llamadas, avanzar, _ = escenario()
+    r = m.estoy_jugando()
+    ok("'estoy jugando' sin juego detectado: pausa al momento", m.estado == JUEGO and llamadas == ["descargar"], r)
+    avanzar(300)
+    ok("forzado: sigue en pausa aunque no haya señales", m.estado == JUEGO)
+    r = m.ya_termine()
+    ok("'ya terminé': recarga al momento", m.estado == NORMAL and llamadas[-1] == "cargar", r)
+    s, v, m, llamadas, avanzar, _ = escenario([ROBLOX], ventanas=[ROBLOX])
+    avanzar(10)
+    r = m.ya_termine()
+    avanzar(60)
+    ok("'ya terminé' con Roblox aún visible: se ignora ese proceso y no vuelve a pausar", m.estado == NORMAL
+       and llamadas == ["descargar", "cargar"], r)
+    s.reabrir(ROBLOX)  # lo cierra y lo vuelve a abrir: otro pid
+    avanzar(10)
+    ok("al volver a abrir el juego (otro proceso): pausa de nuevo", m.estado == JUEGO)
 
-    m.cargar = cargar_que_falla
-    m.comprobar()
-    try:
-        m.comprobar()
-    except RuntimeError:
-        pass
-    ok("recarga fallida: sigue en pausa", m.estado == JUEGO)
-    m.comprobar()
-    m.comprobar()
-    ok("y la reintenta después", m.estado == NORMAL and llamadas[-1] == "cargar")
+    # 7. la reflexión usa la misma detección
+    s, v, m, _, avanzar, reloj = escenario([ROBLOX], ventanas=[])
+    reloj.t = 1000
+    v.dormir = lambda seg: setattr(reloj, "t", reloj.t + seg)
+    ok("reflexión: Roblox en la bandeja no la bloquea", v.motivo_para_no_empezar() is None)
+    s.ventanas = {ROBLOX}
+    reloj.t += 10
+    ok("reflexión: Roblox con ventana sí la bloquea", (v.motivo_para_no_empezar() or "").startswith("juego abierto"))
 
-    # el agente: un pedido en pausa no llega al modelo
+    # 8. la regla de mis pruebas (guardia_juego) también
+    import guardia_juego
+    for nombre, kw, esperado in [("en la bandeja", {"ventanas": []}, None),
+                                 ("con ventana", {"ventanas": [ROBLOX]}, "Roblox"),
+                                 ("GPU sostenida", {"ventanas": [], "gpu_proc": {ROBLOX: 50}}, "Roblox")]:
+        reloj = Reloj()
+        sistema = SistemaFalso(reloj, procesos=[ROBLOX], **kw)
+        original = habitos.Clasificador
+        habitos.Clasificador = lambda: original({ROBLOX: {"nombre": "Roblox", "categoria": "juegos"}})
+        try:
+            r = guardia_juego.juego_abierto(sistema, dormir=lambda seg: setattr(reloj, "t", reloj.t + seg), reloj=reloj)
+        finally:
+            habitos.Clasificador = original
+        ok(f"regla de mis pruebas, Roblox {nombre}: {'bloquea' if esperado else 'no bloquea'}", r == esperado, r)
+
+    # 9. el agente: comandos sin modelo y pedido en pausa
     arbol = ast.parse((BASE / "agente_minimo.py").read_text(encoding="utf-8"))
-    nodo = next(n for n in arbol.body if isinstance(n, ast.FunctionDef) and n.name == "atender_con_memoria")
+    nombres = {"atender_con_memoria", "comando_modo_juego", "FRASES_JUGANDO", "FRASES_TERMINE", "normalizar"}
+    nodos = [n for n in arbol.body if (isinstance(n, ast.FunctionDef) and n.name in nombres)
+             or (isinstance(n, ast.Assign) and any(getattr(t, "id", None) in nombres for t in n.targets))]
     usado = []
 
     class PlanFalso:
@@ -105,11 +162,32 @@ def pruebas_logica():
             usado.append("pedido")
             raise AssertionError("no debía tocar el modelo")
 
-    ns = {"_modo_juego": type("M", (), {"en_pausa": lambda self: "Hades",
-                                        "mensaje": lambda self: "Estoy en pausa porque Hades está abierto"})()}
-    exec(compile(ast.Module(body=[nodo], type_ignores=[]), "agente_minimo.py", "exec"), ns)
+    class ModoFalso:
+        pausa = "Hades"
+
+        def en_pausa(self):
+            return self.pausa
+
+        def mensaje(self):
+            return "Estoy en pausa porque Hades está abierto"
+
+        def estoy_jugando(self):
+            self.pausa = "un juego"
+            return "Vale, libero la GPU"
+
+        def ya_termine(self):
+            self.pausa = None
+            return "Listo, ya volví"
+
+    import unicodedata
+    ns = {"_modo_juego": ModoFalso(), "unicodedata": unicodedata}
+    exec(compile(ast.Module(body=nodos, type_ignores=[]), "agente_minimo.py", "exec"), ns)
     r = ns["atender_con_memoria"]("pon el volumen al 30", [], PlanFalso())
     ok("pedido en modo juego: aviso de pausa sin llamar al modelo", "pausa" in r and not usado, r)
+    r = ns["atender_con_memoria"]("Ya terminé.", [], PlanFalso())
+    ok("'Ya terminé.' lo atiende el código, sin el modelo", r == "Listo, ya volví" and not usado, r)
+    r = ns["atender_con_memoria"]("estoy jugando", [], PlanFalso())
+    ok("'estoy jugando' lo atiende el código", r.startswith("Vale") and not usado, r)
 
 
 def vram_mb():
@@ -147,18 +225,21 @@ def medir_gemma(ciclos=2):
         estado["llm"] = crear_llm(config)
         vision._init_mtmd_context(estado["llm"])
 
-    v, s = vigilante_falso(STEAM_BANDEJA)
+    s, v, _, _, _, reloj = escenario()
     m = ModoJuego(v, threading.Lock(), descargar, cargar, confirmar=2, anotar=print)
     filas = []
     for ciclo in range(ciclos):
-        s.procesos.append(sim.V["hades"][0])
-        m.comprobar()
-        m.comprobar()
+        s.procs.append(HADES)  # juego simulado con ventana visible (SistemaFalso: todas visibles por defecto)
+        for _ in range(2):
+            reloj.t += 5
+            m.comprobar()
         time.sleep(2)
         descargada = vram_mb()
-        s.procesos.remove(sim.V["hades"][0])
-        m.comprobar()
-        m.comprobar()
+        s.procs.remove(HADES)
+        reloj.t += 125  # 2 min sin señales
+        for _ in range(2):
+            reloj.t += 5
+            m.comprobar()
         r = estado["llm"].create_chat_completion(messages=[{"role": "user", "content": "di hola"}], max_tokens=5)
         filas.append({"ciclo": ciclo + 1, "descargar_s": m.tiempos[-2]["segundos"], "cargar_s": m.tiempos[-1]["segundos"],
                       "vram_con_modelo_mb": cargada, "vram_en_juego_mb": descargada, "vram_tras_recargar_mb": vram_mb(),

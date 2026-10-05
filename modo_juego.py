@@ -1,7 +1,9 @@
 """
-Modo juego: con un juego abierto el agente libera la VRAM descargando Gemma (con el mmproj de visión) y Whisper, y
-los recarga al cerrarlo. Detecta el juego con las mismas reglas de la Fase 6 (deteccion.Vigilante.juego_abierto):
-categoría 'juegos' o carpeta de juegos, sin lanzadores (Steam, Epic...) ni Wallpaper Engine.
+Modo juego: con un juego ACTIVO el agente libera la VRAM descargando Gemma (con el mmproj de visión) y Whisper, y
+los recarga cuando termina. Usa deteccion.DetectorJuegos (el mismo que la reflexión): un juego cuenta si tiene una
+ventana visible o usa la GPU de forma sostenida, y termina tras 2 min sin esas señales; un juego en la bandeja (Roblox
+al cerrarlo) no cuenta. Sin lanzadores (Steam, Epic...) ni Wallpaper Engine. "estoy jugando" / "ya terminé" lo
+fuerzan (estoy_jugando / ya_termine), sin esperar las comprobaciones.
 
   - Para entrar hacen falta 'confirmar' comprobaciones seguidas con juego (cada intervalo_s); para salir, otras tantas
     sin juego: así un juego que se reinicia o un lanzador que abre y cierra procesos no provocan recargas seguidas.
@@ -77,9 +79,28 @@ class ModoJuego:
 
     def _nombre(self, ruta):
         try:
-            return self.vigilante.clasificador.info(ruta)["nombre"]
+            return self.vigilante.detector.nombre(ruta)
         except Exception:
             return ruta.replace("\\", "/").rsplit("/", 1)[-1]
+
+    # ----- comandos de Reizo -----
+
+    def estoy_jugando(self):
+        """Fuerza la pausa ahora (descarga sin esperar las comprobaciones). Devuelve la respuesta para Reizo."""
+        self.vigilante.detector.estoy_jugando()
+        if self.estado == NORMAL:
+            self._entrar(self._nombre(self.vigilante.juego_abierto()))
+        return "Vale, libero la GPU para que juegues. Dime \"ya terminé\" cuando acabes."
+
+    def ya_termine(self):
+        """Da por terminados los juegos activos y recarga ya (tarda unos segundos)."""
+        self.vigilante.detector.ya_termine()
+        if self.estado == JUEGO and not self.vigilante.juego_abierto():
+            self._salir()
+            return "Listo, ya volví. ¿En qué te ayudo?"
+        if self.estado == JUEGO:  # sigue habiendo otro juego activo
+            return self.mensaje()
+        return "No estaba en pausa; sigo aquí."
 
     def _entrar(self, juego):
         self.parar_reflexion()

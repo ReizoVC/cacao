@@ -8,11 +8,20 @@ Audio según la categoría de la app que suena: 'música' no bloquea; el navegad
 cualquier otra ('video', llamadas de 'comunicación', desconocidas) sí. El audio del propio agente (Piper) no cuenta.
 
 Durante la reflexión, Guardia comprueba cada vigilancia_ms (los procesos, cada 2 s) y avisa del primer motivo para
-parar: cualquier entrada nueva, pantalla completa, un juego que se abre o audio que empieza.
+parar: cualquier entrada nueva, pantalla completa, un juego que se activa o audio que empieza.
+
+Juego ACTIVO (DetectorJuegos; lo usan la reflexión, el modo juego y guardia_juego): que el proceso exista no basta,
+porque juegos y lanzadores como Roblox se quedan en la bandeja al cerrarlos. Un proceso de juego (categoría 'juegos'
+o carpeta de juegos, sin lanzadores ni Wallpaper Engine) cuenta como activo si tiene una ventana visible (no
+minimizada ni oculta) o usa la GPU de forma sostenida (contadores "GPU Engine" de Windows por proceso, motor 3D).
+Se da por terminado tras gracia_s (2 min) sin ninguna de las dos señales: un juego minimizado un momento sigue activo.
+"estoy jugando" / "ya terminé" lo fuerzan a mano.
 SistemaWindows hace las consultas reales (todas de solo lectura); las pruebas usan un sistema falso.
 """
+import collections
 import ctypes
 import os
+import re
 import subprocess
 import threading
 import time
@@ -60,11 +69,55 @@ class SistemaWindows:
         return r.left <= m.left and r.top <= m.top and r.right >= m.right and r.bottom >= m.bottom
 
     def ejecutables(self):
+        return [ruta for _, ruta in self.procesos()]
+
+    def procesos(self):
+        """[(pid, ruta del ejecutable o nombre)]."""
         import psutil
-        rutas = []
-        for p in psutil.process_iter(["exe", "name"]):
-            rutas.append(p.info["exe"] or p.info["name"] or "")
-        return rutas
+        return [(p.info["pid"], p.info["exe"] or p.info["name"] or "")
+                for p in psutil.process_iter(["pid", "exe", "name"])]
+
+    def pids_con_ventana(self):
+        """pids con alguna ventana principal visible: no minimizada, no oculta (cloaked) y de tamaño real."""
+        pids = set()
+        dwmapi = ctypes.windll.dwmapi
+
+        def revisar(hwnd, _):
+            if user32.IsWindowVisible(hwnd) and not user32.IsIconic(hwnd) and not user32.GetWindow(hwnd, 4):
+                oculta = ctypes.c_int(0)
+                dwmapi.DwmGetWindowAttribute(hwnd, 14, ctypes.byref(oculta), ctypes.sizeof(oculta))
+                r = wintypes.RECT()
+                user32.GetWindowRect(hwnd, ctypes.byref(r))
+                if not oculta.value and r.right - r.left >= 200 and r.bottom - r.top >= 150:
+                    pid = wintypes.DWORD()
+                    user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
+                    pids.add(pid.value)
+            return True
+
+        user32.EnumWindows(ctypes.WINFUNCTYPE(wintypes.BOOL, wintypes.HWND, wintypes.LPARAM)(revisar), 0)
+        return pids
+
+    def gpu_por_pid(self):
+        """{pid: % de uso del motor 3D de la GPU} desde la medición anterior (contadores de rendimiento)."""
+        import win32pdh
+        if not hasattr(self, "_pdh"):
+            consulta = win32pdh.OpenQuery()
+            contador = win32pdh.AddEnglishCounter(consulta, r"\GPU Engine(*)\Utilization Percentage")
+            win32pdh.CollectQueryData(consulta)
+            self._pdh = (consulta, contador)
+            return {}  # los contadores de uso necesitan dos mediciones
+        consulta, contador = self._pdh
+        win32pdh.CollectQueryData(consulta)
+        uso = collections.defaultdict(float)
+        try:
+            valores = win32pdh.GetFormattedCounterArray(contador, win32pdh.PDH_FMT_DOUBLE)
+        except Exception:  # instancias que desaparecen entre mediciones
+            return {}
+        for instancia, valor in valores.items():
+            m = re.match(r"pid_(\d+)_.*engtype_(3D|Compute)", instancia)
+            if m:
+                uso[int(m.group(1))] += valor
+        return dict(uso)
 
     def audio(self):
         """[(exe_ruta, aumid, pico)] de las sesiones de audio activas de otros procesos."""
@@ -98,17 +151,95 @@ class SistemaWindows:
             return None
 
 
+class DetectorJuegos:
+    """Qué juego está ACTIVO (ventana visible o GPU sostenida), con gracia_s de margen tras la última señal.
+    Muestrea solo cuando se le pregunta y han pasado muestreo_s desde la última vez (no necesita hilo)."""
+
+    def __init__(self, sistema, clasificador, config=None, reloj=time.monotonic):
+        c = {"gracia_s": 120, "muestreo_s": 5, "gpu_umbral_pct": 5, "gpu_ventana_s": 30, "gpu_fraccion": 0.6,
+             **(config or {})}
+        self.sistema, self.clasificador, self.reloj = sistema, clasificador, reloj
+        self.gracia, self.muestreo = c["gracia_s"], c["muestreo_s"]
+        self.gpu_umbral, self.gpu_ventana, self.gpu_fraccion = c["gpu_umbral_pct"], c["gpu_ventana_s"], c["gpu_fraccion"]
+        self.forzado = False          # "estoy jugando"
+        self._ignorar = set()         # pids que Reizo dio por terminados ("ya terminé") mientras sigan vivos
+        self._senal = {}              # pid -> última vez con ventana visible o GPU sostenida
+        self._exe = {}                # pid -> ruta
+        self._gpu = collections.defaultdict(collections.deque)  # pid -> [(t, %)]
+        self._ultimo = None
+        self._cerrojo = threading.Lock()
+
+    def muestrear(self):
+        with self._cerrojo:
+            ahora = self.reloj()
+            self._ultimo = ahora
+            juegos = {pid: ruta for pid, ruta in self.sistema.procesos() if self.clasificador.es_juego(ruta)}
+            ventanas = self.sistema.pids_con_ventana() if juegos else set()
+            gpu = self.sistema.gpu_por_pid()
+            self._ignorar &= set(juegos)  # un pid ignorado que se cerró ya no hace falta recordarlo
+            for pid in list(self._gpu):
+                if pid not in juegos:
+                    del self._gpu[pid]
+            for pid, ruta in juegos.items():
+                historial = self._gpu[pid]
+                historial.append((ahora, gpu.get(pid, 0.0)))
+                while historial and ahora - historial[0][0] > self.gpu_ventana:
+                    historial.popleft()
+                if pid in ventanas or self._gpu_sostenida(historial):
+                    self._senal[pid] = ahora
+                    self._exe[pid] = ruta
+
+    def _gpu_sostenida(self, historial):
+        # al menos la mitad de la ventana medida y una fracción de las muestras por encima del umbral
+        if len(historial) < 3 or historial[-1][0] - historial[0][0] < self.gpu_ventana / 2:
+            return False
+        altos = sum(1 for _, uso in historial if uso >= self.gpu_umbral)
+        return altos / len(historial) >= self.gpu_fraccion
+
+    def _vigentes(self):
+        ahora = self.reloj()
+        return {pid: t for pid, t in self._senal.items() if ahora - t <= self.gracia and pid not in self._ignorar}
+
+    def activo(self):
+        """Ruta del juego activo, "estoy jugando" si se forzó a mano, o None."""
+        if self._ultimo is None or self.reloj() - self._ultimo >= self.muestreo:
+            self.muestrear()
+        if self.forzado:
+            return "estoy jugando"
+        vigentes = self._vigentes()
+        return self._exe[max(vigentes, key=vigentes.get)] if vigentes else None
+
+    def nombre(self, ruta):
+        if ruta == "estoy jugando":
+            return "un juego (me dijiste que estás jugando)"
+        return self.clasificador.info(ruta)["nombre"]
+
+    def estoy_jugando(self):
+        self.forzado = True
+
+    def ya_termine(self):
+        """Quita el modo forzado y da por terminados los juegos activos ahora (hasta que se cierren y vuelvan)."""
+        with self._cerrojo:
+            self.forzado = False
+            self._ignorar |= set(self._vigentes())
+            for pid in list(self._senal):
+                if pid in self._ignorar:
+                    del self._senal[pid]
+
+
 class Vigilante:
-    def __init__(self, sistema, clasificador, config, reloj=time.monotonic, dormir=time.sleep):
+    def __init__(self, sistema, clasificador, config, reloj=time.monotonic, dormir=time.sleep, detector=None):
         self.sistema, self.clasificador = sistema, clasificador
         self.c = config["reflexion"]
         self.reloj, self.dormir = reloj, dormir
+        self.detector = detector or DetectorJuegos(sistema, clasificador, config.get("juegos"), reloj=reloj)
         self._sonando = {}  # app -> (primera vez, última vez) que se oyó por encima del umbral
 
     # ----- comprobaciones sueltas -----
 
     def juego_abierto(self):
-        return next((r for r in self.sistema.ejecutables() if self.clasificador.es_juego(r)), None)
+        """Ruta del juego ACTIVO (ventana visible o GPU sostenida, con 2 min de margen) o None."""
+        return self.detector.activo()
 
     def audio_que_bloquea(self):
         """Nombre de la app cuyo audio bloquea (sonando ≥ audio_min_s), o None. Hay que llamarla seguido

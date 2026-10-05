@@ -196,7 +196,7 @@ Formato: **ID**, requisito ("debe"), **criterio verificable** y estado.
 | ID | Requisito | Criterio | Estado |
 |---|---|---|---|
 | RF-50 | El atajo `ctrl+alt+shift+q` debe cortar la tarea en curso y dejar el agente detenido hasta "reanudar" | Corte y rechazo de tareas hasta reanudar | Verificado (real) (`resultados_fase5.md` §3) |
-| RF-51 | Con un juego abierto (sin lanzadores ni Wallpaper Engine) debe descargar Gemma, la visión y Whisper, y recargarlos al cerrarlo; un pedido en pausa recibe un aviso | Lógica 11/11; tiempos en §4.1. La detección reconoció un juego real abierto (Roblox: `RobloxPlayerBeta.exe` y `RobloxCrashHandler.exe`) | Verificado (simulación y detección real). Ciclo completo en real: Pendiente |
+| RF-51 | Con un juego ACTIVO (ventana visible o GPU sostenida; termina tras 2 min sin señales; sin lanzadores, Wallpaper Engine ni Game Bar) debe descargar Gemma, la visión y Whisper, y recargarlos al terminar; "estoy jugando" / "ya terminé" lo fuerzan; un pedido en pausa recibe un aviso | Lógica 11/11; tiempos en §4.1. La detección reconoció un juego real abierto (Roblox: `RobloxPlayerBeta.exe` y `RobloxCrashHandler.exe`) | Verificado (simulación y detección real). Ciclo completo en real: Pendiente |
 
 ---
 
@@ -335,7 +335,7 @@ estos últimos solo para detectar actividad.
 |---|---|---|---|---|
 | R-01 | Inyección de instrucciones desde archivos, web, pantalla o títulos | Media / alto | Confirmación de acciones, bloqueos, tarea contaminada (RS-07), la wiki excluye `fuentes/` | Revisar con contenido real |
 | R-02 | El modelo elige mal o da pasos de más (p. ej. frase 58) | Baja / medio | Set de 65 frases con 3 semillas por cada cambio | Seguir midiendo tras cada cambio de prompt |
-| R-03 | VRAM insuficiente con juegos u otras apps | Media / alto | Modo juego (RF-51): libera ~11,7 GB (Gemma + visión) + ~1 GB (Whisper); quedan 2,6 GB libres en el pico con voz | Probar el ciclo en real. Comprobar que `RobloxCrashHandler.exe` no se queda abierto tras cerrar Roblox: si se queda, mantendría la pausa |
+| R-03 | VRAM insuficiente con juegos u otras apps | Media / alto | Modo juego (RF-51): libera ~11,7 GB (Gemma + visión) + ~1 GB (Whisper); quedan 2,6 GB libres en el pico con voz | Probar el ciclo en real. Resuelto: un juego en la bandeja (Roblox al cerrarlo) ya no cuenta, comprobado en real (solo lectura) |
 | R-04 | El sistema se queda sin memoria comprometida (~16,2 GB con voz); Claude Code cortó procesos | Media / medio | `use_mmap` false; lanzar `voz.py` desde una terminal propia | — |
 | R-05 | Error de CUDA intermitente (una vez al arrancar `voz.py`) | Baja / medio | Registro en `errores_llama.log` | Reproducir si vuelve |
 | R-06 | Actualizar llama-cpp-python rompe `LlamaRapida` (método interno) | Media / alto | `requirements.txt` fija 0.3.36; `modo_gramatica: null` como vuelta atrás | Volver a medir al actualizar |
