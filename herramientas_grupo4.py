@@ -21,8 +21,8 @@ import win32gui
 import win32process
 
 import vision
-from herramientas_grupo1 import (ALIAS, CARPETAS_PERMITIDAS, _normalizar, es_sensible, es_titulo_sensible,
-                                 listar_ventanas, resolver_ruta)
+from herramientas_grupo1 import (ALIAS, CARPETAS_PERMITIDAS, PROCESOS_OCULTOS, _normalizar, es_de_la_isla,
+                                 es_sensible, es_titulo_sensible, listar_ventanas, resolver_ruta)
 
 user32 = ctypes.windll.user32
 shcore = ctypes.windll.shcore
@@ -35,6 +35,22 @@ except (AttributeError, OSError):
 
 # el agente la reemplaza por Emergencia.comprobar: las herramientas largas la llaman para poder cortarse
 comprobar_emergencia = lambda: None  # noqa: E731
+
+
+def _zonas_isla_por_defecto():
+    """Ventanas de la isla (rectángulo entero). El agente la cambia por ServidorIsla.zonas_isla, que sabe la forma
+    exacta de la isla."""
+    import ui_isla
+    return [ui_isla.rect_ventana(h) for h in ui_isla.ventanas_isla()]
+
+
+# Fase 7: la herramienta mouse nunca hace clic dentro de la isla (ahí están los botones de confirmar)
+zonas_isla = _zonas_isla_por_defecto
+
+
+def _en_la_isla(punto):
+    x, y = punto
+    return any(izq <= x < der and arr <= y < aba for izq, arr, der, aba in zonas_isla())
 
 
 def _bloqueado(motivo):
@@ -74,6 +90,15 @@ def planificar_cierre(proceso=None, pid=None, id_ventana=None):
     (None, error). Si coincide más de una ventana devuelve la lista para elegir por id_ventana: varias ventanas
     pueden ser del mismo proceso (el Bloc de notas de Windows 11 usa uno para todas) y cerrarlas juntas cerraría
     también las que Reizo no pidió."""
+    try:
+        nombre_pid = psutil.Process(pid).name().lower() if pid is not None else ""
+    except psutil.Error:
+        nombre_pid = ""
+    if (nombre_pid in PROCESOS_OCULTOS or (proceso and _normalizar(proceso).removesuffix(".exe") + ".exe"
+                                            in PROCESOS_OCULTOS) or (id_ventana is not None
+                                                                     and win32gui.IsWindow(id_ventana)
+                                                                     and es_de_la_isla(id_ventana))):
+        return _bloqueado("Esa es la isla del asistente: no la cierro.")
     ventanas = listar_ventanas()
     if id_ventana is not None:
         objetivo = [v for v in ventanas if v["id_ventana"] == id_ventana]
@@ -254,6 +279,8 @@ def _ventana_uia(id_ventana):
         return None, _error("Esa ventana ya no existe; vuelve a usar listar_ventanas.")[1]
     if es_titulo_sensible(win32gui.GetWindowText(id_ventana)):
         return None, _bloqueado("Esa ventana parece tener contraseñas o claves; no la inspecciono.")[1]
+    if es_de_la_isla(id_ventana):
+        return None, _bloqueado("Esa es la isla del asistente: no la inspecciono.")[1]
     return Desktop(backend="uia").window(handle=id_ventana), None
 
 
@@ -359,6 +386,8 @@ def planificar_mouse(accion, x=None, y=None, cantidad=None, captura=None, ahora=
     if control:
         # por nombre (UI Automation): el centro del control ya está en píxeles de la pantalla real
         hwnd = id_ventana or win32gui.GetForegroundWindow()
+        if es_de_la_isla(hwnd):
+            return _bloqueado("Esa es la isla del asistente: no hago clic en ella.")
         encontrado, error = buscar_control(hwnd, control)
         if error:
             return None, error
@@ -373,6 +402,8 @@ def planificar_mouse(accion, x=None, y=None, cantidad=None, captura=None, ahora=
         if not (0 <= x < captura["ancho"] and 0 <= y < captura["alto"]):
             return _error(f"({x}, {y}) está fuera de la captura de {captura['ancho']}x{captura['alto']}.")
         plan["pantalla"] = a_pantalla(x, y, captura)
+    if plan["pantalla"] and _en_la_isla(plan["pantalla"]):
+        return _bloqueado("Esa posición es la isla del asistente (sus botones confirman acciones): no hago clic ahí.")
     if accion == "desplazar":
         if not cantidad:
             return _error("Para desplazar indica 'cantidad' (positivo arriba, negativo abajo).")

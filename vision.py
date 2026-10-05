@@ -138,6 +138,29 @@ def tapar_sensibles(imagen, zona, ventanas, hwnd_capturada=None):
     return tapadas
 
 
+def _zonas_isla_por_defecto():
+    import ui_isla
+    return [ui_isla.rect_ventana(h) for h in ui_isla.ventanas_isla()]
+
+
+# Fase 7: la isla se tapa en negro en toda captura (además de que Windows la excluya con WDA_EXCLUDEFROMCAPTURE);
+# sin aviso, para que el modelo ni sepa que está ahí. El agente la cambia por ServidorIsla.zonas_isla.
+zonas_isla = _zonas_isla_por_defecto
+
+
+def tapar_isla(imagen, zona):
+    d = ImageDraw.Draw(imagen)
+    tapadas = 0
+    for izq, arr, der, aba in zonas_isla():
+        x0, y0 = max(izq, zona["left"]) - zona["left"], max(arr, zona["top"]) - zona["top"]
+        x1 = min(der, zona["left"] + zona["width"]) - zona["left"]
+        y1 = min(aba, zona["top"] + zona["height"]) - zona["top"]
+        if x1 > x0 and y1 > y0:
+            d.rectangle([x0, y0, x1, y1], fill=(0, 0, 0))
+            tapadas += 1
+    return tapadas
+
+
 def capturar(region="ventana_activa", cuadricula=False):
     """Devuelve (data_url JPEG, info). info lleva el tamaño enviado y cómo pasar a coordenadas de pantalla:
     las de mss son píxeles físicos, porque mss pone el proceso en modo DPI-aware."""
@@ -156,6 +179,7 @@ def capturar(region="ventana_activa", cuadricula=False):
         toma = sct.grab(zona)
     imagen = Image.frombytes("RGB", toma.size, toma.bgra, "raw", "BGRX")
     tapadas = tapar_sensibles(imagen, zona, ventanas_visibles(), hwnd)
+    tapar_isla(imagen, zona)
     escala = min(1.0, LADO_MAXIMO / max(imagen.size))
     if escala < 1.0:
         imagen = imagen.resize((round(imagen.width * escala), round(imagen.height * escala)), Image.LANCZOS)

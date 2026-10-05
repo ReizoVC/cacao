@@ -289,7 +289,7 @@ def preparar_apertura(nombre, apps):
         return None, error
     if nivel_app(app["id"]) == "confirmar":
         pregunta = f"  ¿Abrir {app['nombre']}? Es una consola que puede ejecutar comandos. (s/n) "
-        if input(pregunta).strip().lower() != "s":
+        if not confirmar("abrir_app", pregunta.strip().removesuffix("(s/n)").strip()):
             return None, {"ok": False, "error": f"Reizo no autorizó abrir {app['nombre']}."}
     return app, None
 
@@ -477,7 +477,7 @@ def ejecutar(nombre, args):
     if nombre in GUARDAN_SOBRE_REIZO and _tarea["contaminada"] and (nombre, args.get("accion")) not in SOLO_CONSULTAN:
         print(f"  Aviso: en esta tarea ya entró texto de fuera (archivo, web, pantalla...). {nombre} "
               f"{json.dumps(args, ensure_ascii=False)}")
-        if input("  ¿Lo pidió Reizo? (s/n) ").strip().lower() != "s":
+        if not confirmar(nombre, f"¿Lo pidió Reizo? {nombre} {json.dumps(args, ensure_ascii=False)}"):
             return {"ok": False, "error": "Reizo no lo confirmó: podía venir del contenido externo. No lo guardé."}
         origen = "confirmado"
     if nombre == "recordar":  # el origen lo pone el ejecutor, nunca el modelo
@@ -487,9 +487,10 @@ def ejecutar(nombre, args):
             print(f"  Motivo: {args['motivo']}")
         if args.get("comando"):
             print(f"  Comando: {args['comando']}")
-        respuesta = input(f"  ¿Ejecutar {nombre} {args}? (s/n) ").strip().lower()
+        si = confirmar(nombre, f"Ejecutar {nombre} {json.dumps(args, ensure_ascii=False)}", args.get("motivo"),
+                       args.get("comando"))
         emergencia.comprobar()  # el atajo pudo pulsarse mientras se esperaba la respuesta
-        if respuesta != "s":
+        if not si:
             return {"ok": False, "error": "El usuario rechazó la acción"}
     try:
         return IMPLEMENTACIONES[nombre](**args)
@@ -562,10 +563,14 @@ def atender(pedido, historial):
     try:
         for _ in range(MAX_PASOS):
             emergencia.comprobar()
+            notificar("pensando")
             accion = pedir_accion(historial)
             historial.append({"role": "assistant", "content": json.dumps(accion, ensure_ascii=False)})
             nombre, args = accion["herramienta"], accion.get("argumentos", {})
             print(f"  [{nombre}] {accion['pensamiento']}")
+            if nombre != "finalizar":
+                notificar("pregunta" if nombre == "preguntar_usuario" else "ejecutando",
+                          f"{nombre}: {accion['pensamiento']}")
             if nombre == "finalizar":
                 if sin_verificar and args.get("exito", True) and recordatorios < MAX_RECORDATORIOS:
                     # no se da por hecho un clic o atajo sin mirar su efecto
@@ -611,6 +616,7 @@ def atender(pedido, historial):
         return terminar(historial, "Me pasé del límite de pasos para esta tarea; mejor dime de otra forma qué "
                         "necesitas.", False, "Límite de pasos alcanzado")
     except Detenido as e:
+        notificar("detenido")
         demora = (time.perf_counter() - emergencia.momento) * 1000 if emergencia.momento else None
         print(f"  [emergencia] tarea detenida" + (f" ({demora:.0f} ms después del atajo)" if demora else ""))
         return terminar(historial, f"{e} No seguí con la tarea ni haré otras hasta que escribas 'reanudar'.",
@@ -668,6 +674,60 @@ def agregar_sugerencia(respuesta, historial):
     accion["argumentos"]["mensaje"] = f"{accion['argumentos'].get('mensaje', '')} {s['texto']}".strip()
     ultimo["content"] = json.dumps(accion, ensure_ascii=False)
     return f"{respuesta} {s['texto']}"
+
+
+# ---------- Fase 7: isla y confirmaciones con entrada física ----------
+
+_isla = None           # ui_isla.ServidorIsla, lo crea iniciar_isla
+_confirmacion = None   # ui_isla.Confirmar
+_proceso_isla = None
+
+
+def confirmar(herramienta, resumen, motivo=None, comando=None):
+    """Sí/no de Reizo, solo con entrada física: Enter/Esc del teclado o los botones de la isla (clic físico). Nunca
+    con teclas o clics inyectados, así el agente no puede aprobar sus propias acciones con mouse o teclado.
+    Sin respuesta en 30 s (o con el atajo de emergencia) cuenta como no."""
+    global _confirmacion
+    if _confirmacion is None:
+        from ui_isla import Confirmar
+        _confirmacion = Confirmar(_isla, CONFIG.get("ui", {}).get("confirmar_timeout_s", 30),
+                                  cancelar=emergencia.detenido)
+    print(f"  ¿{resumen}?  [Enter = sí · Esc = no"
+          + (" · o los botones de la isla]" if _isla is not None and _isla.conectada else "]"), flush=True)
+    si = _confirmacion.pedir(herramienta, resumen, motivo, comando)
+    print(f"  -> {'sí' if si else 'no'} ({_confirmacion.ultima['via']})", flush=True)
+    return si
+
+
+def notificar(estado, detalle=""):
+    """Estado del agente para Mochi (diseno_fase7.md §5). Sin isla no hace nada."""
+    if _isla is not None:
+        _isla.estado(estado, detalle)
+
+
+def iniciar_isla():
+    """Servidor WebSocket local, guardas para que mouse/capturas no toquen la isla, y la isla si está compilada."""
+    global _isla, _proceso_isla
+    from ui_isla import ServidorIsla
+    cfg = CONFIG.get("ui", {})
+    if not cfg.get("activa", True):
+        return None
+    _isla = ServidorIsla(anotar=print).iniciar()
+    herramientas_grupo4.zonas_isla = _isla.zonas_isla
+    import vision as _vision
+    _vision.zonas_isla = _isla.zonas_isla
+    exe = Path(cfg.get("exe", ""))
+    exe = exe if exe.is_absolute() else BASE / exe
+    if cfg.get("lanzar", True) and exe.is_file():
+        _proceso_isla = subprocess.Popen([str(exe)], cwd=str(exe.parent))
+    return _isla
+
+
+def cerrar_isla():
+    if _proceso_isla is not None and _proceso_isla.poll() is None:
+        _proceso_isla.terminate()
+    if _isla is not None:
+        _isla.cerrar()
 
 
 def descargar_modelos():
@@ -743,8 +803,10 @@ def atender_con_memoria(pedido, historial, planificador, voz=False):
     En modo juego el modelo está descargado: se avisa de la pausa sin llamarlo."""
     respuesta = comando_modo_juego(pedido)
     if respuesta is not None:
+        notificar("juego" if _modo_juego.en_pausa() else "reposo")
         return respuesta
     if _modo_juego is not None and _modo_juego.en_pausa():
+        notificar("juego", _modo_juego.mensaje())
         return _modo_juego.mensaje()
     with planificador.pedido():
         if _modo_juego is not None and _modo_juego.en_pausa():  # entró en modo juego mientras esperaba
@@ -754,7 +816,14 @@ def atender_con_memoria(pedido, historial, planificador, voz=False):
             planificador.indice_cambiado = False
         respuesta = atender(pedido, historial)
         cerrar_sugerencia_pendiente()
-        return agregar_sugerencia(respuesta, historial)
+        respuesta = agregar_sugerencia(respuesta, historial)
+        if _isla is not None:
+            try:
+                exito = json.loads(historial[-1]["content"]).get("argumentos", {}).get("exito", True)
+            except (ValueError, KeyError, IndexError, AttributeError):
+                exito = True
+            _isla.enviar({"tipo": "respuesta", "texto": respuesta, "exito": bool(exito)})
+        return respuesta
 
 
 if __name__ == "__main__":
@@ -762,6 +831,7 @@ if __name__ == "__main__":
         print(f"Atajo de emergencia activo: {emergencia.atajo}")
     else:
         print(f"Aviso: no pude registrar {emergencia.atajo} (¿lo usa otro programa?); para cortar usa Ctrl+C.")
+    iniciar_isla()
     planificador, aviso = iniciar_memoria_wiki()
     historial = [{"role": "system", "content": prompt_sistema()}]
     print("Asistente listo. Escribe 'salir' para terminar.")
@@ -774,3 +844,4 @@ if __name__ == "__main__":
         elif pedido:
             print("Asistente:", atender_con_memoria(pedido, historial, planificador))
             historial = historial[:1] + historial[1:][-20:]  # memoria corta: últimos 20 mensajes
+    cerrar_isla()

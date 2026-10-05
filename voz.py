@@ -31,7 +31,7 @@ import sounddevice as sd
 from piper import PiperVoice, SynthesisConfig
 
 import agente_minimo as a
-from microfono import TASA, AtajoHablar, Microfono, analizar_audio, confirmar_teclado
+from microfono import TASA, AtajoHablar, Microfono, analizar_audio
 from transcripcion import TranscriptorNativo, TranscriptorWhisper, a_wav, contar_palabras, transcripcion_plausible
 
 BASE = Path(__file__).parent
@@ -107,14 +107,18 @@ class Locutor:
 comando_actual = {}  # registro del comando en curso: aquí se anotan las confirmaciones
 
 
-def pedir_confirmacion(descripcion):
-    print(f"  ¿{descripcion}?  [Enter = sí · Esc = no]", flush=True)
+def pedir_confirmacion(descripcion, herramienta="accion", motivo=None, comando=None):
+    """Enter/Esc o botones de la isla, solo con entrada física (agente_minimo.confirmar)."""
     winsound.MessageBeep(winsound.MB_ICONQUESTION)  # aviso sonoro corto: la pregunta no se lee en voz alta
-    respuesta = confirmar_teclado(CONFIG_VOZ["confirmar_timeout_s"], cancelar=a.emergencia.detenido)
-    print(f"  -> {'sí' if respuesta else 'no' if respuesta is False else 'sin respuesta: no'}", flush=True)
-    comando_actual.setdefault("confirmaciones", []).append({"accion": descripcion, "respuesta": respuesta})
+    respuesta = _confirmar_base(herramienta, descripcion, motivo, comando)
+    ultima = getattr(a._confirmacion, "ultima", None) or {}
+    comando_actual.setdefault("confirmaciones", []).append(
+        {"accion": descripcion, "respuesta": respuesta, "via": ultima.get("via")})
     a.emergencia.comprobar()  # el atajo de emergencia pudo pulsarse mientras se esperaba
-    return bool(respuesta)
+    return respuesta
+
+
+_confirmar_base = a.confirmar
 
 
 _ejecutar = a.ejecutar
@@ -123,14 +127,15 @@ _ejecutar = a.ejecutar
 def ejecutar_voz(nombre, args):
     """Solo lectura: directo. Permiso 'confirmar': lo pregunta ejecutar() con input (= teclado). El resto, aquí."""
     if nombre not in SOLO_LECTURA and a.HERRAMIENTAS[nombre]["permiso"] != "confirmar":
-        if not pedir_confirmacion(f"Ejecutar {nombre} {json.dumps(args, ensure_ascii=False)}"):
+        if not pedir_confirmacion(f"Ejecutar {nombre} {json.dumps(args, ensure_ascii=False)}", nombre):
             return {"ok": False, "error": "Reizo no lo autorizó (Esc o sin respuesta)."}
     return _ejecutar(nombre, args)
 
 
 def activar_confirmaciones():
     a.ejecutar = ejecutar_voz
-    a.input = lambda pregunta="": "s" if pedir_confirmacion(pregunta.strip().rstrip("(s/n)").strip()) else "n"
+    a.confirmar = lambda herramienta, resumen, motivo=None, comando=None: pedir_confirmacion(
+        resumen, herramienta, motivo, comando)
 
 
 # ---------- registro ----------
@@ -164,6 +169,7 @@ def preparar():
     transcriptor = crear_transcriptor()
     ruta_voz = Path(CONFIG_VOZ["piper_voz"])
     locutor = Locutor(ruta_voz if ruta_voz.is_absolute() else BASE / ruta_voz, CONFIG_VOZ["velocidad"])
+    a.iniciar_isla()
     planificador, aviso = a.iniciar_memoria_wiki()
     if hasattr(transcriptor, "descargar"):  # el modo juego también libera Whisper
         a.EXTRAS_MODO_JUEGO.append((transcriptor.descargar, transcriptor.cargar))
@@ -320,6 +326,7 @@ def bucle(medir=0):
                 break
     atajo.cerrar()
     microfono.cerrar()
+    a.cerrar_isla()
     transcriptor.cerrar()
 
 

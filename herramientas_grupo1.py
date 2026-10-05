@@ -42,6 +42,16 @@ BINARIOS = {".pdf", ".docx", ".xlsx", ".pptx", ".doc", ".xls", ".ppt", ".zip", "
 
 # ---------- Ventanas ----------
 
+PROCESOS_OCULTOS = {"asistente-ui.exe"}  # la isla (Fase 7): el agente no la ve ni la toca
+
+
+def es_de_la_isla(hwnd):
+    _, pid = win32process.GetWindowThreadProcessId(hwnd)
+    try:
+        return psutil.Process(pid).name().lower() in PROCESOS_OCULTOS
+    except psutil.Error:
+        return False
+
 def _oculta_por_dwm(hwnd):
     # ventanas "cloaked": apps de la Tienda suspendidas u otros escritorios virtuales
     valor = ctypes.c_int(0)
@@ -64,7 +74,7 @@ def listar_ventanas():
     ventanas = []
 
     def agregar(hwnd, _):
-        if _es_ventana_de_usuario(hwnd):
+        if _es_ventana_de_usuario(hwnd) and not es_de_la_isla(hwnd):
             _, pid = win32process.GetWindowThreadProcessId(hwnd)
             try:
                 proceso = psutil.Process(pid).name()
@@ -81,6 +91,8 @@ def listar_ventanas():
 def enfocar_ventana(id_ventana: int):
     if not win32gui.IsWindow(id_ventana):
         return {"ok": False, "error": "Esa ventana ya no existe; vuelve a usar listar_ventanas."}
+    if es_de_la_isla(id_ventana):
+        return {"ok": False, "bloqueado": True, "error": "Esa es la isla del asistente: no la toco."}
     if win32gui.IsIconic(id_ventana):
         win32gui.ShowWindow(id_ventana, win32con.SW_RESTORE)
     # Windows solo deja traer al frente desde el hilo que tiene el foco: se enlazan las colas de entrada un momento
