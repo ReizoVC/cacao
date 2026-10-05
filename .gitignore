@@ -12,6 +12,9 @@ apps_categorias.json
 resultados_*.json
 resultados_*.md
 
-# Archivos temporales de las pruebas
+# Archivos temporales de las pruebas y registros de voz (audio de Reizo)
 REANUDAR
 *.wav
+voz_pruebas/
+voz_registro/
+errores_llama.log

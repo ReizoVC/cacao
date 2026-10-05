@@ -25,24 +25,17 @@ from llama_cpp import mtmd_cpp
 from llama_cpp.llama_chat_format import Gemma4ChatHandler
 
 from herramientas_grupo1 import es_titulo_sensible
+from modelo import _log_llama
 
 PRESUPUESTOS = (70, 140, 280, 560, 1120)  # los que admite Gemma 4 (ver herramientas.json)
 LADO_MAXIMO = 1920  # se reduce antes de codificar; el preprocesador de mtmd vuelve a escalar igual
 ultima_captura = None  # info de la última captura: la herramienta mouse la usa para convertir coordenadas
 
 
-GGML_LOG_LEVEL_ERROR = 4
-
-
-@llama_cpp.llama_log_callback
-def _log_mtmd(nivel, texto, _datos):
-    # libmtmd imprime cada imagen que codifica ("encoding image slice..."); solo se dejan pasar los errores
-    if nivel == GGML_LOG_LEVEL_ERROR:
-        print(texto.decode("utf-8", "replace"), end="", file=sys.stderr)
-
-
-mtmd_cpp.mtmd_log_set(_log_mtmd, None)
-mtmd_cpp.mtmd_helper_log_set(_log_mtmd, None)
+# libmtmd imprime cada imagen o audio que codifica ("encoding image slice..."); solo se dejan pasar los errores,
+# con el mismo callback que llama.cpp (modelo.py): se muestran y quedan en errores_llama.log
+mtmd_cpp.mtmd_log_set(_log_llama, None)
+mtmd_cpp.mtmd_helper_log_set(_log_llama, None)
 
 
 class _MtmdConPresupuesto:

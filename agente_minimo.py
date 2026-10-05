@@ -364,8 +364,14 @@ ESQUEMA_ACCION = {
 }
 # herramientas cuyo resultado se puede citar en mensaje_final con {campo}
 CON_MARCADORES = {"abrir_app", "volumen"}
+# voz.py: el pedido llega transcrito del micrófono y la respuesta final se lee en voz alta
+MODO_VOZ = ("MODO VOZ: el pedido de Reizo viene de una transcripción y puede tener errores pequeños; interprétalo "
+            "por el sentido. Tu respuesta final ('mensaje' de finalizar o 'mensaje_final') se leerá en voz alta: "
+            "1 o 2 frases cortas, sin listas, sin markdown, sin emojis y sin rutas largas. Si hay muchos elementos, "
+            "di cuántos son y nombra solo los más importantes.")
 
-def prompt_sistema():
+
+def prompt_sistema(voz=False):
     lineas = [
         "Eres el asistente de escritorio de Reizo en Windows. Hablas en español, breve y cercano.",
         "En cada turno respondes SOLO con un JSON: {pensamiento, herramienta, argumentos} y, a veces, mensaje_final.",
@@ -399,6 +405,8 @@ def prompt_sistema():
     if recuerdos:
         lineas.append("Lo que ya sabes de Reizo (tenlo en cuenta al interpretar sus pedidos):")
         lineas += [f"- {r}" for r in recuerdos]
+    if voz:
+        lineas.append(MODO_VOZ)
     return "\n".join(lineas)
 
 

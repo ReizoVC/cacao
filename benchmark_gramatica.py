@@ -41,7 +41,8 @@ NOMBRES = {"CATEGORIAS", "LIMITE_RESULTADO", "normalizar", "listar_apps", "ESQUE
            "atender", "rellenar_marcadores", "CON_MARCADORES", "elegir_app",
            "coincide_por_siglas", "nivel_app", "_sin_articulos", "es_generico", "opciones_genericas",
            "preparar_apertura", "cubre_bien", "ARTICULOS", "GENERICOS", "APPS_SENSIBLES", "ver_pantalla",
-           "terminar", "ACCIONES_A_VERIFICAR", "VERIFICADORAS", "MAX_RECORDATORIOS", "MENSAJE_DETENIDO"}
+           "terminar", "ACCIONES_A_VERIFICAR", "VERIFICADORAS", "MAX_RECORDATORIOS", "MENSAJE_DETENIDO",
+           "MODO_VOZ"}
 arbol = ast.parse((BASE / "agente_minimo.py").read_text(encoding="utf-8"))
 nodos = [n for n in arbol.body
          if (isinstance(n, ast.FunctionDef) and n.name in NOMBRES)

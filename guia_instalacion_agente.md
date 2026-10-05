@@ -231,9 +231,29 @@ En este punto agrega también el **atajo de emergencia** (`ctrl+alt+shift+q`) co
 
 ## Fase 7. Voz e interfaz
 
-1. **Voz a texto:** prueba primero el audio nativo de Gemma 4 12B (máximo 30 segundos por fragmento). Si tu versión de llama-cpp-python todavía no lo soporta, usa `faster-whisper` como alternativa.
-2. **Texto a voz:** Piper, con una voz en español.
-3. **Palabra de activación (opcional):** openWakeWord.
+Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agente_minimo.py`) no cambia.
+
+1. **Voz a texto: faster-whisper `large-v3-turbo` en int8** (~1,3 GB de VRAM, ~0,2 s por frase en la GPU).
+   - El audio nativo de Gemma 4 12B funciona con el mmproj-F16 (trae un codificador de audio), pero se descartó. En 20 grabaciones respondió como un chat ("No hay audio en el mensaje") o se comió parte de la orden en 4 casos. Con una pista de vocabulario inventaba órdenes nuevas. Whisper turbo no falló ninguna.
+   - Instalación (sin permisos de administrador): `pip install faster-whisper nvidia-cublas-cu12 "nvidia-cudnn-cu12==9.*"`. El modelo se descarga solo la primera vez (~1,6 GB, en `%USERPROFILE%\.cache\huggingface`).
+   - No uses `initial_prompt` (pista de vocabulario): hace que el modelo rellene audios cortos con esas palabras.
+2. **Texto a voz: Piper** (`pip install piper-tts`) con la voz `es_MX-claude-high`:
+   - descarga: `python -m piper.download_voices --download-dir modelos/piper es_MX-claude-high`;
+   - genera el primer trozo de audio en ~0,2 s en la CPU;
+   - solo lee la respuesta final, nunca el pensamiento ni las confirmaciones;
+   - en modo voz, el prompt pide 1 o 2 frases.
+3. **Pulsar para hablar:** mantener **Ctrl+Espacio** graba y soltar envía.
+   - El atajo se registra con `RegisterHotKey`, así que la app que está al frente no lo recibe.
+   - Comprueba antes que esté libre en tu PC; si no, cambia `voz.atajo_hablar` en `config.json`.
+   - Micrófono con `sounddevice` (`pip install sounddevice`).
+4. **Frenos de seguridad:**
+   - una pulsación con menos de 0,15 s de voz se descarta sin transcribir (Whisper escribe "Gracias por ver el video" en el silencio);
+   - una transcripción con más de 6 palabras por segundo de voz, más 3 de margen, también se descarta;
+   - las acciones que cambian algo se confirman con el teclado: **Enter = sí, Esc = no**. Las de solo lectura van directas.
+5. **Registro:** cada comando queda en `voz_registro/` (WAV + `registro.jsonl`); esa carpeta no va a git.
+6. **Configuración:** sección `voz` de `config.json`, con su nota.
+7. **Uso:** `.venv\Scripts\python voz.py`. Lánzalo desde tu propia terminal: con Gemma y Whisper cargados, el proceso compromete ~16 GB de memoria virtual, porque la VRAM de CUDA cuenta así en Windows. Cierra apps pesadas si el sistema anda justo.
+8. **Palabra de activación (opcional):** openWakeWord.
 4. **Interfaz:** ícono en la bandeja del sistema y ventana de chat con PySide6, más un atajo global para invocarlo.
 5. **Inicio automático:** un acceso directo en `shell:startup`.
 
@@ -252,6 +272,9 @@ En este punto agrega también el **atajo de emergencia** (`ctrl+alt+shift+q`) co
 | Error en `EndpointVolume` | Versión antigua de pycaw | `pip install --upgrade pycaw` |
 | Caracteres raros en nombres de apps | Codificación de PowerShell | El script ya fuerza UTF-8; revisa que no lo hayas quitado |
 | El agente se repite o entra en bucle | Prompt ambiguo o temperatura alta | Baja `temperature` a 0.2 y revisa las descripciones en `herramientas.json` |
+| El sistema se queda sin RAM con el modelo cargado | Con `use_mmap` el GGUF mapeado ocupa ~8,6 GB de RAM física aunque las capas estén en la GPU | `"use_mmap": false` en `config.json` (~1,3 GB de RAM, misma velocidad) |
+| "ggml-cuda.cu: CUDA error" sin más detalle | llama-cpp-python 0.3.36 ocultaba los errores de llama.cpp: usa la numeración antigua de niveles y trata el error como depuración | `modelo.py` ya los muestra y los guarda en `errores_llama.log` (con la pila de Python si el proceso aborta); revisa ese archivo |
+| Whisper escribe "Gracias" o "Gracias por ver el video" sin que hables | Alucinación típica en silencio o ruido | `voz.py` descarta las pulsaciones casi sin voz (`voz.min_voz_s`) y esas frases |
 
 ---
 
