@@ -60,6 +60,11 @@
   {"id": 57, "tipo": "grupo4", "frase": "baja con la rueda del mouse en la ventana activa", "esperado": ["mouse", "ver_pantalla"], "requiere": ["mouse"]},
   {"id": 58, "tipo": "grupo4", "frase": "escribe 'hola mundo' en el bloc de notas", "esperado": ["listar_ventanas", "enfocar_ventana", "teclado"], "requiere": ["teclado"]},
   {"id": 59, "tipo": "grupo4", "frase": "guarda el archivo con control s", "esperado": ["teclado", "listar_ventanas", "enfocar_ventana"], "requiere": ["teclado"]},
-  {"id": 60, "tipo": "grupo4", "frase": "presiona enter", "esperado": "teclado", "requiere": ["teclado"]}
+  {"id": 60, "tipo": "grupo4", "frase": "presiona enter", "esperado": "teclado", "requiere": ["teclado"]},
+  {"id": 61, "tipo": "fase6", "frase": "¿qué suelo hacer los lunes?", "esperado": "consultar_memoria"},
+  {"id": 62, "tipo": "fase6", "frase": "no me sugieras eso", "esperado": "sugerencias"},
+  {"id": 63, "tipo": "fase6", "frase": "¿qué sugerencias tengo bloqueadas?", "esperado": "sugerencias"},
+  {"id": 64, "tipo": "fase6", "frase": "vuelve a sugerirme lo de spotify", "esperado": "sugerencias"},
+  {"id": 65, "tipo": "fase6", "frase": "deja de registrar lo que hago", "esperado": "registro_habitos"}
  ]
 }

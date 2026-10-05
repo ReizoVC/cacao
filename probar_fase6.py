@@ -1,6 +1,6 @@
 """
 Pruebas de la Fase 6 SIN modelo (o con un modelo falso que devuelve JSON fijo). Usan bases y vault temporales
-(habitos_prueba.db, memoria_prueba.db, memoria_prueba/), que se borran al terminar; no tocan memoria.db, habitos.db
+(habitos_prueba.db, memoria_prueba_f6.db, memoria_prueba_f6/), que se borran al terminar; no tocan memoria.db, habitos.db
 ni la wiki real, no abren apps ni leen archivos de Reizo.
 Uso: .venv\\Scripts\\python probar_fase6.py [seccion ...]   (sin argumentos, todas)
 """
@@ -43,9 +43,9 @@ def wiki_temporal():
         os.chmod(ruta, stat.S_IWRITE)
         func(ruta)
 
-    memoria.RUTA = BASE / "memoria_prueba.db"
+    memoria.RUTA = BASE / "memoria_prueba_f6.db"
     memoria.RUTA.unlink(missing_ok=True)
-    wiki.VAULT = BASE / "memoria_prueba"
+    wiki.VAULT = BASE / "memoria_prueba_f6"
     if wiki.VAULT.exists():
         shutil.rmtree(wiki.VAULT, onerror=quitar_solo_lectura)
     wiki.obsidian_abierto = lambda: False
@@ -760,6 +760,90 @@ def prueba_lint():
     ok("git: commit del lint", "Lint 2026-10-12" in wiki.git("log", "-1", "--format=%s").stdout)
 
 
+# ---------- 7. integración en el agente (sin modelo: funciones de agente_minimo.py extraídas con ast) ----------
+
+def agente_sin_modelo(respuestas_input):
+    """Ejecuta en un espacio aparte las funciones de agente_minimo.py que tocan la Fase 6, con herramientas
+    falsas que solo anotan la llamada (recordar y sugerencias son las reales, sobre las bases de prueba)."""
+    import ast
+    import sugerencias as sg
+    nombres = {"TEXTO_EXTERNO", "GUARDAN_SOBRE_REIZO", "SOLO_CONSULTAN", "_tarea", "_sugerencia", "ejecutar",
+               "prompt_sistema", "cerrar_sugerencia_pendiente", "agregar_sugerencia", "CON_MARCADORES", "MODO_VOZ",
+               "normalizar"}
+    arbol = ast.parse((BASE / "agente_minimo.py").read_text(encoding="utf-8"))
+    nodos = [n for n in arbol.body if (isinstance(n, ast.FunctionDef) and n.name in nombres)
+             or (isinstance(n, ast.Assign) and any(getattr(t, "id", None) in nombres for t in n.targets))]
+    catalogo = json.loads((BASE / "herramientas.json").read_text(encoding="utf-8"))
+    llamadas = []
+    respuestas = list(respuestas_input)
+    ns = {"json": json, "re": re, "unicodedata": __import__("unicodedata"), "memoria": memoria, "wiki": wiki,
+          "sugerencias": sg, "datetime": datetime, "PLANIFICADORES": {}, "Detenido": Exception,
+          "HERRAMIENTAS": {h["nombre"]: h for h in catalogo["herramientas"]},
+          "input": lambda *_: respuestas.pop(0) if respuestas else "n",
+          "app_en_marcha": lambda app: False}
+    exec(compile(ast.Module(body=nodos, type_ignores=[]), "agente_minimo.py", "exec"), ns)
+    ns["IMPLEMENTACIONES"] = {h: (lambda h_: lambda **a: llamadas.append((h_, a)) or {"ok": True})(h)
+                              for h in ns["HERRAMIENTAS"]}
+    ns["IMPLEMENTACIONES"]["recordar"] = memoria.recordar
+    ns["IMPLEMENTACIONES"]["sugerencias"] = sg.herramienta
+    return ns, llamadas
+
+
+def prueba_agente():
+    wiki_temporal()
+    wiki.asegurar_vault(HOY)
+    ns, _ = agente_sin_modelo(["n", "s"])
+    ns["_tarea"].update(contaminada=False)
+    ns["ejecutar"]("recordar", {"dato": "Me gusta el café", "categoria": "otro", "origen": "confirmado"})
+    ns["_tarea"].update(contaminada=True)
+    r_no = ns["ejecutar"]("recordar", {"dato": "Reizo odia Spotify", "categoria": "otro"})
+    r_si = ns["ejecutar"]("recordar", {"dato": "Prefiere el modo oscuro", "categoria": "preferencia"})
+    con = sqlite3.connect(memoria.RUTA)
+    filas = con.execute("SELECT dato, origen FROM memorias ORDER BY id").fetchall()
+    con.close()
+    ok("recordar sin contenido externo: directo (el modelo no puede poner 'origen')",
+       filas[0] == ("Me gusta el café", "directo"), str(filas))
+    ok("recordar tras contenido externo y Reizo dice que no: no se guarda",
+       not r_no.get("ok") and not any("Spotify" in d for d, _ in filas), str(r_no))
+    ok("recordar tras contenido externo y Reizo dice que sí: 'confirmado'",
+       ("Prefiere el modo oscuro", "confirmado") in filas)
+    ns, _ = agente_sin_modelo([])
+    ns["_tarea"].update(contaminada=True)
+    ok("tras contenido externo: listar sugerencias no pregunta", "sugerencias" in ns["ejecutar"]("sugerencias", {"accion": "listar"}))
+    ok("tras contenido externo: bloquear una sugerencia sí pregunta (y sin sí, no se hace)",
+       not ns["ejecutar"]("sugerencias", {"accion": "bloquear"}).get("ok"))
+    prompt = ns["prompt_sistema"]()
+    ok("prompt: lleva el índice de la wiki", "Tu wiki sobre Reizo" in prompt and "[[habitos]]" in prompt
+       and "sugerencias:" in prompt and "registro_habitos:" in prompt)
+
+    # sugerencia al final de la respuesta, y su resultado en la tarea siguiente
+    import sugerencias as sg
+    sg.actualizar([{"clave": "abrir_app:spotify@09", "app": "Spotify.exe", "nombre": "Spotify", "hora": 9,
+                    "apoyo": 5, "dias": 7, "texto": "A esta hora (09:00) sueles abrir Spotify. ¿Lo abro?"}], HOY)
+
+    class Reloj:
+        @staticmethod
+        def now():
+            return datetime(2026, 10, 6, 9, 15)
+
+    ns["datetime"] = Reloj
+    fin = {"role": "assistant", "content": json.dumps({"pensamiento": "x", "herramienta": "finalizar",
+                                                       "argumentos": {"mensaje": "Listo.", "exito": True}})}
+    historial = [{"role": "system", "content": "s"}, {"role": "user", "content": "pon el volumen al 30"}, dict(fin)]
+    respuesta = ns["agregar_sugerencia"]("Listo.", historial)
+    ok("sugerencia: al final de una respuesta que salió bien, también en el historial",
+       respuesta.endswith("¿Lo abro?") and "Spotify" in historial[-1]["content"], respuesta)
+    ns["_tarea"].update(herramientas=[("abrir_app", {"nombre": "Spotify"})])
+    ns["cerrar_sugerencia_pendiente"]()
+    con = sqlite3.connect(memoria.RUTA)
+    resultado = con.execute("SELECT resultado FROM sugerencias_mostradas ORDER BY id DESC LIMIT 1").fetchone()[0]
+    con.close()
+    ok("sugerencia: 'sí' (abrió Spotify) cuenta como aceptada", resultado == "aceptada")
+    error = [{"role": "assistant", "content": json.dumps({"pensamiento": "x", "herramienta": "finalizar",
+                                                          "argumentos": {"mensaje": "No pude.", "exito": False}})}]
+    ok("sugerencia: nunca tras un error", ns["agregar_sugerencia"]("No pude.", error) == "No pude.")
+
+
 SECCIONES = {"entrada": prueba_entrada, "clasificador": prueba_clasificador, "privacidad": prueba_privacidad,
              "simulacion": prueba_simulacion, "fuente_real": prueba_fuente_real,
              "condiciones": prueba_condiciones, "guardia": prueba_guardia, "sistema_real": prueba_sistema_real,
@@ -769,7 +853,8 @@ SECCIONES = {"entrada": prueba_entrada, "clasificador": prueba_clasificador, "pr
              "reflexion": prueba_reflexion,
              "reflexion_parada": prueba_reflexion_parada,
              "planificador": prueba_planificador,
-             "lint": prueba_lint}
+             "lint": prueba_lint,
+             "agente": prueba_agente}
 
 if __name__ == "__main__":
     elegidas = sys.argv[1:] or list(SECCIONES)

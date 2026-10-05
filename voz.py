@@ -164,6 +164,9 @@ def preparar():
     transcriptor = crear_transcriptor()
     ruta_voz = Path(CONFIG_VOZ["piper_voz"])
     locutor = Locutor(ruta_voz if ruta_voz.is_absolute() else BASE / ruta_voz, CONFIG_VOZ["velocidad"])
+    planificador, aviso = a.iniciar_memoria_wiki()
+    if aviso:
+        print(f"Asistente: {aviso}")
     historial = [{"role": "system", "content": a.prompt_sistema(voz=True)}]
     activar_confirmaciones()
     # calentamiento: el prompt de sistema queda en la caché KV y los kernels de CUDA de Whisper cargados
@@ -172,7 +175,7 @@ def preparar():
     list(locutor.voz.synthesize("hola"))
     print(f"Micrófono: {microfono.nombre}. Transcripción: {CONFIG_VOZ['motor_transcripcion']}. "
           f"Voz: {ruta_voz.stem}.")
-    return atajo, microfono, transcriptor, locutor, historial
+    return atajo, microfono, transcriptor, locutor, historial, planificador
 
 
 class MedidorVRAM:
@@ -234,12 +237,14 @@ def filtrar(audio, soltado, transcriptor):
 
 def bucle(medir=0):
     vram = MedidorVRAM() if medir else None
-    atajo, microfono, transcriptor, locutor, historial = preparar()
+    atajo, microfono, transcriptor, locutor, historial, planificador = preparar()
     mediciones, n = [], 0
     print(f"\nModo voz listo. Mantén {atajo.atajo} mientras hablas; di 'salir' para terminar.")
     while True:
         # hablarle encima corta la respuesta anterior (y no se graba la voz de Piper)
-        audio, datos, texto, soltado = escuchar(atajo, microfono, transcriptor, al_pulsar=locutor.callar)
+        # pulsar el atajo también detiene una reflexión en curso (libera la GPU antes de transcribir)
+        audio, datos, texto, soltado = escuchar(atajo, microfono, transcriptor,
+                                                al_pulsar=lambda: (locutor.callar(), planificador.parar.set()))
         n += 1
         comando_actual.clear()
         if texto is None:
@@ -256,7 +261,7 @@ def bucle(medir=0):
             a.emergencia.reanudar()
             respuesta = "Listo, vuelvo a atender pedidos."
         else:
-            respuesta = a.atender(texto, historial)
+            respuesta = a.atender_con_memoria(texto, historial, planificador, voz=True)
             historial[:] = historial[:1] + historial[1:][-20:]  # memoria corta, como en el modo texto
         t_respuesta = time.perf_counter()
         print(f"Asistente: {respuesta}", flush=True)

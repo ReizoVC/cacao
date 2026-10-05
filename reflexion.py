@@ -246,7 +246,10 @@ class Reflexion:
         return _estimar_tokens(texto)
 
     def _interrumpir(self):
-        self.comprobar_emergencia()
+        try:
+            self.comprobar_emergencia()
+        except Exception as e:  # emergencia.Detenido: la reflexión también se corta
+            raise ReflexionDetenida("atajo de emergencia") from e
         if self.parar.is_set():
             raise ReflexionDetenida(self.motivo())
 
@@ -421,8 +424,9 @@ class Planificador:
     reflexión en curso y espera a que suelte el modelo (≤ ~2,5 s si estaba leyendo el prompt)."""
 
     def __init__(self, llm, vigilante, comprobar_emergencia, clasificador=None, lint=None, ahora=datetime.now,
-                 intervalo_s=5, anotar=print):
+                 intervalo_s=5, anotar=print, detenido=lambda: False):
         self.llm, self.vigilante, self.comprobar_emergencia = llm, vigilante, comprobar_emergencia
+        self.detenido = detenido  # con el atajo de emergencia activo no se reflexiona hasta 'reanudar'
         self.clasificador = clasificador or habitos.Clasificador()
         self.lint = lint
         self.ahora, self.intervalo, self.anotar = ahora, intervalo_s, anotar
@@ -467,6 +471,8 @@ class Planificador:
         from deteccion import Guardia
         while not self._fin.wait(self.intervalo):
             try:
+                if self.detenido():
+                    continue
                 ahora = self.ahora()
                 tarea, minutos = self.tarea_pendiente(ahora)
                 if not tarea:

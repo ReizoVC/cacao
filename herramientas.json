@@ -427,7 +427,7 @@
     {
       "nombre": "consultar_memoria",
       "permiso": "libre",
-      "descripcion": "Busca en lo que has guardado sobre el usuario y en el registro de hábitos.",
+      "descripcion": "Busca en lo que has guardado sobre Reizo y en su wiki (perfil, hábitos, apps, rutinas y sus notas). Úsala para preguntas sobre sus costumbres o lo que te contó. Lo que venga marcado como nota_de_reizo lo escribió él y es verdad.",
       "parametros": {
         "type": "object",
         "properties": {
@@ -437,6 +437,34 @@
         "required": ["consulta"]
       },
       "retorno": "Lista de { dato, categoria, fecha }."
+    },
+    {
+      "nombre": "sugerencias",
+      "permiso": "libre",
+      "descripcion": "Gestiona las sugerencias que le haces a Reizo ('a esta hora sueles abrir X'). Usa accion 'bloquear' cuando diga 'no me sugieras eso' (bloquea la última que le mostraste), 'listar' si pregunta cuáles tiene bloqueadas y 'desbloquear' con 'numero' (de la última lista) o 'texto' si quiere que vuelvas a sugerir algo.",
+      "parametros": {
+        "type": "object",
+        "properties": {
+          "accion": { "type": "string", "enum": ["bloquear", "listar", "desbloquear"] },
+          "numero": { "type": "integer", "description": "Solo para desbloquear: número de la última lista." },
+          "texto": { "type": "string", "description": "Solo para desbloquear: de qué sugerencia se trata, por ejemplo 'spotify'." }
+        },
+        "required": ["accion"]
+      },
+      "retorno": "{ ok, bloqueada | desbloqueada } o { sugerencias: [{ numero, texto, estado }] }."
+    },
+    {
+      "nombre": "registro_habitos",
+      "permiso": "libre",
+      "descripcion": "Pausa o reanuda el registro de hábitos (qué app usa Reizo cada 30 s, sin títulos de ventana), o dice si está activo. Úsala si dice 'deja de registrar', 'vuelve a registrar' o pregunta si lo estás registrando.",
+      "parametros": {
+        "type": "object",
+        "properties": {
+          "accion": { "type": "string", "enum": ["pausar", "reanudar", "estado"] }
+        },
+        "required": ["accion"]
+      },
+      "retorno": "{ ok, registrando }."
     },
     {
       "nombre": "preguntar_usuario",

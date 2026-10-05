@@ -6,6 +6,7 @@ listar_controles devuelven siempre las mismas ventanas simuladas (VENTANAS_SIM, 
 resultados no dependan de lo que esté abierto; listar_carpeta, leer_archivo y ver_pantalla son las reales. Uso: .venv\\Scripts\\python benchmark_gramatica.py
 """
 import ast
+import atexit
 import json
 import os
 import re
@@ -23,6 +24,8 @@ import win32gui
 import herramientas_grupo4 as g4
 import herramientas_powershell as ps
 import memoria
+import sugerencias
+import wiki
 from emergencia import Detenido, Emergencia
 from herramientas_grupo1 import listar_carpeta, leer_archivo, url_busqueda
 from modelo import cargar_config, crear_llm
@@ -47,7 +50,7 @@ NOMBRES = {"CATEGORIAS", "LIMITE_RESULTADO", "normalizar", "listar_apps", "ESQUE
            "coincide_por_siglas", "nivel_app", "_sin_articulos", "es_generico", "opciones_genericas",
            "preparar_apertura", "cubre_bien", "ARTICULOS", "GENERICOS", "APPS_SENSIBLES", "ver_pantalla",
            "terminar", "ACCIONES_A_VERIFICAR", "VERIFICADORAS", "MAX_RECORDATORIOS", "MENSAJE_DETENIDO",
-           "MODO_VOZ", "PLANIFICADORES"}
+           "MODO_VOZ", "PLANIFICADORES", "TEXTO_EXTERNO", "GUARDAN_SOBRE_REIZO", "SOLO_CONSULTAN", "_tarea"}
 arbol = ast.parse((BASE / "agente_minimo.py").read_text(encoding="utf-8"))
 nodos = [n for n in arbol.body
          if (isinstance(n, ast.FunctionDef) and n.name in NOMBRES)
@@ -197,6 +200,10 @@ def ejecutar_powershell_sim(comando: str, motivo: str = ""):
                     lambda p: {"ok": True, "codigo_salida": 0, "salida": "(simulado: el comando no se ejecutó)"})
 
 
+def registro_habitos_sim(accion: str):
+    return {"ok": True, "registrando": accion != "pausar"}  # sin tocar PAUSA_HABITOS
+
+
 def buscar_web_sim(consulta: str):
     return {"ok": True, "url": url_busqueda(consulta)}  # no abre el navegador
 
@@ -221,11 +228,99 @@ ns["IMPLEMENTACIONES"] = {"listar_apps": ns["listar_apps"], "abrir_app": abrir_a
                          "cerrar_app": cerrar_app_sim, "mover_archivo": mover_archivo_sim, "mouse": mouse_sim,
                          "teclado": teclado_sim,
                          "listar_controles": listar_controles_sim,
-                         "ejecutar_powershell": ejecutar_powershell_sim}
+                         "ejecutar_powershell": ejecutar_powershell_sim,
+                         "sugerencias": sugerencias.herramienta, "registro_habitos": registro_habitos_sim}
 # la memoria real, pero sobre una base aparte para no tocar memoria.db; empieza vacía
+# SIN_REALES=1: también simuladas las que leen el PC (carpetas, archivos, pantalla), para probar sin Reizo delante
+# y sin tocar sus archivos. Un sistema de archivos falso fijo; las rutas se validan con las reglas reales.
+CARPETAS_SIM = {
+    "Downloads": [("Spark.txt", "archivo"), ("informe_ventas.pdf", "archivo"), ("notas_reunion.md", "archivo"),
+                  ("README.md", "archivo"), ("instalador.exe", "archivo")],
+    "Desktop": [("inventarios", "carpeta"), ("proyecto", "carpeta"), ("notas.txt", "archivo")],
+    "Desktop\\inventarios": [("HELP.md", "archivo"), ("datos.csv", "archivo")],
+    "Documents": [("Trabajo", "carpeta"), ("cv.docx", "archivo")],
+}
+TEXTOS_SIM = {"HELP.md": "# Inventarios\nEste proyecto gestiona el inventario de una tienda: altas, bajas y reportes "
+                         "en CSV. Ejecuta main.py para empezar."}
+
+
+def _relativa_sim(ruta):
+    p, error = g1.resolver_ruta(ruta)
+    if error:
+        return None, None, {"ok": False, "bloqueado": True, "error": error}
+    return p, str(p.relative_to(Path(os.environ["USERPROFILE"]))), None
+
+
+def listar_carpeta_sim(ruta: str, patron: str = ""):
+    p, rel, error = _relativa_sim(ruta)
+    if error:
+        return error
+    if rel not in CARPETAS_SIM:
+        return {"ok": False, "error": f"No existe la carpeta {p}"}
+    import fnmatch
+    return [{"nombre": n, "tipo": t, "tamano_bytes": None if t == "carpeta" else 1024, "modificado": "2026-10-01 10:00"}
+            for n, t in CARPETAS_SIM[rel] if not patron or fnmatch.fnmatch(n.lower(), patron.lower())]
+
+
+def leer_archivo_sim(ruta: str, max_caracteres: int = 20000):
+    p, rel, error = _relativa_sim(ruta)
+    if error:
+        return error
+    carpeta, _, nombre = rel.rpartition("\\")
+    if (nombre, "archivo") not in CARPETAS_SIM.get(carpeta, []):
+        return {"ok": False, "error": f"No existe el archivo {p}"}
+    if g1.es_sensible(p):
+        return {"ok": False, "bloqueado": True, "error": "Ese archivo puede tener contraseñas o claves; no lo leo por seguridad."}
+    return {"ok": True, "contenido": TEXTOS_SIM.get(nombre, f"Contenido de prueba de {nombre}."), "truncado": False}
+
+
+def mover_archivo_sin_reales(origen: str, destino: str):
+    p, rel, error = _relativa_sim(origen)
+    if error:
+        return _simular("mover_archivo", (None, error), None)
+    carpeta, _, nombre = rel.rpartition("\\")
+    if g1.es_sensible(p):
+        return _simular("mover_archivo", (None, {"ok": False, "bloqueado": True,
+                                                 "error": "Ese archivo puede tener contraseñas o claves; no lo muevo."}), None)
+    if not any(n == nombre for n, _ in CARPETAS_SIM.get(carpeta, [])):
+        return _simular("mover_archivo", (None, {"ok": False, "error": f"No existe {p}"}), None)
+    return _simular("mover_archivo", ((p, destino), None), lambda plan: {"ok": True, "ruta_final": str(destino)})
+
+
+def ver_pantalla_sim(region: str = "ventana_activa", presupuesto_tokens: int = 560, cuadricula: bool = False):
+    return {"ok": True, "ancho": 1920, "alto": 1080, "presupuesto_tokens": presupuesto_tokens,
+            "cuadricula": bool(cuadricula), "nota": "(simulado: sin imagen) Se ve PowerShell al frente."}
+
+
+if os.environ.get("SIN_REALES"):
+    import herramientas_grupo1 as g1
+    ns["IMPLEMENTACIONES"].update({"listar_carpeta": listar_carpeta_sim, "leer_archivo": leer_archivo_sim,
+                                   "mover_archivo": mover_archivo_sin_reales, "ver_pantalla": ver_pantalla_sim})
+else:
+    import herramientas_grupo1 as g1
 memoria.RUTA = BASE / "memoria_prueba.db"
 memoria.RUTA.unlink(missing_ok=True)
 ns["memoria"] = memoria
+# Fase 6: una wiki de prueba (vault temporal, con el índice inicial en el prompt), que se borra al salir
+wiki.VAULT = BASE / "memoria_prueba"
+wiki.obsidian_abierto = lambda: False
+if wiki.ruta("perfil").exists() is False:
+    wiki.asegurar_vault()
+ns["wiki"] = wiki
+
+
+def _borrar_vault_prueba():
+    import shutil
+    import stat
+
+    def quitar_solo_lectura(func, ruta, _):
+        os.chmod(ruta, stat.S_IWRITE)
+        func(ruta)
+
+    shutil.rmtree(wiki.VAULT, onerror=quitar_solo_lectura)
+
+
+atexit.register(_borrar_vault_prueba)
 # respuesta a toda confirmación: CONFIRMAR=s deja avanzar las simuladas del grupo 4 (no hacen nada real)
 ns["input"] = lambda *_: os.environ.get("CONFIRMAR", "n")
 
