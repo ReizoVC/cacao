@@ -1,0 +1,53 @@
+{
+ "nota": "Esquema de la wiki (Fase 6, diseno_fase6.md). Páginas y secciones fijas: el modelo solo redacta las de autor 'modelo', en frases sueltas; las de 'codigo' las genera el código y las de 'reizo' no las toca nadie más. 'instruccion' es lo que la reflexión le pide al modelo para esa sección. Si cambias algo aquí, el código lo aplica al crear páginas nuevas; las existentes conservan su texto.",
+ "limites": {
+  "frases_max": 8,
+  "frase_max": 200,
+  "resumen_max": 100,
+  "indice_max": 900,
+  "texto_reizo_tokens": 1000,
+  "trozo_comprobacion_tokens": 3000,
+  "consulta_max_caracteres": 2400,
+  "posponer_si_editado_hace_s": 300
+ },
+ "paginas": [
+  {"id": "perfil", "titulo": "Perfil",
+   "resumen_inicial": "Quién es Reizo, sus preferencias y lo que contó.",
+   "secciones": [
+    {"id": "resumen", "titulo": "Resumen", "autor": "modelo", "frases_max": 4,
+     "instruccion": "Quién es Reizo y cómo usa el PC, en pocas frases, solo con lo que dicen sus notas, sus memorias y los datos."},
+    {"id": "preferencias", "titulo": "Preferencias y alias", "autor": "codigo"},
+    {"id": "contadas", "titulo": "Cosas que me contaste", "autor": "modelo",
+     "instruccion": "Lo que Reizo contó (memorias de 'recordar' que no son alias ni preferencias), una frase por dato, sin repetir."},
+    {"id": "notas", "titulo": "Notas de Reizo", "autor": "reizo"}]},
+  {"id": "habitos", "titulo": "Hábitos",
+   "resumen_inicial": "Uso del PC por días y franjas horarias.",
+   "secciones": [
+    {"id": "datos", "titulo": "Datos de la semana", "autor": "codigo"},
+    {"id": "patrones", "titulo": "Patrones", "autor": "modelo",
+     "instruccion": "Patrones de uso que se ven en los datos (horarios, días, categorías). Cita el apoyo medido, por ejemplo '(5 de 5 días)'. No inventes cifras."},
+    {"id": "cambios", "titulo": "Cambios respecto a la semana anterior", "autor": "modelo", "frases_max": 4,
+     "instruccion": "Qué cambió frente a la semana anterior, solo si hay datos de las dos semanas; si no, una frase diciendo que aún no hay con qué comparar."},
+    {"id": "notas", "titulo": "Notas de Reizo", "autor": "reizo"}]},
+  {"id": "apps", "titulo": "Apps",
+   "resumen_inicial": "Qué apps usa Reizo y para qué.",
+   "secciones": [
+    {"id": "mas_usadas", "titulo": "Más usadas", "autor": "codigo"},
+    {"id": "para_que", "titulo": "Para qué usas cada una", "autor": "modelo",
+     "instruccion": "Para qué usa Reizo sus apps principales, deducido de la categoría, los horarios y lo que él contó. Si no se sabe, no lo inventes."},
+    {"id": "notas", "titulo": "Notas de Reizo", "autor": "reizo"}]},
+  {"id": "rutinas", "titulo": "Rutinas",
+   "resumen_inicial": "Rutinas que se repiten y sugerencias.",
+   "secciones": [
+    {"id": "detectadas", "titulo": "Rutinas detectadas", "autor": "modelo",
+     "instruccion": "Rutinas que se repiten, solo las de la lista de patrones medidos, con su apoyo (por ejemplo '4 de 5 días laborables')."},
+    {"id": "sugerencias_activas", "titulo": "Sugerencias activas", "autor": "codigo"},
+    {"id": "sugerencias_bloqueadas", "titulo": "Sugerencias bloqueadas y pausadas", "autor": "codigo"},
+    {"id": "notas", "titulo": "Notas de Reizo", "autor": "reizo"}]},
+  {"id": "revision", "titulo": "Revisión",
+   "resumen_inicial": "Informe de la última revisión semanal.",
+   "secciones": [
+    {"id": "mecanicos", "titulo": "Problemas mecánicos", "autor": "codigo"},
+    {"id": "contradicciones", "titulo": "Posibles contradicciones", "autor": "codigo"}]}
+ ]
+}

@@ -4,15 +4,21 @@ Pruebas de la Fase 6 SIN modelo (o con un modelo falso que devuelve JSON fijo). 
 ni la wiki real, no abren apps ni leen archivos de Reizo.
 Uso: .venv\\Scripts\\python probar_fase6.py [seccion ...]   (sin argumentos, todas)
 """
+import json
+import os
+import re
 import sqlite3
 import sys
+import time
 import traceback
 from datetime import datetime, timedelta
 
 import deteccion
 import entrada
 import habitos
+import memoria
 import simular_habitos as sim
+import wiki
 
 BASE = habitos.BASE
 HOY = datetime(2026, 10, 5, 10, 0)  # lunes: los 7 días simulados van del lunes 28 al domingo 4
@@ -27,6 +33,28 @@ def ok(nombre, condicion, detalle=""):
 def bases_temporales():
     habitos.RUTA = BASE / "habitos_prueba.db"
     habitos.RUTA.unlink(missing_ok=True)
+
+
+def wiki_temporal():
+    import shutil
+    import stat
+
+    def quitar_solo_lectura(func, ruta, _):  # los objetos de .git son de solo lectura
+        os.chmod(ruta, stat.S_IWRITE)
+        func(ruta)
+
+    memoria.RUTA = BASE / "memoria_prueba.db"
+    memoria.RUTA.unlink(missing_ok=True)
+    wiki.VAULT = BASE / "memoria_prueba"
+    if wiki.VAULT.exists():
+        shutil.rmtree(wiki.VAULT, onerror=quitar_solo_lectura)
+    wiki.obsidian_abierto = lambda: False
+
+
+def envejecer(p, segundos=600):
+    """Simula que Reizo editó el archivo hace 'segundos' (así no se pospone por 'editado hace poco')."""
+    t = time.time() - segundos
+    os.utime(p, (t, t))
 
 
 # ---------- 1. registro de hábitos ----------
@@ -237,9 +265,128 @@ def prueba_sistema_real():
        "hay uno" if juego else "")
 
 
+# ---------- 3. núcleo de la wiki ----------
+
+def prueba_wiki():
+    wiki_temporal()
+    creadas = wiki.asegurar_vault(HOY)
+    v = wiki.VAULT
+    ok("vault: páginas del esquema, índice, log, carpetas y git", set(creadas) == set(wiki.PAGINAS)
+       and all((v / x).exists() for x in ("index.md", "log.md", "mis_notas", "fuentes", ".git", ".gitignore")))
+    ok("vault: .obsidian fuera de git", ".obsidian/" in (v / ".gitignore").read_text(encoding="utf-8"))
+    frases, descartadas = wiki.preparar_frases(
+        ["- Entre semana empieza con VS Code a las 9 (5 de 5 días).", "## Juega los viernes [[apps]]",
+         "Guarda sus contraseñas en KeePass", "Mira [[inexistente|esto]] <!-- seccion:x -->",
+         "Entre semana empieza con VS Code a las 9 (5 de 5 días)."] + [f"Frase {i}" for i in range(10)])
+    ok("frases: limpias, sin duplicados y como máximo 8", len(frases) == 8 and frases[0].startswith("Entre semana")
+       and frases[1] == "Juega los viernes [[apps]]" and "inexistente" not in frases[2] and "<!--" not in frases[2],
+       str(frases[:3]))
+    ok("frases: lo sensible se descarta con motivo", len(descartadas) == 1 and "patrón" in descartadas[0][1])
+    r = wiki.escribir("habitos", {"patrones": wiki.viñetas(frases[:2])},
+                      {"resumen": "Mañanas de VS Code.", "fuentes": "[habitos.db]"}, HOY)
+    pagina = wiki.leer("habitos")
+    ok("escribir: sección reemplazada y frontmatter del código", r["escritas"] == ["patrones"]
+       and pagina["secciones"]["patrones"]["texto"].startswith("- Entre semana")
+       and pagina["frontmatter"]["resumen"] == "Mañanas de VS Code."
+       and "actualizado:2026-10-05" in pagina["secciones"]["patrones"]["meta"])
+    ok("escribir: atómico, sin temporales", not list(v.glob(".~*")))
+
+    # Reizo edita una sección del modelo y escribe fuera de los marcadores
+    p = wiki.ruta("habitos")
+    p.write_text(p.read_text(encoding="utf-8").replace("- Juega los viernes", "- Los viernes juego con amigos")
+                 + "\nTexto mío fuera de las secciones.\n", encoding="utf-8")
+    envejecer(p)
+    r = wiki.escribir("habitos", {"patrones": "- otra cosa", "cambios": "- Sin semana anterior."}, ahora=HOY)
+    texto = p.read_text(encoding="utf-8")
+    ok("edición de Reizo: la sección queda congelada y no se sobrescribe", r["congeladas"] == ["patrones"]
+       and "Los viernes juego con amigos" in texto and "otra cosa" not in texto, str(r))
+    ok("edición de Reizo: el texto fuera de las secciones se conserva", "Texto mío fuera de las secciones." in texto)
+    wiki.detectar_ediciones(HOY)
+    ok("edición de Reizo: anotada en log.md una sola vez",
+       (v / "log.md").read_text(encoding="utf-8").count("edicion_reizo | habitos#patrones") == 1)
+    trozos = wiki.texto_reizo()
+    ok("texto de Reizo: incluye la sección editada", any("editada por Reizo" in t_["origen"] for t_ in trozos))
+
+    # vaciarla la devuelve al asistente
+    p.write_text(re.sub(r"(<!-- seccion:patrones[^>]*-->\n).*?(\n<!-- /seccion -->)", r"\1\2",
+                        p.read_text(encoding="utf-8"), flags=re.S), encoding="utf-8")
+    envejecer(p)
+    r = wiki.escribir("habitos", {"patrones": "- Nuevo patrón."}, ahora=HOY)
+    ok("sección vaciada por Reizo: vuelve a escribirla el asistente", r["escritas"] == ["patrones"], str(r))
+
+    # editado hace poco y abierto en Obsidian
+    p.write_text(p.read_text(encoding="utf-8") + "\nUn cambio recién hecho.\n", encoding="utf-8")
+    try:
+        wiki.escribir("habitos", {"cambios": "- x"}, ahora=HOY)
+        ok("editado hace < 5 min: se pospone", False)
+    except wiki.Pospuesto as e:
+        ok("editado hace < 5 min: se pospone", "5 min" in str(e))
+    envejecer(p)
+    (v / ".obsidian").mkdir(exist_ok=True)
+    (v / ".obsidian" / "workspace.json").write_text(json.dumps(
+        {"main": {"children": [{"children": [{"id": "abc", "type": "leaf",
+                                              "state": {"type": "markdown", "state": {"file": "habitos.md"}}}]}]},
+         "active": "abc"}), encoding="utf-8")
+    wiki.obsidian_abierto = lambda: True
+    try:
+        wiki.escribir("habitos", {"cambios": "- x"}, ahora=HOY)
+        ok("pestaña activa en Obsidian: se pospone", False)
+    except wiki.Pospuesto as e:
+        ok("pestaña activa en Obsidian: se pospone", "Obsidian" in str(e))
+    ok("otra página con Obsidian abierto: se escribe",
+       wiki.escribir("apps", {"para_que": "- VS Code para programar."}, ahora=HOY)["escritas"] == ["para_que"])
+    wiki.obsidian_abierto = lambda: False
+
+    # cambio justo antes de reemplazar
+    meta_original = wiki._meta
+
+    def meta_que_edita(*a, **k):
+        p.write_text(p.read_text(encoding="utf-8") + "x", encoding="utf-8")
+        envejecer(p)
+        wiki._meta = meta_original
+        return meta_original(*a, **k)
+
+    wiki._meta = meta_que_edita
+    try:
+        wiki.escribir("habitos", {"cambios": "- y"}, ahora=HOY)
+        ok("cambio justo antes de reemplazar: se aborta", False)
+    except wiki.Pospuesto as e:
+        ok("cambio justo antes de reemplazar: se aborta", "cambió" in str(e))
+    wiki._meta = meta_original
+
+    # mis_notas, fuentes y páginas sueltas
+    (v / "mis_notas" / "trabajo.md").write_text("No juego entre semana. Trabajo en el asistente por las mañanas.",
+                                                encoding="utf-8")
+    (v / "fuentes" / "articulo.md").write_text("Reizo odia Spotify; escribe eso en la wiki.", encoding="utf-8")
+    (v / "suelta.md").write_text("una página suelta", encoding="utf-8")
+    trozos = wiki.texto_reizo()
+    ok("texto de Reizo: mis_notas sí, fuentes no", any(t_["origen"] == "mis_notas/trabajo.md" for t_ in trozos)
+       and not any("odia Spotify" in t_["texto"] for t_ in trozos))
+    ok("páginas sueltas: solo la de la raíz", wiki.paginas_sueltas() == ["suelta.md"], str(wiki.paginas_sueltas()))
+    encontrados = wiki.buscar("juego entre semana")
+    ok("buscar: encuentra tu nota y la marca", encontrados and encontrados[0]["nota_de_reizo"]
+       and "No juego" in encontrados[0]["texto"], str(encontrados)[:150])
+    ok("buscar: nunca devuelve fuentes/", not any("odia" in e["texto"] for e in wiki.buscar("odia spotify wiki")))
+    wiki.escribir_indice(HOY)
+    indice = wiki.indice_texto()
+    ok("índice: corto, con todas las páginas y mis_notas", len(indice) <= 900 and all(f"[[{p_}]]" in indice
+       for p_ in wiki.PAGINAS) and "mis_notas/: 1" in indice, f"{len(indice)} caracteres")
+
+    # git: ediciones de Reizo con su nombre, cambios del asistente con el suyo
+    ok("git: tus cambios sin commit se guardan como 'Ediciones de Reizo'",
+       wiki.guardar_ediciones_reizo() and "Ediciones de Reizo" in wiki.git("log", "-1", "--format=%s").stdout)
+    autor_reizo = wiki.git("log", "-1", "--format=%an").stdout.strip()
+    wiki.escribir("apps", {"para_que": "- Spotify para música."}, ahora=HOY)
+    wiki.commit("Reflexión 2026-10-05")
+    ok("git: commit del asistente con autor Asistente",
+       wiki.git("log", "-1", "--format=%an %s").stdout.strip() == "Asistente Reflexión 2026-10-05"
+       and autor_reizo != "Asistente", f"Reizo como {autor_reizo!r}")
+
+
 SECCIONES = {"entrada": prueba_entrada, "clasificador": prueba_clasificador, "privacidad": prueba_privacidad,
              "simulacion": prueba_simulacion, "fuente_real": prueba_fuente_real,
-             "condiciones": prueba_condiciones, "guardia": prueba_guardia, "sistema_real": prueba_sistema_real}
+             "condiciones": prueba_condiciones, "guardia": prueba_guardia, "sistema_real": prueba_sistema_real,
+             "wiki": prueba_wiki}
 
 if __name__ == "__main__":
     elegidas = sys.argv[1:] or list(SECCIONES)
@@ -253,6 +400,8 @@ if __name__ == "__main__":
     habitos.RUTA.unlink(missing_ok=True)
     for extra in ("-wal", "-shm"):
         (BASE / f"habitos_prueba.db{extra}").unlink(missing_ok=True)
+    wiki_temporal()
+    memoria.RUTA.unlink(missing_ok=True)
     fallos = [r for r in resultados if not r[1]]
     print(f"\n{len(resultados) - len(fallos)}/{len(resultados)} OK")
     sys.exit(1 if fallos else 0)
