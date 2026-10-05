@@ -425,6 +425,9 @@ def prompt_sistema(voz=False):
         "'id_ventana'; usa ver_pantalla con cuadrícula y coordenadas solo si el control no aparece. Después de un "
         "clic o un atajo, comprueba el resultado con listar_controles, ver_pantalla o listar_ventanas antes de decir "
         "que funcionó; si no cambió lo esperado, dilo.",
+        "Si Reizo nombra una app para hacer algo dentro de ella (escribir en el Bloc de notas, guardar en Word), usa "
+        "primero listar_ventanas: si ya tiene una ventana de esa app, tráela con enfocar_ventana y úsala; usa "
+        "abrir_app solo si no hay ninguna. Si solo pide abrir una app ('abre Spotify'), usa abrir_app directamente.",
         "Herramientas disponibles:",
     ]
     for h in HERRAMIENTAS.values():
