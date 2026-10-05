@@ -343,8 +343,9 @@ class Reflexion:
                         continue
                     limpias, descartadas = wiki.preparar_frases(frases, esquema_s.get("frases_max"))
                     for frase, motivo in descartadas:
+                        motivo = motivo.split(" (")[0]  # sin la palabra que coincidió: el texto no se guarda en ningún sitio
                         memoria.registrar_bloqueo("reflexión", "escribir_seccion", {"pagina": pagina, "seccion": sid},
-                                                  motivo)  # el texto sensible no se guarda en ningún sitio
+                                                  motivo)
                         wiki.anotar("bloqueo", f"{pagina}#{sid}: {motivo}, no se escribió", ahora)
                         resultado["bloqueadas"] += 1
                     todas += limpias
@@ -488,7 +489,8 @@ class Planificador:
                                                   motivo=lambda: guardia.motivo or "pedido o atajo de emergencia"
                                                   ).ejecutar(ahora)
                         else:
-                            resultado = self.lint.ejecutar(self.llm, self.parar, self.comprobar_emergencia, ahora)
+                            resultado = self.lint.ejecutar(self.llm, self.parar, self.comprobar_emergencia, ahora,
+                                                           motivo=lambda: guardia.motivo or "pedido o atajo de emergencia")
                     self.ultimo_resultado = resultado
                     if resultado.get("terminada"):
                         self.indice_cambiado = True

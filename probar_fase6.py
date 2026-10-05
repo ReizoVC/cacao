@@ -683,6 +683,83 @@ def prueba_planificador():
         deteccion.Guardia = original
 
 
+# ---------- 6. revisión semanal (lint) ----------
+
+class LLMLintFalso(LLMFalso):
+    """Marca como contradicción las frases con 'Firefox' y como 'ya no se ve' las de Spotify si los patrones
+    medidos no lo mencionan; registra qué se numeró."""
+
+    def create_chat_completion(self, messages, response_format, max_tokens, **_):
+        props = response_format["schema"]["properties"]
+        if "problemas" not in props:
+            return super().create_chat_completion(messages, response_format, max_tokens)
+        contenido = messages[-1]["content"]
+        self.llamadas.append(("lint", contenido))
+        frases = re.findall(r"^(\d+)\. (.*)$", contenido.split("<<<FRASES DEL ASISTENTE>>>")[1].split("<<<FIN>>>")[0],
+                            re.M)
+        patrones = contenido.split("<<<PATRONES MEDIDOS ESTA SEMANA>>>")[1]
+        problemas = []
+        firefox = [int(n) for n, f in frases if "Firefox" in f]
+        if firefox:
+            problemas.append({"tipo": "contradiccion", "frases": firefox, "tuyos": [],
+                              "explicacion": "El alias de navegador apunta a Chrome."})
+        spotify = [int(n) for n, f in frases if "Spotify" in f]
+        if spotify and "Spotify" not in patrones:
+            problemas.append({"tipo": "ya_no_se_ve", "frases": spotify[:3], "tuyos": [],
+                              "explicacion": "Esta semana no hay Spotify por la mañana."})
+        return {"choices": [{"message": {"content": json.dumps({"problemas": problemas}, ensure_ascii=False)}}]}
+
+
+def prueba_lint():
+    import lint
+    import reflexion
+    import sugerencias as sg
+    wiki_temporal()
+    bases_temporales()
+    wiki.asegurar_vault(HOY)
+    hoy2 = HOY + timedelta(days=7)
+    r = sim.simular(hoy2, dias=14, semilla=22, sin_spotify_desde=HOY)  # semana 2 sin Spotify por la mañana
+    clas = r["clasificador"]
+    memoria.recordar("Cuando digo el navegador me refiero a Chrome", "alias", "navegador", "Chrome")
+
+    class LLMSemana1(LLMFalso):
+        @staticmethod
+        def frases_para(seccion):
+            return {"detectadas": ["Entre semana abre Spotify a las 9 (5 de 5 días laborables)."],
+                    "para_que": ["Reizo usa Firefox como navegador principal."]}.get(seccion, [f"Frase de {seccion}."])
+
+    reflexion.Reflexion(LLMSemana1(), clas).ejecutar(HOY)  # semana 1: con Spotify
+    l = lint.Lint()
+    l.mecanicos(HOY)  # primera revisión: guarda qué sugerencias estaban activas
+    # problemas sembrados: enlace roto escrito por código, sección vieja, página suelta, algo sensible en fuentes
+    wiki.escribir("habitos", {"cambios": "- Ver [[noexiste]] y [[apps]]."}, ahora=datetime(2026, 8, 1))
+    (wiki.VAULT / "suelta.md").write_text("una página suelta", encoding="utf-8")
+    (wiki.VAULT / "fuentes" / "clip.md").write_text("Mi contraseña del correo es x", encoding="utf-8")
+    (wiki.VAULT / "mis_notas" / "nav.md").write_text("Uso Firefox en el trabajo.", encoding="utf-8")
+    reflexion.Reflexion(LLMFalso(), clas).ejecutar(hoy2)  # semana 2: la reflexión ya no ve Spotify
+    wiki.escribir("habitos", {"cambios": "- Ver [[noexiste]] y [[apps]]."}, ahora=datetime(2026, 8, 1))
+    llm = LLMLintFalso()
+    res = l.ejecutar(llm, ahora=hoy2)
+    rev = wiki.ruta("revision").read_text(encoding="utf-8")
+    ok("lint: terminado y revision.md escrita", res["terminada"] and "Problemas mecánicos" in rev, str(res)[:200])
+    ok("mecánico: enlace roto arreglado por código", "[[noexiste]]" not in wiki.ruta("habitos").read_text(encoding="utf-8")
+       and any("enlace(s) roto(s)" in a for a in res["arreglos"]), str(res["arreglos"]))
+    ok("datos viejos: sección sin actualizar desde hace > 30 días", "sin actualizar desde 2026-08-01" in rev)
+    ok("rutina que desaparece: la sugerencia de Spotify ya no se ve", "Ya no se ve en los datos: «A esta hora (09:00) "
+       "sueles abrir Spotify" in rev)
+    ok("página suelta: propone moverla", "Página suelta suelta.md" in rev)
+    ok("sensible en fuentes/: avisa sin copiar el texto", "fuentes/clip.md: contiene algo sensible" in rev
+       and "correo es x" not in rev)
+    ok("modelo: contradicción con el alias anotada", "Posible contradicción: «Reizo usa Firefox" in rev, rev[-600:])
+    numeradas = next(c for t, c in llm.llamadas if t == "lint").split("<<<FIN>>>")[0]
+    ok("tu texto nunca se numera como sospechoso", "Uso Firefox en el trabajo" not in numeradas)
+    ok("aviso al iniciar: una sola vez", (lint.aviso_de_revision() or "").startswith("Hay ")
+       and lint.aviso_de_revision() is None)
+    ok("lint: no vuelve a tocar hasta dentro de 7 días", not l.pendiente(hoy2 + timedelta(days=3))
+       and l.pendiente(hoy2 + timedelta(days=7)))
+    ok("git: commit del lint", "Lint 2026-10-12" in wiki.git("log", "-1", "--format=%s").stdout)
+
+
 SECCIONES = {"entrada": prueba_entrada, "clasificador": prueba_clasificador, "privacidad": prueba_privacidad,
              "simulacion": prueba_simulacion, "fuente_real": prueba_fuente_real,
              "condiciones": prueba_condiciones, "guardia": prueba_guardia, "sistema_real": prueba_sistema_real,
@@ -691,7 +768,8 @@ SECCIONES = {"entrada": prueba_entrada, "clasificador": prueba_clasificador, "pr
              "memoria_origen": prueba_memoria_origen,
              "reflexion": prueba_reflexion,
              "reflexion_parada": prueba_reflexion_parada,
-             "planificador": prueba_planificador}
+             "planificador": prueba_planificador,
+             "lint": prueba_lint}
 
 if __name__ == "__main__":
     elegidas = sys.argv[1:] or list(SECCIONES)
