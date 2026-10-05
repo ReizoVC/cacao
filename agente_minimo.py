@@ -686,7 +686,7 @@ def descargar_modelos():
 def cargar_modelos():
     """Al cerrar el juego: vuelve a cargar Gemma con los mismos parámetros y lo conecta de nuevo."""
     global llm
-    llm = crear_llm(CONFIG, esperar_juego=True)
+    llm = crear_llm(CONFIG, comprobar_juego=False)  # el detector del modo juego ya dio el juego por terminado
     llm.interrumpir = emergencia.comprobar
     for _, cargar in EXTRAS_MODO_JUEGO:
         cargar()
@@ -718,9 +718,32 @@ def iniciar_memoria_wiki():
     return planificador, aviso_de_revision()
 
 
+FRASES_JUGANDO = ("estoy jugando", "voy a jugar", "me pongo a jugar", "activa el modo juego", "modo juego")
+FRASES_TERMINE = ("ya termine", "termine de jugar", "ya acabe", "acabe de jugar", "ya no estoy jugando",
+                  "deje de jugar", "sal del modo juego", "desactiva el modo juego")
+
+
+def comando_modo_juego(pedido):
+    """'estoy jugando' / 'ya terminé': los atiende el código, sin el modelo (en pausa está descargado).
+    Devuelve la respuesta, o None si el pedido no es uno de esos comandos."""
+    if _modo_juego is None:
+        return None
+    orden = normalizar(pedido).strip(" .,!¡?¿")
+    if len(orden.split()) > 6:
+        return None
+    if any(f in orden for f in FRASES_TERMINE):
+        return _modo_juego.ya_termine()
+    if any(f in orden for f in FRASES_JUGANDO):
+        return _modo_juego.estoy_jugando()
+    return None
+
+
 def atender_con_memoria(pedido, historial, planificador, voz=False):
     """atender() con el modelo reservado (detiene la reflexión si estaba en curso) y la sugerencia del momento.
     En modo juego el modelo está descargado: se avisa de la pausa sin llamarlo."""
+    respuesta = comando_modo_juego(pedido)
+    if respuesta is not None:
+        return respuesta
     if _modo_juego is not None and _modo_juego.en_pausa():
         return _modo_juego.mensaje()
     with planificador.pedido():

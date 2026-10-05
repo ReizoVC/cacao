@@ -214,14 +214,31 @@ def escuchar(atajo, microfono, transcriptor, al_pulsar=lambda: None):
     return audio, datos, texto, soltado
 
 
+_transcriptor_pausa = None
+
+
+def transcribir_en_pausa(audio):
+    global _transcriptor_pausa
+    if _transcriptor_pausa is None:  # se carga la primera vez (y se descarga el modelo la primera vez que se usa)
+        _transcriptor_pausa = TranscriptorWhisper(CONFIG_VOZ.get("whisper_pausa", "base"), dispositivo="cpu",
+                                                  tipo="int8")
+    return _transcriptor_pausa.transcribir(a_wav(audio))
+
+
 def filtrar(audio, soltado, transcriptor):
     """Frenos: silencio (sin transcribir), transcripción vacía y demasiadas palabras para la voz que hubo.
     Devuelve (datos para el registro, texto o None si se descartó)."""
     analisis = analizar_audio(audio)
     datos = {"hora": time.strftime("%Y-%m-%d %H:%M:%S"), **analisis}
-    if a._modo_juego is not None and a._modo_juego.en_pausa():  # Whisper está descargado
-        datos["freno"] = "modo_juego"
-        return datos, None
+    if a._modo_juego is not None and a._modo_juego.en_pausa():
+        # Whisper de la GPU está descargado: un modelo pequeño en la CPU solo para entender "ya terminé"
+        texto = transcribir_en_pausa(audio) if analisis["voz_s"] >= CONFIG_VOZ["min_voz_s"] else ""
+        datos["transcripcion_pausa"] = texto
+        if not any(f in a.normalizar(texto) for f in a.FRASES_TERMINE + a.FRASES_JUGANDO):
+            datos["freno"] = "modo_juego"
+            return datos, None
+        print(f"\nTú (voz, en pausa): {texto}", flush=True)
+        return datos, texto
     if analisis["voz_s"] < CONFIG_VOZ["min_voz_s"]:
         datos["freno"] = "silencio"
         print(f"  (descartado sin transcribir: {analisis['voz_s']} s de voz)", flush=True)

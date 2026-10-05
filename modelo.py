@@ -52,10 +52,12 @@ def cargar_config():
     return config
 
 
-def crear_llm(config, esperar_juego=False):
-    # con un juego abierto no se carga nada en la GPU: las pruebas terminan con un aviso, el agente espera
-    from guardia_juego import exigir_gpu_libre
-    exigir_gpu_libre("Gemma", esperar=esperar_juego)
+def crear_llm(config, esperar_juego=False, comprobar_juego=True):
+    # con un juego activo no se carga nada en la GPU: las pruebas terminan con un aviso, el agente espera.
+    # comprobar_juego=False: la recarga del modo juego, que ya decidió con su detector (y con "ya terminé")
+    if comprobar_juego:
+        from guardia_juego import exigir_gpu_libre
+        exigir_gpu_libre("Gemma", esperar=esperar_juego)
     # caché KV cuantizada para ahorrar VRAM; llama.cpp exige flash attention para cuantizar la caché V.
     # LlamaRapida aplica la gramática después de top_k (~26 ms/token en vez de ~125; ver resultados_latencia.md).
     # OJO: sobrescribe Llama._init_sampler, método interno de llama-cpp-python 0.3.36; puede romperse al

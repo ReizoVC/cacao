@@ -125,8 +125,9 @@ class TranscriptorWhisper:
     rellenaba audios cortos con ella, y Whisper con condition_on_previous_text arrastra frases anteriores."""
 
     def __init__(self, modelo="large-v3-turbo", dispositivo="cuda", tipo="int8_float16", haz=5, esperar_juego=False):
-        from guardia_juego import exigir_gpu_libre
-        exigir_gpu_libre("Whisper", esperar=esperar_juego)
+        if dispositivo != "cpu":
+            from guardia_juego import exigir_gpu_libre
+            exigir_gpu_libre("Whisper", esperar=esperar_juego)
         _rutas_cuda_pip()
         from faster_whisper import WhisperModel
         self.modelo = WhisperModel(modelo, device=dispositivo, compute_type=tipo)
@@ -149,9 +150,7 @@ class TranscriptorWhisper:
         self.modelo.model.unload_model()
 
     def cargar(self):
-        from guardia_juego import exigir_gpu_libre
-        exigir_gpu_libre("Whisper", esperar=True)
-        self.modelo.model.load_model()
+        self.modelo.model.load_model()  # lo llama el modo juego cuando ya dio el juego por terminado
 
     def cerrar(self):
         self.modelo = None
