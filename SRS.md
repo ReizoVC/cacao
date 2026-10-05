@@ -291,7 +291,8 @@ ventana activa") empezara con `listar_ventanas` en 3/3. Se acotó a "cuando nomb
   - lectura y edición de la wiki;
   - notas en "Notas de Reizo" o `mis_notas/`;
   - casillas de desbloqueo en `rutinas.md`.
-- **Isla gráfica:** en diseño, pendiente de aprobación (`diseno_fase7.md`).
+- **Isla gráfica (Fase 7):** `C:\asistente-ui`. Muestra los estados del agente con Mochi y pide las confirmaciones con
+  botones, que solo aceptan clics físicos. Probada en simulación y con la isla real (`probar_fase7.py`, 37/37).
 
 ### 6.2 Software
 
@@ -360,6 +361,9 @@ estos últimos solo para detectar actividad.
   - RF-50 → `probar_emergencia.py`, `prueba_real.py 3`.
 - **Pendientes en real (contigo frente al PC):**
   - rechazo con Esc en voz;
+  - Whisper pequeño en la CPU con audio real: que entienda "estoy jugando" y "ya terminé" en modo juego;
+  - isla: confirmar con clic físico en Permitir/Denegar y con Enter/Esc; que no quite el foco; grabarla con
+    "Permitir capturas";
   - registro de hábitos durante una semana;
   - incógnito por navegador, mandos y audio;
   - modo juego con un juego de verdad;

@@ -157,13 +157,18 @@ resto se ve al pasar el mouse por el borde superior.
    - los botones;
    - el modo voz con botones y Enter/Esc.
 
-## 8. Decisiones para tu aprobación
+## 8. Decisiones (aprobadas el 2026-10-05)
 
-1. **El agente es el servidor WebSocket**, con token por sesión y comprobación de Origin, solo en 127.0.0.1.
-2. **Se quitan:** hooks de Claude Code, chat, API de Anthropic, integraciones, claves, soltar archivos y toda la red
-   saliente.
-3. **Sin campo de texto en la isla** (evita el foco); los pedidos siguen entrando por voz o consola.
-4. **Mapa de estados del §5.**
-5. **Confirmación:** botones con 30 s y "no" por defecto. En voz, botón o Enter/Esc, lo que llegue primero.
-6. **Invisible para el agente:** `WDA_EXCLUDEFROMCAPTURE`, más tapar la isla en las capturas y excluirla por proceso.
-7. **Nombre local "Asistente"** y repositorio sin remoto. Mochi y sus sonidos solo en tu PC (licencia de los assets).
+| # | Decisión | Estado |
+|---|---|---|
+| 1 | El agente es el servidor WebSocket (token por sesión, Origin, solo 127.0.0.1) | Aprobada. **Cómo recibe la isla el token:** el agente lo genera al arrancar (32 bytes aleatorios) y lo escribe con el puerto en `%LOCALAPPDATA%\Asistente\ui.json`, en tu carpeta de usuario. La isla lo lee con el comando de Tauri `leer_conexion` y el webview lo manda en su primer mensaje. El archivo se borra al salir del agente |
+| 2 | Se quitan hooks, chat, API de Anthropic, integraciones, claves, soltar archivos y red saliente | Aprobada y hecha (sin `reqwest`, `keyring` ni `tokio`) |
+| 3 | Sin campo de texto en la isla | Aprobada; **se deja para más adelante** |
+| 4 | Mapa de estados del §5 | Aprobada y hecha (`src/island/agente.ts`) |
+| 5 | Confirmación con botones y "no" a los 30 s | Aprobada con requisitos de seguridad, hechos: (a) **solo entrada física**: hooks de bajo nivel; Enter/Esc con `LLKHF_INJECTED` y botones tras un clic con `LLMHF_INJECTED` se rechazan (`entrada_fisica.py`); (b) la herramienta mouse no puede hacer clic dentro de la isla; (c) los botones no quitan el foco (`WS_EX_NOACTIVATE`, que ahora se vuelve a aplicar cada vez que Tauri cambia la transparencia de clics) |
+| 6 | Invisible para el agente | Aprobada y hecha. **Se puede desactivar para grabar la isla:** bandeja → "Permitir capturas (para grabar la isla)" o el interruptor en Ajustes de la isla. Aun así, el agente la tapa en negro en sus capturas |
+| 7 | Nombre local "Asistente", repositorio sin remoto | Aprobada y hecha |
+
+**Cómo compilar la isla:** `C:\asistente-ui\windows`, `npm install` y luego `npx tauri build --no-bundle` desde un entorno
+de VS 2022 Community (`vcvars64.bat`). VS 18 Insiders no trae las librerías de C++ y el enlazado falla
+(`msvcrt.lib`). El ejecutable queda en `target\release\asistente-ui.exe` y `config.json` → `ui.exe` apunta ahí.
