@@ -180,7 +180,7 @@ def pruebas_logica():
             return "Listo, ya volví"
 
     import unicodedata
-    ns = {"_modo_juego": ModoFalso(), "unicodedata": unicodedata}
+    ns = {"_modo_juego": ModoFalso(), "unicodedata": unicodedata, "notificar": lambda *a, **k: None}
     exec(compile(ast.Module(body=nodos, type_ignores=[]), "agente_minimo.py", "exec"), ns)
     r = ns["atender_con_memoria"]("pon el volumen al 30", [], PlanFalso())
     ok("pedido en modo juego: aviso de pausa sin llamar al modelo", "pausa" in r and not usado, r)

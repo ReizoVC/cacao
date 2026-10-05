@@ -74,20 +74,20 @@ if __name__ == "__main__":
 
     # 2) confirmación con teclado (ejecución real sustituida por una falsa)
     ejecutadas = []
-    ejecutar_real, confirmar_real = voz._ejecutar, voz.confirmar_teclado
+    ejecutar_real, confirmar_real = voz._ejecutar, voz._confirmar_base
     voz._ejecutar = lambda nombre, args: ejecutadas.append(nombre) or {"ok": True, "simulado": True}
     for respuesta, esperado in ((False, False), (None, False), (True, True)):
-        voz.confirmar_teclado = lambda *_a, **_k: respuesta
+        voz._confirmar_base = lambda *_a, **_k: bool(respuesta)
         ejecutadas.clear()
         r = voz.ejecutar_voz("volumen", {"accion": "fijar", "nivel": 50})
         registrar(f"confirmación volumen con {'Enter' if respuesta else 'Esc' if respuesta is False else 'sin respuesta'}",
                   bool(ejecutadas) == esperado, resultado=r)
     preguntas = []
-    voz.confirmar_teclado = lambda *_a, **_k: preguntas.append(1) or False
+    voz._confirmar_base = lambda *_a, **_k: preguntas.append(1) or False
     ejecutadas.clear()
     voz.ejecutar_voz("listar_ventanas", {})
     registrar("solo lectura no pregunta", not preguntas and ejecutadas == ["listar_ventanas"])
-    voz._ejecutar, voz.confirmar_teclado = ejecutar_real, confirmar_real  # el paso 3 usa las reales (solo lectura)
+    voz._ejecutar, voz._confirmar_base = ejecutar_real, confirmar_real  # el paso 3 usa las reales (solo lectura)
 
     # 3) órdenes habladas de solo lectura, de punta a punta (agente real, altavoz falso)
     pensamientos = []

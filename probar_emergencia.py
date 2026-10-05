@@ -43,16 +43,16 @@ if __name__ == "__main__":
         em.reanudar()
 
     # 2) mientras se espera una confirmación: el atajo llega antes de responder "s"; la herramienta no se ejecuta
-    entrada_original = b.ns["input"]
+    entrada_original = b.ns["confirmar"]
 
-    def confirmar_tras_atajo(*_):
+    def confirmar_tras_atajo(*_a, **_k):
         em.simular_atajo()
         time.sleep(0.05)  # deja que el hilo del atajo procese el mensaje
-        return "s"
+        return True
 
-    b.ns["input"] = confirmar_tras_atajo
+    b.ns["confirmar"] = confirmar_tras_atajo
     r = b.correr("topk", 11, "renombra Spark.txt de mis descargas a spark_copia.txt")
-    b.ns["input"] = entrada_original
+    b.ns["confirmar"] = entrada_original
     ejecutadas = [p for p in r["planes"] if p["herramienta"] == "mover_archivo"]
     registrar("corta al confirmar y no ejecuta la herramienta",
               r["respuesta"] is not None and "atajo de emergencia" in r["respuesta"] and not ejecutadas,

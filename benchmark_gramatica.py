@@ -322,7 +322,8 @@ def _borrar_vault_prueba():
 
 atexit.register(_borrar_vault_prueba)
 # respuesta a toda confirmación: CONFIRMAR=s deja avanzar las simuladas del grupo 4 (no hacen nada real)
-ns["input"] = lambda *_: os.environ.get("CONFIRMAR", "n")
+ns["confirmar"] = lambda *_a, **_k: os.environ.get("CONFIRMAR", "n") == "s"  # sin hooks ni isla
+ns["notificar"] = lambda *_a, **_k: None
 
 # ---------- modelo con medición ----------
 CONFIG = cargar_config()
