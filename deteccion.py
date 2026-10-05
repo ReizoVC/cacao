@@ -22,6 +22,7 @@ user32 = ctypes.windll.user32
 QUNS_PANTALLA_COMPLETA = {2, 3, 4}  # ocupado, D3D a pantalla completa, modo presentación
 WS_CAPTION = 0x00C00000
 CLASES_ESCRITORIO = {"Progman", "WorkerW", "Shell_TrayWnd", "Shell_SecondaryTrayWnd"}
+_hilo_com = threading.local()
 
 
 class MONITORINFO(ctypes.Structure):
@@ -70,21 +71,21 @@ class SistemaWindows:
         import comtypes
         from pycaw.pycaw import AudioUtilities, IAudioMeterInformation
         import habitos
-        comtypes.CoInitialize()  # cada hilo que usa COM
+        if not getattr(_hilo_com, "listo", False):
+            # una vez por hilo y sin CoUninitialize: liberar COM con objetos aún vivos puede tumbar el proceso
+            comtypes.CoInitialize()
+            _hilo_com.listo = True
         sesiones = []
-        try:
-            for s in AudioUtilities.GetAllSessions():
-                pid = s.ProcessId
-                if not pid or pid == self.pid_propio or s.State != 1:  # 1 = AudioSessionStateActive
-                    continue
-                try:
-                    pico = s._ctl.QueryInterface(IAudioMeterInformation).GetPeakValue()
-                    exe = s.Process.exe() if s.Process else None
-                except Exception:
-                    continue
-                sesiones.append((exe, habitos.aumid_de_pid(pid), pico))
-        finally:
-            comtypes.CoUninitialize()
+        for s in AudioUtilities.GetAllSessions():
+            pid = s.ProcessId
+            if not pid or pid == self.pid_propio or s.State != 1:  # 1 = AudioSessionStateActive
+                continue
+            try:
+                pico = s._ctl.QueryInterface(IAudioMeterInformation).GetPeakValue()
+                exe = s.Process.exe() if s.Process else None
+            except Exception:
+                continue
+            sesiones.append((exe, habitos.aumid_de_pid(pid), pico))
         return sesiones
 
     def uso_gpu(self):

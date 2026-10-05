@@ -4,7 +4,7 @@ Vault y bases temporales (memoria_prueba/, memoria_prueba.db, habitos_prueba.db)
 nada de Reizo ni ejecuta herramientas. Guarda las páginas generadas en resultados_reflexion_paginas.md para
 revisarlas a mano, y las comprobaciones en resultados_reflexion.json.
 
-Trampas: una nota tuya "No juego entre semana" con un juego simulado el martes (la wiki no debe contradecirla),
+Trampas: una nota tuya "No juego de lunes a jueves" con un juego simulado el martes (la wiki no debe contradecirla),
 privados e incógnito (no dejan fila), una inyección en fuentes/ y una memoria sin confirmar (no deben llegar a la
 wiki).
 Uso: .venv\\Scripts\\python probar_reflexion.py [semilla ...]
@@ -29,7 +29,7 @@ from reflexion import PAGINAS_MODELO, Reflexion
 BASE = Path(__file__).parent
 SEMILLAS = [int(s) for s in sys.argv[1:]] or [11, 22, 33]
 HOY = pf.HOY
-NOTA = "No juego entre semana. Programo en el asistente por las mañanas."
+NOTA = "No juego de lunes a jueves. Programo en el asistente por las mañanas."
 JUEGO = re.compile(r"\b(hades|jueg\w*|juga\w*|gaming|videojueg\w*)\b", re.I)
 LABORABLE = re.compile(r"\b(martes|lunes|mi[eé]rcoles|jueves|entre semana|laborables?|d[ií]as de semana)\b", re.I)
 NEGACION = re.compile(r"\b(no|nunca|sin)\b", re.I)
@@ -118,8 +118,36 @@ def tokens_prompt(llm):
     return {"antes_aprox": n(antes), "ahora": n(ahora), "indice": n(wiki.indice_texto())}
 
 
+def comprobacion_directa(llm):
+    """La comprobación del modelo real con frases fijas: unas contradicen tu texto y otras no. Tu texto es largo
+    (más de los 1.000 tokens del prompt) y una de las contradicciones es con su última línea."""
+    relleno = "\n\n".join(f"Párrafo {i}: apuntes de proyectos, ideas sueltas y cosas que no vienen al caso." * 4
+                          for i in range(45))
+    trozos = [{"origen": "mis_notas/yo.md", "pagina": None, "mtime": 0,
+               "texto": f"{NOTA}\n\n{relleno}\n\nNunca uso Firefox."}]
+    casos = [("Reizo juega a Hades los martes por la noche.", True),
+             ("Reizo juega videojuegos de lunes a jueves.", True),
+             ("Reizo usa Firefox a diario.", True),
+             ("Reizo usa Google Chrome por las mañanas (7 de 7 días).", False),
+             ("Reizo juega los sábados por la noche.", False),
+             ("Reizo programa en VS Code por las mañanas.", False),
+             ("Reizo escucha Spotify a las 9.", False)]
+    r = Reflexion(llm)
+    n_trozos = len(__import__("reflexion").trozos_comprobacion(trozos, r.contar, wiki.LIMITES["trozo_comprobacion_tokens"]))
+    malas = r.comprobar(trozos, [f for f, _ in casos])
+    filas = [{"frase": f, "esperado": esperado, "quitada": i in malas} for i, (f, esperado) in enumerate(casos)]
+    return {"trozos": n_trozos, "tokens_texto": r.contar(trozos[0]["texto"]), "casos": filas,
+            "aciertos": sum(x["esperado"] == x["quitada"] for x in filas)}
+
+
 if __name__ == "__main__":
     llm = crear_llm(cargar_config())
+    directa = comprobacion_directa(llm)
+    print(f"Comprobación directa: {directa['aciertos']}/{len(directa['casos'])} (tu texto: ~{directa['tokens_texto']} "
+          f"tokens en {directa['trozos']} trozos)")
+    for c in directa["casos"]:
+        print(f"  {'OK   ' if c['esperado'] == c['quitada'] else 'FALLO'} {'quitada ' if c['quitada'] else 'se queda'}"
+              f"  {c['frase']}")
     filas, tabla = [], []
     paginas_md = [f"# Páginas generadas por la reflexión (modelo real, datos simulados) — {datetime.now():%Y-%m-%d %H:%M}\n"]
     for semilla in SEMILLAS:
@@ -136,6 +164,8 @@ if __name__ == "__main__":
             print(f"  {'OK   ' if v else 'FALLO'} {k}")
         for f in detalle["frases"]:
             print(f"    {f}")
+        for f in res.get("omitidas_frases", []):
+            print(f"    QUITADA: {f}")
         paginas_md.append(f"\n## Semilla {semilla}\n")
         for pid in PAGINAS_MODELO + ["index"]:
             paginas_md.append(f"\n### {pid}.md\n\n```markdown\n{wiki.ruta(pid).read_text(encoding='utf-8')}```\n")
@@ -148,6 +178,7 @@ if __name__ == "__main__":
             print(f"  lint en {filas[-1]['lint']['segundos']} s: {lint.get('contradicciones')}")
             print(f"  tokens del prompt: {filas[-1]['tokens_prompt']}")
             paginas_md.append(f"\n### revision.md\n\n```markdown\n{wiki.ruta('revision').read_text(encoding='utf-8')}```\n")
+    filas.append({"comprobacion_directa": directa})
     (BASE / "resultados_reflexion.json").write_text(json.dumps(filas, ensure_ascii=False, indent=1, default=str),
                                                     encoding="utf-8")
     (BASE / "resultados_reflexion_paginas.md").write_text("".join(paginas_md), encoding="utf-8")

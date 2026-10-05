@@ -220,12 +220,36 @@ En este punto agrega también el **atajo de emergencia** (`ctrl+alt+shift+q`) co
 
 ---
 
-## Fase 6. Aprendizaje y recomendaciones
+## Fase 6. Memoria tipo wiki, hábitos y recomendaciones
 
-1. **Registro de hábitos:** un hilo en segundo plano que cada 30–60 segundos guarda en SQLite la ventana activa y la hora.
-2. **Reflexión periódica:** una vez al día, el modelo lee el registro y escribe un resumen de patrones que se guarda como memoria de tipo `habito`.
-3. **Perfil en el prompt:** al iniciar, las memorias más relevantes se agregan al prompt de sistema.
-4. **Recomendaciones:** cuando detecta un patrón claro (por ejemplo, abres las mismas apps a la misma hora), sugiere la acción. Ofrece siempre, nunca la ejecuta sola.
+Diseño completo en `diseno_fase6.md`: es el patrón *LLM Wiki* de Karpathy, con Obsidian para leer la wiki.
+
+1. **Registro de hábitos** (`registro_habitos.py`):
+   - es un proceso aparte, sin modelo, que cada 30 s guarda en `habitos.db` la app al frente, su categoría y el estado;
+   - **no guarda títulos**;
+   - los gestores de contraseñas, las apps de banco (`datos_locales.json` → `apps_banco`), Seguridad de Windows y el incógnito no dejan fila;
+   - las muestras crudas se borran a los 30 días; el resumen diario se queda;
+   - para arrancarlo con Windows, crea un acceso directo a `.venv\Scripts\pythonw.exe registro_habitos.py` en `shell:startup`.
+2. **Wiki** en `memoria\`:
+   - es un vault de Obsidian con su propio git local;
+   - `index.md` (siempre en el prompt) y `log.md` los escribe solo el código;
+   - páginas `perfil`, `habitos`, `apps`, `rutinas` y `revision`, con secciones fijas (`wiki_esquema.json`);
+   - tus notas van en las secciones "Notas de Reizo" o en `mis_notas\`; el contenido externo, en `fuentes\` (nada lo lee).
+   - Si editas una sección, queda congelada: el asistente no la toca hasta que la vacíes.
+3. **Reflexión diaria** (`reflexion.py`):
+   - el código mide y el modelo redacta frases por página;
+   - una comprobación sobre todo tu texto quita lo que lo contradiga;
+   - solo arranca con ≥ 10 min sin teclado, mouse ni mando, sin pantalla completa, sin juegos abiertos, sin audio que no sea música y con la GPU libre;
+   - se detiene en cuanto vuelve la actividad.
+4. **Revisión semanal** (`lint.py`): arregla lo mecánico y anota en `revision.md` lo que debes mirar.
+5. **Sugerencias** (`sugerencias.py`):
+   - solo texto, máximo 2 al día;
+   - solo para apps que empiezas a usar a la misma hora en ≥ 4 de 7 días;
+   - "no me sugieras eso" las bloquea; para verlas y desbloquearlas, la herramienta `sugerencias` o las casillas de `rutinas.md`.
+6. **Pruebas:**
+   - `probar_fase6.py` (sin modelo);
+   - `probar_reflexion.py` (modelo real con 7 días simulados de `simular_habitos.py`);
+   - `SIN_REALES=1 evaluar_pruebas.py` (las 65 frases sin tocar archivos ni la pantalla).
 
 ---
 
@@ -288,5 +312,5 @@ Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agen
 - [ ] `agente_minimo.py` resolviendo las 5 frases de prueba
 - [ ] Set de pruebas con porcentaje de acierto medido
 - [ ] Herramientas restantes y atajo de emergencia
-- [ ] Memoria, hábitos y recomendaciones
+- [ ] Memoria wiki, hábitos y recomendaciones (código y pruebas simuladas hechos; falta probar en real)
 - [ ] Voz, interfaz e inicio automático

@@ -485,18 +485,26 @@ class LLMFalso:
     def frases_para(seccion):
         return {"patrones": ["Entre semana empieza con VS Code a las 9 (5 de 5 días), ver [[apps]].",
                              "Juega a Hades los martes por la noche. CONTRADICE",
-                             "Guarda sus contraseñas en el Bloc de notas.", "Mira [[noexiste]] a veces."],
+                             "Guarda sus contraseñas en el Bloc de notas.", "Mira [[noexiste]] a veces.",
+                             "Reizo INVENTA historias los domingos."],
                 "para_que": ["Usa VS Code para programar.", "Reizo usa Firefox a diario."]}.get(
             seccion, [f"Frase de {seccion}."])
 
     def create_chat_completion(self, messages, response_format, max_tokens, **_):
         props = response_format["schema"]["properties"]
         contenido = messages[-1]["content"]
-        if "contradicen" in props:
+        if "contradice" in props:
             self.llamadas.append(("comprobar", contenido))
-            frases = re.findall(r"^(\d+)\. (.*)$", contenido.split("<<<FRASES NUEVAS>>>")[1], re.M)
-            salida = {"contradicen": [int(n) for n, f in frases if "CONTRADICE" in f
-                                      or ("Firefox" in f and "Nunca uso Firefox" in contenido)]}
+            frase = re.search(r"Frase: «(.*)»", contenido).group(1)
+            trozo = contenido.split("<<<TEXTO DE REIZO (es verdad)>>>")[1].split("<<<FIN>>>")[0]
+            if "CONTRADICE" in frase:
+                salida = {"contradice": True, "cita": trozo.strip()[:30]}
+            elif "Firefox" in frase and "Nunca uso Firefox" in trozo:
+                salida = {"contradice": True, "cita": "Nunca uso Firefox"}
+            elif "INVENTA" in frase:  # dice que contradice, pero cita algo que Reizo no escribió
+                salida = {"contradice": True, "cita": "una frase que Reizo nunca escribió"}
+            else:
+                salida = {"contradice": False, "cita": ""}
         else:
             self.llamadas.append(("redactar", contenido))
             salida = {"secciones": {s: self.frases_para(s) for s in props["secciones"]["properties"]},
@@ -548,6 +556,7 @@ def prueba_reflexion():
        and "habitos.db 2026-09-28..2026-10-04" in h["frontmatter"]["fuentes"], str(h["frontmatter"]))
     pat = h["secciones"]["patrones"]["texto"]
     ok("comprobación: la frase que contradice tu nota se quita", "CONTRADICE" not in pat and "Entre semana" in pat, pat)
+    ok("comprobación: si la cita no está en tu texto, no se quita nada", "INVENTA" in pat)
     ok("filtro: la frase sensible no se escribe", "contraseñas" not in pat)
     ok("enlaces: el roto pasa a texto, el bueno se queda", "[[noexiste]]" not in pat and "[[apps]]" in pat)
     log = (v / "log.md").read_text(encoding="utf-8")

@@ -293,22 +293,38 @@ class Reflexion:
 
     def comprobar(self, trozos_reizo, frases):
         """Índices (base 0) de las frases que contradicen algún trozo del texto de Reizo."""
+        # Una llamada por frase y por trozo (con todas las frases juntas, el modelo marcaba de más: en la prueba quitó
+        # "usa Chrome por las mañanas" por una nota sobre juegos). La frase va al final, así llama.cpp reutiliza el
+        # prefijo (texto de Reizo y ejemplos) y cada llamada solo lee unas decenas de fichas. Si el modelo dice que
+        # contradice, tiene que citar las palabras de Reizo: una cita que no está en su texto no quita nada.
         if not trozos_reizo or not frases:
             return set()
-        numeradas = "\n".join(f"{i}. {f}" for i, f in enumerate(frases, 1))
-        esquema = {"type": "object", "properties": {"contradicen": {
-            "type": "array", "items": {"type": "integer", "enum": list(range(1, len(frases) + 1))}}},
-            "required": ["contradicen"]}
+        esquema = {"type": "object", "properties": {"contradice": {"type": "boolean"},
+                                                    "cita": {"type": "string", "maxLength": 150}},
+                   "required": ["contradice", "cita"]}
+        sistema = ("Decides si UNA frase contradice el texto de Reizo, que es verdad. Contradecir es afirmar lo "
+                   "contrario de algo que Reizo dice o ponerlo en duda. Hablar de otro tema, añadir datos o ser más "
+                   "concreto NO es contradecir. Responde SOLO con el JSON pedido.")
+        ejemplos = ("Ejemplos, con otro texto de Reizo: 'No uso Firefox. Trabajo de noche.'\n"
+                    "- Frase 'Reizo usa Chrome por las mañanas' -> {\"contradice\": false, \"cita\": \"\"} (otro tema)\n"
+                    "- Frase 'Reizo usa Firefox a diario' -> {\"contradice\": true, \"cita\": \"No uso Firefox\"}\n"
+                    "- Frase 'Reizo trabaja de noche (5 de 7 días)' -> {\"contradice\": false, \"cita\": \"\"} (coincide)\n"
+                    "- Frase 'Reizo usa Spotify de noche' -> {\"contradice\": false, \"cita\": \"\"} (puede trabajar "
+                    "y usar otra app a la misma hora)")
         malas = set()
         for trozo in trozos_comprobacion(trozos_reizo, self.contar, LIMITES["trozo_comprobacion_tokens"]):
-            contenido = (f"<<<TEXTO DE REIZO (es verdad)>>>\n{trozo}\n<<<FIN>>>\n\n<<<FRASES NUEVAS>>>\n{numeradas}\n"
-                         "<<<FIN>>>\n\n¿Qué frases nuevas contradicen, niegan o ponen en duda algo del texto de Reizo? "
-                         "Una frase que habla de otra cosa NO lo contradice. Responde {\"contradicen\": [números]}, "
-                         "con la lista vacía si ninguna.")
-            r = self._completar([{"role": "system", "content": "Revisas frases contra el texto de Reizo, que es "
-                                  "verdad. Responde SOLO con el JSON pedido."},
-                                 {"role": "user", "content": contenido}], esquema, 120)
-            malas |= {n - 1 for n in r.get("contradicen", []) if isinstance(n, int) and 1 <= n <= len(frases)}
+            base = normalizar(trozo)
+            for i, frase in enumerate(frases):
+                if i in malas:
+                    continue
+                contenido = (f"<<<TEXTO DE REIZO (es verdad)>>>\n{trozo}\n<<<FIN>>>\n\n{ejemplos}\n\n"
+                             f"Frase: «{frase}»\n¿Contradice el texto de Reizo? Si contradice, copia en 'cita' las "
+                             "palabras exactas de Reizo que contradice.")
+                r = self._completar([{"role": "system", "content": sistema}, {"role": "user", "content": contenido}],
+                                    esquema, 80)
+                cita = normalizar(str(r.get("cita", "")))
+                if r.get("contradice") is True and len(cita) >= 5 and fuzz.partial_ratio(cita, base) >= 85:
+                    malas.add(i)
         return malas
 
     def ejecutar(self, hoy=None):
@@ -358,6 +374,7 @@ class Reflexion:
                     n = sum(1 for i in malas if origen[i] == sid)
                     wiki.anotar("omitido", f"{pagina}#{sid}: {n} frase(s) contradecían texto de Reizo", ahora)
                 resultado["omitidas"] += len(malas)
+                resultado.setdefault("omitidas_frases", []).extend(f"{pagina}#{origen[i]}: {todas[i]}" for i in sorted(malas))
                 for s in PAGINAS[pagina]["secciones"]:
                     if s["autor"] == "modelo" and s["id"] in propuestas:
                         secciones[s["id"]] = wiki.viñetas([f for i, f in enumerate(todas)
