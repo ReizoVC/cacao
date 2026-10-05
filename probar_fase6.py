@@ -74,7 +74,9 @@ def prueba_entrada():
     ok("xinput: stick a 6000 es actividad", entrada.hay_cambio(entrada._estado_xinput(g), entrada._estado_xinput(g2)))
     m = entrada.MonitorEntrada().iniciar()
     import time
-    time.sleep(0.6)
+    limite = time.monotonic() + 5  # los hilos de los mandos tardan en registrarse si la máquina va cargada
+    while not (m.rawinput_ok and m.xinput_ok) and time.monotonic() < limite:
+        time.sleep(0.05)
     s = m.segundos_sin_entrada()
     ok("monitor real: arranca y mide (solo lectura)", isinstance(s, float) and s >= 0 and m.rawinput_ok,
        f"xinput={m.xinput_ok} rawinput={m.rawinput_ok}")
@@ -815,7 +817,7 @@ def agente_sin_modelo(respuestas_input):
     ns = {"json": json, "re": re, "unicodedata": __import__("unicodedata"), "memoria": memoria, "wiki": wiki,
           "sugerencias": sg, "datetime": datetime, "PLANIFICADORES": {}, "Detenido": Exception,
           "HERRAMIENTAS": {h["nombre"]: h for h in catalogo["herramientas"]},
-          "input": lambda *_: respuestas.pop(0) if respuestas else "n",
+          "confirmar": lambda *_a, **_k: (respuestas.pop(0) if respuestas else "n") == "s",
           "app_en_marcha": lambda app: False}
     exec(compile(ast.Module(body=nodos, type_ignores=[]), "agente_minimo.py", "exec"), ns)
     ns["IMPLEMENTACIONES"] = {h: (lambda h_: lambda **a: llamadas.append((h_, a)) or {"ok": True})(h)

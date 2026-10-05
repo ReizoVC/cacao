@@ -395,7 +395,8 @@ class Reflexion:
             quedan = [p for p in PAGINAS_MODELO if p not in hechas["paginas"]]
             resultado["detenida"] = str(e)
             wiki.anotar("reflexion_detenida", f"{e}; quedan {', '.join(quedan)}", ahora)
-            wiki.commit(f"Reflexión {dia} (parcial)")
+            # sin commit aquí: el pedido que la detuvo espera el modelo, y git puede tardar más de un segundo.
+            # Lo escrito se guarda en el siguiente commit (guardar_ediciones_reizo lo reconoce como del asistente)
             return resultado
         if len(hechas["paginas"]) == len(PAGINAS_MODELO):
             hechas["terminada"] = True

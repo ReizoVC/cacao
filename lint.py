@@ -175,8 +175,7 @@ class Lint:
         try:
             contradicciones = self.contradicciones(r, ahora) if llm is not None else []
         except ReflexionDetenida as e:
-            wiki.anotar("lint_detenido", str(e), ahora)
-            wiki.commit(f"Lint {ahora:%Y-%m-%d} (parcial)")
+            wiki.anotar("lint_detenido", str(e), ahora)  # sin commit: el pedido que lo detuvo espera el modelo
             return {"terminada": False, "detenida": str(e)}
         mecanicos = arreglos + avisos
         secciones = {"mecanicos": wiki.viñetas(mecanicos) if mecanicos else "(Nada que revisar.)",
