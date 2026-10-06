@@ -13,11 +13,15 @@ Modo voz del asistente: pulsar para hablar y respuesta hablada. El modo texto (a
 - Cada comando queda en voz_registro/: el WAV y una línea en registro.jsonl (transcripción, frenos, confirmaciones,
   respuesta y latencias). La carpeta no va a git.
 - ctrl+alt+shift+q detiene la tarea y lo que se esté diciendo; di "reanudar" para seguir. Di "salir" para terminar.
+- Palabra de activación "Cacao" (palabra_activacion.py, en la CPU; se enciende y apaga con un clic físico en la
+  bandeja o en la isla): al oírla, la isla muestra "escuchando", se graba con un búfer previo hasta un silencio o
+  30 s y pasa por los mismos frenos y por Whisper. Mientras Cacao habla se ignora. Sigue activa en modo juego.
 
 Uso: .venv\\Scripts\\python voz.py              (modo normal)
      .venv\\Scripts\\python voz.py --medir 5    (mide la latencia de 5 comandos -> resultados_latencia_voz.json)
 """
 import json
+import queue
 import re
 import subprocess
 import sys
@@ -33,7 +37,8 @@ from piper import PiperVoice, SynthesisConfig
 
 import agente_minimo as a
 import confirmacion_voz
-from microfono import TASA, AtajoHablar, Microfono, analizar_audio
+import palabra_activacion
+from microfono import TASA, UMBRAL_VOZ, AtajoHablar, Microfono, analizar_audio
 from transcripcion import TranscriptorNativo, TranscriptorWhisper, a_wav, contar_palabras, transcripcion_plausible
 
 BASE = Path(__file__).parent
@@ -151,9 +156,27 @@ def escuchar_confirmacion(aceptar, hecho, entrada):
     """Corre en un hilo mientras se espera una confirmación (confirmacion_voz.Oyente)."""
     if not _piezas:
         return
-    confirmacion_voz.Oyente(_piezas["atajo"], _piezas["microfono"], _piezas["transcriptor"],
-                            min_voz_s=CONFIG_VOZ["min_voz_s"], disparos=_piezas.get("disparos")).escuchar(
-        aceptar, hecho, entrada)
+    atajo = _piezas["atajo"]
+    confirmacion_voz.Oyente(atajo, _piezas["microfono"], _piezas["transcriptor"], min_voz_s=CONFIG_VOZ["min_voz_s"],
+                            disparos=lambda s: esperar_disparo(atajo, s)).escuchar(aceptar, hecho, entrada)
+
+
+def crear_escucha(microfono, locutor):
+    """La palabra de activación, si hay modelo entrenado (entrenar_cacao.py) y no está apagada en config.json."""
+    cfg = {"activa": True, "activa_al_iniciar": True, **CONFIG_VOZ.get("palabra_activacion", {})}
+    if not cfg["activa"]:
+        return None
+    if not palabra_activacion.RUTA_MODELO.exists():
+        print("Aviso: no hay modelo de la palabra «Cacao» (corre entrenar_cacao.py); solo Ctrl+Espacio.")
+        return None
+    a._modos["escucha"] = bool(cfg["activa_al_iniciar"])
+    escucha = palabra_activacion.Escucha(
+        microfono.tasa, activa=lambda: a._modos.get("escucha", False),
+        ignorar=lambda: locutor.hablando() or microfono.grabando,
+        al_detectar=lambda: (locutor.callar(), a.notificar("escuchando")),
+        umbral_voz=UMBRAL_VOZ, mirar_audio=confirmacion_voz.otro_audio_sonando)
+    microfono.oyentes.append(escucha.recibir)
+    return escucha
 
 
 # ---------- registro ----------
@@ -188,6 +211,7 @@ def preparar():
     ruta_voz = Path(CONFIG_VOZ["piper_voz"])
     locutor = Locutor(ruta_voz if ruta_voz.is_absolute() else BASE / ruta_voz, CONFIG_VOZ["velocidad"])
     _piezas.update(atajo=atajo, microfono=microfono, transcriptor=transcriptor, locutor=locutor)
+    _piezas["escucha"] = crear_escucha(microfono, locutor)
     a.iniciar_isla()
     planificador, aviso = a.iniciar_memoria_wiki()
     if hasattr(transcriptor, "descargar"):  # el modo juego también libera Whisper
@@ -227,15 +251,57 @@ class MedidorVRAM:
         self._parar.set()
 
 
+def esperar_disparo(atajo, segundos=None):
+    """'atajo' (Ctrl+Espacio), ('activacion', audio, otro_audio) tras la palabra "Cacao", o None si pasó el
+    tiempo. Lo usan el bucle y, durante una confirmación, el oyente de la frase."""
+    limite = None if segundos is None else time.monotonic() + segundos
+    escucha = _piezas.get("escucha")
+    while True:
+        if atajo.pulsado.is_set():
+            atajo.pulsado.clear()
+            return "atajo"
+        if escucha is not None:
+            try:
+                return escucha.cola.get(timeout=0.05)
+            except queue.Empty:
+                pass
+        else:
+            time.sleep(0.05)
+        if limite is not None and time.monotonic() >= limite:
+            return None
+
+
 def escuchar(atajo, microfono, transcriptor, al_pulsar=lambda: None):
-    """Graba una pulsación y aplica los frenos. Devuelve (audio, datos del registro, texto o None si se descartó,
-    momento de soltar)."""
-    atajo.esperar()
+    """Espera Ctrl+Espacio o la palabra "Cacao", graba y aplica los frenos. Devuelve (audio, datos del registro,
+    texto o None si se descartó, momento de soltar)."""
+    disparo = esperar_disparo(atajo)
     al_pulsar()
-    limite = time.perf_counter() + CONFIG_VOZ["max_grabacion_s"]
-    audio, pulsada, soltado = microfono.grabar_hasta(lambda: atajo.sigue_pulsado() and time.perf_counter() < limite)
+    if disparo == "atajo":
+        limite = time.perf_counter() + CONFIG_VOZ["max_grabacion_s"]
+        audio, pulsada, soltado = microfono.grabar_hasta(lambda: atajo.sigue_pulsado() and time.perf_counter() < limite)
+        datos, texto = filtrar(audio, soltado, transcriptor)
+        datos["tecla_s"] = round(pulsada, 2)
+        return audio, datos, texto, soltado
+    audio, soltado = disparo[1], time.perf_counter()
     datos, texto = filtrar(audio, soltado, transcriptor)
-    datos["tecla_s"] = round(pulsada, 2)
+    datos["disparo"] = "cacao"
+    dicho = texto if texto is not None else datos.get("transcripcion") or datos.get("transcripcion_pausa") or ""
+    if not palabra_activacion.empieza_con_la_palabra(dicho):
+        # segunda etapa: Whisper no oyó "Cacao" al principio: activación falsa. No se guarda nada.
+        datos["freno"] = "sin_la_palabra"
+        print("  (activación falsa: la transcripción no empieza con «Cacao»; descartada sin guardar)", flush=True)
+        a.notificar("reposo")
+        return audio, datos, None, soltado
+    if texto is not None:
+        orden = palabra_activacion.quitar_palabra(texto)
+        if not orden:
+            datos["freno"] = "solo_la_palabra"
+            print("  (solo dijiste «Cacao»: no hay orden)", flush=True)
+            a.notificar("reposo")
+            return audio, datos, None, soltado
+        texto = orden
+    else:
+        a.notificar("reposo")
     return audio, datos, texto, soltado
 
 
@@ -296,7 +362,8 @@ def bucle(medir=0):
             n += 1
             comando_actual.clear()
             if texto is None:
-                registrar(n, audio, datos)
+                if datos.get("freno") != "sin_la_palabra":  # una activación falsa no deja rastro
+                    registrar(n, audio, datos)
                 if datos.get("freno") == "modo_juego":
                     locutor.hablar(limpiar_para_voz(a._modo_juego.mensaje()))  # Piper va en la CPU
                 continue

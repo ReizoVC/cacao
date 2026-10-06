@@ -131,9 +131,9 @@ class Oyente:
                 limite = time.perf_counter() + 8
                 audio, _, _ = self.microfono.grabar_hasta(
                     lambda: self.atajo.sigue_pulsado() and not hecho.is_set() and time.perf_counter() < limite)
-            else:  # ("activacion", audio): la grabación tras "Cacao" ya está hecha
+            else:  # ("activacion", audio, otro_audio): la grabación tras "Cacao" ya está hecha
                 tecla_fisica, audio = True, disparo[1]
-            otro_audio = vigia.parar()
+            otro_audio = vigia.parar() or (len(disparo) > 2 and bool(disparo[2]) if disparo != "atajo" else False)
             if hecho.is_set():
                 return
             analisis = self.analizar(audio)

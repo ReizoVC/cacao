@@ -92,6 +92,7 @@ class Microfono:
         self.grabando = False
         self.bloques = []
         self.tasa = TASA
+        self.oyentes = []  # funciones(bloque) que reciben todo el audio (la palabra de activación); solo memoria
         try:
             self.flujo = sd.InputStream(samplerate=TASA, channels=1, dtype="int16", device=dispositivo,
                                         callback=self._recibir)
@@ -105,6 +106,8 @@ class Microfono:
     def _recibir(self, datos, *_):
         if self.grabando:
             self.bloques.append(datos.copy())
+        for oyente in self.oyentes:
+            oyente(datos.copy())
 
     def grabar_hasta(self, sigue):
         """Graba mientras sigue() sea verdadero. Devuelve (audio int16 a 16 kHz, segundos pulsado, momento de

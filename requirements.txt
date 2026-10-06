@@ -68,3 +68,6 @@ tqdm==4.70.1
 truststore==0.10.4
 typing_extensions==4.16.0
 websockets==17.2
+openwakeword==0.6.0
+scikit-learn==1.9.1
+scipy==1.17.1
