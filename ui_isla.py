@@ -17,6 +17,7 @@ emergencia. Sin isla conectada, solo Enter/Esc.
 zonas_isla(): dónde está la isla en la pantalla, para que la herramienta mouse no pueda hacer clic dentro.
 """
 import asyncio
+import atexit
 import ctypes
 import hmac
 import json
@@ -84,6 +85,7 @@ class ServidorIsla:
         self.token = secrets.token_urlsafe(32)
         self.ruta_conexion.parent.mkdir(parents=True, exist_ok=True)
         self.ruta_conexion.write_text(json.dumps({"puerto": self.puerto, "token": self.token}), encoding="utf-8")
+        atexit.register(self.ruta_conexion.unlink, missing_ok=True)  # también si el agente sale con un error
         self._hilo = threading.Thread(target=self._correr, name="servidor-isla", daemon=True)
         self._hilo.start()
         self._listo.wait(5)

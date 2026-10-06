@@ -60,7 +60,8 @@ voz.sd.OutputStream = AltavozFalso
 voz.Microfono = MicrofonoFalso
 
 if __name__ == "__main__":
-    atajo, _, transcriptor, locutor, historial = voz.preparar()
+    voz.a.CONFIG.setdefault("ui", {})["activa"] = False  # sin isla: aquí las confirmaciones son falsas
+    atajo, _, transcriptor, locutor, historial, _planificador = voz.preparar()
     atajo.cerrar()
 
     # 1) frenos
@@ -121,4 +122,7 @@ if __name__ == "__main__":
                   transcripcion=texto, dicho=dicho, frases=frases, transcribir_s=datos["transcribir_s"],
                   agente_s=round(t2 - t1, 2), piper_s=round(primero - t2, 2) if primero else None,
                   total_s=round(primero - soltado, 2) if primero else None)
-    print("\nTODO OK" if all(f["ok"] for f in filas) else "\nHAY FALLOS")
+    voz.a.cerrar_isla()
+    transcriptor.cerrar()
+    bien = sum(f["ok"] for f in filas)
+    print(f"\n{bien}/{len(filas)} OK" + ("" if bien == len(filas) else " - HAY FALLOS"))
