@@ -128,7 +128,7 @@ def ejecutar_voz(nombre, args):
     """Solo lectura: directo. Permiso 'confirmar': lo pregunta ejecutar() con input (= teclado). El resto, aquí."""
     if nombre not in SOLO_LECTURA and a.HERRAMIENTAS[nombre]["permiso"] != "confirmar":
         if not pedir_confirmacion(f"Ejecutar {nombre} {json.dumps(args, ensure_ascii=False)}", nombre):
-            return {"ok": False, "error": "Reizo no lo autorizó (Esc o sin respuesta)."}
+            return {"ok": False, "rechazado": True, "error": "Reizo no lo autorizó (Esc o sin respuesta)."}
     return _ejecutar(nombre, args)
 
 

@@ -290,7 +290,7 @@ def preparar_apertura(nombre, apps):
     if nivel_app(app["id"]) == "confirmar":
         pregunta = f"  ¿Abrir {app['nombre']}? Es una consola que puede ejecutar comandos. (s/n) "
         if not confirmar("abrir_app", pregunta.strip().removesuffix("(s/n)").strip()):
-            return None, {"ok": False, "error": f"Reizo no autorizó abrir {app['nombre']}."}
+            return None, {"ok": False, "rechazado": True, "error": f"Reizo no autorizó abrir {app['nombre']}."}
     return app, None
 
 
@@ -478,7 +478,8 @@ def ejecutar(nombre, args):
         print(f"  Aviso: en esta tarea ya entró texto de fuera (archivo, web, pantalla...). {nombre} "
               f"{json.dumps(args, ensure_ascii=False)}")
         if not confirmar(nombre, f"¿Lo pidió Reizo? {nombre} {json.dumps(args, ensure_ascii=False)}"):
-            return {"ok": False, "error": "Reizo no lo confirmó: podía venir del contenido externo. No lo guardé."}
+            return {"ok": False, "rechazado": True,
+                    "error": "Reizo no lo confirmó: podía venir del contenido externo. No lo guardé."}
         origen = "confirmado"
     if nombre == "recordar":  # el origen lo pone el ejecutor, nunca el modelo
         args = {**{k: v for k, v in args.items() if k != "origen"}, "origen": origen}
@@ -491,7 +492,7 @@ def ejecutar(nombre, args):
                        args.get("comando"))
         emergencia.comprobar()  # el atajo pudo pulsarse mientras se esperaba la respuesta
         if not si:
-            return {"ok": False, "error": "El usuario rechazó la acción"}
+            return {"ok": False, "rechazado": True, "error": "Reizo no lo autorizó (Denegar, Esc o sin respuesta)."}
     try:
         return IMPLEMENTACIONES[nombre](**args)
     except Detenido:
@@ -597,6 +598,11 @@ def atender(pedido, historial):
                 print("  [bloqueado] tarea terminada por el ejecutor")
                 return terminar(historial, f"No lo hice: {resultado.get('error', 'está bloqueado por seguridad.')}",
                                 False, "Acción bloqueada; el ejecutor terminó la tarea")
+            if isinstance(resultado, dict) and resultado.get("rechazado"):
+                # un "no" de Reizo cierra la tarea: el modelo no prueba con otra ventana, otra app u otro camino
+                print("  [rechazado] Reizo dijo que no: tarea terminada por el ejecutor")
+                return terminar(historial, "No lo hice porque no lo autorizaste.", False,
+                                "Reizo rechazó la acción; el ejecutor terminó la tarea")
             if nombre in VERIFICADORAS:
                 sin_verificar = None
             elif args.get("accion") in ACCIONES_A_VERIFICAR.get(nombre, ()) and isinstance(resultado, dict) \

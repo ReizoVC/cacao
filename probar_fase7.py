@@ -215,6 +215,29 @@ def pruebas_websocket():
 
 # ---------- B. isla real ----------
 
+def pruebas_rechazo():
+    """Un "no" de Reizo termina la tarea: el modelo (falso) intenta cerrar otra ventana y no llega a pedirlo."""
+    import agente_minimo as a
+    pasos = iter([{"pensamiento": "cierro la primera", "herramienta": "cerrar_app", "argumentos": {"id_ventana": 1}},
+                  {"pensamiento": "rechazado; pruebo con la otra", "herramienta": "cerrar_app",
+                   "argumentos": {"id_ventana": 2}},
+                  {"pensamiento": "listo", "herramienta": "finalizar", "argumentos": {"mensaje": "cerré", "exito": True}}])
+    preguntas, cerradas = [], []
+    guardado = a.pedir_accion, a.confirmar, a.PLANIFICADORES, a.IMPLEMENTACIONES["cerrar_app"], a.notificar
+    a.pedir_accion = lambda _h: next(pasos)
+    a.confirmar = lambda *x, **k: preguntas.append(x) or False
+    a.PLANIFICADORES = {}
+    a.IMPLEMENTACIONES["cerrar_app"] = lambda **k: cerradas.append(k) or {"ok": True}
+    a.notificar = lambda *x, **k: None
+    try:
+        respuesta = a.atender("cierra la calculadora", [{"role": "system", "content": ""}])
+    finally:
+        a.pedir_accion, a.confirmar, a.PLANIFICADORES, a.IMPLEMENTACIONES["cerrar_app"], a.notificar = guardado
+    ok("rechazo: tras Denegar no intenta otra ventana", len(preguntas) == 1 and not cerradas,
+       f"{len(preguntas)} preguntas, {len(cerradas)} cierres")
+    ok("rechazo: responde que no lo hizo", respuesta.startswith("No lo hice"), respuesta)
+
+
 def pruebas_isla_real():
     import guardia_juego
     juego = guardia_juego.juego_abierto()
@@ -305,6 +328,7 @@ if __name__ == "__main__":
         pruebas_confirmacion()
         pruebas_mouse()
         pruebas_websocket()
+        pruebas_rechazo()
     if "B" in partes:
         print("\n== B. isla real ==")
         pruebas_isla_real()
