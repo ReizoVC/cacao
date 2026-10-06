@@ -225,6 +225,8 @@ Formato: **ID**, requisito ("debe"), **criterio verificable** y estado.
 | RF-46 | Las secciones editadas por Reizo no deben sobrescribirse; escribir se pospone si el archivo cambió hace < 5 min o está activo en Obsidian | Pruebas de wiki 22/22 | Verificado (simulación) |
 | RF-47 | El lint semanal debe arreglar lo mecánico y anotar el resto en `revision.md` sin acusar al texto de Reizo | 11/11 | Verificado (simulación) |
 | RF-48 | Las sugerencias deben ser solo texto: máximo 2 al día, apoyo ≥ 4 de 7 días en el inicio de uso, bloqueo permanente, desbloqueo por número, texto o casilla | 18/18 | Verificado (simulación) |
+| RF-49a | La actividad (registro, reflexión) debe medirse solo con entrada física: teclado y mouse por Raw Input con dispositivo y mandos; la entrada inyectada y la deriva del mouse no cuentan; no se usa GetLastInputInfo salvo de respaldo | 10 min sin entrada física → "inactivo" aunque GetLastInputInfo diga 0 s; 1 200 eventos inyectados no reinician el contador (`probar_actividad_fisica.py` 29/29). En vivo: GetLastInputInfo 0,0 s frente a 8,0 s del contador físico | Verificado (simulación y lectura real) |
+| RF-49b | Los periodos dudosos (`periodos_dudosos`: desde, hasta, motivo) deben quedar fuera del resumen diario, la actividad por hora y las sugerencias, sin borrar filas | `probar_actividad_fisica.py`; en real, marcado del 2026-10-05 21:33:30 al 2026-10-06 18:22:16 (2 017 filas) | Verificado (simulación); marcado aplicado |
 | RF-49 | `consultar_memoria` debe devolver también las 1–2 secciones de la wiki más relacionadas (≤ 2 400 caracteres), nunca de `fuentes/` | "¿qué suelo hacer los lunes?" → consultar_memoria, 3/3 | Verificado (simulación) |
 
 ### 3.6 Control y modo juego
@@ -464,7 +466,7 @@ estos últimos solo para detectar actividad.
 | R-06 | Actualizar llama-cpp-python rompe `LlamaRapida` (método interno) | Media / alto | `requirements.txt` fija 0.3.36; `modo_gramatica: null` como vuelta atrás | Volver a medir al actualizar |
 | R-07 | Windows de la rama Insider (26300): cambios de API o comportamiento | Media / medio | — | Volver a probar tras cada actualización grande |
 | R-08 | Los patrones de PowerShell no son un sandbox (alias raros, ofuscación) | Media / alto | La confirmación es la barrera principal; `-enc`, `iex` e `Invoke-Expression` bloqueados; PowerShell pregunta siempre, también en el modo sin confirmación | — |
-| R-09 | Un mouse que deriva o el uso de otra persona reinicia la inactividad y la reflexión no arranca | Media / bajo | Diagnóstico Raw Input: era entrada real de dispositivos físicos (`resultados_fase6.md`) | Revisar contigo, también con un mando |
+| R-09 | Algo reinicia la inactividad sin que nadie use el PC y la reflexión no arranca | Media / bajo | Diagnóstico del 2026-10-06: GetLastInputInfo se reiniciaba sin ninguna entrada (ni física ni inyectada). Ahora se mide con entrada física por Raw Input, sin deriva del mouse (RF-49a) | Ver en real que salga "inactivo"; qué reiniciaba GetLastInputInfo (`powercfg /requests`, administrador); revisar con un mando |
 | R-10 | Whisper inventa texto en silencio o ruido | Alta sin frenos / alto | Frenos de silencio, palabras/s y frases de subtítulos; la frase de confirmación no vale casi sin voz | — |
 | R-11 | Choque entre ediciones en Obsidian y escritura del agente | Baja / medio | Hash por sección, posponer 5 min, pestaña activa, escritura atómica | Probar en real |
 | R-12 | Privacidad del registro de hábitos | Media / alto | Sin títulos, privados sin fila, purga a 30 días, base fuera de git | Lista de apps de banco (`apps_banco` vacío en este PC) |
@@ -489,7 +491,7 @@ estos últimos solo para detectar actividad.
   - RF-30..33 → `probar_voz.py`, `validar_transcripcion.py`;
   - RF-34 → `probar_confirmacion_voz.py`;
   - RF-35..39 y RNF-23/24 → `probar_palabra_activacion.py`, `entrenar_cacao.py`;
-  - RF-40..49 → `probar_fase6.py`, `probar_reflexion.py`;
+  - RF-40..49 → `probar_fase6.py`, `probar_reflexion.py`; RF-49a/b → `probar_actividad_fisica.py`;
   - RF-50 → `probar_emergencia.py`, `prueba_real.py 3`;
   - RF-51..53 y RNF-08 → `probar_modo_juego.py`;
   - RF-60..66 → `probar_fase7.py` (A, B y C);

@@ -233,7 +233,13 @@ Diseño completo en `diseno_fase6.md`: es el patrón *LLM Wiki* de Karpathy, con
      (`.venv\Scripts\pythonw.exe "C:\asistente\registro_habitos.py"`, sin consola). Para quitarlo, borra el acceso
      directo y cierra `pythonw.exe`;
    - cada fila es solo `fecha_hora | app (exe o ID de la Tienda) | categoría | activo/inactivo/bloqueado`. Las
-     categorías salen de `apps_categorias.json` (se recargan cada hora o al reiniciar el registro).
+     categorías salen de `apps_categorias.json` (se recargan cada hora o al reiniciar el registro);
+   - "inactivo" = 5 min sin **entrada física** (`entrada.py`): teclado y mouse por Raw Input y mandos. La entrada
+     inyectada (SendInput: las herramientas de Cacao, macros, control remoto por software) no cuenta, ni la deriva
+     del mouse. No se usa GetLastInputInfo: en este PC se reiniciaba sin parar sin que nadie tocara nada
+     (`diagnostico_actividad.py`, 2026-10-06), y por eso nunca salía "inactivo";
+   - `periodos_dudosos` (desde, hasta, motivo): tramos que la reflexión y las sugerencias ignoran, sin borrar nada.
+     Todo lo anterior al 2026-10-06 18:22:16 está marcado (2 017 filas, medidas con GetLastInputInfo).
 2. **Wiki** en `memoria\`:
    - es un vault de Obsidian con su propio git local;
    - `index.md` (siempre en el prompt) y `log.md` los escribe solo el código;
