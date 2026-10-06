@@ -321,6 +321,103 @@ def pruebas_isla_real():
            and proceso.poll() is not None and not ui_isla.RUTA_CONEXION.exists())
 
 
+def _clic_inyectado(x, y):
+    """Como la herramienta mouse del agente: SetCursorPos + mouse_event (llega con LLMHF_INJECTED)."""
+    import win32api
+    import win32con
+    win32api.SetCursorPos((int(x), int(y)))
+    time.sleep(0.25)  # la isla deja de ignorar el cursor cuando lo tiene encima (sondeo a 60 Hz)
+    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
+    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
+
+
+def _control_isla(hwnd, nombre, segundos=6):
+    """Centro de un botón de la isla por UI Automation (las pruebas sí pueden; el agente tiene bloqueada la isla)."""
+    from pywinauto import Desktop
+    limite = time.monotonic() + segundos
+    while time.monotonic() < limite:
+        try:
+            for e in Desktop(backend="uia").window(handle=hwnd).descendants(control_type="Button"):
+                if e.element_info.name == nombre:
+                    r = e.element_info.rectangle
+                    if r.width() > 0:
+                        return (r.left + r.right) // 2, (r.top + r.bottom) // 2
+        except Exception:
+            pass
+        time.sleep(0.3)
+    return None
+
+
+def pruebas_modos_isla_real(esperar_fisico_s=0):
+    """C: interruptores de modo en la isla real. Un clic inyectado no cambia nada; si esperar_fisico_s > 0, espera
+    a que Reizo haga clic él mismo en el interruptor (y en la bandeja) y comprueba que ese sí vale."""
+    import guardia_juego
+    if guardia_juego.juego_abierto():
+        ok("modos: no se abre la isla con un juego activo", True)
+        return
+    pedidos = []
+    s = ui_isla.ServidorIsla()
+    s.al_cambiar_modo = lambda modo, fisico, origen: pedidos.append((modo, fisico, origen))
+    s.iniciar()
+    proceso = subprocess.Popen([str(EXE)], cwd=str(EXE.parent))
+    try:
+        limite = time.monotonic() + 30
+        while not (s.conectada and s.rect) and time.monotonic() < limite:
+            time.sleep(0.2)
+        # el saludo de bienvenida sigue mientras el cursor está encima: se aparta y se espera a la isla compacta
+        import win32api
+        win32api.SetCursorPos((5, 900))
+        limite = time.monotonic() + 30
+        while not (s.rect and s.rect["alto"] < 40) and time.monotonic() < limite:
+            time.sleep(0.2)
+        hwnd = ui_isla.ventanas_isla()[0]
+        izq, arr, der, aba = s.zonas_isla()[0]
+        _clic_inyectado((izq + der) // 2, arr + 16)  # abre la isla (esto sí lo puede cualquiera)
+        time.sleep(1.5)  # animación de apertura
+        ajustes = _control_isla(hwnd, "Ajustes")
+        ok("modos: la isla se abre y muestra Ajustes", ajustes is not None)
+        if not ajustes:
+            return
+        _clic_inyectado(*ajustes)
+        time.sleep(1.5)
+        interruptor = _control_isla(hwnd, "Modo sin confirmación")
+        ok("modos: Ajustes muestra el interruptor del modo sin confirmación", interruptor is not None)
+        if not interruptor:
+            return
+        _clic_inyectado(*interruptor)
+        time.sleep(1)
+        ok("modos: clic inyectado en el interruptor -> la isla lo manda como NO físico",
+           pedidos and pedidos[-1] == ("sin_confirmacion", False, "isla"), pedidos)
+        s.enviar({"tipo": "modos", "sin_confirmacion": True, "escucha": False})
+        time.sleep(0.6)
+        r = ctypes.windll.user32.GetForegroundWindow()
+        ok("modos: el indicador no le quita el foco a la ventana activa", r != hwnd)
+        s.enviar({"tipo": "modos", "sin_confirmacion": False, "escucha": False})
+        if esperar_fisico_s:
+            print(f"\n>>> Reizo: haz clic TÚ en el interruptor 'Modo sin confirmación' de la isla "
+                  f"(tienes {esperar_fisico_s} s)", flush=True)
+            antes = len(pedidos)
+            limite = time.monotonic() + esperar_fisico_s
+            while len(pedidos) == antes and time.monotonic() < limite:
+                time.sleep(0.2)
+            ok("modos: tu clic físico en la isla -> físico", len(pedidos) > antes and pedidos[-1][1] is True,
+               pedidos[antes:])
+            print(f"\n>>> Ahora en la bandeja: clic derecho en el icono de Cacao y 'Modo sin confirmación' "
+                  f"(tienes {esperar_fisico_s} s)", flush=True)
+            antes = len(pedidos)
+            limite = time.monotonic() + esperar_fisico_s
+            while len(pedidos) == antes and time.monotonic() < limite:
+                time.sleep(0.2)
+            ok("modos: tu clic físico en la bandeja -> físico", len(pedidos) > antes
+               and pedidos[-1] == ("sin_confirmacion", True, "bandeja"), pedidos[antes:])
+    finally:
+        proceso.terminate()
+        proceso.wait(10)
+        s.cerrar()
+        time.sleep(1)
+        ok("modos: isla cerrada al terminar", not ui_isla.ventanas_isla() and not ui_isla.RUTA_CONEXION.exists())
+
+
 if __name__ == "__main__":
     partes = sys.argv[1:] or ["A", "B"]
     if "A" in partes:
@@ -332,6 +429,9 @@ if __name__ == "__main__":
     if "B" in partes:
         print("\n== B. isla real ==")
         pruebas_isla_real()
+    if "C" in partes:
+        print("\n== C. modos en la isla real ==")
+        pruebas_modos_isla_real(int(os.environ.get("ESPERAR_FISICO_S", "0")))
     fallos = [r for r in resultados if not r[1]]
     print(f"\n{len(resultados) - len(fallos)}/{len(resultados)} OK")
     sys.exit(1 if fallos else 0)

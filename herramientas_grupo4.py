@@ -106,7 +106,7 @@ def planificar_cierre(proceso=None, pid=None, id_ventana=None):
                                             in PROCESOS_OCULTOS) or (id_ventana is not None
                                                                      and win32gui.IsWindow(id_ventana)
                                                                      and es_de_la_isla(id_ventana))):
-        return _bloqueado("Esa es la isla del asistente: no la cierro.")
+        return _bloqueado("Esa es la isla de Cacao: no la cierro.")
     ventanas = listar_ventanas()
     if id_ventana is not None:
         objetivo = [v for v in ventanas if v["id_ventana"] == id_ventana]
@@ -138,11 +138,11 @@ def planificar_cierre(proceso=None, pid=None, id_ventana=None):
     if nombre.lower() in PROTEGIDOS:
         return _bloqueado(f"{nombre} es un proceso de Windows; no lo cierro por seguridad.")
     if elegido in _ancestros_propios():
-        return _bloqueado(f"{nombre} es el propio asistente o la ventana donde corre; no lo cierro.")
+        return _bloqueado(f"{nombre} es el propio Cacao o la ventana donde corre; no lo cierro.")
     # Windows Terminal aloja las consolas sin ser su proceso padre: si el agente corre dentro (WT_SESSION),
     # no se sabe cuál de sus ventanas es la suya, así que no se cierra ninguna
     if nombre.lower() == "windowsterminal.exe" and os.environ.get("WT_SESSION"):
-        return _bloqueado("El asistente corre dentro de Windows Terminal; cerrarla lo cerraría a él también.")
+        return _bloqueado("Cacao corre dentro de Windows Terminal; cerrarla lo cerraría a él también.")
     ids = {v["id_ventana"] for v in objetivo}
     otras = [v["titulo"] for v in ventanas if v["pid"] == elegido and v["id_ventana"] not in ids]
     return {"pid": elegido, "proceso": nombre, "ventanas": sorted(ids), "titulos": [v["titulo"] for v in objetivo],
@@ -354,7 +354,7 @@ def _ventana_uia(id_ventana):
     if es_titulo_sensible(win32gui.GetWindowText(id_ventana)):
         return None, _bloqueado("Esa ventana parece tener contraseñas o claves; no la inspecciono.")[1]
     if es_de_la_isla(id_ventana):
-        return None, _bloqueado("Esa es la isla del asistente: no la inspecciono.")[1]
+        return None, _bloqueado("Esa es la isla de Cacao: no la inspecciono.")[1]
     return Desktop(backend="uia").window(handle=id_ventana), None
 
 
@@ -461,7 +461,7 @@ def planificar_mouse(accion, x=None, y=None, cantidad=None, captura=None, ahora=
         # por nombre (UI Automation): el centro del control ya está en píxeles de la pantalla real
         hwnd = id_ventana or win32gui.GetForegroundWindow()
         if es_de_la_isla(hwnd):
-            return _bloqueado("Esa es la isla del asistente: no hago clic en ella.")
+            return _bloqueado("Esa es la isla de Cacao: no hago clic en ella.")
         encontrado, error = buscar_control(hwnd, control)
         if error:
             return None, error
@@ -477,7 +477,7 @@ def planificar_mouse(accion, x=None, y=None, cantidad=None, captura=None, ahora=
             return _error(f"({x}, {y}) está fuera de la captura de {captura['ancho']}x{captura['alto']}.")
         plan["pantalla"] = a_pantalla(x, y, captura)
     if plan["pantalla"] and _en_la_isla(plan["pantalla"]):
-        return _bloqueado("Esa posición es la isla del asistente (sus botones confirman acciones): no hago clic ahí.")
+        return _bloqueado("Esa posición es la isla de Cacao (sus botones confirman acciones): no hago clic ahí.")
     if accion == "desplazar":
         if not cantidad:
             return _error("Para desplazar indica 'cantidad' (positivo arriba, negativo abajo).")
@@ -558,7 +558,7 @@ ATAJOS_BLOQUEADOS = {frozenset({"win", "r"}): "abre Ejecutar, que está bloquead
                      frozenset({"ctrl", "alt", "delete"}): "abre la pantalla de seguridad de Windows",
                      frozenset({"alt", "f4"}): "cierra ventanas sin las protecciones de cerrar_app (y en el "
                                                "escritorio abre Apagar); usa cerrar_app",
-                     frozenset({"ctrl", "alt", "shift", "q"}): "es el atajo de emergencia del asistente"}
+                     frozenset({"ctrl", "alt", "shift", "q"}): "es el atajo de emergencia de Cacao"}
 ATAJOS_BLOQUEADOS.update({frozenset({"win", str(n)}): "abre una app de la barra de tareas sin pasar por abrir_app"
                           for n in range(10)})
 WIN_PERMITIDOS = {frozenset({"win", t}) for t in ("d", "m", "tab", "arriba", "abajo", "izquierda", "derecha")} | {

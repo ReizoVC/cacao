@@ -70,7 +70,7 @@ class Lint:
                                   f"{', '.join(rotos[:3])}.")
                 if editada and s["autor"] == "codigo":
                     avisos.append(f"[[{pid}]] '{s['titulo']}': la editaste y quedó congelada, así que sus datos ya no "
-                                  "se actualizan. Vacíala para que el asistente la vuelva a llenar.")
+                                  "se actualizan. Vacíala para que Cacao la vuelva a llenar.")
                 vinetas = sum(1 for l in texto.splitlines() if l.startswith("- "))
                 if s["autor"] == "modelo" and vinetas > s.get("frases_max", LIMITES["frases_max"]):
                     avisos.append(f"[[{pid}]] '{s['titulo']}': tiene {vinetas} frases (máximo "

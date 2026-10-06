@@ -226,7 +226,7 @@ class Politica:
         punto = plan["pantalla"] or self.posicion_cursor()
         app = self.app_en_punto(*punto)
         if not app or app["shell"]:
-            return False, "el clic cae en Windows (barra de tareas, escritorio, Inicio) o en el propio asistente"
+            return False, "el clic cae en Windows (barra de tareas, escritorio, Inicio) o en el propio Cacao"
         if not nombrada_en(app["nombres"], pedido):
             return False, f"el clic cae en {app['proceso']}, que no es la app que nombraste"
         return True, {"pid": app["pid"], "nombres": sorted(app["nombres"])}
@@ -234,7 +234,7 @@ class Politica:
     def _teclado(self, args, pedido):
         app = self.app_al_frente()
         if not app or app["shell"]:
-            return False, "la ventana al frente es de Windows o del propio asistente"
+            return False, "la ventana al frente es de Windows o del propio Cacao"
         if not nombrada_en(app["nombres"], pedido):
             return False, f"la ventana al frente es {app['proceso']}, que no es la app que nombraste"
         accion = args.get("accion")

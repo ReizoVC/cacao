@@ -92,7 +92,7 @@ def enfocar_ventana(id_ventana: int):
     if not win32gui.IsWindow(id_ventana):
         return {"ok": False, "error": "Esa ventana ya no existe; vuelve a usar listar_ventanas."}
     if es_de_la_isla(id_ventana):
-        return {"ok": False, "bloqueado": True, "error": "Esa es la isla del asistente: no la toco."}
+        return {"ok": False, "bloqueado": True, "error": "Esa es la isla de Cacao: no la toco."}
     if win32gui.IsIconic(id_ventana):
         win32gui.ShowWindow(id_ventana, win32con.SW_RESTORE)
     # Windows solo deja traer al frente desde el hilo que tiene el foco: se enlazan las colas de entrada un momento

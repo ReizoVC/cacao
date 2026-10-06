@@ -193,7 +193,7 @@ def preparar():
     if hasattr(transcriptor, "descargar"):  # el modo juego también libera Whisper
         a.EXTRAS_MODO_JUEGO.append((transcriptor.descargar, transcriptor.cargar))
     if aviso:
-        print(f"Asistente: {aviso}")
+        print(f"Cacao: {aviso}")
     historial = [{"role": "system", "content": a.prompt_sistema(voz=True)}]
     activar_confirmaciones()
     # calentamiento: el prompt de sistema queda en la caché KV y los kernels de CUDA de Whisper cargados
@@ -314,7 +314,7 @@ def bucle(medir=0):
                 respuesta = a.atender_con_memoria(texto, historial, planificador, voz=True)
                 historial[:] = historial[:1] + historial[1:][-20:]  # memoria corta, como en el modo texto
             t_respuesta = time.perf_counter()
-            print(f"Asistente: {respuesta}", flush=True)
+            print(f"Cacao: {respuesta}", flush=True)
             inicio = {}
             pulsaciones = a.emergencia.pulsaciones
             locutor.hablar(limpiar_para_voz(respuesta), al_empezar=lambda t: inicio.setdefault("t", t),

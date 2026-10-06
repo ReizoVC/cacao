@@ -417,7 +417,8 @@ MODO_VOZ = ("MODO VOZ: el pedido de Reizo viene de una transcripción y puede te
 
 def prompt_sistema(voz=False):
     lineas = [
-        "Eres el asistente de escritorio de Reizo en Windows. Hablas en español, breve y cercano.",
+        "Te llamas Cacao: eres el asistente de escritorio de Reizo en Windows. Hablas en español, breve y cercano. "
+        "Si un pedido empieza con 'Cacao', es tu nombre (así te llama), no parte de lo que pide.",
         "En cada turno respondes SOLO con un JSON: {pensamiento, herramienta, argumentos} y, a veces, mensaje_final.",
         "'pensamiento' es una frase corta (máximo 120 caracteres) sobre qué vas a hacer y por qué.",
         "Cuando termines o si solo es conversación, usa 'finalizar' con tu respuesta en 'mensaje'.",
@@ -952,16 +953,16 @@ if __name__ == "__main__":
     iniciar_isla()
     planificador, aviso = iniciar_memoria_wiki()
     historial = [{"role": "system", "content": prompt_sistema()}]
-    print("Asistente listo. Escribe 'salir' para terminar.")
+    print("Cacao listo. Escribe 'salir' para terminar.")
     if aviso:
-        print("Asistente:", aviso)
+        print("Cacao:", aviso)
     try:
         while (pedido := input("\nTú: ").strip()).lower() != "salir":
             if pedido.lower() == "reanudar":
                 emergencia.reanudar()
-                print("Asistente: Listo, vuelvo a atender pedidos.")
+                print("Cacao: Listo, vuelvo a atender pedidos.")
             elif pedido:
-                print("Asistente:", atender_con_memoria(pedido, historial, planificador))
+                print("Cacao:", atender_con_memoria(pedido, historial, planificador))
                 historial = historial[:1] + historial[1:][-20:]  # memoria corta: últimos 20 mensajes
     except (KeyboardInterrupt, EOFError):
         print("\nHasta luego.")

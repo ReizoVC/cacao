@@ -34,7 +34,7 @@ FRANJAS = [("madrugada", 0, 6), ("mañana", 6, 12), ("tarde", 12, 18), ("noche",
 MIN_FRANJA = 15  # minutos en una franja para que el día cuente como apoyo de un patrón
 
 SISTEMA = (
-    "Eres el asistente de escritorio de Reizo y mantienes su wiki personal. Escribes en español, con frases cortas "
+    "Eres Cacao, el asistente de escritorio de Reizo, y mantienes su wiki personal. Escribes en español, con frases cortas "
     "y concretas sobre Reizo, en tercera persona ('Reizo suele...'). Responde SOLO con el JSON pedido.\n"
     "Reglas:\n"
     "1. Lo que Reizo escribió es VERDAD. No lo contradigas, no lo pongas en duda ni lo matices. Si un dato medido "

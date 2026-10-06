@@ -422,9 +422,9 @@ def prueba_wiki():
     autor_reizo = wiki.git("log", "-1", "--format=%an").stdout.strip()
     wiki.escribir("apps", {"para_que": "- Spotify para música."}, ahora=HOY)
     wiki.commit("Reflexión 2026-10-05")
-    ok("git: commit del asistente con autor Asistente",
-       wiki.git("log", "-1", "--format=%an %s").stdout.strip() == "Asistente Reflexión 2026-10-05"
-       and autor_reizo != "Asistente", f"Reizo como {autor_reizo!r}")
+    ok("git: commit del asistente con autor Cacao",
+       wiki.git("log", "-1", "--format=%an %s").stdout.strip() == "Cacao Reflexión 2026-10-05"
+       and autor_reizo != "Cacao", f"Reizo como {autor_reizo!r}")
 
 
 # ---------- 4. sugerencias y procedencia de las memorias ----------
@@ -627,8 +627,8 @@ def prueba_reflexion():
        or "Cuando digo el editor" in wiki.leer("perfil")["secciones"]["preferencias"]["texto"])
     ok("rutinas: sugerencias activas por código", "Spotify" in wiki.leer("rutinas")["secciones"]["sugerencias_activas"]["texto"])
     ok("índice: con los resúmenes nuevos", "Resumen de prueba" in (v / "index.md").read_text(encoding="utf-8"))
-    ok("git: commit 'Reflexión 2026-10-04' del Asistente",
-       wiki.git("log", "-1", "--format=%an %s").stdout.strip() == "Asistente Reflexión 2026-10-04")
+    ok("git: commit 'Reflexión 2026-10-04' de Cacao",
+       wiki.git("log", "-1", "--format=%an %s").stdout.strip() == "Cacao Reflexión 2026-10-04")
     ok("día ya reflexionado: no queda pendiente", not reflexion.dia_pendiente(HOY))
     ok("nota tuya en perfil: no se toca", "vivo en Lima" in wiki.ruta("perfil").read_text(encoding="utf-8"))
 

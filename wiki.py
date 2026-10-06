@@ -40,7 +40,7 @@ VAULT = BASE / CONFIG["memoria_wiki"]["vault"]  # las pruebas la cambian por mem
 MIS_NOTAS, FUENTES = "mis_notas", "fuentes"
 TEXTO_NOTAS = "(Escribe aquí. El agente nunca toca esta sección y la reflexión lo toma como verdad.)"
 TEXTO_VACIO = "(Todavía sin datos.)"
-AUTOR_ASISTENTE = ["-c", "user.name=Asistente", "-c", "user.email=asistente@local"]
+AUTOR_ASISTENTE = ["-c", "user.name=Cacao", "-c", "user.email=cacao@local"]
 RE_SECCION = re.compile(r"<!-- seccion:(?P<id>\w+)(?P<meta>[^>]*?)-->\n?(?P<texto>.*?)\n?<!-- /seccion -->", re.S)
 RE_ENLACE = re.compile(r"\[\[([^\]|#]+)(#[^\]|]*)?(?:\|([^\]]+))?\]\]")
 _LIMITES_SEG = json.loads((BASE / "herramientas.json").read_text(encoding="utf-8"))["limites"]
@@ -353,7 +353,7 @@ def detectar_ediciones(ahora=None):
                     congeladas.append((pid, s["id"]))
     for tipo, pid, sid in nuevas:
         detalle = (f"{pid}#{sid} (se respeta, no se sobrescribe)" if tipo == "edicion_reizo"
-                   else f"{pid}#{sid} (vaciada: vuelve a escribirla el asistente)")
+                   else f"{pid}#{sid} (vaciada: vuelve a escribirla Cacao)")
         anotar(tipo, detalle, ahora)
     return congeladas
 
@@ -485,7 +485,7 @@ def escribir_indice(ahora=None):
         if motivo:
             raise Pospuesto(f"index.md: {motivo}")
     _escribir_atomico(p, _render_frontmatter({"actualizado": f"{ahora:%Y-%m-%d %H:%M}"}) +
-                      "# Índice\n\nGenerado por el asistente; no lo edites (se reescribe).\n\n" + indice_texto() + "\n")
+                      "# Índice\n\nGenerado por Cacao; no lo edites (se reescribe).\n\n" + indice_texto() + "\n")
     _registrar_archivo(p)
 
 
@@ -496,7 +496,7 @@ def anotar(tipo, detalle, ahora=None):
     nuevo = not p.exists()
     with open(p, "a", encoding="utf-8", newline="\n") as f:
         if nuevo:
-            f.write("# Registro\n\nLo escribe solo el asistente, añadiendo al final.\n\n")
+            f.write("# Registro\n\nLo escribe solo Cacao, añadiendo al final.\n\n")
         f.write(f"## [{ahora:%Y-%m-%d %H:%M}] {tipo} | {' '.join(str(detalle).split())}\n\n")
     _registrar_archivo(p)
 
@@ -554,9 +554,9 @@ def asegurar_vault(ahora=None):
     ahora = ahora or datetime.now()
     for carpeta in (VAULT, VAULT / MIS_NOTAS, VAULT / FUENTES):
         carpeta.mkdir(parents=True, exist_ok=True)
-    for carpeta, texto in ((MIS_NOTAS, "Tus páginas: la reflexión las toma como verdad. El asistente nunca escribe "
+    for carpeta, texto in ((MIS_NOTAS, "Tus páginas: la reflexión las toma como verdad. Cacao nunca escribe "
                                        "aquí."),
-                           (FUENTES, "Contenido externo (Web Clipper, etc.): nada del asistente lo lee.")):
+                           (FUENTES, "Contenido externo (Web Clipper, etc.): Cacao nunca lo lee.")):
         leeme = VAULT / carpeta / "LEEME.txt"
         if not leeme.exists():
             leeme.write_text(texto + "\n", encoding="utf-8")

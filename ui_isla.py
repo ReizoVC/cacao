@@ -53,7 +53,9 @@ def ventanas_isla():
         pid = wintypes.DWORD()
         user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
         if pid.value in pids and user32.IsWindowVisible(hwnd):
-            encontradas.append(hwnd)
+            izq, arriba, der, abajo = rect_ventana(hwnd)
+            if der - izq >= 100 and abajo - arriba >= 4:  # Tauri tiene además ventanitas de 16x16 sin contenido
+                encontradas.append(hwnd)
         return True
 
     user32.EnumWindows(ctypes.WINFUNCTYPE(wintypes.BOOL, wintypes.HWND, wintypes.LPARAM)(revisar), 0)
