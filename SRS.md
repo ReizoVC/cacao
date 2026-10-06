@@ -362,7 +362,11 @@ estos últimos solo para detectar actividad.
 - **Probado en real el 2026-10-05:** rechazo con Esc en voz; Whisper de la CPU con "estoy jugando" y "ya terminé";
   isla con clic físico en Permitir/Denegar y Enter, sin quitar el foco; modo juego con Roblox; incógnito en Chrome;
   regla de audio (música, video en ventana y en pantalla completa, llamada); registro de hábitos al arrancar.
+- **Modo sin confirmación y palabra "Cacao" (2026-10-06):** implementados y probados en simulación
+  (`probar_modo_directo.py` 73/73, `probar_confirmacion_voz.py` 33/33, `probar_palabra_activacion.py` 27/27); un clic
+  inyectado en el interruptor de la isla real no cambia el modo.
 - **Pendientes en real:**
+  - "Cacao" y "confirmo la instrucción" con tu voz; videos que digan "cacao"; los interruptores con tu clic;
   - actividad con un mando;
   - grabar la isla con "Permitir capturas";
   - registro de hábitos durante una semana (reflexión y sugerencias con datos reales);

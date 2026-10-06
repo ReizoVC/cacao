@@ -285,9 +285,11 @@ Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agen
 4. **Frenos de seguridad:**
    - una pulsación con menos de 0,15 s de voz se descarta sin transcribir (Whisper escribe "Gracias por ver el video" en el silencio);
    - una transcripción con más de 6 palabras por segundo de voz, más 3 de margen, también se descarta;
-   - las acciones que cambian algo se confirman con **Enter = sí, Esc = no** o con los botones de la isla, y solo
-     con entrada física (las teclas y los clics inyectados se rechazan). Sin respuesta en 30 s = no. Las de solo
-     lectura van directas;
+   - las acciones que cambian algo se confirman con **Enter = sí, Esc = no**, con los botones de la isla o diciendo
+     **"confirmo la instrucción"** en una grabación aparte tras la pregunta (Ctrl+Espacio o "Cacao"). Solo con
+     entrada física: las teclas y los clics inyectados se rechazan, y la frase no vale con otra app sonando, casi
+     sin voz (Whisper pudo inventarla) ni con un Espacio inyectado; "sí" solo no vale. Sin respuesta en 30 s = no.
+     Las de solo lectura van directas;
    - un "no" termina la tarea: el agente no prueba con otra ventana ni por otro camino.
 5. **Registro:** cada comando queda en `voz_registro/` (WAV + `registro.jsonl`); esa carpeta no va a git.
 6. **Configuración:** sección `voz` de `config.json`, con su nota.
@@ -303,9 +305,32 @@ Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agen
      en ella. Para grabarla: bandeja → "Permitir capturas";
    - compilar: en `C:\asistente-ui\windows`, `npm install` y `npx tauri build --no-bundle` desde un entorno de
      VS 2022 (`vcvars64.bat`); VS 18 Insiders no trae `msvcrt.lib`.
-9. **Pruebas:** `probar_voz.py` (WAV de prueba, sin micrófono ni acciones reales) y `probar_fase7.py` (A: simulación;
-   B: isla real).
-10. **Palabra de activación (opcional):** openWakeWord.
+9. **Pruebas:** `probar_voz.py` (WAV de prueba, sin micrófono ni acciones reales), `probar_fase7.py` (A: simulación;
+   B: isla real; C: interruptores de modo en la isla real), `probar_modo_directo.py`, `probar_confirmacion_voz.py`
+   y `probar_palabra_activacion.py`.
+10. **Palabra de activación "Cacao"** (`palabra_activacion.py`; el asistente también se llama Cacao):
+    - detector local en la CPU: características de openWakeWord y un clasificador pequeño entrenado con
+      `entrenar_cacao.py` (voces sintéticas de Piper, negativos reales de openWakeWord y el ruido real del
+      micrófono). Instalación: `pip install openwakeword scikit-learn scipy`, las voces de Piper de
+      `modelos/piper_cacao` y las características de openWakeWord en `modelos/cacao` (ver el script);
+    - al oírla, la isla muestra "escuchando" y graba (con 1,6 s de búfer previo, para "Cacao, sube el volumen"
+      de corrido) hasta un silencio o 30 s; pasa por los mismos frenos y por Whisper. Ctrl+Espacio sigue igual;
+    - segunda etapa: si Whisper no oye "Cacao" al principio, era una activación falsa y se descarta sin guardar;
+    - privacidad: el audio se procesa en memoria y nada se guarda hasta detectar la palabra; se ignora mientras
+      Cacao habla;
+    - se enciende y apaga con un clic físico en la bandeja o en la isla; sigue activa en modo juego;
+    - la palabra sola nunca confirma nada.
+11. **Modo sin confirmación** (`modo_directo.py`): solo con un clic físico en la bandeja o en la isla (empieza
+    apagado; el atajo de emergencia lo apaga). Con él van directos volumen, abrir_app, enfocar_ventana, buscar_web
+    y cerrar_app normal; mouse y teclado solo dentro de la app que nombraste (y teclado solo con texto de tu
+    pedido); mover_archivo hasta 10 archivos, sin ejecutables ni scripts y fuera de `carpetas_importantes`
+    (`datos_locales.json`), con "deshaz lo último". PowerShell y cerrar a la fuerza siempre preguntan. Si en la
+    tarea entró contenido externo (archivo, web, PowerShell), todo vuelve a preguntar. La isla muestra un
+    indicador ámbar mientras está activo.
+12. **Atajos bloqueados siempre:** con la tecla Windows solo valen los de ventanas y escritorios (Win+D, Win+M,
+    Win+Tab, Win+flechas, Win+Shift+S, Win+Ctrl+D/flechas/F4). Bloqueados, entre otros: Win sola, Win+R, X, I, S,
+    Q, E, A, U, K, P, N, B, T, V, H, L, G, Win+número, Win+Alt+R, Win+Ctrl+Enter, Win+Ctrl+O, Ctrl+Esc,
+    Ctrl+Shift+Esc, Ctrl+Alt+Supr, Alt+F4 (usa cerrar_app) y el atajo de emergencia.
 
 ### Estado real (probado contigo frente al PC el 2026-10-05)
 
@@ -323,7 +348,24 @@ Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agen
 **Corregido durante las pruebas:** Ctrl+C no cerraba el modo voz; la isla quedaba abierta al cerrar la terminal con
 la X; el modo voz se caía tras un comando en pausa; tras un "Denegar", el modelo intentaba con otra ventana.
 
+### Modo sin confirmación y "Cacao" (2026-10-06, en simulación)
+
+| Prueba | Resultado |
+|---|---|
+| `probar_modo_directo.py` (texto leído en pantalla, clic fuera de la ventana, atajos bloqueados, 11 archivos, un .exe, deshacer, el agente no puede cambiar el modo) | 73/73 |
+| `probar_confirmacion_voz.py` ("confirmo la instrucción" con variaciones, transcripción inventada, otro audio, Espacio inyectado) | 33/33 |
+| `probar_fase7.py` C: clic inyectado en el interruptor del modo, en la isla real | Llega como no físico; el modo no cambia |
+| `probar_palabra_activacion.py` | 27/27 |
+| "Cacao" con voces que no vio al entrenar (umbral 0,9) | Sola 37/54; de corrido con la orden 77/108 |
+| Activaciones falsas | 0 en 7,9 min de conversación, 0 en 20 frases que mencionan "cacao", 0 en 15 min de ruido y música, 0 en tus 30 grabaciones; 10,8 por hora en las 10,7 h de validación de openWakeWord (las filtra la segunda etapa) |
+| "Oye, Cacao" (mismo método, para comparar) | Detecta menos (24-32/54) y baja poco las falsas (2,8 por hora con el umbral más alto) |
+
+El modelo instalado es la segunda versión de las tres que entrené (una capa de 96, una ronda de negativos difíciles);
+la tercera, la del script actual, con tonos desplazados y frases de corrido, no la mejoró.
+
 **Pendiente:** detección de actividad con un mando (no había uno a mano); grabar la isla con "Permitir capturas";
+con tu voz: "Cacao" en vivo, con videos que digan "cacao" y con audio de fondo, y "confirmo la instrucción"; con
+tu mano: el interruptor del modo en la isla y en la bandeja (`ESPERAR_FISICO_S=60 probar_fase7.py C`);
 Obsidian; ver la reflexión diaria y las sugerencias tras una semana de hábitos reales. Sin apps de banco en este PC
 (`apps_banco` vacío).
 
