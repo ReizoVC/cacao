@@ -267,67 +267,71 @@ def bucle(medir=0):
     vram = MedidorVRAM() if medir else None
     atajo, microfono, transcriptor, locutor, historial, planificador = preparar()
     mediciones, n = [], 0
-    print(f"\nModo voz listo. Mantén {atajo.atajo} mientras hablas; di 'salir' para terminar.")
-    while True:
-        # hablarle encima corta la respuesta anterior (y no se graba la voz de Piper)
-        # pulsar el atajo también detiene una reflexión en curso (libera la GPU antes de transcribir)
-        audio, datos, texto, soltado = escuchar(atajo, microfono, transcriptor,
-                                                al_pulsar=lambda: (locutor.callar(), planificador.parar.set()))
-        n += 1
-        comando_actual.clear()
-        if texto is None:
-            registrar(n, audio, datos)
-            if datos.get("freno") == "modo_juego":
-                locutor.hablar(limpiar_para_voz(a._modo_juego.mensaje()))  # Piper va en la CPU
-            continue
-        t_transcrito = time.perf_counter()
-        orden = normalizar(texto)
-        if orden in ("salir", "salir del modo voz"):
-            registrar(n, audio, {**datos, "respuesta": "(salir)"})
-            locutor.hablar("Hasta luego.")
-            time.sleep(1.5)
-            break
-        if orden in ("reanudar", "reanuda"):
-            a.emergencia.reanudar()
-            respuesta = "Listo, vuelvo a atender pedidos."
-        else:
-            respuesta = a.atender_con_memoria(texto, historial, planificador, voz=True)
-            historial[:] = historial[:1] + historial[1:][-20:]  # memoria corta, como en el modo texto
-        t_respuesta = time.perf_counter()
-        print(f"Asistente: {respuesta}", flush=True)
-        inicio = {}
-        pulsaciones = a.emergencia.pulsaciones
-        locutor.hablar(limpiar_para_voz(respuesta), al_empezar=lambda t: inicio.setdefault("t", t),
-                       cortar=lambda: a.emergencia.pulsaciones != pulsaciones)  # el atajo también la calla
-        limite = time.perf_counter() + 15
-        while "t" not in inicio and locutor.hablando() and time.perf_counter() < limite:
-            time.sleep(0.005)
-        empieza = inicio.get("t")
-        latencias = {"transcribir_s": datos["transcribir_s"], "agente_s": round(t_respuesta - t_transcrito, 2),
-                     "piper_s": round(empieza - t_respuesta, 2) if empieza else None,
-                     "total_s": round(empieza - soltado, 2) if empieza else None,
-                     "salida_altavoz_s": round(locutor.salida.latency, 3)}
-        confirmaciones = list(comando_actual.get("confirmaciones", []))
-        registrar(n, audio, {**datos, "respuesta": respuesta, "confirmaciones": confirmaciones, **latencias})
-        if medir:
-            mediciones.append({"transcripcion": texto, "respuesta": respuesta, "confirmaciones": confirmaciones,
-                               "audio_s": datos["duracion_s"], **latencias})
-            print("  [latencia] " + json.dumps(latencias), flush=True)
-            if len(mediciones) >= medir:
-                while locutor.hablando():
-                    time.sleep(0.05)
-                vram.parar()
-                resumen = {"vram_pico_mb": vram.pico, "vram_total_mb": vram.total,
-                           "vram_libre_en_el_pico_mb": vram.total - vram.pico, "comandos": mediciones}
-                (BASE / "resultados_latencia_voz.json").write_text(
-                    json.dumps(resumen, ensure_ascii=False, indent=1), encoding="utf-8")
-                print(f"\nMedidos {medir} comandos: resultados_latencia_voz.json. VRAM pico {vram.pico} de "
-                      f"{vram.total} MB (libres {vram.total - vram.pico} MB).")
+    try:
+        print(f"\nModo voz listo. Mantén {atajo.atajo} mientras hablas; di 'salir' o pulsa Ctrl+C para terminar.")
+        while True:
+            # hablarle encima corta la respuesta anterior (y no se graba la voz de Piper)
+            # pulsar el atajo también detiene una reflexión en curso (libera la GPU antes de transcribir)
+            audio, datos, texto, soltado = escuchar(atajo, microfono, transcriptor,
+                                                    al_pulsar=lambda: (locutor.callar(), planificador.parar.set()))
+            n += 1
+            comando_actual.clear()
+            if texto is None:
+                registrar(n, audio, datos)
+                if datos.get("freno") == "modo_juego":
+                    locutor.hablar(limpiar_para_voz(a._modo_juego.mensaje()))  # Piper va en la CPU
+                continue
+            t_transcrito = time.perf_counter()
+            orden = normalizar(texto)
+            if orden in ("salir", "salir del modo voz"):
+                registrar(n, audio, {**datos, "respuesta": "(salir)"})
+                locutor.hablar("Hasta luego.")
+                time.sleep(1.5)
                 break
-    atajo.cerrar()
-    microfono.cerrar()
-    a.cerrar_isla()
-    transcriptor.cerrar()
+            if orden in ("reanudar", "reanuda"):
+                a.emergencia.reanudar()
+                respuesta = "Listo, vuelvo a atender pedidos."
+            else:
+                respuesta = a.atender_con_memoria(texto, historial, planificador, voz=True)
+                historial[:] = historial[:1] + historial[1:][-20:]  # memoria corta, como en el modo texto
+            t_respuesta = time.perf_counter()
+            print(f"Asistente: {respuesta}", flush=True)
+            inicio = {}
+            pulsaciones = a.emergencia.pulsaciones
+            locutor.hablar(limpiar_para_voz(respuesta), al_empezar=lambda t: inicio.setdefault("t", t),
+                           cortar=lambda: a.emergencia.pulsaciones != pulsaciones)  # el atajo también la calla
+            limite = time.perf_counter() + 15
+            while "t" not in inicio and locutor.hablando() and time.perf_counter() < limite:
+                time.sleep(0.005)
+            empieza = inicio.get("t")
+            latencias = {"transcribir_s": datos["transcribir_s"], "agente_s": round(t_respuesta - t_transcrito, 2),
+                         "piper_s": round(empieza - t_respuesta, 2) if empieza else None,
+                         "total_s": round(empieza - soltado, 2) if empieza else None,
+                         "salida_altavoz_s": round(locutor.salida.latency, 3)}
+            confirmaciones = list(comando_actual.get("confirmaciones", []))
+            registrar(n, audio, {**datos, "respuesta": respuesta, "confirmaciones": confirmaciones, **latencias})
+            if medir:
+                mediciones.append({"transcripcion": texto, "respuesta": respuesta, "confirmaciones": confirmaciones,
+                                   "audio_s": datos["duracion_s"], **latencias})
+                print("  [latencia] " + json.dumps(latencias), flush=True)
+                if len(mediciones) >= medir:
+                    while locutor.hablando():
+                        time.sleep(0.05)
+                    vram.parar()
+                    resumen = {"vram_pico_mb": vram.pico, "vram_total_mb": vram.total,
+                               "vram_libre_en_el_pico_mb": vram.total - vram.pico, "comandos": mediciones}
+                    (BASE / "resultados_latencia_voz.json").write_text(
+                        json.dumps(resumen, ensure_ascii=False, indent=1), encoding="utf-8")
+                    print(f"\nMedidos {medir} comandos: resultados_latencia_voz.json. VRAM pico {vram.pico} de "
+                          f"{vram.total} MB (libres {vram.total - vram.pico} MB).")
+                    break
+    except KeyboardInterrupt:
+        print("\nHasta luego.")
+    finally:
+        atajo.cerrar()
+        microfono.cerrar()
+        a.cerrar_isla()
+        transcriptor.cerrar()
 
 
 if __name__ == "__main__":

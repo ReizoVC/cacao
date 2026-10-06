@@ -73,7 +73,12 @@ class AtajoHablar:
 
     def esperar(self, timeout=None):
         """Bloquea hasta que se pulse el atajo. Devuelve False si venció el timeout."""
-        ok = self.pulsado.wait(timeout)
+        if timeout is None:
+            while not self.pulsado.wait(0.25):  # a trozos: un wait sin límite no deja pasar Ctrl+C en Windows
+                pass
+            ok = True
+        else:
+            ok = self.pulsado.wait(timeout)
         self.pulsado.clear()
         return ok
 

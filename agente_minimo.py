@@ -720,7 +720,41 @@ def iniciar_isla():
     exe = exe if exe.is_absolute() else BASE / exe
     if cfg.get("lanzar", True) and exe.is_file():
         _proceso_isla = subprocess.Popen([str(exe)], cwd=str(exe.parent))
+        _atar_isla(_proceso_isla)
     return _isla
+
+
+def _atar_isla(proceso):
+    """La isla muere con el agente aunque se cierre la terminal con la X o el proceso caiga: va en un Job con
+    KILL_ON_JOB_CLOSE. Al cerrar la consola, además, se borra ui.json (el token de la sesión)."""
+    global _job_isla
+    try:
+        import win32api
+        import win32con
+        import win32job
+        _job_isla = win32job.CreateJobObject(None, "")
+        info = win32job.QueryInformationJobObject(_job_isla, win32job.JobObjectExtendedLimitInformation)
+        info["BasicLimitInformation"]["LimitFlags"] |= win32job.JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE
+        win32job.SetInformationJobObject(_job_isla, win32job.JobObjectExtendedLimitInformation, info)
+        manejador = win32api.OpenProcess(win32con.PROCESS_SET_QUOTA | win32con.PROCESS_TERMINATE, False,
+                                         proceso.pid)
+        win32job.AssignProcessToJobObject(_job_isla, manejador)
+        win32api.CloseHandle(manejador)
+        win32api.SetConsoleCtrlHandler(_al_cerrar_consola, True)
+    except Exception as e:  # sin Job la isla funciona igual; solo puede quedar abierta si el agente cae
+        print(f"Aviso: no pude atar la isla al agente ({e}).")
+
+
+def _al_cerrar_consola(evento):
+    if evento in (2, 5, 6):  # CTRL_CLOSE_EVENT, CTRL_LOGOFF_EVENT, CTRL_SHUTDOWN_EVENT: Windows da ~5 s
+        if _proceso_isla is not None and _proceso_isla.poll() is None:
+            _proceso_isla.terminate()
+        if _isla is not None:
+            _isla.ruta_conexion.unlink(missing_ok=True)
+    return False  # Ctrl+C sigue su camino normal (KeyboardInterrupt)
+
+
+_job_isla = None
 
 
 def cerrar_isla():
@@ -837,11 +871,15 @@ if __name__ == "__main__":
     print("Asistente listo. Escribe 'salir' para terminar.")
     if aviso:
         print("Asistente:", aviso)
-    while (pedido := input("\nTú: ").strip()).lower() != "salir":
-        if pedido.lower() == "reanudar":
-            emergencia.reanudar()
-            print("Asistente: Listo, vuelvo a atender pedidos.")
-        elif pedido:
-            print("Asistente:", atender_con_memoria(pedido, historial, planificador))
-            historial = historial[:1] + historial[1:][-20:]  # memoria corta: últimos 20 mensajes
-    cerrar_isla()
+    try:
+        while (pedido := input("\nTú: ").strip()).lower() != "salir":
+            if pedido.lower() == "reanudar":
+                emergencia.reanudar()
+                print("Asistente: Listo, vuelvo a atender pedidos.")
+            elif pedido:
+                print("Asistente:", atender_con_memoria(pedido, historial, planificador))
+                historial = historial[:1] + historial[1:][-20:]  # memoria corta: últimos 20 mensajes
+    except (KeyboardInterrupt, EOFError):
+        print("\nHasta luego.")
+    finally:
+        cerrar_isla()
