@@ -304,8 +304,9 @@ Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agen
    - no toma el foco (salvo en su campo de texto), no sale en `listar_ventanas` ni en `ver_pantalla`, y la
      herramienta mouse no puede hacer clic en ella. Para grabarla: bandeja → "Permitir capturas";
    - **campo "Escribe a Cacao…"** (vista de inicio y de pregunta):
-     - con un clic físico en él, la isla toma el foco y recuerda la ventana que estaba activa; Enter envía el texto,
-       y Enter, Esc o un clic fuera devuelven el foco a esa ventana. Un clic inyectado no abre el campo;
+     - con un clic físico en él, la isla toma el foco y recuerda la ventana que estaba activa; Enter envía el texto.
+       Enter y Esc devuelven el foco a esa ventana; con un clic fuera, el foco se queda en la ventana donde hiciste
+       clic (si fue en la propia isla, vuelve a la de antes). Un clic inyectado no abre el campo;
      - fuera del campo la isla sigue con WS_EX_NOACTIVATE y sus botones no quitan el foco;
      - el texto entra como un pedido más (consola o voz): mismos permisos, bloqueos, modo sin confirmación y
        confirmaciones. Hasta 2000 caracteres. En modo voz, la respuesta también se lee en voz alta;
@@ -408,7 +409,7 @@ la tercera, la del script actual, con tonos desplazados y frases de corrido, no 
 
 | Prueba | Resultado |
 |---|---|
-| `foco.rs` (Windows simulado: un clic no activa una ventana NOACTIVATE): Enter, Esc y clic fuera devuelven el foco a la ventana de antes; los botones no lo quitan; un clic no físico no lo toma; ventana de antes cerrada | 9/9 |
+| `foco.rs` (Windows simulado: un clic no activa una ventana NOACTIVATE): Enter y Esc devuelven el foco a la ventana de antes; un clic fuera lo deja en la ventana del clic (y, si fue en la isla, vuelve a la de antes); los botones no lo quitan; un clic no físico no lo toma; ventana de antes cerrada | 10/10 |
 | `npm run probar-campo` (controlador del campo): los tres casos, un solo retorno del foco, Esc que no cierra la isla, sin conexión, campo vacío, 2000 caracteres | 18/18 |
 | `probar_campo_isla.py`: servidor (token), cola consola + isla, mismo camino que la consola y la voz, teclado bloqueado con la isla al frente (también en el modo sin confirmación) | 29/29 |
 | Regresión | palabra de activación 27/27, modo directo 73/73, autocompletar 46/46, confirmación por voz 33/33, fase 7 A 26/26 |
@@ -433,8 +434,8 @@ la tercera, la del script actual, con tonos desplazados y frases de corrido, no 
    que se abra solo: Cacao debe esperar.
 8. **Campo de texto de la isla (prueba visual):** con el Bloc de notas al frente, haz clic en "Escribe a Cacao…",
    escribe "sube el volumen" y Enter: se cumple y el Bloc de notas vuelve a tener el foco (escribe una letra para
-   comprobarlo). Repite con Esc y con un clic en el escritorio. Pulsa Permitir/Denegar o un interruptor: el Bloc de
-   notas no pierde el foco. Mira que el campo se vea bien en la columna derecha y en la vista de pregunta.
+   comprobarlo). Repite con Esc. Escribiendo en el campo, haz clic en otra ventana (por ejemplo, el Explorador): el
+   foco debe quedarse en ella. Pulsa Permitir/Denegar o un interruptor: el Bloc de notas no pierde el foco. Mira que el campo se vea bien en la columna derecha y en la vista de pregunta.
 9. **Grabar la isla** con "Permitir capturas".
 10. **Mando:** detección de actividad (no había uno a mano).
 11. **Datos reales:** Obsidian, y la reflexión diaria y las sugerencias tras una semana de hábitos. `apps_banco` sigue
