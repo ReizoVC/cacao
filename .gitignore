@@ -34,3 +34,6 @@ historial_movimientos.json
 
 # Acceso directo de Cacao: lo genera crear_acceso_directo.ps1 con las rutas de este PC
 Cacao.lnk
+
+# Instantáneas de diagnóstico (procesos, ventanas, red de este PC)
+diagnostico/
