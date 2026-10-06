@@ -86,7 +86,11 @@ class ModoJuego:
     # ----- comandos de Reizo -----
 
     def estoy_jugando(self):
-        """Fuerza la pausa ahora (descarga sin esperar las comprobaciones). Devuelve la respuesta para Reizo."""
+        """Fuerza la pausa ahora (descarga sin esperar las comprobaciones). Devuelve la respuesta para Reizo.
+        Si ya está en pausa por un juego detectado, solo lo confirma: forzar haría que al cerrar el juego no
+        recargara solo (esperaría un "ya terminé")."""
+        if self.estado in (DESCARGANDO, JUEGO) and not self.vigilante.detector.forzado:
+            return f"Ya estoy en pausa por {self.juego}; vuelvo solo cuando lo cierres."
         self.vigilante.detector.estoy_jugando()
         if self.estado == NORMAL:
             self._entrar(self._nombre(self.vigilante.juego_abierto()))

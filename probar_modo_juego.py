@@ -125,6 +125,13 @@ def pruebas_logica():
     s.reabrir(ROBLOX)  # lo cierra y lo vuelve a abrir: otro pid
     avanzar(10)
     ok("al volver a abrir el juego (otro proceso): pausa de nuevo", m.estado == JUEGO)
+    r = m.estoy_jugando()
+    ok("'estoy jugando' con el juego ya detectado: solo confirma, no fuerza", m.estado == JUEGO
+       and not v.detector.forzado and r.startswith("Ya estoy en pausa"), r)
+    s.ventanas = set()  # lo cierra a la bandeja
+    avanzar(135)
+    ok("tras ese 'estoy jugando', al cerrarlo recarga solo a los 2 min", m.estado == NORMAL
+       and llamadas[-1] == "cargar")
 
     # 7. la reflexión usa la misma detección
     s, v, m, _, avanzar, reloj = escenario([ROBLOX], ventanas=[])
