@@ -8,7 +8,8 @@ no se midió, se dice "no medido". Un requisito está **Verificado (real)** si s
 
 **Cambios de la 1.1:** nombre del asistente (§3.9); modo juego con detección por actividad (§3.6); la isla y sus
 confirmaciones con entrada física (§3.7); modo sin confirmación y atajos bloqueados (§3.8); confirmación por voz y
-palabra de activación "Cacao" (§3.4); riesgos R-14 a R-19.
+palabra de activación "Cacao" (§3.4); `autocompletar_login`, en simulación (§3.10); arranque automático,
+preparado (§3.11); riesgos R-14 a R-21.
 
 ---
 
@@ -33,7 +34,9 @@ Especifica los requisitos de Cacao, el asistente de escritorio de Reizo: un agen
 - funciona por voz: pulsar para hablar o la palabra de activación "Cacao";
 - muestra su estado y pide las confirmaciones en una isla gráfica;
 - tiene un modo sin confirmación, que Reizo activa a mano, para acciones acotadas;
-- libera la GPU cuando hay un juego activo.
+- libera la GPU cuando hay un juego activo;
+- (en simulación, apagado) activa el autocompletado de contraseñas de Chrome sin que el modelo vea las credenciales;
+- (preparado, sin activar) arranca al iniciar sesión.
 
 Todo el razonamiento es local: Gemma 4 12B en la GPU. La única salida a internet es `buscar_web`, que abre el
 navegador predeterminado.
@@ -118,7 +121,8 @@ Procesos y datos:
 
 Hay 21 herramientas activas (`agente_minimo.ACTIVAS`). Seis piden confirmación: `cerrar_app`, `mouse`, `teclado`,
 `mover_archivo`, `deshacer_movimiento` y `ejecutar_powershell` (`herramientas.json`). En voz, además, se confirma
-toda herramienta que no sea de solo lectura (`voz.SOLO_LECTURA`).
+toda herramienta que no sea de solo lectura (`voz.SOLO_LECTURA`). `autocompletar_login` (confirmar) está en el
+catálogo pero fuera de `ACTIVAS` mientras `config.json` → `autocompletar_login.activa` sea false.
 
 ### 2.3 Usuario
 
@@ -267,6 +271,26 @@ Formato: **ID**, requisito ("debe"), **criterio verificable** y estado.
 | RF-80 | El asistente debe llamarse Cacao en el prompt, la consola, los mensajes de bloqueo, la wiki y la isla; los nombres internos (`%LOCALAPPDATA%\Asistente`, `asistente-ui.exe`, marcas `autor:asistente`) no cambian | Textos del commit ae8f33c | Verificado en código |
 | RF-81 | Si un pedido empieza con "Cacao", el modelo debe entenderlo como su nombre y no como parte del pedido | Regla en `prompt_sistema` | Verificado en código; efecto en el modelo **no medido** (el set de 65 frases no tiene frases con "Cacao") |
 
+### 3.10 autocompletar_login (en simulación, apagada)
+
+| ID | Requisito | Criterio | Estado |
+|---|---|---|---|
+| RF-90 | Debe actuar solo en la ventana de Chrome que está al frente y cuyo título es del sitio que Reizo nombró en el pedido (lo comprueba el código con el pedido, no con lo que diga el modelo; "github.com" vale para "GitHub", "git" no vale para "GitLab") | Otra app o Edge al frente, Chrome con otro sitio y sitio no nombrado: error o bloqueo | Verificado (simulación) (`probar_autocompletar_login.py` 46/46) |
+| RF-91 | Debe hacer clic en el campo de usuario (el último campo de texto antes del primero de contraseña; sin contraseña, el único campo o el único con etiqueta de usuario) y elegir la primera cuenta de la lista de Chrome con flecha abajo + Enter, sin enviar el formulario | Buscador en la cabecera ignorado; campos ambiguos → error sin adivinar; lista que no aparece → error sin Enter | Verificado (simulación) |
+| RF-92 | El modelo nunca debe recibir el usuario, la contraseña, el título, los campos ni las cuentas; la herramienta no lee el valor de ningún campo | Resultados solo con `ok`, `error`, `bloqueado` y `nota`; el módulo no usa ValuePattern ni lecturas de valor | Verificado (simulación y revisión de código) |
+| RF-93 | Debe bloquearse si en la tarea entró contenido externo (leer_archivo, buscar_web, ejecutar_powershell) | 3/3 bloqueadas | Verificado (simulación) |
+| RF-94 | Debe pedir confirmación siempre, también con el modo sin confirmación, y comprobar el plan antes de preguntar | Ejecutor del agente extraído con ast: pregunta con el modo activo; con plan fallido no pregunta | Verificado (simulación) |
+| RF-95 | Debe volver a comprobar la ventana antes del clic y antes de elegir; si cambió, no actúa (o cierra la lista con Esc); el atajo de emergencia la corta | Ventana cambiada antes y con la lista abierta; emergencia antes del clic | Verificado (simulación) |
+| RF-96 | La autorización de cada relleno debe ponerla Windows Hello de Chrome ("Usar Windows Hello al completar contraseñas") | Con Hello activado, Chrome pide huella, cara o PIN; al cancelar no rellena | **Pendiente** (en real, cuando Reizo lo active) |
+
+### 3.11 Arranque automático (preparado, sin activar)
+
+| ID | Requisito | Criterio | Estado |
+|---|---|---|---|
+| RF-97 | `iniciar_cacao.ps1` debe lanzar `voz.py` (agente con isla y palabra de activación) sin permisos de administrador, esperando 60 s con `-AlInicio` y con `ESPERAR_JUEGO=1` | `-Simular` muestra el comando y no carga nada | Verificado (simulación) |
+| RF-98 | No debe abrir un segundo Cacao si ya hay uno en marcha | Con un proceso falso de `voz.py`: "ya está en marcha" y sale | Verificado (simulación) |
+| RF-99 | El acceso directo debe crearse en `C:\asistente` y solo pasar a `shell:startup` con `crear_acceso_directo.ps1 -Inicio` (quitarlo con `-Quitar`) | `Cacao.lnk` creado; la carpeta de Inicio sigue solo con el registro de hábitos | Verificado (real, solo creación). Arranque al iniciar sesión: **Pendiente** |
+
 ---
 
 ## 4. Requisitos no funcionales (con cifras medidas)
@@ -357,6 +381,7 @@ ventana activa") empezara con `listar_ventanas` en 3/3. Se acotó a "cuando nomb
 | RS-15 | Ni la palabra de activación ni una frase cualquiera confirman: solo "confirmo la instrucción" en su propia grabación, con voz real y sin otro audio | RF-34, RF-39 | Verificado (simulación) |
 | RS-16 | Privacidad de la escucha: nada se guarda hasta detectar "Cacao"; las activaciones falsas no se guardan; `voz_registro/` no va a git | RF-36, RF-37; `.gitignore` | Verificado (simulación) |
 | RS-17 | La isla no tiene red saliente ni acepta conexiones de otras páginas o procesos sin el token | RF-64, RF-66 | Verificado (simulación) |
+| RS-18 | Ninguna herramienta entrega usuarios ni contraseñas al modelo; el autocompletado lo autoriza Windows Hello | RF-90 a RF-96 | Verificado (simulación); Windows Hello: Pendiente |
 
 **Límite reconocido:** los patrones son una red de seguridad, no un sandbox. La barrera principal es la confirmación
 (`herramientas_powershell.py`), y la confirmación supone que quien está frente al PC es Reizo (R-16).
@@ -419,6 +444,8 @@ estos últimos solo para detectar actividad.
 | CU-13 Palabra de activación | Reizo: "Cacao, sube el volumen" | Detección en la CPU → isla "escuchando" → grabación hasta el silencio → frenos → Whisper → segunda etapa → agente | Sin "Cacao" al principio → descartado sin guardar; escucha apagada → solo Ctrl+Espacio |
 | CU-14 Confirmar por voz | El agente pregunta por una acción | Reizo pulsa Ctrl+Espacio o dice "Cacao" y luego "confirmo la instrucción" → sí | "Sí" solo, otra app sonando, casi sin voz o Espacio inyectado → no vale; Esc o Denegar → no |
 | CU-15 Modo sin confirmación | Clic físico de Reizo en la isla o la bandeja | Indicador ámbar; volumen, abrir_app… van directos; mouse/teclado solo en la app nombrada | Contenido externo, PowerShell o cerrar forzado → pregunta; clic inyectado → no cambia; emergencia → se apaga |
+| CU-16 Iniciar sesión | "inicia sesión en GitHub" (con la función activada) | `listar_ventanas` → `enfocar_ventana` → `autocompletar_login{sitio: github}` → confirmación → clic en el usuario, primera cuenta → Windows Hello → "Listo, no envié el formulario" | Otro sitio al frente o sin cuentas → error; contenido externo en la tarea → bloqueo; Hello cancelado → no rellena |
+| CU-17 Arranque | Reizo inicia sesión en Windows (con el acceso en Inicio) | 60 s → `voz.py` → isla y escucha | Ya en marcha → no abre otro; juego activo → espera para cargar la GPU |
 
 ---
 
@@ -444,7 +471,9 @@ estos últimos solo para detectar actividad.
 | R-16 | Otra persona usa el PC: Cacao obedece a cualquier voz, y quien esté frente al teclado puede confirmar con Enter o un clic | Media / alto | El modo sin confirmación empieza apagado y la emergencia lo apaga; la escucha se apaga con un clic en la bandeja; los bloqueos valen para todos; el registro de hábitos atribuye a Reizo lo que haga otro | Sin reconocimiento de quién habla (fuera de alcance). Costumbre: apagar la escucha y el modo antes de prestar el PC |
 | R-17 | El modo sin confirmación queda encendido y olvidado | Media / medio | Empieza apagado en cada arranque; indicador ámbar en la isla; emergencia lo apaga | Valorar que se apague solo tras un tiempo sin uso |
 | R-18 | La isla deja de mostrarse o no conecta y Reizo no ve una confirmación | Baja / bajo | Enter/Esc físicos en la consola siguen valiendo; sin respuesta en 30 s = no | — |
-| R-19 | Un arranque automático del agente le quita la GPU a un juego o carga sin que Reizo esté | Baja / medio | El agente espera a que el juego se cierre antes de cargar (RF-54) | Ver §9: el arranque automático no está activado |
+| R-19 | Un arranque automático del agente le quita la GPU a un juego o carga sin que Reizo esté | Baja / medio | El agente espera a que el juego se cierre antes de cargar (RF-54) | Activarlo solo con Reizo presente (§3.11) |
+| R-20 | `autocompletar_login` sin Windows Hello activado en Chrome: el relleno solo depende de la confirmación de Cacao, que puede dar cualquiera frente al PC (R-16) | Media / alto | Apagada por defecto; sitio del pedido, Chrome al frente, sin contenido externo, confirmación siempre; no envía el formulario | Activar Hello antes que la función (guía, Fase 7 punto 13) |
+| R-21 | Página con varios campos o una lista de Chrome distinta de la esperada: el clic cae en otro campo o se elige otra opción | Baja / medio | Sin un único campo claro da error; si la lista no se abre no pulsa Enter; si sigue abierta tras Enter, error | Probar en 2-3 sitios reales |
 
 ---
 
@@ -460,17 +489,22 @@ estos últimos solo para detectar actividad.
   - RF-40..49 → `probar_fase6.py`, `probar_reflexion.py`;
   - RF-50 → `probar_emergencia.py`, `prueba_real.py 3`;
   - RF-51..53 y RNF-08 → `probar_modo_juego.py`;
-  - RF-60..66 → `probar_fase7.py` (A, B y C).
+  - RF-60..66 → `probar_fase7.py` (A, B y C);
+  - RF-90..95 → `probar_autocompletar_login.py`;
+  - RF-97..98 → `iniciar_cacao.ps1 -Simular`.
 - **Probado en real el 2026-10-05:** rechazo con Esc en voz; Whisper de la CPU con "estoy jugando" y "ya terminé";
   isla con clic físico en Permitir/Denegar y Enter, sin quitar el foco; modo juego con Roblox; incógnito en Chrome;
   regla de audio (música, video en ventana y en pantalla completa, llamada); registro de hábitos al arrancar.
 - **Probado en simulación el 2026-10-06:** modo sin confirmación (73/73), confirmación por voz (33/33), palabra
   "Cacao" (27/27 y las mediciones de RNF-23/24), clic inyectado en el interruptor de la isla real (5/5).
-- **Pendientes en real:**
-  - "Cacao" y "confirmo la instrucción" con tu voz; videos que digan "cacao"; los interruptores con tu clic;
-  - actividad con un mando;
-  - grabar la isla con "Permitir capturas";
-  - registro de hábitos durante una semana (reflexión y sugerencias con datos reales);
-  - Obsidian.
+- **Probado en simulación el 2026-10-06 (tarde):** `autocompletar_login` (46/46) y el arranque (`-Simular`, instancia
+  única).
+- **Pendientes en real** (orden y detalle en la guía, Fase 7, "Pendiente para cuando estés frente al PC"):
+  - los interruptores con tu clic; "Cacao" y "confirmo la instrucción" con tu voz; videos que digan "cacao";
+  - el modo sin confirmación con acciones reales;
+  - `autocompletar_login` con Windows Hello (RF-96);
+  - el arranque al iniciar sesión (RF-99);
+  - grabar la isla con "Permitir capturas"; actividad con un mando;
+  - registro de hábitos durante una semana (reflexión y sugerencias con datos reales) y Obsidian.
 - **Pendientes de medición:** el set de 65 frases con el prompt actual (§4.4); activaciones falsas tras la segunda
   etapa, latencia y CPU de la escucha (RNF-25).

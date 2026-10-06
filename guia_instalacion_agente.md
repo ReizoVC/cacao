@@ -306,8 +306,8 @@ Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agen
    - compilar: en `C:\asistente-ui\windows`, `npm install` y `npx tauri build --no-bundle` desde un entorno de
      VS 2022 (`vcvars64.bat`); VS 18 Insiders no trae `msvcrt.lib`.
 9. **Pruebas:** `probar_voz.py` (WAV de prueba, sin micrófono ni acciones reales), `probar_fase7.py` (A: simulación;
-   B: isla real; C: interruptores de modo en la isla real), `probar_modo_directo.py`, `probar_confirmacion_voz.py`
-   y `probar_palabra_activacion.py`.
+   B: isla real; C: interruptores de modo en la isla real), `probar_modo_directo.py`, `probar_confirmacion_voz.py`,
+   `probar_palabra_activacion.py` y `probar_autocompletar_login.py` (Chrome simulado).
 10. **Palabra de activación "Cacao"** (`palabra_activacion.py`; el asistente también se llama Cacao):
     - detector local en la CPU: características de openWakeWord y un clasificador pequeño entrenado con
       `entrenar_cacao.py` (voces sintéticas de Piper, negativos reales de openWakeWord y el ruido real del
@@ -331,6 +331,30 @@ Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agen
     Win+Tab, Win+flechas, Win+Shift+S, Win+Ctrl+D/flechas/F4). Bloqueados, entre otros: Win sola, Win+R, X, I, S,
     Q, E, A, U, K, P, N, B, T, V, H, L, G, Win+número, Win+Alt+R, Win+Ctrl+Enter, Win+Ctrl+O, Ctrl+Esc,
     Ctrl+Shift+Esc, Ctrl+Alt+Supr, Alt+F4 (usa cerrar_app) y el atajo de emergencia.
+13. **autocompletar_login** (`autocompletar_login.py`; **apagada** hasta probarla contigo):
+    - qué hace: en la ventana de Chrome que está al frente, si su título es del sitio que nombraste ("inicia sesión
+      en GitHub"), hace clic en el campo de usuario y elige la primera cuenta guardada (flecha abajo + Enter). No
+      envía el formulario;
+    - el modelo nunca recibe el usuario ni la contraseña: el código no lee el valor de ningún campo y solo devuelve
+      éxito o error (sin título, campos ni cuentas);
+    - no actúa si el sitio no sale de tu pedido, si la ventana al frente no es Chrome o es de otro sitio, ni si en la
+      tarea entró contenido externo (archivo, web, PowerShell). Pide confirmación siempre, también en el modo sin
+      confirmación;
+    - la autorización real es **Windows Hello de Chrome**: en Chrome, Configuración → Autocompletar y contraseñas →
+      Gestor de contraseñas de Google → Configuración → "Usar Windows Hello al completar contraseñas". Con eso, cada
+      relleno pide huella, cara o PIN, que no se pueden aprobar con teclas inyectadas;
+    - activarla: `config.json` → `autocompletar_login.activa: true`. Cambia el prompt, así que antes vuelve a pasar
+      `SIN_REALES=1 evaluar_pruebas.py`.
+14. **Arranque automático de Cacao** (preparado, **no activado**):
+    - `iniciar_cacao.ps1` lanza `voz.py`, que abre la isla y escucha "Cacao" (`voz.palabra_activacion.activa_al_iniciar`).
+      No abre un segundo Cacao si ya hay uno; con un juego activo espera a que se cierre antes de cargar la GPU
+      (`ESPERAR_JUEGO=1`); con `-AlInicio` espera 60 s tras iniciar sesión; con `-Simular` solo comprueba;
+    - `crear_acceso_directo.ps1` crea `Cacao.lnk` en `C:\asistente` (ventana minimizada, con el icono de la isla).
+      Ya está creado: doble clic para arrancar Cacao a mano;
+    - **activarlo (contigo frente al PC):** `powershell -ExecutionPolicy Bypass -File .\crear_acceso_directo.ps1 -Inicio`
+      lo copia a `shell:startup` (solo tu usuario, sin administrador). Quitarlo: `... -Quitar`;
+    - la ventana minimizada "Cacao" es el agente: Ctrl+C o "salir" lo cierran (y la isla con él). Si termina con
+      error, la ventana se queda abierta con el mensaje.
 
 ### Estado real (probado contigo frente al PC el 2026-10-05)
 
@@ -363,11 +387,35 @@ la X; el modo voz se caía tras un comando en pausa; tras un "Denegar", el model
 El modelo instalado es la segunda versión de las tres que entrené (una capa de 96, una ronda de negativos difíciles);
 la tercera, la del script actual, con tonos desplazados y frases de corrido, no la mejoró.
 
-**Pendiente:** detección de actividad con un mando (no había uno a mano); grabar la isla con "Permitir capturas";
-con tu voz: "Cacao" en vivo, con videos que digan "cacao" y con audio de fondo, y "confirmo la instrucción"; con
-tu mano: el interruptor del modo en la isla y en la bandeja (`ESPERAR_FISICO_S=60 probar_fase7.py C`);
-Obsidian; ver la reflexión diaria y las sugerencias tras una semana de hábitos reales. Sin apps de banco en este PC
-(`apps_banco` vacío).
+### autocompletar_login y arranque automático (2026-10-06, en simulación)
+
+| Prueba | Resultado |
+|---|---|
+| `probar_autocompletar_login.py` (sitio no nombrado, otra app o sitio al frente, contenido externo, campo ambiguo o tapado, la isla, lista que no aparece, ventana que cambia, atajo de emergencia, nada de credenciales hacia el modelo, siempre pregunta) | 46/46 |
+| `iniciar_cacao.ps1 -Simular` | Encuentra todo; con un proceso falso de `voz.py` en marcha, no abre otro |
+| `crear_acceso_directo.ps1` (sin `-Inicio`) | `Cacao.lnk` en `C:\asistente`; la carpeta de Inicio sigue solo con el registro de hábitos |
+
+### Pendiente para cuando estés frente al PC (en orden)
+
+1. **Regresión del prompt** (sin ti, pero con el PC libre y sin juegos): `SIN_REALES=1 evaluar_pruebas.py` con las
+   65 frases × 3 semillas. El prompt cambió con el nombre "Cacao" y `deshacer_movimiento` y no se ha vuelto a medir.
+2. **Interruptores con tu clic:** `ESPERAR_FISICO_S=60 probar_fase7.py C` (escucha y modo sin confirmación, en la isla
+   y en la bandeja); mira el indicador ámbar y el estado "escuchando".
+3. **"Cacao" con tu voz:** sola y de corrido ("Cacao, sube el volumen"), con música de fondo, y con un video que diga
+   "cacao" (no debería pasar la segunda etapa). Apunta las activaciones falsas que notes.
+4. **"Confirmo la instrucción" con tu voz:** tras una pregunta, con Ctrl+Espacio y con "Cacao"; y que "sí" solo no valga.
+5. **Modo sin confirmación en real:** volumen y abrir una app directos; escribir en el Bloc de notas con texto de tu
+   pedido; mover 2 archivos de prueba y "deshaz lo último"; el atajo de emergencia lo apaga.
+6. **autocompletar_login:** activa Windows Hello en Chrome (punto 13) y prueba a mano que Chrome lo pide; luego
+   `autocompletar_login.activa: true`, añade 2-3 frases al set y repite el punto 1; prueba en un sitio con cuenta
+   guardada: con Hello rellena y no envía; si cancelas Hello no rellena; con otra ventana al frente da error.
+7. **Arranque automático:** doble clic en `Cacao.lnk`; si arranca bien (isla, "Cacao", Ctrl+Espacio), actívalo con
+   `crear_acceso_directo.ps1 -Inicio`, cierra sesión y vuelve a entrar. Prueba también a iniciar sesión con un juego
+   que se abra solo: Cacao debe esperar.
+8. **Grabar la isla** con "Permitir capturas".
+9. **Mando:** detección de actividad (no había uno a mano).
+10. **Datos reales:** Obsidian, y la reflexión diaria y las sugerencias tras una semana de hábitos. `apps_banco` sigue
+    vacío (no hay apps de banco en este PC).
 
 ---
 
@@ -404,3 +452,5 @@ Obsidian; ver la reflexión diaria y las sugerencias tras una semana de hábitos
 - [x] Herramientas restantes y atajo de emergencia
 - [x] Memoria wiki, hábitos y recomendaciones (probado en real; falta el mando y una semana de datos)
 - [x] Voz, isla e inicio automático del registro de hábitos
+- [ ] autocompletar_login con Windows Hello (hecha en simulación, apagada)
+- [ ] Arranque automático de Cacao (preparado en `Cacao.lnk`; activarlo contigo)
