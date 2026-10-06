@@ -61,6 +61,7 @@ voz.Microfono = MicrofonoFalso
 
 if __name__ == "__main__":
     voz.a.CONFIG.setdefault("ui", {})["activa"] = False  # sin isla: aquí las confirmaciones son falsas
+    voz.CONFIG_VOZ["palabra_activacion"] = {"activa": False}  # sin micrófono real: sin escucha de "Cacao"
     atajo, _, transcriptor, locutor, historial, _planificador = voz.preparar()
     atajo.cerrar()
 
