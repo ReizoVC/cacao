@@ -1,12 +1,19 @@
 """
-Fase 6: actividad de Reizo frente al PC (teclado, mouse y mandos).
+Fase 6: actividad de Reizo frente al PC (teclado, mouse y mandos), solo con ENTRADA FÍSICA.
 
-GetLastInputInfo solo ve teclado y mouse. Los mandos se vigilan aparte, en hilos, sin instalar nada:
+Teclado y mouse se miden con Raw Input (RIDEV_INPUTSINK en una ventana oculta), no con GetLastInputInfo: en este PC
+GetLastInputInfo se reiniciaba sin parar sin ninguna tecla ni movimiento (diagnostico_actividad.py, 2026-10-06), así
+que nunca había 'inactivo'. Raw Input dice de qué dispositivo viene cada evento; la entrada inyectada (SendInput: la
+herramienta teclado/mouse del agente, macros, control remoto por software) llega SIN dispositivo y no cuenta. Del
+mouse cuentan los botones, la rueda y el movimiento de al menos MOVIMIENTO_MIN cuentas en un segundo (la deriva del
+sensor no). Si Raw Input no se pudo registrar, se vuelve a GetLastInputInfo y se avisa en raw_teclado_ok.
+
+Los mandos se vigilan aparte, en hilos, sin instalar nada:
   - XInput (xinput1_4.dll): mandos Xbox y compatibles, 4 puertos, consultados 4 veces por segundo;
-  - Raw Input HID (gamepad y joystick, RIDEV_INPUTSINK en una ventana oculta): los demás (DualSense, Switch Pro...).
+  - Raw Input HID (gamepad y joystick): los demás (DualSense, Switch Pro...).
 Cuenta como actividad un botón que cambia o un eje que se mueve más de ZONA_MUERTA de su recorrido; así un stick que
 deriva o un mando que manda informes sin parar (el DualSense manda ~250 por segundo, con el giroscopio) no la falsea.
-Lo usan registro_habitos.py (estado 'inactivo') y la vigilancia de la reflexión (deteccion.py).
+Lo usan registro_habitos.py (estado 'inactivo'), la vigilancia de la reflexión y el modo juego (deteccion.py).
 """
 import ctypes
 import threading
@@ -17,6 +24,7 @@ user32 = ctypes.windll.user32
 kernel32 = ctypes.windll.kernel32
 
 ZONA_MUERTA = 0.12      # fracción del recorrido de un eje
+MOVIMIENTO_MIN = 12     # cuentas de mouse (|dx| + |dy|) en un segundo para que el movimiento sea actividad
 XINPUT_STICK = 4000     # de 32767
 XINPUT_GATILLO = 30     # de 255
 
@@ -68,7 +76,10 @@ def _estado_xinput(g):
 # ---------- Raw Input HID ----------
 
 WM_INPUT = 0x00FF
-RIM_TYPEHID = 2
+RIM_TYPEMOUSE, RIM_TYPEKEYBOARD, RIM_TYPEHID = 0, 1, 2
+RI_KEY_BREAK = 0x01
+MOUSE_MOVE_ABSOLUTE = 0x01
+PAGINA_RATON, PAGINA_TECLADO = 0x02, 0x06  # usos de la página de escritorio genérico (0x01)
 RIDEV_INPUTSINK = 0x00000100
 RID_INPUT = 0x10000003
 RIDI_PREPARSEDDATA = 0x20000005
@@ -197,13 +208,20 @@ class _DispositivoHID:
 
 
 class MonitorEntrada:
-    """segundos_sin_entrada(): lo menor entre teclado/mouse (GetLastInputInfo) y la última actividad de un mando."""
+    """segundos_sin_entrada(): desde la última entrada FÍSICA de teclado, mouse o mando (ver arriba). Al arrancar
+    cuenta desde ese momento."""
 
     def __init__(self, reloj=time.monotonic):
         self.reloj = reloj
+        self.inicio = reloj()
         self.ultima_mando = None   # reloj() de la última actividad de un mando
+        self.ultima_fisica = None  # reloj() de la última tecla o movimiento de mouse físicos
+        self.inyectados = 0        # eventos de teclado/mouse sin dispositivo (no cuentan), para el diagnóstico
+        self._mov = [0, 0]         # [segundo, cuentas de movimiento en ese segundo]
+        self._abs = {}             # mouse absoluto (tabletas, escritorio remoto): última posición por dispositivo
         self.xinput_ok = False
         self.rawinput_ok = False
+        self.raw_teclado_ok = False  # teclado y mouse por Raw Input; si es False se usa GetLastInputInfo
         self._parar = threading.Event()
         self._hilos = []
         self._anteriores = {}      # mando -> último estado
@@ -225,8 +243,49 @@ class MonitorEntrada:
     def segundos_sin_mando(self):
         return float("inf") if self.ultima_mando is None else self.reloj() - self.ultima_mando
 
+    def segundos_sin_teclado_ni_mouse(self):
+        if not self.raw_teclado_ok:
+            return segundos_sin_teclado_ni_mouse()  # respaldo: Raw Input no se registró
+        return self.reloj() - (self.ultima_fisica if self.ultima_fisica is not None else self.inicio)
+
     def segundos_sin_entrada(self):
-        return min(segundos_sin_teclado_ni_mouse(), self.segundos_sin_mando())
+        return min(self.segundos_sin_teclado_ni_mouse(), self.segundos_sin_mando())
+
+    # ----- teclado y mouse (sin Win32, para poder probarlo) -----
+
+    def procesar_teclado(self, hdevice, flags):
+        """Una tecla de Raw Input. hdevice 0 = inyectada: no cuenta. Solo la pulsación (no la suelta)."""
+        if not hdevice:
+            self.inyectados += 1
+            return False
+        if flags & RI_KEY_BREAK:
+            return False
+        self.ultima_fisica = self.reloj()
+        return True
+
+    def procesar_raton(self, hdevice, usflags, botones, dx, dy):
+        """Un evento de mouse de Raw Input. Cuentan botones y rueda (usButtonFlags != 0) y el movimiento que suma
+        MOVIMIENTO_MIN cuentas en un segundo. hdevice 0 = inyectado: no cuenta."""
+        if not hdevice:
+            self.inyectados += 1
+            return False
+        ahora = self.reloj()
+        if botones:
+            self.ultima_fisica = ahora
+            return True
+        if usflags & MOUSE_MOVE_ABSOLUTE:
+            previo, self._abs[hdevice] = self._abs.get(hdevice), (dx, dy)
+            if previo is None:
+                return False
+            dx, dy = (dx - previo[0]) * 1920 // 65536, (dy - previo[1]) * 1080 // 65536  # a píxeles aproximados
+        segundo = int(ahora)
+        if self._mov[0] != segundo:
+            self._mov = [segundo, 0]
+        self._mov[1] += abs(dx) + abs(dy)
+        if self._mov[1] >= MOVIMIENTO_MIN:
+            self.ultima_fisica = ahora
+            return True
+        return False
 
     def _registrar(self, mando, estado):
         if hay_cambio(self._anteriores.get(mando), estado):
@@ -260,6 +319,9 @@ class MonitorEntrada:
         dispositivos = (RAWINPUTDEVICE * 2)(RAWINPUTDEVICE(PAGINA_ESCRITORIO, 0x04, RIDEV_INPUTSINK, hwnd),
                                             RAWINPUTDEVICE(PAGINA_ESCRITORIO, 0x05, RIDEV_INPUTSINK, hwnd))
         self.rawinput_ok = bool(user32.RegisterRawInputDevices(dispositivos, 2, ctypes.sizeof(RAWINPUTDEVICE)))
+        fisicos = (RAWINPUTDEVICE * 2)(RAWINPUTDEVICE(PAGINA_ESCRITORIO, PAGINA_TECLADO, RIDEV_INPUTSINK, hwnd),
+                                       RAWINPUTDEVICE(PAGINA_ESCRITORIO, PAGINA_RATON, RIDEV_INPUTSINK, hwnd))
+        self.raw_teclado_ok = bool(user32.RegisterRawInputDevices(fisicos, 2, ctypes.sizeof(RAWINPUTDEVICE)))
         msg = wintypes.MSG()
         while user32.GetMessageW(ctypes.byref(msg), None, 0, 0) > 0:
             user32.TranslateMessage(ctypes.byref(msg))
@@ -282,6 +344,17 @@ class MonitorEntrada:
         if user32.GetRawInputData(lparam, RID_INPUT, buf, ctypes.byref(tamano), cabecera) != tamano.value:
             return
         h = RAWINPUTHEADER.from_buffer_copy(buf)
+        if h.dwType == RIM_TYPEKEYBOARD:
+            _, flags = (wintypes.USHORT * 2).from_buffer_copy(buf, cabecera)  # RAWKEYBOARD: MakeCode, Flags
+            self.procesar_teclado(h.hDevice, flags)
+            return
+        if h.dwType == RIM_TYPEMOUSE:
+            # RAWMOUSE: usFlags (+2 de relleno), usButtonFlags, usButtonData, ulRawButtons, lLastX, lLastY
+            usflags = wintypes.USHORT.from_buffer_copy(buf, cabecera).value
+            botones = wintypes.USHORT.from_buffer_copy(buf, cabecera + 4).value
+            dx, dy = (wintypes.LONG * 2).from_buffer_copy(buf, cabecera + 12)
+            self.procesar_raton(h.hDevice, usflags, botones, dx, dy)
+            return
         if h.dwType != RIM_TYPEHID:
             return
         dwsize, dwcount = (wintypes.DWORD * 2).from_buffer_copy(buf, cabecera)
