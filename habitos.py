@@ -9,6 +9,11 @@ se descarta.
 
 Las muestras son inmutables: solo se añaden, y se borran por antigüedad (conservar_dias) después de resumirlas en
 resumen_diario, que no se borra. Lo escribe registro_habitos.py (proceso aparte, sin modelo) y lo lee la reflexión.
+
+periodos_dudosos (desde, hasta, motivo): tramos cuyas muestras no son fiables (p. ej. todo lo anterior al
+2026-10-06, cuando el estado activo/inactivo salía de GetLastInputInfo, que se reiniciaba sin entrada). No se borra
+nada: el resumen diario, la actividad por hora (reflexión y sugerencias) y los días ya resumidos que se solapan con
+un tramo dudoso (resumenes_dudosos) los dejan fuera.
 """
 import ctypes
 import json
@@ -61,6 +66,14 @@ def conectar():
                            ultima TEXT,
                            PRIMARY KEY (dia, app))""")
         con.execute("CREATE TABLE IF NOT EXISTS dias_resumidos (dia TEXT PRIMARY KEY)")
+        con.execute("""CREATE TABLE IF NOT EXISTS periodos_dudosos (
+                           id INTEGER PRIMARY KEY AUTOINCREMENT,
+                           desde TEXT NOT NULL,
+                           hasta TEXT NOT NULL,
+                           motivo TEXT NOT NULL,
+                           marcado TEXT NOT NULL)""")
+        # días que ya estaban resumidos cuando se marcó un tramo dudoso que los toca: su resumen no se usa
+        con.execute("CREATE TABLE IF NOT EXISTS resumenes_dudosos (dia TEXT PRIMARY KEY, periodo INTEGER NOT NULL)")
         yield con
         con.commit()
     finally:
@@ -347,8 +360,37 @@ def minutos_por_muestra():
     return MW["muestreo_s"] / 60
 
 
+# ---------- periodos dudosos ----------
+
+# condición SQL: la muestra no cae en ningún periodo dudoso (desde incluido, hasta excluido)
+FIABLE = ("NOT EXISTS (SELECT 1 FROM periodos_dudosos p WHERE muestras.fecha_hora >= p.desde "
+          "AND muestras.fecha_hora < p.hasta)")
+
+
+def marcar_dudoso(desde, hasta, motivo, ahora=None):
+    """Marca [desde, hasta) como dudoso (datetime o texto 'AAAA-MM-DD HH:MM:SS'). No borra nada. Devuelve
+    (id del periodo, muestras que quedan dentro)."""
+    texto = lambda t: t if isinstance(t, str) else t.strftime(FORMATO)  # noqa: E731
+    desde, hasta = texto(desde), texto(hasta)
+    with conectar() as con:
+        cur = con.execute("INSERT INTO periodos_dudosos (desde, hasta, motivo, marcado) VALUES (?, ?, ?, ?)",
+                          (desde, hasta, motivo, (ahora or datetime.now()).strftime(FORMATO)))
+        periodo = cur.lastrowid
+        con.execute("INSERT OR IGNORE INTO resumenes_dudosos SELECT dia, ? FROM dias_resumidos "
+                    "WHERE dia >= substr(?, 1, 10) AND dia <= substr(?, 1, 10)", (periodo, desde, hasta))
+        n = con.execute("SELECT COUNT(*) FROM muestras WHERE fecha_hora >= ? AND fecha_hora < ?",
+                        (desde, hasta)).fetchone()[0]
+    return periodo, n
+
+
+def periodos_dudosos():
+    with conectar() as con:
+        return con.execute("SELECT id, desde, hasta, motivo, marcado FROM periodos_dudosos ORDER BY desde").fetchall()
+
+
 def resumir_dias(hoy, clasificador):
-    """Resume en resumen_diario los días cerrados (anteriores a 'hoy') que aún no estén resumidos."""
+    """Resume en resumen_diario los días cerrados (anteriores a 'hoy') que aún no estén resumidos. Las muestras de
+    periodos dudosos no cuentan."""
     hecho = []
     with conectar() as con:
         ya = {d for (d,) in con.execute("SELECT dia FROM dias_resumidos")}
@@ -357,7 +399,7 @@ def resumir_dias(hoy, clasificador):
         for dia in sorted(set(dias) - ya):
             filas = con.execute("SELECT app, categoria, COUNT(*), MIN(fecha_hora), MAX(fecha_hora) FROM muestras "
                                 "WHERE substr(fecha_hora, 1, 10) = ? AND estado = 'activo' AND app != '-' "
-                                "GROUP BY app", (dia,)).fetchall()
+                                f"AND {FIABLE} GROUP BY app", (dia,)).fetchall()
             for app, categoria, n, primera, ultima in filas:
                 con.execute("INSERT OR REPLACE INTO resumen_diario VALUES (?, ?, ?, ?, ?, ?, ?)",
                             (dia, app, clasificador.nombre(app), categoria, n * minutos_por_muestra(),
@@ -377,26 +419,30 @@ def purgar(hoy):
 
 
 def actividad_por_hora(desde, hasta):
-    """{(dia, hora, app): minutos activos} entre dos fechas (datetime, 'hasta' excluido), desde las muestras."""
+    """{(dia, hora, app): minutos activos} entre dos fechas (datetime, 'hasta' excluido), desde las muestras. Las de
+    periodos dudosos no cuentan."""
     with conectar() as con:
         filas = con.execute("SELECT substr(fecha_hora, 1, 10), CAST(substr(fecha_hora, 12, 2) AS INTEGER), app, "
                             "COUNT(*) FROM muestras WHERE fecha_hora >= ? AND fecha_hora < ? AND estado = 'activo' "
-                            "AND app != '-' GROUP BY 1, 2, 3",
+                            f"AND app != '-' AND {FIABLE} GROUP BY 1, 2, 3",
                             (desde.strftime(FORMATO), hasta.strftime(FORMATO))).fetchall()
     return {(d, h, a): n * minutos_por_muestra() for d, h, a, n in filas}
 
 
 def resumen_dias(desde, hasta):
-    """Filas de resumen_diario entre dos días (datetime.date o datetime; 'hasta' excluido)."""
+    """Filas de resumen_diario entre dos días (datetime.date o datetime; 'hasta' excluido), sin los días que ya
+    estaban resumidos cuando se marcó un periodo dudoso que los toca."""
     with conectar() as con:
         return con.execute("SELECT dia, app, nombre, categoria, minutos, primera, ultima FROM resumen_diario "
-                           "WHERE dia >= ? AND dia < ? ORDER BY dia",
+                           "WHERE dia >= ? AND dia < ? AND dia NOT IN (SELECT dia FROM resumenes_dudosos) "
+                           "ORDER BY dia",
                            (desde.strftime("%Y-%m-%d"), hasta.strftime("%Y-%m-%d"))).fetchall()
 
 
 def hay_datos(desde, hasta):
+    """True si hay muestras fiables (fuera de periodos dudosos) entre dos fechas."""
     with conectar() as con:
-        return con.execute("SELECT COUNT(*) FROM muestras WHERE fecha_hora >= ? AND fecha_hora < ?",
+        return con.execute(f"SELECT COUNT(*) FROM muestras WHERE fecha_hora >= ? AND fecha_hora < ? AND {FIABLE}",
                            (desde.strftime(FORMATO), hasta.strftime(FORMATO))).fetchone()[0] > 0
 
 
