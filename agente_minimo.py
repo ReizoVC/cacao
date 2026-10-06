@@ -759,6 +759,7 @@ def agregar_sugerencia(respuesta, historial):
 
 _isla = None           # ui_isla.ServidorIsla, lo crea iniciar_isla
 _confirmacion = None   # ui_isla.Confirmar
+_confirmar_extra = None  # voz.py: la frase "confirmo la instrucción" como otra vía de "sí"
 _proceso_isla = None
 
 
@@ -772,8 +773,9 @@ def confirmar(herramienta, resumen, motivo=None, comando=None):
         _confirmacion = Confirmar(_isla, CONFIG.get("ui", {}).get("confirmar_timeout_s", 30),
                                   cancelar=emergencia.detenido)
     print(f"  ¿{resumen}?  [Enter = sí · Esc = no"
-          + (" · o los botones de la isla]" if _isla is not None and _isla.conectada else "]"), flush=True)
-    si = _confirmacion.pedir(herramienta, resumen, motivo, comando)
+          + (" · o los botones de la isla" if _isla is not None and _isla.conectada else "")
+          + (" · o di «confirmo la instrucción»" if _confirmar_extra else "") + "]", flush=True)
+    si = _confirmacion.pedir(herramienta, resumen, motivo, comando, extra=_confirmar_extra)
     print(f"  -> {'sí' if si else 'no'} ({_confirmacion.ultima['via']})", flush=True)
     return si
 

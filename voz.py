@@ -6,7 +6,8 @@ Modo voz del asistente: pulsar para hablar y respuesta hablada. El modo texto (a
 - Frenos antes de llegar al agente: una pulsación casi sin voz se descarta sin transcribir; una transcripción con
   más palabras de las que caben en los segundos con voz, o con una frase típica de alucinación de Whisper, también.
 - Las herramientas de solo lectura van directas. Las que cambian algo (abrir, volumen, mover, cerrar, teclado...)
-  piden confirmación con el TECLADO: Enter = sí, Esc = no (nunca diciendo "sí"); sin respuesta en 30 s = no.
+  piden confirmación: Enter = sí, Esc = no, los botones de la isla, o la frase "confirmo la instrucción" en una
+  grabación aparte tras la pregunta (confirmacion_voz.py; "sí" solo no vale). Sin respuesta en 30 s = no.
 - La respuesta final (lo que devuelve atender) se lee con Piper. El pensamiento, los pasos y las confirmaciones
   NUNCA se leen: solo se muestran en la consola. En modo voz el prompt pide 1 o 2 frases (agente_minimo.MODO_VOZ).
 - Cada comando queda en voz_registro/: el WAV y una línea en registro.jsonl (transcripción, frenos, confirmaciones,
@@ -31,6 +32,7 @@ import sounddevice as sd
 from piper import PiperVoice, SynthesisConfig
 
 import agente_minimo as a
+import confirmacion_voz
 from microfono import TASA, AtajoHablar, Microfono, analizar_audio
 from transcripcion import TranscriptorNativo, TranscriptorWhisper, a_wav, contar_palabras, transcripcion_plausible
 
@@ -137,6 +139,21 @@ def activar_confirmaciones():
     a.ejecutar = ejecutar_voz
     a.confirmar = lambda herramienta, resumen, motivo=None, comando=None: pedir_confirmacion(
         resumen, herramienta, motivo, comando)
+    a._confirmar_extra = escuchar_confirmacion
+
+
+# ---------- confirmación por voz ("confirmo la instrucción") ----------
+
+_piezas = {}  # atajo, micrófono, transcriptor y locutor: los pone preparar()
+
+
+def escuchar_confirmacion(aceptar, hecho, entrada):
+    """Corre en un hilo mientras se espera una confirmación (confirmacion_voz.Oyente)."""
+    if not _piezas:
+        return
+    confirmacion_voz.Oyente(_piezas["atajo"], _piezas["microfono"], _piezas["transcriptor"],
+                            min_voz_s=CONFIG_VOZ["min_voz_s"], disparos=_piezas.get("disparos")).escuchar(
+        aceptar, hecho, entrada)
 
 
 # ---------- registro ----------
@@ -170,6 +187,7 @@ def preparar():
     transcriptor = crear_transcriptor()
     ruta_voz = Path(CONFIG_VOZ["piper_voz"])
     locutor = Locutor(ruta_voz if ruta_voz.is_absolute() else BASE / ruta_voz, CONFIG_VOZ["velocidad"])
+    _piezas.update(atajo=atajo, microfono=microfono, transcriptor=transcriptor, locutor=locutor)
     a.iniciar_isla()
     planificador, aviso = a.iniciar_memoria_wiki()
     if hasattr(transcriptor, "descargar"):  # el modo juego también libera Whisper

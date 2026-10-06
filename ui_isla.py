@@ -199,7 +199,9 @@ class Confirmar:
         self._crear_entrada = entrada or (lambda zonas, al_teclear: EntradaFisica(zonas, al_teclear))
         self.ultima = None  # {'id', 'resultado', 'via'} para el registro y las pruebas
 
-    def pedir(self, herramienta, resumen, motivo=None, comando=None):
+    def pedir(self, herramienta, resumen, motivo=None, comando=None, extra=None):
+        """extra(aceptar, hecho, entrada): otra vía de "sí" que corre en un hilo mientras se espera (la frase de
+        voz en voz.py). aceptar(via) confirma; hecho es el Event que marca el final."""
         ident = uuid.uuid4().hex[:12]
         hecho = threading.Event()
         res = {"si": False, "via": "sin respuesta"}
@@ -228,6 +230,9 @@ class Confirmar:
             self.servidor.enviar({"tipo": "confirmar", "id": ident, "herramienta": herramienta, "resumen": resumen,
                                   "motivo": motivo, "comando": comando})
         entrada.iniciar()
+        if extra:
+            threading.Thread(target=extra, args=(lambda via: resolver(True, via), hecho, entrada),
+                             name="confirmar-por-voz", daemon=True).start()
         try:
             limite = inicio + self.timeout_s
             while not hecho.wait(0.05):

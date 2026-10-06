@@ -25,7 +25,7 @@ WH_KEYBOARD_LL, WH_MOUSE_LL = 13, 14
 WM_KEYDOWN, WM_SYSKEYDOWN = 0x0100, 0x0104
 WM_LBUTTONDOWN, WM_LBUTTONUP = 0x0201, 0x0202
 WM_QUIT = 0x0012
-VK_RETURN, VK_ESCAPE = 0x0D, 0x1B
+VK_RETURN, VK_ESCAPE, VK_SPACE = 0x0D, 0x1B, 0x20
 LLKHF_INJECTED, LLKHF_LOWER_IL_INJECTED = 0x10, 0x02
 LLMHF_INJECTED, LLMHF_LOWER_IL_INJECTED = 0x01, 0x02
 CLIC_VALIDO_S = 2.0  # entre el clic físico en la isla y la decisión que manda la isla
@@ -56,6 +56,7 @@ class EntradaFisica:
     def __init__(self, zona_isla=lambda: [], al_teclear=lambda si: None, reloj=time.monotonic):
         self.zona_isla, self.al_teclear, self.reloj = zona_isla, al_teclear, reloj
         self.ultimo_clic_isla = None   # (instante, físico)
+        self.ultimo_espacio = None     # (instante, físico): Ctrl+Espacio para confirmar por voz
         self.teclas_inyectadas = 0     # para el registro: cuántas se ignoraron
         self.clics_inyectados = 0
         self._hooks = []
@@ -67,6 +68,10 @@ class EntradaFisica:
 
     def procesar_tecla(self, vk, mensaje, flags):
         """True si la tecla se consume (Enter o Esc mientras se espera)."""
+        if vk == VK_SPACE and mensaje in (WM_KEYDOWN, WM_SYSKEYDOWN):
+            # no se consume: solo se anota si fue física (la confirmación por voz empieza con Ctrl+Espacio)
+            self.ultimo_espacio = (self.reloj(), not flags & (LLKHF_INJECTED | LLKHF_LOWER_IL_INJECTED))
+            return False
         if vk not in (VK_RETURN, VK_ESCAPE):
             return False
         if mensaje in (WM_KEYDOWN, WM_SYSKEYDOWN):
@@ -87,6 +92,13 @@ class EntradaFisica:
         # el par bajar/subir cuenta como uno: si cualquiera de los dos es inyectado, el clic no es físico
         if mensaje == WM_LBUTTONDOWN or self.ultimo_clic_isla is None or not fisico:
             self.ultimo_clic_isla = (self.reloj(), fisico)
+
+    def espacio_fisico_reciente(self, segundos=1.5):
+        """True si la última pulsación de Espacio fue física y de hace ≤ segundos."""
+        if self.ultimo_espacio is None:
+            return False
+        instante, fisico = self.ultimo_espacio
+        return fisico and self.reloj() - instante <= segundos
 
     def clic_fisico_reciente(self, desde):
         """True si el último clic dentro de la isla fue físico, posterior a 'desde' y de hace ≤ CLIC_VALIDO_S."""
