@@ -37,6 +37,7 @@
   "modo_juego": "Con un juego abierto (mismas reglas que la Fase 6: sin lanzadores ni Wallpaper Engine) el agente descarga Gemma, la visión y Whisper para dejar la VRAM al juego, y los recarga al cerrarlo. Entra y sale tras 'confirmar' comprobaciones seguidas cada intervalo_s segundos. Un pedido en pausa recibe un aviso.",
   "ui": "Fase 7: isla (C:\\asistente-ui). activa: el agente abre el servidor WebSocket en 127.0.0.1:8765 con un token por sesión en %LOCALAPPDATA%\\Asistente\\ui.json. lanzar: abre la isla (exe) al arrancar y la cierra al salir. Las confirmaciones solo aceptan entrada física (Enter/Esc o los botones de la isla); sin respuesta en confirmar_timeout_s = no.",
   "palabra_activacion": "Palabra «Cacao» (palabra_activacion.py, en la CPU; modelo de entrenar_cacao.py en modelos/cacao/). activa: false la quita del todo. activa_al_iniciar: si empieza escuchando; luego se enciende y apaga con un clic físico en la bandeja o en la isla. El audio se procesa en memoria y nada se guarda hasta detectar la palabra.",
+  "autocompletar_login": "autocompletar_login.py: en la ventana de Chrome al frente, del sitio que Reizo nombró, hace clic en el campo de usuario y elige la primera cuenta guardada; el modelo nunca recibe usuario ni contraseña. activa: false hasta probarla en real con Windows Hello activado en Chrome (Configuración > Autocompletar y contraseñas > Gestor de contraseñas > Configuración > 'Usar Windows Hello al completar contraseñas'); al activarla cambia el prompt, así que hay que volver a pasar las 65 frases.",
   "modo_sin_confirmacion": "Modo sin confirmación (modo_directo.py): solo con un clic físico en la bandeja o en la isla; empieza apagado. Carpetas donde mover_archivo siempre pregunta: datos_locales.json -> carpetas_importantes."
  },
  "memoria_wiki": {
@@ -177,6 +178,9 @@
   "activo": true,
   "intervalo_s": 5,
   "confirmar": 2
+ },
+ "autocompletar_login": {
+  "activa": false
  },
  "ui": {
   "activa": true,

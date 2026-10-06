@@ -402,6 +402,19 @@
       "retorno": "{ ok, deshechos }."
     },
     {
+      "nombre": "autocompletar_login",
+      "permiso": "confirmar",
+      "descripcion": "Inicia sesión con el gestor de contraseñas de Chrome: en la ventana de Chrome que está al frente, hace clic en el campo de usuario y elige la primera cuenta guardada. Tú nunca ves el usuario ni la contraseña; solo te dice si funcionó. Úsala solo si Reizo pide iniciar sesión (o completar el login) en un sitio que él nombra, y pasa en 'sitio' ese nombre tal como lo dijo. Si la ventana al frente no es de ese sitio, usa antes listar_ventanas y enfocar_ventana. No envía el formulario y no sirve para escribir contraseñas.",
+      "parametros": {
+        "type": "object",
+        "properties": {
+          "sitio": { "type": "string", "description": "El sitio que nombró Reizo, por ejemplo 'github' o 'mercado libre'." }
+        },
+        "required": ["sitio"]
+      },
+      "retorno": "{ ok } o { ok: false, error }."
+    },
+    {
       "nombre": "ejecutar_powershell",
       "permiso": "confirmar",
       "descripcion": "Ejecuta un comando de PowerShell. Úsala solo cuando ninguna otra herramienta sirva. Siempre explica el motivo en lenguaje simple, porque se mostrará al usuario antes de ejecutar.",

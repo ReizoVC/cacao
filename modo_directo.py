@@ -14,7 +14,7 @@ normales (que piden confirmación según el permiso, y en modo voz para todo lo 
     'tecla' con letras o números, o un atajo con letras sin Ctrl ni Alt, es escribir: sigue las reglas normales;
   - mover_archivo: directo hasta 10 archivos por tarea, sin ejecutables ni scripts y fuera de las carpetas
     importantes (datos_locales.json -> carpetas_importantes). Cada movimiento queda en un historial para deshacer;
-  - siempre con confirmación: ejecutar_powershell y cerrar_app forzado;
+  - siempre con confirmación: ejecutar_powershell, autocompletar_login y cerrar_app forzado;
   - si en la tarea entró contenido externo (leer_archivo, buscar_web, ejecutar_powershell), todo vuelve a las reglas
     normales hasta que termine. ver_pantalla, listar_controles y listar_ventanas sirven para ubicar botones y
     ventanas: después de usarlas, mouse, teclado, enfocar_ventana, cerrar_app y abrir_app solo van directos sobre la
@@ -35,7 +35,7 @@ RUTA_DATOS_LOCALES = BASE / "datos_locales.json"
 DIRECTAS = {"volumen", "abrir_app", "enfocar_ventana", "buscar_web"}
 EXTERNO = {"leer_archivo", "buscar_web", "ejecutar_powershell"}
 UBICACION = {"ver_pantalla", "listar_controles", "listar_ventanas"}
-SIEMPRE_CONFIRMAR = {"ejecutar_powershell"}
+SIEMPRE_CONFIRMAR = {"ejecutar_powershell", "autocompletar_login"}
 MAX_ARCHIVOS = 10
 EXTENSIONES_RIESGO = {".exe", ".dll", ".bat", ".ps1", ".cmd", ".msi", ".lnk",
                       ".vbs", ".js", ".scr", ".com", ".reg", ".psm1", ".msc"}  # las 7 pedidas y otras parecidas

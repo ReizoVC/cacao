@@ -25,6 +25,7 @@ from pathlib import Path
 from rapidfuzz import process, fuzz
 from pycaw.pycaw import AudioUtilities
 
+import autocompletar_login
 import habitos
 import herramientas_grupo4
 import modo_directo
@@ -50,6 +51,10 @@ ACTIVAS = {"listar_apps", "abrir_app", "volumen", "finalizar",
            "listar_controles", "ejecutar_powershell", "sugerencias", "registro_habitos", "deshacer_movimiento"}
 if not CONFIG.get("mmproj"):
     ACTIVAS.discard("ver_pantalla")
+# probada solo en simulación: se activa en config.json cuando Reizo tenga Windows Hello en Chrome (y tras volver a
+# pasar las 65 frases, porque cambia el prompt)
+if CONFIG.get("autocompletar_login", {}).get("activa"):
+    ACTIVAS.add("autocompletar_login")
 HERRAMIENTAS = {h["nombre"]: h for h in CATALOGO["herramientas"] if h["nombre"] in ACTIVAS}
 MAX_PASOS = CATALOGO["limites"]["max_pasos_por_tarea"]
 APPS_SENSIBLES = CATALOGO["limites"]["apps_sensibles"]
@@ -356,9 +361,11 @@ IMPLEMENTACIONES = {"listar_apps": listar_apps, "abrir_app": abrir_app, "volumen
                     "cerrar_app": cerrar_app, "mover_archivo": mover_archivo, "mouse": mouse, "teclado": teclado,
                     "listar_controles": listar_controles, "ejecutar_powershell": ejecutar_powershell,
                     "sugerencias": sugerencias.herramienta, "registro_habitos": registro_habitos,
-                    "deshacer_movimiento": deshacer_movimiento}
+                    "deshacer_movimiento": deshacer_movimiento,
+                    "autocompletar_login": autocompletar_login.autocompletar_login}
 # comprobaciones que no ejecutan nada: si fallan, no se le pide confirmación al usuario por algo que se va a rechazar
-PLANIFICADORES = {"ejecutar_powershell": lambda args: planificar_powershell(args.get("comando"), args.get("motivo"))}
+PLANIFICADORES = {"ejecutar_powershell": lambda args: planificar_powershell(args.get("comando"), args.get("motivo")),
+                  "autocompletar_login": lambda args: autocompletar_login.planificar_desde_agente(args.get("sitio"))}
 # acciones cuyo efecto hay que comprobar antes de darlas por hechas, y herramientas que sirven para comprobarlo
 ACCIONES_A_VERIFICAR = {"mouse": {"clic", "doble_clic", "clic_derecho"}, "teclado": {"atajo", "tecla"}}
 VERIFICADORAS = {"ver_pantalla", "listar_controles", "listar_ventanas"}
@@ -375,6 +382,8 @@ _tarea = {"contaminada": False, "herramientas": [], "pedido": "", "movidos": 0} 
 # FÍSICO en la isla o en la bandeja; empieza apagado en cada arranque.
 _modos = {"sin_confirmacion": False}
 _politica = modo_directo.Politica()
+# autocompletar_login comprueba con el pedido de Reizo (no con lo que diga el modelo) qué sitio se nombró
+autocompletar_login.obtener_tarea = lambda: (_tarea["pedido"], [n for n, _ in _tarea["herramientas"]])
 _decision = {"clave": None, "valor": None}  # la última decisión (ejecutar_voz y ejecutar la consultan seguidas)
 _modo_juego = None  # modo_juego.ModoJuego, lo crea iniciar_memoria_wiki
 _planificador = None
@@ -394,6 +403,7 @@ emergencia = Emergencia(CATALOGO["limites"]["atajo_emergencia"])
 llm.interrumpir = emergencia.comprobar  # se comprueba en cada token que genera el modelo
 herramientas_grupo4.comprobar_emergencia = emergencia.comprobar  # y dentro de las herramientas largas
 herramientas_powershell.comprobar_emergencia = emergencia.comprobar
+autocompletar_login.comprobar_emergencia = emergencia.comprobar
 sincronizar_apps()
 
 ESQUEMA_ACCION = {
