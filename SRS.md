@@ -43,7 +43,6 @@ navegador predeterminado.
 
 **Fuera de alcance:**
 - el uso por más de un usuario y el reconocimiento de quién habla;
-- campo de texto en la isla (decisión 3 de `diseno_fase7.md`);
 - cualquier herramienta que entregue usuarios o contraseñas al modelo.
 
 ### 1.3 Definiciones
@@ -249,6 +248,9 @@ Formato: **ID**, requisito ("debe"), **criterio verificable** y estado.
 | RF-64 | Conexión solo en `127.0.0.1:8765`, con token por sesión en `%LOCALAPPDATA%\Asistente\ui.json` (borrado al salir), Origin de Tauri y una sola isla | Token incorrecto, Origin distinto y segunda isla rechazados (`probar_fase7.py` A) | Verificado (simulación) |
 | RF-65 | La isla debe cerrarse con el agente aunque se cierre la terminal con la X o el proceso caiga (Job con `KILL_ON_JOB_CLOSE`) | Al cerrar la terminal con la X, la isla se cierra | Verificado (real) el 2026-10-05 (guía, "Corregido durante las pruebas") |
 | RF-66 | La isla no debe hablar con internet: sin hooks de Claude Code, API, integraciones, claves ni red saliente; CSP con `connect-src` solo `ipc:` y el WebSocket local | Sin `reqwest`, `keyring` ni `tokio` | Verificado en código (`diseno_fase7.md` §8, decisión 2) |
+| RF-67 | El campo de texto de la isla debe tomar el foco solo con un clic físico en él y devolverlo a la ventana que estaba activa antes con Enter, Esc o un clic fuera; fuera del campo, la isla mantiene WS_EX_NOACTIVATE y sus botones no quitan el foco | `foco.rs` 9/9 (Windows simulado) y `npm run probar-campo` 18/18: los tres casos devuelven el foco; un clic no físico no lo toma | Verificado (simulación). Prueba visual: **Pendiente** |
+| RF-68 | El texto del campo debe entrar como un pedido normal (`atender_con_memoria`), con los mismos permisos, bloqueos, modo sin confirmación y confirmaciones que la consola y la voz; hasta 2000 caracteres | `probar_campo_isla.py`: mismo camino que la consola en modo texto y que lo dicho en modo voz; sin token, nada | Verificado (simulación) |
+| RF-69 | La herramienta teclado debe negarse (bloqueo, sin pedir confirmación) a escribir o pulsar teclas si la ventana al frente es la isla | `probar_campo_isla.py`: bloqueo sin pulsaciones, en modo normal y sin confirmación | Verificado (simulación) |
 
 ### 3.8 Modo sin confirmación
 
@@ -382,6 +384,7 @@ ventana activa") empezara con `listar_ventanas` en 3/3. Se acotó a "cuando nomb
 | RS-16 | Privacidad de la escucha: nada se guarda hasta detectar "Cacao"; las activaciones falsas no se guardan; `voz_registro/` no va a git | RF-36, RF-37; `.gitignore` | Verificado (simulación) |
 | RS-17 | La isla no tiene red saliente ni acepta conexiones de otras páginas o procesos sin el token | RF-64, RF-66 | Verificado (simulación) |
 | RS-18 | Ninguna herramienta entrega usuarios ni contraseñas al modelo; el autocompletado lo autoriza Windows Hello | RF-90 a RF-96 | Verificado (simulación); Windows Hello: Pendiente |
+| RS-19 | El agente no puede dictarse pedidos por la isla: su campo solo se abre con un clic físico y teclado no escribe en ella | RF-67, RF-69 | Verificado (simulación) |
 
 **Límite reconocido:** los patrones son una red de seguridad, no un sandbox. La barrera principal es la confirmación
 (`herramientas_powershell.py`), y la confirmación supone que quien está frente al PC es Reizo (R-16).
@@ -490,6 +493,7 @@ estos últimos solo para detectar actividad.
   - RF-50 → `probar_emergencia.py`, `prueba_real.py 3`;
   - RF-51..53 y RNF-08 → `probar_modo_juego.py`;
   - RF-60..66 → `probar_fase7.py` (A, B y C);
+  - RF-67..69 → `foco.rs` y `npm run probar-campo` (en `C:\asistente-ui\windows`), `probar_campo_isla.py`;
   - RF-90..95 → `probar_autocompletar_login.py`;
   - RF-97..98 → `iniciar_cacao.ps1 -Simular`.
 - **Probado en real el 2026-10-05:** rechazo con Esc en voz; Whisper de la CPU con "estoy jugando" y "ya terminé";
@@ -504,6 +508,7 @@ estos últimos solo para detectar actividad.
   - el modo sin confirmación con acciones reales;
   - `autocompletar_login` con Windows Hello (RF-96);
   - el arranque al iniciar sesión (RF-99);
+  - el campo de texto de la isla a la vista (RF-67);
   - grabar la isla con "Permitir capturas"; actividad con un mando;
   - registro de hábitos durante una semana (reflexión y sugerencias con datos reales) y Obsidian.
 - **Pendientes de medición:** el set de 65 frases con el prompt actual (§4.4); activaciones falsas tras la segunda

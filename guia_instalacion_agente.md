@@ -301,13 +301,22 @@ Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agen
    - el agente la abre al arrancar (`config.json` → `ui`) y la cierra al salir; va unida al proceso del agente
      (Job de Windows), así que no queda abierta si este cae;
    - conexión: WebSocket en `127.0.0.1:8765` con un token por sesión en `%LOCALAPPDATA%\Asistente\ui.json`;
-   - no toma el foco, no sale en `listar_ventanas` ni en `ver_pantalla`, y la herramienta mouse no puede hacer clic
-     en ella. Para grabarla: bandeja → "Permitir capturas";
+   - no toma el foco (salvo en su campo de texto), no sale en `listar_ventanas` ni en `ver_pantalla`, y la
+     herramienta mouse no puede hacer clic en ella. Para grabarla: bandeja → "Permitir capturas";
+   - **campo "Escribe a Cacao…"** (vista de inicio y de pregunta):
+     - con un clic físico en él, la isla toma el foco y recuerda la ventana que estaba activa; Enter envía el texto,
+       y Enter, Esc o un clic fuera devuelven el foco a esa ventana. Un clic inyectado no abre el campo;
+     - fuera del campo la isla sigue con WS_EX_NOACTIVATE y sus botones no quitan el foco;
+     - el texto entra como un pedido más (consola o voz): mismos permisos, bloqueos, modo sin confirmación y
+       confirmaciones. Hasta 2000 caracteres. En modo voz, la respuesta también se lee en voz alta;
+     - la herramienta teclado se niega a escribir si la ventana al frente es la isla (bloqueo);
    - compilar: en `C:\asistente-ui\windows`, `npm install` y `npx tauri build --no-bundle` desde un entorno de
      VS 2022 (`vcvars64.bat`); VS 18 Insiders no trae `msvcrt.lib`.
 9. **Pruebas:** `probar_voz.py` (WAV de prueba, sin micrófono ni acciones reales), `probar_fase7.py` (A: simulación;
    B: isla real; C: interruptores de modo en la isla real), `probar_modo_directo.py`, `probar_confirmacion_voz.py`,
-   `probar_palabra_activacion.py` y `probar_autocompletar_login.py` (Chrome simulado).
+   `probar_palabra_activacion.py`, `probar_autocompletar_login.py` (Chrome simulado) y `probar_campo_isla.py`. En
+   `C:\asistente-ui\windows`: `npm run probar-campo` y las pruebas de `src-tauri/src/foco.rs` (con `rustc --test`
+   desde un entorno de VS 2022).
 10. **Palabra de activación "Cacao"** (`palabra_activacion.py`; el asistente también se llama Cacao):
     - detector local en la CPU: características de openWakeWord y un clasificador pequeño entrenado con
       `entrenar_cacao.py` (voces sintéticas de Piper, negativos reales de openWakeWord y el ruido real del
@@ -395,6 +404,16 @@ la tercera, la del script actual, con tonos desplazados y frases de corrido, no 
 | `iniciar_cacao.ps1 -Simular` | Encuentra todo; con un proceso falso de `voz.py` en marcha, no abre otro |
 | `crear_acceso_directo.ps1` (sin `-Inicio`) | `Cacao.lnk` en `C:\asistente`; la carpeta de Inicio sigue solo con el registro de hábitos |
 
+### Campo de texto de la isla (2026-10-06, en simulación)
+
+| Prueba | Resultado |
+|---|---|
+| `foco.rs` (Windows simulado: un clic no activa una ventana NOACTIVATE): Enter, Esc y clic fuera devuelven el foco a la ventana de antes; los botones no lo quitan; un clic no físico no lo toma; ventana de antes cerrada | 9/9 |
+| `npm run probar-campo` (controlador del campo): los tres casos, un solo retorno del foco, Esc que no cierra la isla, sin conexión, campo vacío, 2000 caracteres | 18/18 |
+| `probar_campo_isla.py`: servidor (token), cola consola + isla, mismo camino que la consola y la voz, teclado bloqueado con la isla al frente (también en el modo sin confirmación) | 29/29 |
+| Regresión | palabra de activación 27/27, modo directo 73/73, autocompletar 46/46, confirmación por voz 33/33, fase 7 A 26/26 |
+| `cargo check --offline`, `tsc` y `tauri build --no-bundle` sin red | Sin errores; `asistente-ui.exe` recompilado |
+
 ### Pendiente para cuando estés frente al PC (en orden)
 
 1. **Regresión del prompt** (sin ti, pero con el PC libre y sin juegos): `SIN_REALES=1 evaluar_pruebas.py` con las
@@ -412,9 +431,13 @@ la tercera, la del script actual, con tonos desplazados y frases de corrido, no 
 7. **Arranque automático:** doble clic en `Cacao.lnk`; si arranca bien (isla, "Cacao", Ctrl+Espacio), actívalo con
    `crear_acceso_directo.ps1 -Inicio`, cierra sesión y vuelve a entrar. Prueba también a iniciar sesión con un juego
    que se abra solo: Cacao debe esperar.
-8. **Grabar la isla** con "Permitir capturas".
-9. **Mando:** detección de actividad (no había uno a mano).
-10. **Datos reales:** Obsidian, y la reflexión diaria y las sugerencias tras una semana de hábitos. `apps_banco` sigue
+8. **Campo de texto de la isla (prueba visual):** con el Bloc de notas al frente, haz clic en "Escribe a Cacao…",
+   escribe "sube el volumen" y Enter: se cumple y el Bloc de notas vuelve a tener el foco (escribe una letra para
+   comprobarlo). Repite con Esc y con un clic en el escritorio. Pulsa Permitir/Denegar o un interruptor: el Bloc de
+   notas no pierde el foco. Mira que el campo se vea bien en la columna derecha y en la vista de pregunta.
+9. **Grabar la isla** con "Permitir capturas".
+10. **Mando:** detección de actividad (no había uno a mano).
+11. **Datos reales:** Obsidian, y la reflexión diaria y las sugerencias tras una semana de hábitos. `apps_banco` sigue
     vacío (no hay apps de banco en este PC).
 
 ---
