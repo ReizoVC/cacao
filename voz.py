@@ -239,7 +239,7 @@ def filtrar(audio, soltado, transcriptor):
     if a._modo_juego is not None and a._modo_juego.en_pausa():
         # Whisper de la GPU está descargado: un modelo pequeño en la CPU solo para entender "ya terminé"
         texto = transcribir_en_pausa(audio) if analisis["voz_s"] >= CONFIG_VOZ["min_voz_s"] else ""
-        datos["transcripcion_pausa"] = texto
+        datos.update(transcripcion_pausa=texto, transcribir_s=round(time.perf_counter() - soltado, 2))
         if not any(f in a.normalizar(texto) for f in a.FRASES_TERMINE + a.FRASES_JUGANDO):
             datos["freno"] = "modo_juego"
             return datos, None

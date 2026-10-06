@@ -271,6 +271,28 @@ def medir_whisper(ciclos=2):
     return {"vram_sin_whisper_mb": base, "carga_inicial_s": round(carga_inicial, 2), "ciclos": filas}
 
 
+def pruebas_filtrar_en_pausa():
+    """voz.filtrar en pausa devuelve los mismos campos que fuera de pausa (el bucle mide transcribir_s)."""
+    import numpy as np
+    import voz
+
+    class EnPausa:
+        def en_pausa(self):
+            return True
+
+    guardado = voz.a._modo_juego, voz.transcribir_en_pausa, voz.analizar_audio
+    voz.a._modo_juego = EnPausa()
+    voz.analizar_audio = lambda _audio: {"pico": 9000, "voz_s": 1.0, "duracion_s": 1.5}
+    try:
+        for frase, pasa in (("Estoy jugando.", True), ("Ya terminé.", True), ("Abre la calculadora.", False)):
+            voz.transcribir_en_pausa = lambda _audio: frase
+            datos, texto = voz.filtrar(np.zeros(16000, dtype=np.int16), time.perf_counter(), None)
+            ok(f"voz en pausa: «{frase}» {'pasa' if pasa else 'se descarta'} con transcribir_s",
+               (texto is not None) == pasa and "transcribir_s" in datos, json.dumps(datos, ensure_ascii=False))
+    finally:
+        voz.a._modo_juego, voz.transcribir_en_pausa, voz.analizar_audio = guardado
+
+
 if __name__ == "__main__":
     if "--medir" in sys.argv:
         r = medir_gemma()
@@ -280,5 +302,6 @@ if __name__ == "__main__":
         (BASE / "resultados_modo_juego_whisper.json").write_text(json.dumps(r, indent=1), encoding="utf-8")
     else:
         pruebas_logica()
+        pruebas_filtrar_en_pausa()
         fallos = [x for x in resultados if not x[1]]
         print(f"\n{len(resultados) - len(fallos)}/{len(resultados)} OK")
