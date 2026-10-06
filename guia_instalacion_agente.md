@@ -229,7 +229,11 @@ Diseño completo en `diseno_fase6.md`: es el patrón *LLM Wiki* de Karpathy, con
    - **no guarda títulos**;
    - los gestores de contraseñas, las apps de banco (`datos_locales.json` → `apps_banco`), Seguridad de Windows y el incógnito no dejan fila;
    - las muestras crudas se borran a los 30 días; el resumen diario se queda;
-   - para arrancarlo con Windows, crea un acceso directo a `.venv\Scripts\pythonw.exe registro_habitos.py` en `shell:startup`.
+   - arranca con Windows desde el acceso directo `Registro de hábitos (asistente).lnk` de `shell:startup`
+     (`.venv\Scripts\pythonw.exe "C:\asistente\registro_habitos.py"`, sin consola). Para quitarlo, borra el acceso
+     directo y cierra `pythonw.exe`;
+   - cada fila es solo `fecha_hora | app (exe o ID de la Tienda) | categoría | activo/inactivo/bloqueado`. Las
+     categorías salen de `apps_categorias.json` (se recargan cada hora o al reiniciar el registro).
 2. **Wiki** en `memoria\`:
    - es un vault de Obsidian con su propio git local;
    - `index.md` (siempre en el prompt) y `log.md` los escribe solo el código;
@@ -246,8 +250,16 @@ Diseño completo en `diseno_fase6.md`: es el patrón *LLM Wiki* de Karpathy, con
    - solo texto, máximo 2 al día;
    - solo para apps que empiezas a usar a la misma hora en ≥ 4 de 7 días;
    - "no me sugieras eso" las bloquea; para verlas y desbloquearlas, la herramienta `sugerencias` o las casillas de `rutinas.md`.
-6. **Pruebas:**
+6. **Modo juego** (`modo_juego.py`, `deteccion.py`):
+   - un juego cuenta como activo si tiene una ventana visible o usa la GPU de forma sostenida; termina tras 2 min
+     sin esas señales (cerrado o en la bandeja);
+   - en pausa se descargan Gemma, el mmproj y Whisper de la GPU; un Whisper "base" en la CPU entiende solo
+     "estoy jugando" y "ya terminé";
+   - "estoy jugando" sin juego detectado fuerza la pausa hasta "ya terminé"; con un juego ya detectado solo lo
+     confirma, y al cerrarlo recarga solo.
+7. **Pruebas:**
    - `probar_fase6.py` (sin modelo);
+   - `probar_modo_juego.py` (sin modelo; `--medir` y `--medir-whisper` miden descarga y recarga);
    - `probar_reflexion.py` (modelo real con 7 días simulados de `simular_habitos.py`);
    - `SIN_REALES=1 evaluar_pruebas.py` (las 65 frases sin tocar archivos ni la pantalla).
 
@@ -273,13 +285,47 @@ Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agen
 4. **Frenos de seguridad:**
    - una pulsación con menos de 0,15 s de voz se descarta sin transcribir (Whisper escribe "Gracias por ver el video" en el silencio);
    - una transcripción con más de 6 palabras por segundo de voz, más 3 de margen, también se descarta;
-   - las acciones que cambian algo se confirman con el teclado: **Enter = sí, Esc = no**. Las de solo lectura van directas.
+   - las acciones que cambian algo se confirman con **Enter = sí, Esc = no** o con los botones de la isla, y solo
+     con entrada física (las teclas y los clics inyectados se rechazan). Sin respuesta en 30 s = no. Las de solo
+     lectura van directas;
+   - un "no" termina la tarea: el agente no prueba con otra ventana ni por otro camino.
 5. **Registro:** cada comando queda en `voz_registro/` (WAV + `registro.jsonl`); esa carpeta no va a git.
 6. **Configuración:** sección `voz` de `config.json`, con su nota.
 7. **Uso:** `.venv\Scripts\python voz.py`. Lánzalo desde tu propia terminal: con Gemma y Whisper cargados, el proceso compromete ~16 GB de memoria virtual, porque la VRAM de CUDA cuenta así en Windows. Cierra apps pesadas si el sistema anda justo.
-8. **Palabra de activación (opcional):** openWakeWord.
-4. **Interfaz:** ícono en la bandeja del sistema y ventana de chat con PySide6, más un atajo global para invocarlo.
-5. **Inicio automático:** un acceso directo en `shell:startup`.
+   - Para salir, di "salir" o pulsa Ctrl+C. Si cierras la terminal con la X, la isla se cierra igual.
+8. **Isla** (`C:\asistente-ui`, Tauri 2; diseño en `diseno_fase7.md`):
+   - muestra el estado del agente (pensando, trabajando, terminado, error, pausa por juego) y pide las
+     confirmaciones con Permitir/Denegar;
+   - el agente la abre al arrancar (`config.json` → `ui`) y la cierra al salir; va unida al proceso del agente
+     (Job de Windows), así que no queda abierta si este cae;
+   - conexión: WebSocket en `127.0.0.1:8765` con un token por sesión en `%LOCALAPPDATA%\Asistente\ui.json`;
+   - no toma el foco, no sale en `listar_ventanas` ni en `ver_pantalla`, y la herramienta mouse no puede hacer clic
+     en ella. Para grabarla: bandeja → "Permitir capturas";
+   - compilar: en `C:\asistente-ui\windows`, `npm install` y `npx tauri build --no-bundle` desde un entorno de
+     VS 2022 (`vcvars64.bat`); VS 18 Insiders no trae `msvcrt.lib`.
+9. **Pruebas:** `probar_voz.py` (WAV de prueba, sin micrófono ni acciones reales) y `probar_fase7.py` (A: simulación;
+   B: isla real).
+10. **Palabra de activación (opcional):** openWakeWord.
+
+### Estado real (probado contigo frente al PC el 2026-10-05)
+
+| Prueba | Resultado |
+|---|---|
+| Voz: "abre la calculadora" → Esc | No se abrió (rechazo por teclado físico) |
+| `probar_voz.py` | 11/11 |
+| Isla: Permitir y Denegar con clic físico, Enter | Funcionan; la terminal no perdió el foco; los estados se ven bien |
+| Modo juego con Roblox | Pausa en < 1 s (GPU de 14 GB a 1,4 GB); recarga sola al cerrar el juego (15 s) |
+| "Estoy jugando" / "ya terminé" con el Whisper de la CPU | Entendidos (1,75 s); "ya terminé" recarga en 16 s |
+| Incógnito en Chrome | Sin fila; la ventana normal sí deja fila |
+| Audio | Spotify no bloquea; YouTube en ventana no, en pantalla completa sí (a los 2 s); una llamada de Teams sí |
+| Registro de hábitos en `shell:startup` | Arranca y guarda una fila cada 30 s |
+
+**Corregido durante las pruebas:** Ctrl+C no cerraba el modo voz; la isla quedaba abierta al cerrar la terminal con
+la X; el modo voz se caía tras un comando en pausa; tras un "Denegar", el modelo intentaba con otra ventana.
+
+**Pendiente:** detección de actividad con un mando (no había uno a mano); grabar la isla con "Permitir capturas";
+Obsidian; ver la reflexión diaria y las sugerencias tras una semana de hábitos reales. Sin apps de banco en este PC
+(`apps_banco` vacío).
 
 ---
 
@@ -298,6 +344,8 @@ Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agen
 | El agente se repite o entra en bucle | Prompt ambiguo o temperatura alta | Baja `temperature` a 0.2 y revisa las descripciones en `herramientas.json` |
 | El sistema se queda sin RAM con el modelo cargado | Con `use_mmap` el GGUF mapeado ocupa ~8,6 GB de RAM física aunque las capas estén en la GPU | `"use_mmap": false` en `config.json` (~1,3 GB de RAM, misma velocidad) |
 | "ggml-cuda.cu: CUDA error" sin más detalle | llama-cpp-python 0.3.36 ocultaba los errores de llama.cpp: usa la numeración antigua de niveles y trata el error como depuración | `modelo.py` ya los muestra y los guarda en `errores_llama.log` (con la pila de Python si el proceso aborta); revisa ese archivo |
+| El modo voz descarta todo lo que dices (`pico` 1 en `voz_registro`) | El micrófono está silenciado (botón de mute del headset) u otra app lo tomó en exclusiva | Quita el mute; en Roblox u otros juegos, revisa el chat de voz |
+| La isla no compila: `LNK1104 msvcrt.lib` | Se usó VS 18 Insiders | Compila desde un entorno de VS 2022 (`vcvars64.bat`) |
 | Whisper escribe "Gracias" o "Gracias por ver el video" sin que hables | Alucinación típica en silencio o ruido | `voz.py` descarta las pulsaciones casi sin voz (`voz.min_voz_s`) y esas frases |
 
 ---
@@ -311,6 +359,6 @@ Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agen
 - [ ] Prueba de humo con todas las capas en GPU
 - [ ] `agente_minimo.py` resolviendo las 5 frases de prueba
 - [ ] Set de pruebas con porcentaje de acierto medido
-- [ ] Herramientas restantes y atajo de emergencia
-- [ ] Memoria wiki, hábitos y recomendaciones (código y pruebas simuladas hechos; falta probar en real)
-- [ ] Voz, interfaz e inicio automático
+- [x] Herramientas restantes y atajo de emergencia
+- [x] Memoria wiki, hábitos y recomendaciones (probado en real; falta el mando y una semana de datos)
+- [x] Voz, isla e inicio automático del registro de hábitos

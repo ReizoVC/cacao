@@ -359,13 +359,11 @@ estos últimos solo para detectar actividad.
   - RF-51 y RNF-08 → `probar_modo_juego.py`;
   - RF-30..33 → `probar_voz.py`, `validar_transcripcion.py`;
   - RF-50 → `probar_emergencia.py`, `prueba_real.py 3`.
-- **Pendientes en real (contigo frente al PC):**
-  - rechazo con Esc en voz;
-  - Whisper pequeño en la CPU con audio real: que entienda "estoy jugando" y "ya terminé" en modo juego;
-  - isla: confirmar con clic físico en Permitir/Denegar y con Enter/Esc; que no quite el foco; grabarla con
-    "Permitir capturas";
-  - registro de hábitos durante una semana;
-  - incógnito por navegador, mandos y audio;
-  - modo juego con un juego de verdad;
-  - Obsidian;
-  - la isla (Fase 7, tras aprobar el diseño).
+- **Probado en real el 2026-10-05:** rechazo con Esc en voz; Whisper de la CPU con "estoy jugando" y "ya terminé";
+  isla con clic físico en Permitir/Denegar y Enter, sin quitar el foco; modo juego con Roblox; incógnito en Chrome;
+  regla de audio (música, video en ventana y en pantalla completa, llamada); registro de hábitos al arrancar.
+- **Pendientes en real:**
+  - actividad con un mando;
+  - grabar la isla con "Permitir capturas";
+  - registro de hábitos durante una semana (reflexión y sugerencias con datos reales);
+  - Obsidian.
