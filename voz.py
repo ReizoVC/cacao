@@ -184,9 +184,11 @@ def crear_escucha(microfono, locutor):
 def registrar(n, audio, datos):
     REGISTRO.mkdir(exist_ok=True)
     nombre = time.strftime("%Y%m%d_%H%M%S") + f"_{n}"
-    (REGISTRO / f"{nombre}.wav").write_bytes(a_wav(audio))
+    if audio is not None:  # un pedido escrito en la isla no tiene audio
+        (REGISTRO / f"{nombre}.wav").write_bytes(a_wav(audio))
     with open(REGISTRO / "registro.jsonl", "a", encoding="utf-8") as f:
-        f.write(json.dumps({"wav": f"{nombre}.wav", **datos}, ensure_ascii=False) + "\n")
+        f.write(json.dumps({"wav": f"{nombre}.wav" if audio is not None else None, **datos}, ensure_ascii=False)
+                + "\n")
 
 
 # ---------- bucle ----------
@@ -251,8 +253,9 @@ class MedidorVRAM:
         self._parar.set()
 
 
-def esperar_disparo(atajo, segundos=None):
-    """'atajo' (Ctrl+Espacio), ('activacion', audio, otro_audio) tras la palabra "Cacao", o None si pasó el
+def esperar_disparo(atajo, segundos=None, isla=False):
+    """'atajo' (Ctrl+Espacio), ('activacion', audio, otro_audio) tras la palabra "Cacao", ('isla', texto) con un
+    pedido escrito en la isla (solo con isla=True, que usa el bucle y no la confirmación por voz) o None si pasó el
     tiempo. Lo usan el bucle y, durante una confirmación, el oyente de la frase."""
     limite = None if segundos is None else time.monotonic() + segundos
     escucha = _piezas.get("escucha")
@@ -260,6 +263,8 @@ def esperar_disparo(atajo, segundos=None):
         if atajo.pulsado.is_set():
             atajo.pulsado.clear()
             return "atajo"
+        if isla and (texto := a.cola_pedidos.pedido_isla()):
+            return ("isla", texto)
         if escucha is not None:
             try:
                 return escucha.cola.get(timeout=0.05)
@@ -274,8 +279,13 @@ def esperar_disparo(atajo, segundos=None):
 def escuchar(atajo, microfono, transcriptor, al_pulsar=lambda: None):
     """Espera Ctrl+Espacio o la palabra "Cacao", graba y aplica los frenos. Devuelve (audio, datos del registro,
     texto o None si se descartó, momento de soltar)."""
-    disparo = esperar_disparo(atajo)
+    disparo = esperar_disparo(atajo, isla=True)
     al_pulsar()
+    if disparo[0] == "isla":
+        # escrito en la isla: sin audio ni frenos de voz; los permisos y las confirmaciones son los de siempre
+        print(f"\nTú (isla): {disparo[1]}", flush=True)
+        return None, {"hora": time.strftime("%Y-%m-%d %H:%M:%S"), "disparo": "isla", "duracion_s": 0.0,
+                      "transcribir_s": 0.0}, disparo[1], time.perf_counter()
     if disparo == "atajo":
         limite = time.perf_counter() + CONFIG_VOZ["max_grabacion_s"]
         audio, pulsada, soltado = microfono.grabar_hasta(lambda: atajo.sigue_pulsado() and time.perf_counter() < limite)

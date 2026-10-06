@@ -10,6 +10,9 @@ Servidor WebSocket (el agente es el servidor):
     http://localhost:1420. Cualquier otro (una página web abierta en el navegador) recibe 403 en el handshake;
   - una sola isla a la vez (4002 para la segunda).
 
+Pedidos escritos: {"tipo": "pedido", "texto"} del campo de texto de la isla (solo se puede escribir en él tras un
+clic físico) van a al_pedido, que los pone en la misma cola que la consola (pedidos.py).
+
 Confirmar.pedir(): "sí" solo con Enter físico o con Permitir en la isla tras un clic físico dentro de ella
 (entrada_fisica.py); "no" con Esc físico, Denegar (también con clic físico), 30 s sin respuesta o el atajo de
 emergencia. Sin isla conectada, solo Enter/Esc.
@@ -77,6 +80,7 @@ class ServidorIsla:
         self.al_decidir = None    # función(id, si) que pone Confirmar
         self.al_cambiar_modo = None  # función(modo, fisico, origen): solo el agente cambia sus modos
         self.al_conectar = None   # función() al conectarse la isla (el agente le manda sus modos)
+        self.al_pedido = None     # función(texto) con lo escrito en el campo de la isla (pedidos.ColaPedidos)
         self.rechazos = []        # (motivo) de conexiones rechazadas, para las pruebas y el registro
         self._loop = None
         self._hilo = None
@@ -152,6 +156,8 @@ class ServidorIsla:
                     # 'fisico' lo calcula la isla con su hook de mouse (LLMHF_INJECTED); sin él no vale
                     self.al_cambiar_modo(str(m.get("modo")), m.get("fisico") is True,
                                          "bandeja" if m.get("origen") == "bandeja" else "isla")
+                elif m.get("tipo") == "pedido" and self.al_pedido:
+                    self.al_pedido(m.get("texto"))
                 elif m.get("tipo") == "rect":
                     self.rect = {k: float(m.get(k, 0)) for k in ("x", "y", "ancho", "alto", "escala")}
         except websockets.ConnectionClosed:

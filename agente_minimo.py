@@ -29,6 +29,7 @@ import autocompletar_login
 import habitos
 import herramientas_grupo4
 import modo_directo
+import pedidos
 import herramientas_powershell
 import memoria
 import sugerencias
@@ -365,6 +366,7 @@ IMPLEMENTACIONES = {"listar_apps": listar_apps, "abrir_app": abrir_app, "volumen
                     "autocompletar_login": autocompletar_login.autocompletar_login}
 # comprobaciones que no ejecutan nada: si fallan, no se le pide confirmación al usuario por algo que se va a rechazar
 PLANIFICADORES = {"ejecutar_powershell": lambda args: planificar_powershell(args.get("comando"), args.get("motivo")),
+                  "teclado": lambda args: herramientas_grupo4.planificar_teclado_ventana(),
                   "autocompletar_login": lambda args: autocompletar_login.planificar_desde_agente(args.get("sitio"))}
 # acciones cuyo efecto hay que comprobar antes de darlas por hechas, y herramientas que sirven para comprobarlo
 ACCIONES_A_VERIFICAR = {"mouse": {"clic", "doble_clic", "clic_derecho"}, "teclado": {"atajo", "tecla"}}
@@ -772,6 +774,8 @@ _isla = None           # ui_isla.ServidorIsla, lo crea iniciar_isla
 _confirmacion = None   # ui_isla.Confirmar
 _confirmar_extra = None  # voz.py: la frase "confirmo la instrucción" como otra vía de "sí"
 _proceso_isla = None
+# Pedidos escritos: la consola y el campo de texto de la isla (mismo camino que cualquier otro pedido)
+cola_pedidos = pedidos.ColaPedidos()
 
 
 def confirmar(herramienta, resumen, motivo=None, comando=None):
@@ -807,6 +811,7 @@ def iniciar_isla():
     _isla = ServidorIsla(anotar=print)
     _isla.al_cambiar_modo = cambiar_modo
     _isla.al_conectar = enviar_modos
+    _isla.al_pedido = cola_pedidos.desde_isla
     _isla.iniciar()
     herramientas_grupo4.zonas_isla = _isla.zonas_isla
     import vision as _vision
@@ -955,6 +960,28 @@ def atender_con_memoria(pedido, historial, planificador, voz=False):
         return respuesta
 
 
+def bucle_texto(cola, historial, planificador):
+    """Modo texto: pedidos de la consola y del campo de la isla, uno tras otro y por el mismo camino
+    (atender_con_memoria: mismos permisos, bloqueos y confirmaciones). Termina con 'salir' o al cerrar la consola."""
+    while True:
+        cola.listo()
+        origen, pedido = cola.siguiente()
+        if origen == "fin":
+            print("\nHasta luego.")
+            return
+        pedido = pedido.strip()
+        if origen == "isla":
+            print(f"\nTú (isla): {pedido}", flush=True)
+        if pedido.lower() == "salir":
+            return
+        if pedido.lower() == "reanudar":
+            emergencia.reanudar()
+            print("Cacao: Listo, vuelvo a atender pedidos.")
+        elif pedido:
+            print("Cacao:", atender_con_memoria(pedido, historial, planificador))
+            historial[:] = historial[:1] + historial[1:][-20:]  # memoria corta: últimos 20 mensajes
+
+
 if __name__ == "__main__":
     if emergencia.iniciar():
         print(f"Atajo de emergencia activo: {emergencia.atajo}")
@@ -963,18 +990,13 @@ if __name__ == "__main__":
     iniciar_isla()
     planificador, aviso = iniciar_memoria_wiki()
     historial = [{"role": "system", "content": prompt_sistema()}]
-    print("Cacao listo. Escribe 'salir' para terminar.")
+    print("Cacao listo. Escribe aquí o en el campo de la isla; 'salir' para terminar.")
     if aviso:
         print("Cacao:", aviso)
+    cola_pedidos.iniciar_consola()
     try:
-        while (pedido := input("\nTú: ").strip()).lower() != "salir":
-            if pedido.lower() == "reanudar":
-                emergencia.reanudar()
-                print("Cacao: Listo, vuelvo a atender pedidos.")
-            elif pedido:
-                print("Cacao:", atender_con_memoria(pedido, historial, planificador))
-                historial = historial[:1] + historial[1:][-20:]  # memoria corta: últimos 20 mensajes
-    except (KeyboardInterrupt, EOFError):
+        bucle_texto(cola_pedidos, historial, planificador)
+    except KeyboardInterrupt:
         print("\nHasta luego.")
     finally:
         cerrar_isla()

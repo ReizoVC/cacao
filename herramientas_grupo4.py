@@ -666,8 +666,27 @@ def _pegar(texto):
     return otro_contenido
 
 
+def isla_al_frente():
+    """True si la ventana al frente es la isla de Cacao (su campo de texto tiene el foco)."""
+    try:
+        return es_de_la_isla(win32gui.GetForegroundWindow())
+    except Exception:
+        return False
+
+
+def planificar_teclado_ventana():
+    """(None, error) si teclado no debe escribir en la ventana al frente. En la isla nunca: su campo manda pedidos
+    al agente, y el agente no puede dictarse pedidos a sí mismo. Es un bloqueo: corta la tarea."""
+    if isla_al_frente():
+        return _bloqueado("La ventana al frente es la isla de Cacao: no escribo ni pulso teclas en ella.")
+    return None, None
+
+
 def teclado(accion: str, texto: str = None, teclas: list = None):
     plan, error = planificar_teclado(accion, texto, teclas)
+    if error:
+        return error
+    _, error = planificar_teclado_ventana()
     if error:
         return error
     comprobar_emergencia()
