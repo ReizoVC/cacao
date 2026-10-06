@@ -395,6 +395,13 @@
       "retorno": "{ ok, ruta_final }."
     },
     {
+      "nombre": "deshacer_movimiento",
+      "permiso": "confirmar",
+      "descripcion": "Deshace lo último que se movió o renombró con mover_archivo (todos los movimientos de esa tarea): cada archivo vuelve a su ruta original. Úsala cuando Reizo diga \"deshaz lo último\" o \"devuélvelo\". Nunca sobrescribe.",
+      "parametros": { "type": "object", "properties": {}, "required": [] },
+      "retorno": "{ ok, deshechos }."
+    },
+    {
       "nombre": "ejecutar_powershell",
       "permiso": "confirmar",
       "descripcion": "Ejecuta un comando de PowerShell. Úsala solo cuando ninguna otra herramienta sirva. Siempre explica el motivo en lenguaje simple, porque se mostrará al usuario antes de ejecutar.",

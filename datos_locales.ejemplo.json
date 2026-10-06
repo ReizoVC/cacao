@@ -4,5 +4,8 @@
  "titulo_ventana_sensible": "el título de una ventana con un archivo sensible, p. ej. claves.env: Bloc de notas",
  "apps_banco": [
   "ejecutables (BancoX.exe) o AppID de la Tienda de tus apps de banco: no dejan ninguna fila en habitos.db"
+ ],
+ "carpetas_importantes": [
+  "ej: C:\\Users\\TU_USUARIO\\Documents\\Universidad (carpetas donde mover_archivo siempre pide confirmación, también en el modo sin confirmación)"
  ]
 }

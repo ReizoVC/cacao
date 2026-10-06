@@ -27,13 +27,14 @@ from pycaw.pycaw import AudioUtilities
 
 import habitos
 import herramientas_grupo4
+import modo_directo
 import herramientas_powershell
 import memoria
 import sugerencias
 import wiki
 from emergencia import Detenido, Emergencia
 from herramientas_grupo1 import listar_ventanas, enfocar_ventana, listar_carpeta, leer_archivo, buscar_web
-from herramientas_grupo4 import cerrar_app, listar_controles, mover_archivo, mouse, teclado
+from herramientas_grupo4 import cerrar_app, deshacer_movimiento, listar_controles, mover_archivo, mouse, teclado
 from herramientas_powershell import ejecutar_powershell, planificar_powershell
 from memoria import recordar, consultar_memoria
 from modelo import cargar_config, crear_llm
@@ -46,7 +47,7 @@ CATALOGO = json.loads((BASE / "herramientas.json").read_text(encoding="utf-8"))
 ACTIVAS = {"listar_apps", "abrir_app", "volumen", "finalizar",
            "listar_ventanas", "enfocar_ventana", "listar_carpeta", "leer_archivo", "buscar_web",
            "recordar", "consultar_memoria", "ver_pantalla", "cerrar_app", "mover_archivo", "mouse", "teclado",
-           "listar_controles", "ejecutar_powershell", "sugerencias", "registro_habitos"}
+           "listar_controles", "ejecutar_powershell", "sugerencias", "registro_habitos", "deshacer_movimiento"}
 if not CONFIG.get("mmproj"):
     ACTIVAS.discard("ver_pantalla")
 HERRAMIENTAS = {h["nombre"]: h for h in CATALOGO["herramientas"] if h["nombre"] in ACTIVAS}
@@ -354,7 +355,8 @@ IMPLEMENTACIONES = {"listar_apps": listar_apps, "abrir_app": abrir_app, "volumen
                     "recordar": recordar, "consultar_memoria": consultar_memoria, "ver_pantalla": ver_pantalla,
                     "cerrar_app": cerrar_app, "mover_archivo": mover_archivo, "mouse": mouse, "teclado": teclado,
                     "listar_controles": listar_controles, "ejecutar_powershell": ejecutar_powershell,
-                    "sugerencias": sugerencias.herramienta, "registro_habitos": registro_habitos}
+                    "sugerencias": sugerencias.herramienta, "registro_habitos": registro_habitos,
+                    "deshacer_movimiento": deshacer_movimiento}
 # comprobaciones que no ejecutan nada: si fallan, no se le pide confirmación al usuario por algo que se va a rechazar
 PLANIFICADORES = {"ejecutar_powershell": lambda args: planificar_powershell(args.get("comando"), args.get("motivo"))}
 # acciones cuyo efecto hay que comprobar antes de darlas por hechas, y herramientas que sirven para comprobarlo
@@ -368,7 +370,12 @@ TEXTO_EXTERNO = {"leer_archivo", "buscar_web", "ver_pantalla", "ejecutar_powersh
                  "listar_ventanas", "listar_carpeta"}
 GUARDAN_SOBRE_REIZO = {"recordar", "sugerencias", "registro_habitos"}
 SOLO_CONSULTAN = {("sugerencias", "listar"), ("registro_habitos", "estado")}
-_tarea = {"contaminada": False, "herramientas": []}  # de la tarea en curso (atender la reinicia)
+_tarea = {"contaminada": False, "herramientas": [], "pedido": "", "movidos": 0}  # de la tarea en curso
+# Modo sin confirmación (modo_directo.py). Solo lo cambia cambiar_modo(), que llama ServidorIsla al recibir un clic
+# FÍSICO en la isla o en la bandeja; empieza apagado en cada arranque.
+_modos = {"sin_confirmacion": False}
+_politica = modo_directo.Politica()
+_decision = {"clave": None, "valor": None}  # la última decisión (ejecutar_voz y ejecutar la consultan seguidas)
 _modo_juego = None  # modo_juego.ModoJuego, lo crea iniciar_memoria_wiki
 _planificador = None
 # (descargar, cargar) de otros modelos en la GPU que el modo juego también libera (voz.py añade Whisper)
@@ -483,7 +490,12 @@ def ejecutar(nombre, args):
         origen = "confirmado"
     if nombre == "recordar":  # el origen lo pone el ejecutor, nunca el modelo
         args = {**{k: v for k, v in args.items() if k != "origen"}, "origen": origen}
-    if h["permiso"] == "confirmar":
+    directo, detalle = decision_modo(nombre, args)
+    if directo:
+        print(f"  [sin confirmación] {nombre}")
+    elif _modos["sin_confirmacion"] and h["permiso"] == "confirmar":
+        print(f"  [modo sin confirmación] esta sí la pregunto: {detalle}")
+    if h["permiso"] == "confirmar" and not directo:
         if args.get("motivo"):  # p. ej. ejecutar_powershell: el motivo se muestra antes de pedir el sí
             print(f"  Motivo: {args['motivo']}")
         if args.get("comando"):
@@ -493,12 +505,67 @@ def ejecutar(nombre, args):
         emergencia.comprobar()  # el atajo pudo pulsarse mientras se esperaba la respuesta
         if not si:
             return {"ok": False, "rechazado": True, "error": "Reizo no lo autorizó (Denegar, Esc o sin respuesta)."}
+    if directo and nombre in ("mouse", "teclado"):
+        herramientas_grupo4.guardia_directa = _guardia(detalle)
     try:
-        return IMPLEMENTACIONES[nombre](**args)
+        resultado = IMPLEMENTACIONES[nombre](**args)
+        if directo and nombre == "mover_archivo" and isinstance(resultado, dict) and resultado.get("ok"):
+            _tarea["movidos"] += detalle["archivos"]
+        return resultado
     except Detenido:
         raise
     except Exception as e:  # el error vuelve al modelo para que se corrija
         return {"ok": False, "error": str(e)}
+    finally:
+        herramientas_grupo4.guardia_directa = None
+
+
+def decision_modo(nombre, args):
+    """(True, detalle) si la herramienta va sin confirmación por el modo; (False, motivo) si sigue las reglas
+    normales. Se calcula una vez por llamada (el modo voz la consulta antes que ejecutar)."""
+    if not _modos["sin_confirmacion"]:
+        return False, "modo sin confirmación apagado"
+    clave = (nombre, json.dumps(args, sort_keys=True, ensure_ascii=False), len(_tarea["herramientas"]))
+    if _decision["clave"] != clave:
+        try:
+            valor = _politica.decidir(nombre, args, _tarea["pedido"], [n for n, _ in _tarea["herramientas"]],
+                                      _tarea["movidos"])
+        except Exception as e:  # ante la duda, se pregunta
+            valor = (False, f"no pude comprobarlo ({type(e).__name__})")
+        _decision.update(clave=clave, valor=valor)
+    return _decision["valor"]
+
+
+def _guardia(detalle):
+    """Se vuelve a mirar justo antes de hacer clic o escribir: la ventana tiene que seguir siendo la de la app."""
+    def revisar(tipo, dato):
+        app = modo_directo.app_en_punto(*dato) if tipo == "mouse" else modo_directo.app_de_ventana(dato)
+        if not app or app["shell"] or app["pid"] != detalle["pid"]:
+            return ("La ventana cambió desde que lo decidí: no lo hago sin confirmación. Vuelve a ubicarla con "
+                    "listar_controles o ver_pantalla.")
+        return None
+    return revisar
+
+
+def cambiar_modo(modo, fisico, origen):
+    """Lo llama ServidorIsla. Solo con un clic físico (la isla lo comprueba con su hook de mouse de bajo nivel):
+    ni las herramientas del agente (mouse/teclado inyectan) ni la voz pueden cambiarlo."""
+    if modo not in _modos:
+        return
+    if not fisico:
+        print(f"  [modo] cambio de '{modo}' rechazado: el clic no fue físico ({origen})")
+        if _isla is not None:
+            _isla.enviar({"tipo": "aviso", "texto": "No cambio el modo: el clic no fue físico."})
+        return
+    _modos[modo] = not _modos[modo]
+    print(f"  [modo] {modo.replace('_', ' ')}: {'activado' if _modos[modo] else 'desactivado'} "
+          f"(clic físico en la {origen})", flush=True)
+    enviar_modos()
+
+
+def enviar_modos():
+    if _isla is not None:
+        _isla.enviar({"tipo": "modos", **_modos})
 
 
 def rellenar_marcadores(texto, resultado):
@@ -559,7 +626,9 @@ def atender(pedido, historial):
         print("  [emergencia] agente detenido: la tarea no se ejecuta")
         return MENSAJE_DETENIDO
     historial.append({"role": "user", "content": pedido})
-    _tarea.update(contaminada=False, herramientas=[])
+    _tarea.update(contaminada=False, herramientas=[], pedido=pedido, movidos=0)
+    herramientas_grupo4.tarea_actual = f"{time.time():.3f}"
+    _decision.update(clave=None, valor=None)
     sin_verificar, recordatorios = None, 0  # último clic o atajo que el modelo aún no comprobó
     try:
         for _ in range(MAX_PASOS):
@@ -623,6 +692,10 @@ def atender(pedido, historial):
                         "necesitas.", False, "Límite de pasos alcanzado")
     except Detenido as e:
         notificar("detenido")
+        if _modos["sin_confirmacion"]:  # el atajo de emergencia también apaga el modo sin confirmación
+            _modos["sin_confirmacion"] = False
+            print("  [modo] sin confirmación: desactivado por el atajo de emergencia")
+            enviar_modos()
         demora = (time.perf_counter() - emergencia.momento) * 1000 if emergencia.momento else None
         print(f"  [emergencia] tarea detenida" + (f" ({demora:.0f} ms después del atajo)" if demora else ""))
         return terminar(historial, f"{e} No seguí con la tarea ni haré otras hasta que escribas 'reanudar'.",
@@ -718,7 +791,10 @@ def iniciar_isla():
     cfg = CONFIG.get("ui", {})
     if not cfg.get("activa", True):
         return None
-    _isla = ServidorIsla(anotar=print).iniciar()
+    _isla = ServidorIsla(anotar=print)
+    _isla.al_cambiar_modo = cambiar_modo
+    _isla.al_conectar = enviar_modos
+    _isla.iniciar()
     herramientas_grupo4.zonas_isla = _isla.zonas_isla
     import vision as _vision
     _vision.zonas_isla = _isla.zonas_isla

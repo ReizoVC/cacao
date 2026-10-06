@@ -24,7 +24,7 @@ categorias = json.loads((BASE / "apps_categorias.json").read_text(encoding="utf-
 respuesta = {"valor": "n"}
 ns = {"re": re, "unicodedata": unicodedata, "process": process, "fuzz": fuzz, "memoria": memoria,
       "CATALOGO": json.loads((BASE / "herramientas.json").read_text(encoding="utf-8")),
-      "_categorias": categorias, "input": lambda *_: respuesta["valor"]}
+      "_categorias": categorias, "confirmar": lambda *_a, **_k: respuesta["valor"] == "s"}
 exec(compile(ast.Module(body=nodos, type_ignores=[]), "agente_minimo.py", "exec"), ns)
 APPS = [{"nombre": d["nombre"], "id": i} for i, d in categorias.items()]
 BLOQUEADAS = {a["id"] for a in APPS if ns["nivel_app"](a["id"]) == "bloqueadas"}

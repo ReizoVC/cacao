@@ -194,10 +194,11 @@ if __name__ == "__main__":
     if terminal:
         controles = g4.listar_controles(terminal["id_ventana"])
         nombres = [c["nombre"] for c in controles] if isinstance(controles, list) else controles
-        comprobar("lista los controles de Windows Terminal", isinstance(controles, list) and "Minimizar" in nombres,
-                  nombres)
-        tipo, r = resultado(g4.planificar_mouse("clic", control="Minimizar", id_ventana=terminal["id_ventana"]))
-        boton = next(c for c in controles if c["nombre"] == "Minimizar")
+        # el botón de minimizar no sale con algunas ventanas (ajustadas o maximizadas): vale cualquiera de estos
+        objetivo = next((n for n in ("Minimizar", "Nueva pestaña", "Maximizar") if n in nombres), None)
+        comprobar("lista los controles de Windows Terminal", isinstance(controles, list) and objetivo, nombres)
+        tipo, r = resultado(g4.planificar_mouse("clic", control=objetivo, id_ventana=terminal["id_ventana"]))
+        boton = next(c for c in controles if c["nombre"] == objetivo)
         comprobar("clic por nombre: apunta al centro del botón, sin captura", tipo == "plan" and
                   r["pantalla"] == tuple(boton["centro"]), r)
         tipo, r = resultado(g4.planificar_mouse("clic", control="Cerrar", id_ventana=terminal["id_ventana"]))

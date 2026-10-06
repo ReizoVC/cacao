@@ -4,6 +4,7 @@ Pruebas de la Fase 6 SIN modelo (o con un modelo falso que devuelve JSON fijo). 
 ni la wiki real, no abren apps ni leen archivos de Reizo.
 Uso: .venv\\Scripts\\python probar_fase6.py [seccion ...]   (sin argumentos, todas)
 """
+import gc
 import json
 import os
 import re
@@ -12,6 +13,7 @@ import sys
 import time
 import traceback
 from datetime import datetime, timedelta
+from pathlib import Path
 
 import deteccion
 import entrada
@@ -30,9 +32,22 @@ def ok(nombre, condicion, detalle=""):
     print(f"{'OK   ' if condicion else 'FALLO'} {nombre}{f'  ({detalle})' if detalle else ''}", flush=True)
 
 
+def borrar(ruta, intentos=20):
+    """unlink con reintentos: el antivirus u otro lector puede tener la base abierta un momento (WinError 32)."""
+    for i in range(intentos):
+        try:
+            Path(ruta).unlink(missing_ok=True)
+            return
+        except PermissionError:
+            if i == intentos - 1:
+                raise
+            gc.collect()  # conexiones sqlite que quedaron sin cerrar
+            time.sleep(0.25)
+
+
 def bases_temporales():
     habitos.RUTA = BASE / "habitos_prueba.db"
-    habitos.RUTA.unlink(missing_ok=True)
+    borrar(habitos.RUTA)
 
 
 def wiki_temporal():
@@ -44,7 +59,7 @@ def wiki_temporal():
         func(ruta)
 
     memoria.RUTA = BASE / "memoria_prueba_f6.db"
-    memoria.RUTA.unlink(missing_ok=True)
+    borrar(memoria.RUTA)
     wiki.VAULT = BASE / "memoria_prueba_f6"
     if wiki.VAULT.exists():
         shutil.rmtree(wiki.VAULT, onerror=quitar_solo_lectura)
@@ -807,7 +822,8 @@ def agente_sin_modelo(respuestas_input):
     import sugerencias as sg
     nombres = {"TEXTO_EXTERNO", "GUARDAN_SOBRE_REIZO", "SOLO_CONSULTAN", "_tarea", "_sugerencia", "ejecutar",
                "prompt_sistema", "cerrar_sugerencia_pendiente", "agregar_sugerencia", "CON_MARCADORES", "MODO_VOZ",
-               "normalizar"}
+               "normalizar", "_modos", "_decision", "_politica", "decision_modo", "_guardia", "enviar_modos",
+               "_isla"}
     arbol = ast.parse((BASE / "agente_minimo.py").read_text(encoding="utf-8"))
     nodos = [n for n in arbol.body if (isinstance(n, ast.FunctionDef) and n.name in nombres)
              or (isinstance(n, ast.Assign) and any(getattr(t, "id", None) in nombres for t in n.targets))]
@@ -818,7 +834,8 @@ def agente_sin_modelo(respuestas_input):
           "sugerencias": sg, "datetime": datetime, "PLANIFICADORES": {}, "Detenido": Exception,
           "HERRAMIENTAS": {h["nombre"]: h for h in catalogo["herramientas"]},
           "confirmar": lambda *_a, **_k: (respuestas.pop(0) if respuestas else "n") == "s",
-          "app_en_marcha": lambda app: False}
+          "app_en_marcha": lambda app: False, "herramientas_grupo4": __import__("herramientas_grupo4"),
+          "modo_directo": __import__("modo_directo")}
     exec(compile(ast.Module(body=nodos, type_ignores=[]), "agente_minimo.py", "exec"), ns)
     ns["IMPLEMENTACIONES"] = {h: (lambda h_: lambda **a: llamadas.append((h_, a)) or {"ok": True})(h)
                               for h in ns["HERRAMIENTAS"]}
@@ -903,11 +920,11 @@ if __name__ == "__main__":
         except Exception:
             ok(f"{nombre}: sin excepciones", False, traceback.format_exc())
     habitos.RUTA = BASE / "habitos_prueba.db"
-    habitos.RUTA.unlink(missing_ok=True)
+    borrar(habitos.RUTA)
     for extra in ("-wal", "-shm"):
-        (BASE / f"habitos_prueba.db{extra}").unlink(missing_ok=True)
+        borrar(BASE / f"habitos_prueba.db{extra}")
     wiki_temporal()
-    memoria.RUTA.unlink(missing_ok=True)
+    borrar(memoria.RUTA)
     fallos = [r for r in resultados if not r[1]]
     print(f"\n{len(resultados) - len(fallos)}/{len(resultados)} OK")
     sys.exit(1 if fallos else 0)

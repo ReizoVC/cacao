@@ -7,9 +7,11 @@ ese plan. Las pruebas usan solo los planes. Los rechazos de seguridad devuelven 
 corta la tarea al verlos.
 """
 import ctypes
+import json
 import os
 import shutil
 import time
+from datetime import datetime
 from ctypes import wintypes
 from pathlib import Path
 
@@ -35,6 +37,12 @@ except (AttributeError, OSError):
 
 # el agente la reemplaza por Emergencia.comprobar: las herramientas largas la llaman para poder cortarse
 comprobar_emergencia = lambda: None  # noqa: E731
+# Modo sin confirmación: si el ejecutor dejó pasar un mouse o un teclado sin preguntar, pone aquí una función
+# (tipo, dato) -> error o None que se vuelve a comprobar justo antes de actuar (el punto del clic o la ventana al
+# frente pudieron cambiar desde que se decidió). Fuera de esas llamadas es None.
+guardia_directa = None
+# id de la tarea en curso (lo pone el agente): el historial de movimientos se deshace por tareas
+tarea_actual = None
 
 
 def _zonas_isla_por_defecto():
@@ -224,7 +232,73 @@ def mover_archivo(origen: str, destino: str):
         if d.exists():  # otro disco: shutil.move copiaría encima, así que se vuelve a comprobar justo antes
             return {"ok": False, "error": f"Ya existe {d}; nunca sobrescribo."}
         shutil.move(str(o), str(d))
+    anotar_movimiento(o, d)
     return {"ok": True, "ruta_final": str(d)}
+
+
+HISTORIAL_MOVIMIENTOS = Path(__file__).parent / "historial_movimientos.json"  # no va a git
+MAX_HISTORIAL = 200
+
+
+def _leer_historial():
+    try:
+        return json.loads(HISTORIAL_MOVIMIENTOS.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return []
+
+
+def anotar_movimiento(origen, destino):
+    historial = _leer_historial()
+    historial.append({"fecha": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "tarea": tarea_actual,
+                      "origen": str(origen), "destino": str(destino)})
+    HISTORIAL_MOVIMIENTOS.write_text(json.dumps(historial[-MAX_HISTORIAL:], ensure_ascii=False, indent=1),
+                                     encoding="utf-8")
+
+
+def planificar_deshacer():
+    """Los movimientos de la última tarea que movió algo, del último al primero: [(desde, hacia)]. Cada uno vuelve
+    a su ruta original solo si sigue donde quedó y el sitio original está libre."""
+    historial = _leer_historial()
+    if not historial:
+        return _error("No hay movimientos que deshacer.")
+    tarea = historial[-1].get("tarea")
+    grupo = []
+    for m in reversed(historial):
+        if m.get("tarea") != tarea or (tarea is None and grupo):
+            break
+        grupo.append(m)
+    pasos = []
+    for m in grupo:
+        desde, hacia = Path(m["destino"]), Path(m["origen"])
+        for ruta in (desde, hacia):
+            _, error = resolver_ruta(str(ruta))
+            if error:
+                return _bloqueado(error)
+        if not desde.exists():
+            return _error(f"{desde} ya no está; no puedo deshacer ese movimiento.")
+        if hacia.exists():
+            return _error(f"Ya existe {hacia}; nunca sobrescribo.")
+        pasos.append((desde, hacia))
+    return {"pasos": pasos, "cuantos": len(grupo)}, None
+
+
+def deshacer_movimiento():
+    plan, error = planificar_deshacer()
+    if error:
+        return error
+    hechos = []
+    for desde, hacia in plan["pasos"]:
+        try:
+            os.rename(desde, hacia)
+        except OSError:
+            if hacia.exists():
+                return {"ok": False, "error": f"Ya existe {hacia}; nunca sobrescribo.", "deshechos": hechos}
+            shutil.move(str(desde), str(hacia))
+        hechos.append(str(hacia))
+    historial = _leer_historial()
+    HISTORIAL_MOVIMIENTOS.write_text(json.dumps(historial[:-plan["cuantos"]], ensure_ascii=False, indent=1),
+                                     encoding="utf-8")
+    return {"ok": True, "deshechos": hechos}
 
 
 # ---------- mouse ----------
@@ -417,6 +491,10 @@ def mouse(accion: str, x: int = None, y: int = None, cantidad: int = None, contr
     if error:
         return error
     comprobar_emergencia()
+    if guardia_directa:
+        problema = guardia_directa("mouse", plan["pantalla"] or tuple(win32api.GetCursorPos()))
+        if problema:
+            return {"ok": False, "error": problema}
     if plan["pantalla"]:
         win32api.SetCursorPos(plan["pantalla"])
     eventos = {"clic": [(win32con.MOUSEEVENTF_LEFTDOWN, win32con.MOUSEEVENTF_LEFTUP)],
@@ -449,16 +527,52 @@ TECLAS.update({"flecha_arriba": win32con.VK_UP, "flecha_abajo": win32con.VK_DOWN
                "suprimir": win32con.VK_DELETE, "escape": win32con.VK_ESCAPE})
 TECLAS.update({f"f{i}": win32con.VK_F1 + i - 1 for i in range(1, 13)})
 TECLAS.update({c: ord(c.upper()) for c in "abcdefghijklmnopqrstuvwxyz0123456789"})
-# combinaciones que abren herramientas bloqueadas o el propio atajo de emergencia
+# Atajos bloqueados en cualquier modo (con o sin confirmación). Con Win solo valen los de ventanas y escritorios de
+# WIN_PERMITIDOS: el resto abre Inicio o la búsqueda (desde ahí se lanza cualquier cosa), Ejecutar, Configuración,
+# la barra de tareas o la bandeja (abren apps sin pasar por abrir_app, y en la bandeja está el modo sin
+# confirmación), el portapapeles, la grabación, el dictado o el Narrador.
 ATAJOS_BLOQUEADOS = {frozenset({"win", "r"}): "abre Ejecutar, que está bloqueado",
                      frozenset({"win", "x"}): "abre el menú de administración de Windows",
+                     frozenset({"win", "i"}): "abre Configuración",
+                     frozenset({"win", "s"}): "abre la búsqueda de Windows, desde la que se lanza cualquier cosa",
+                     frozenset({"win", "q"}): "abre la búsqueda de Windows, desde la que se lanza cualquier cosa",
+                     frozenset({"win", "e"}): "abre el Explorador, cuya barra de direcciones ejecuta comandos",
+                     frozenset({"win", "a"}): "abre la configuración rápida",
+                     frozenset({"win", "u"}): "abre la configuración de accesibilidad",
+                     frozenset({"win", "k"}): "abre la configuración de proyección",
+                     frozenset({"win", "p"}): "abre la configuración de proyección",
+                     frozenset({"win", "n"}): "abre el centro de notificaciones",
+                     frozenset({"win", "b"}): "lleva a la bandeja del sistema",
+                     frozenset({"win", "t"}): "lleva a la barra de tareas, que abre apps",
+                     frozenset({"win", "v"}): "abre el historial del portapapeles",
+                     frozenset({"win", "h"}): "activa el dictado por voz",
+                     frozenset({"win", "l"}): "bloquea la sesión",
+                     frozenset({"win", "g"}): "abre la Xbox Game Bar (graba la pantalla)",
+                     frozenset({"win", "alt", "r"}): "graba la pantalla",
+                     frozenset({"win", "ctrl", "enter"}): "activa el Narrador",
+                     frozenset({"win", "ctrl", "o"}): "abre el teclado en pantalla",
+                     frozenset({"win", "ctrl", "shift", "b"}): "reinicia el controlador gráfico",
+                     frozenset({"win"}): "abre el menú Inicio, desde el que se lanza cualquier cosa",
+                     frozenset({"ctrl", "esc"}): "abre el menú Inicio, desde el que se lanza cualquier cosa",
+                     frozenset({"ctrl", "shift", "esc"}): "abre el Administrador de tareas (puede ejecutar programas)",
+                     frozenset({"ctrl", "alt", "delete"}): "abre la pantalla de seguridad de Windows",
+                     frozenset({"alt", "f4"}): "cierra ventanas sin las protecciones de cerrar_app (y en el "
+                                               "escritorio abre Apagar); usa cerrar_app",
                      frozenset({"ctrl", "alt", "shift", "q"}): "es el atajo de emergencia del asistente"}
+ATAJOS_BLOQUEADOS.update({frozenset({"win", str(n)}): "abre una app de la barra de tareas sin pasar por abrir_app"
+                          for n in range(10)})
+WIN_PERMITIDOS = {frozenset({"win", t}) for t in ("d", "m", "tab", "arriba", "abajo", "izquierda", "derecha")} | {
+    frozenset({"win", "shift", t}) for t in ("m", "s", "arriba", "abajo", "izquierda", "derecha")} | {
+    frozenset({"win", "ctrl", t}) for t in ("d", "izquierda", "derecha", "f4")}
 MAX_TEXTO = 2000
 
 
 def _canonica(tecla):
     t = _normalizar(tecla).strip()
-    return {"control": "ctrl", "mayus": "shift", "escape": "esc", "intro": "enter"}.get(t, t)
+    return {"control": "ctrl", "mayus": "shift", "escape": "esc", "intro": "enter", "supr": "delete", "suprimir": "delete",
+            "retroceso": "backspace", "up": "arriba", "down": "abajo", "left": "izquierda", "right": "derecha",
+            "flecha_arriba": "arriba", "flecha_abajo": "abajo", "flecha_izquierda": "izquierda",
+            "flecha_derecha": "derecha", "home": "inicio", "end": "fin", "space": "espacio"}.get(t, t)
 
 
 def planificar_teclado(accion, texto=None, teclas=None):
@@ -479,6 +593,11 @@ def planificar_teclado(accion, texto=None, teclas=None):
     combo = frozenset(_canonica(t) for t in teclas)
     if accion == "atajo" and combo in ATAJOS_BLOQUEADOS:
         return _bloqueado(f"El atajo {'+'.join(teclas)} {ATAJOS_BLOQUEADOS[combo]}; no lo uso.")
+    if accion == "atajo" and "win" in combo and combo not in WIN_PERMITIDOS:
+        return _bloqueado(f"El atajo {'+'.join(teclas)} usa la tecla Windows: solo uso los de ventanas y "
+                          "escritorios (Win+D, Win+flechas...).")
+    if accion == "tecla" and "win" in combo:
+        return _bloqueado("La tecla Windows sola abre el menú Inicio, desde el que se lanza cualquier cosa; no la uso.")
     return {"accion": accion, "teclas": [TECLAS[_normalizar(t).strip()] for t in teclas],
             "nombres": [_canonica(t) for t in teclas]}, None
 
@@ -552,6 +671,10 @@ def teclado(accion: str, texto: str = None, teclas: list = None):
     if error:
         return error
     comprobar_emergencia()
+    if guardia_directa:
+        problema = guardia_directa("teclado", win32gui.GetForegroundWindow())
+        if problema:
+            return {"ok": False, "error": problema}
     if accion == "escribir" and MODO_ESCRIBIR == "pegar":
         if _pegar(plan["texto"]):
             return {"ok": True, "nota": "El portapapeles tenía algo que no era texto y se reemplazó."}

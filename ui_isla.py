@@ -73,6 +73,8 @@ class ServidorIsla:
         self.cliente = None
         self.rect = None          # forma de la isla que manda el webview (px CSS de la ventana) y su escala
         self.al_decidir = None    # función(id, si) que pone Confirmar
+        self.al_cambiar_modo = None  # función(modo, fisico, origen): solo el agente cambia sus modos
+        self.al_conectar = None   # función() al conectarse la isla (el agente le manda sus modos)
         self.rechazos = []        # (motivo) de conexiones rechazadas, para las pruebas y el registro
         self._loop = None
         self._hilo = None
@@ -134,6 +136,8 @@ class ServidorIsla:
             return
         self.cliente = ws
         self.anotar("[isla] conectada")
+        if self.al_conectar:
+            self.al_conectar()
         try:
             async for crudo in ws:
                 try:
@@ -142,6 +146,10 @@ class ServidorIsla:
                     continue
                 if m.get("tipo") == "decision" and self.al_decidir:
                     self.al_decidir(str(m.get("id")), bool(m.get("si")))
+                elif m.get("tipo") == "modo" and self.al_cambiar_modo:
+                    # 'fisico' lo calcula la isla con su hook de mouse (LLMHF_INJECTED); sin él no vale
+                    self.al_cambiar_modo(str(m.get("modo")), m.get("fisico") is True,
+                                         "bandeja" if m.get("origen") == "bandeja" else "isla")
                 elif m.get("tipo") == "rect":
                     self.rect = {k: float(m.get(k, 0)) for k in ("x", "y", "ancho", "alto", "escala")}
         except websockets.ConnectionClosed:
