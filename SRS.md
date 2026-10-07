@@ -13,7 +13,9 @@ palabra de activación "Cacao" (§3.4); `autocompletar_login`, en simulación (�
 preparado (§3.11); riesgos R-14 a R-21.
 
 **Cambios de la 1.2:** en el modo sin confirmación, mouse y teclado ya no preguntan salvo un texto que puede venir de
-contenido de fuera (RF-72, RF-73, RF-76); bloqueo de escribir en ventanas sensibles (RF-79); riesgo R-22.
+contenido de fuera (RF-72, RF-73, RF-76); bloqueo de escribir en ventanas sensibles (RF-79); isla proporcional al
+monitor con tamaño en Ajustes, que se esconde sola tras responder, y ticker sin texto encimado; escucha de
+seguimiento tras cada respuesta (§3.12); RS-16 y riesgos R-22 y R-23.
 
 ---
 
@@ -35,12 +37,13 @@ Especifica los requisitos de Cacao, el asistente de escritorio de Reizo: un agen
 - busca en la web (abre el navegador), mira la pantalla, usa mouse y teclado, y ejecuta PowerShell con límites;
 - recuerda preferencias y alias;
 - registra hábitos, mantiene una wiki de memoria (Obsidian) y sugiere rutinas;
-- funciona por voz: pulsar para hablar o la palabra de activación "Cacao";
+- funciona por voz: pulsar para hablar o la palabra de activación "Cacao", y sigue oyendo unos segundos tras
+  responder;
 - muestra su estado y pide las confirmaciones en una isla gráfica;
 - tiene un modo sin confirmación, que Reizo activa a mano, para acciones acotadas;
 - libera la GPU cuando hay un juego activo;
 - (en simulación, apagado) activa el autocompletado de contraseñas de Chrome sin que el modelo vea las credenciales;
-- (preparado, sin activar) arranca al iniciar sesión.
+- arranca al iniciar sesión (activado el 2026-10-06).
 
 Todo el razonamiento es local: Gemma 4 12B en la GPU. La única salida a internet es `buscar_web`, que abre el
 navegador predeterminado.
@@ -293,7 +296,7 @@ Formato: **ID**, requisito ("debe"), **criterio verificable** y estado.
 | RF-95 | Debe volver a comprobar la ventana antes del clic y antes de elegir; si cambió, no actúa (o cierra la lista con Esc); el atajo de emergencia la corta | Ventana cambiada antes y con la lista abierta; emergencia antes del clic | Verificado (simulación) |
 | RF-96 | La autorización de cada relleno debe ponerla Windows Hello de Chrome ("Usar Windows Hello al completar contraseñas") | Con Hello activado, Chrome pide huella, cara o PIN; al cancelar no rellena | **Pendiente** (en real, cuando Reizo lo active) |
 
-### 3.11 Arranque automático (preparado, sin activar)
+### 3.11 Arranque automático (activado el 2026-10-06) y otros
 
 | ID | Requisito | Criterio | Estado |
 |---|---|---|---|
@@ -303,6 +306,15 @@ Formato: **ID**, requisito ("debe"), **criterio verificable** y estado.
 | RF-100 | Tras cada atajo, tecla o clic, Cacao debe comprobar si tuvo efecto (ventana al frente, título, ventanas del proceso, foco, portapapeles; hasta 1,5 s) y, si no, decírselo al modelo y avisar en la isla; al terminar, decir qué falló y cómo se resolvió, o pedir ayuda | Ctrl+S en el Bloc de notas: aviso en la isla y en la respuesta (real) | Verificado (simulación y real) |
 | RF-101 | La tabla `obstaculos` (memoria.db) debe guardar por app y acción el camino que funcionó (atajo o ruta de menú), escrita solo por el código, nunca con contenido externo en la tarea; la próxima vez se usa directo y entra en el prompt | Real: Bloc de notas, Ctrl+S → Ctrl+G, usado 3 veces; `probar_obstaculos.py` 35/35 | Verificado (simulación y real). Límite: guardar algo sin cambios no deja efecto visible |
 | RF-102 | Cada pedido debe llevar la fecha y la hora actuales | `[Ahora: martes 6 de octubre de 2026, 21:50]` | Verificado (simulación) |
+
+### 3.12 Isla: tamaño, cierre automático y escucha de seguimiento
+
+| ID | Requisito | Criterio | Estado |
+|---|---|---|---|
+| RF-103 | La isla debe escalarse según el monitor: tamaño de Ajustes (pequeño 0,70, mediano 0,80 por defecto, grande 0,92) × resolución física respecto a 1920×1080 (el lado más corto) ÷ √escalado de Windows, entre 0,55 y 2,5. La ventana, los clics (Rust) y la zona que el mouse del agente no puede tocar siguen esa escala | En 1920×1080 al 100 %, abierta 448×112 / 512×128 / 589×147 px (antes 640×160); Ajustes con la fila «Tamaño» | Verificado (simulación: navegador con el servidor de desarrollo y `cargo check`). A la vista: **Pendiente** |
+| RF-104 | Tras una respuesta, la isla debe quedarse abierta mientras Cacao habla y 4 a 10 s más según el largo del texto (18 caracteres por segundo), y volver al notch pequeño sin pulsar OK; con el mouse encima no se esconde (lo hace 1,5 s después de que sale); las confirmaciones y el campo en uso nunca se esconden solos; el cierre dura 180 ms | Navegador, mensajes simulados: sin voz cerrada a los 4 s; con voz abierta hasta `fin_habla` y 4 s más; mouse encima, abierta, y cerrada 1,5 s tras salir; confirmación, abierta | Verificado (simulación). A la vista: **Pendiente** |
+| RF-105 | Tras cada respuesta hablada, Cacao debe seguir oyendo 8 s sin la palabra «Cacao», con un indicador que cuenta atrás en la isla; si Reizo habla (120 ms seguidos de voz), se graba hasta un silencio y entra como pedido normal con los mismos frenos y confirmaciones; si no, termina. No se abre con otra app sonando, ni con la escucha de «Cacao» apagada, en modo juego o detenido; si otra app suena antes de hablar se cierra, y si suena mientras graba no vale. Se enciende y apaga con un clic físico en Ajustes (modo «seguimiento»; empieza según `voz.seguimiento.activa_al_iniciar`) | `probar_seguimiento.py` 35/35 (audio sintético y reloj falso; voz.py extraído con ast) | Verificado (simulación). Con tu voz: **Pendiente** |
+| RF-106 | El ticker de la isla no debe encimar el paso anterior con el actual, y debe seguir avanzando pasados 20 pasos | «cerrar_app: Cerré la ventana…» y «Te escucho…» en líneas separadas; 25 pasos | Verificado (simulación: navegador) |
 
 ---
 
@@ -371,7 +383,7 @@ primer paso, **3,91 s** de media (`resultados_pruebas_65_fecha.json`).
 | RNF-30 | Los errores de llama.cpp/CUDA deben quedar registrados | `modelo.py` los muestra y los guarda en `errores_llama.log` (`resultados_voz.md`, incidencias) |
 | RNF-31 | La reflexión, el lint y el modo juego nunca deben tumbar al agente | Capturan sus excepciones, las anotan y reintentan más tarde (código) |
 | RNF-32 | Las pruebas no deben tocar datos reales | Bases y vault temporales (`*_prueba*`), borrados al terminar; `probar_voz.py` usa un micrófono falso |
-| RNF-33 | Cada fase tiene su script de pruebas | `evaluar_pruebas.py`, `probar_fase6.py` (142/142), `probar_powershell.py` (59/59), `probar_modo_juego.py` (28/28), `probar_voz.py` (11/11), `probar_fase7.py` (A+B 39/39, C 5/5), `probar_modo_directo.py` (99/99), `probar_confirmacion_voz.py` (33/33), `probar_palabra_activacion.py` (27/27) |
+| RNF-33 | Cada fase tiene su script de pruebas | `evaluar_pruebas.py`, `probar_fase6.py` (142/142), `probar_powershell.py` (59/59), `probar_modo_juego.py` (28/28), `probar_voz.py` (11/11), `probar_fase7.py` (A+B 39/39, C 5/5), `probar_modo_directo.py` (99/99), `probar_confirmacion_voz.py` (33/33), `probar_palabra_activacion.py` (41/41), `probar_seguimiento.py` (35/35) |
 | RNF-34 | Ctrl+C debe cerrar el modo voz y un comando en pausa no debe tumbarlo | Corregido y verificado en real el 2026-10-05 (guía, "Corregido durante las pruebas") |
 
 ---
@@ -395,7 +407,7 @@ primer paso, **3,91 s** de media (`resultados_pruebas_65_fecha.json`).
 | RS-13 | El agente no puede aprobar sus propias acciones | Confirmaciones solo con entrada física (RF-61); la herramienta mouse no hace clic en la isla (RF-63) | Verificado (simulación y real) |
 | RS-14 | El modo sin confirmación solo lo enciende Reizo; cubre acciones acotadas y reversibles, y mouse y teclado en cualquier ventana salvo un texto que puede venir de contenido de fuera | RF-70 a RF-76 y RF-79; los bloqueos siguen igual en cualquier modo | Verificado (simulación) |
 | RS-15 | Ni la palabra de activación ni una frase cualquiera confirman: solo "confirmo la instrucción" en su propia grabación, con voz real y sin otro audio | RF-34, RF-39 | Verificado (simulación) |
-| RS-16 | Privacidad de la escucha: nada se guarda hasta detectar "Cacao"; las activaciones falsas no se guardan; `voz_registro/` no va a git | RF-36, RF-37; `.gitignore` | Verificado (simulación) |
+| RS-16 | Privacidad de la escucha: nada se guarda hasta detectar "Cacao" o, en los 8 s de la escucha de seguimiento, hasta que lo que se dice pasa los frenos como pedido; las activaciones falsas y lo oído en el seguimiento que no es pedido no se guardan; `voz_registro/` no va a git | RF-36, RF-37, RF-105; `.gitignore` | Verificado (simulación) |
 | RS-17 | La isla no tiene red saliente ni acepta conexiones de otras páginas o procesos sin el token | RF-64, RF-66 | Verificado (simulación) |
 | RS-18 | Ninguna herramienta entrega usuarios ni contraseñas al modelo; el autocompletado lo autoriza Windows Hello | RF-90 a RF-96 | Verificado (simulación); Windows Hello: Pendiente |
 | RS-19 | El agente no puede dictarse pedidos por la isla: su campo solo se abre con un clic físico y teclado no escribe en ella | RF-67, RF-69 | Verificado (simulación) |
@@ -491,6 +503,7 @@ estos últimos solo para detectar actividad.
 | R-19 | Un arranque automático del agente le quita la GPU a un juego o carga sin que Reizo esté | Baja / medio | El agente espera a que el juego se cierre antes de cargar (RF-54) | Activarlo solo con Reizo presente (§3.11) |
 | R-20 | `autocompletar_login` sin Windows Hello activado en Chrome: el relleno solo depende de la confirmación de Cacao, que puede dar cualquiera frente al PC (R-16) | Media / alto | Apagada por defecto; sitio del pedido, Chrome al frente, sin contenido externo, confirmación siempre; no envía el formulario | Activar Hello antes que la función (guía, Fase 7 punto 13) |
 | R-22 | Con el modo sin confirmación activo, mouse y teclado actúan en cualquier ventana sin preguntar (Inicio, barra de tareas, Configuración, otra app): un error del modelo, o contenido de fuera que lo empuje a hacer clics, cambia cosas sin que Reizo lo apruebe | Media / alto | Empieza apagado y solo lo enciende un clic físico; indicador ámbar; emergencia lo apaga; un texto que no sale del pedido tras leer contenido de fuera pregunta; bloqueos de atajos, isla y ventanas sensibles; PowerShell y cerrar a la fuerza siguen preguntando | Valorar si Inicio, la barra de tareas y Configuración deben volver a preguntar |
+| R-23 | La escucha de seguimiento toma como pedido lo que se dice en la sala justo después de una respuesta (otra persona, una conversación, la tele sin sonar por el PC) | Media / medio | Solo 8 s tras una respuesta; no con otra app sonando por el PC; mismos frenos de Whisper; las acciones con efecto siguen pidiendo confirmación (salvo el modo sin confirmación); se apaga en Ajustes | Ver en `contador_cacao.json` («seguimiento») cuántos pedidos llegan así |
 | R-21 | Página con varios campos o una lista de Chrome distinta de la esperada: el clic cae en otro campo o se elige otra opción | Baja / medio | Sin un único campo claro da error; si la lista no se abre no pulsa Enter; si sigue abierta tras Enter, error | Probar en 2-3 sitios reales |
 
 ---
@@ -510,7 +523,9 @@ estos últimos solo para detectar actividad.
   - RF-60..66 → `probar_fase7.py` (A, B y C);
   - RF-67..69 → `foco.rs` y `npm run probar-campo` (en `C:\asistente-ui\windows`), `probar_campo_isla.py`;
   - RF-90..95 → `probar_autocompletar_login.py`;
-  - RF-97..98 → `iniciar_cacao.ps1 -Simular`.
+  - RF-97..98 → `iniciar_cacao.ps1 -Simular`;
+  - RF-103, RF-104 y RF-106 → la isla con `npm run dev` y `window.cacao` (mensajes simulados);
+  - RF-105 → `probar_seguimiento.py`.
 - **Probado en real el 2026-10-05:** rechazo con Esc en voz; Whisper de la CPU con "estoy jugando" y "ya terminé";
   isla con clic físico en Permitir/Denegar y Enter, sin quitar el foco; modo juego con Roblox; incógnito en Chrome;
   regla de audio (música, video en ventana y en pantalla completa, llamada); registro de hábitos al arrancar.

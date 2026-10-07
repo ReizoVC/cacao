@@ -75,7 +75,9 @@ y si el agente se cierra, la isla solo espera y reintenta.
 | agente → isla | `confirmar` | `id`, `herramienta`, `resumen`, `motivo`, `comando` (PowerShell), `vence_s` |
 | isla → agente | `decision` | `id`, `si` (true/false) |
 | agente → isla | `cancelar` | `id` (respondida por teclado, vencida o emergencia) |
-| agente → isla | `respuesta` | `texto`, `exito` (y `sugerencia`, si la hay) |
+| agente → isla | `respuesta` | `texto`, `exito` (y `sugerencia`, si la hay), `habla` (se lee en voz alta: la isla espera a `fin_habla` para empezar a esconderse) |
+| agente → isla | `fin_habla` | — (Cacao terminó de hablar; desde ahí la respuesta se queda 4 a 10 s según su largo) |
+| agente → isla | `seguimiento` | `activo`, `segundos` (escucha de seguimiento: indicador con cuenta atrás) |
 | agente → isla | `aviso` | `texto` (modo juego, revisión de la wiki) |
 | isla → agente | `rect` | `x`, `y`, `ancho`, `alto` de la isla en pantalla (§6) |
 

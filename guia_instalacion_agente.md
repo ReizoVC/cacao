@@ -309,6 +309,10 @@ Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agen
    - conexión: WebSocket en `127.0.0.1:8765` con un token por sesión en `%LOCALAPPDATA%\Asistente\ui.json`;
    - no toma el foco (salvo en su campo de texto), no sale en `listar_ventanas` ni en `ver_pantalla`, y la
      herramienta mouse no puede hacer clic en ella. Para grabarla: bandeja → "Permitir capturas";
+   - **tamaño** (Ajustes → Tamaño): pequeño, mediano (por defecto) o grande, y proporcional al monitor y al escalado
+     de Windows. En tu 1920×1080 al 100 % la isla abierta mide 448×112, 512×128 o 589×147 px (antes 640×160);
+   - **tras una respuesta se esconde sola**: abierta mientras Cacao habla y 4 a 10 s más según el largo del mensaje;
+     luego vuelve al notch pequeño, sin pulsar OK. Con el mouse encima no se esconde. Las confirmaciones nunca;
    - **campo "Escribe a Cacao…"** (vista de inicio y de pregunta):
      - con un clic físico en él, la isla toma el foco y recuerda la ventana que estaba activa; Enter envía el texto.
        Enter y Esc devuelven el foco a esa ventana; con un clic fuera, el foco se queda en la ventana donde hiciste
@@ -335,7 +339,13 @@ Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agen
     - privacidad: el audio se procesa en memoria y nada se guarda hasta detectar la palabra; se ignora mientras
       Cacao habla;
     - se enciende y apaga con un clic físico en la bandeja o en la isla; sigue activa en modo juego;
-    - la palabra sola nunca confirma nada.
+    - la palabra sola nunca confirma nada;
+    - **escucha de seguimiento** (`seguimiento.py`): al terminar de hablar, Cacao sigue oyendo 8 s sin la palabra,
+      con un indicador verde que cuenta atrás («Te sigo oyendo · 8 s»). Si hablas, es un pedido normal (mismos frenos
+      y confirmaciones; "Cacao, …" también vale); si no, termina. No se abre con otra app sonando (hay que volver a
+      decir "Cacao"), ni con la escucha de «Cacao» apagada, en modo juego o detenido. Se apaga y enciende en Ajustes
+      de la isla con un clic físico; al arrancar vale `voz.seguimiento.activa_al_iniciar` de `config.json`. Lo oído
+      que no llega a pedido no se guarda; en `contador_cacao.json` cuenta como «seguimiento».
 11. **Modo sin confirmación** (`modo_directo.py`): solo con un clic físico en la bandeja o en la isla (empieza
     apagado; el atajo de emergencia lo apaga). Con él van directos volumen, abrir_app, enfocar_ventana, buscar_web
     y cerrar_app normal; mover_archivo hasta 10 archivos, sin ejecutables ni scripts y fuera de
@@ -366,7 +376,7 @@ Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agen
       relleno pide huella, cara o PIN, que no se pueden aprobar con teclas inyectadas;
     - activarla: `config.json` → `autocompletar_login.activa: true`. Cambia el prompt, así que antes vuelve a pasar
       `SIN_REALES=1 evaluar_pruebas.py`.
-14. **Arranque automático de Cacao** (preparado, **no activado**):
+14. **Arranque automático de Cacao** (**activado** el 2026-10-06):
     - `iniciar_cacao.ps1` lanza `voz.py`, que abre la isla y escucha "Cacao" (`voz.palabra_activacion.activa_al_iniciar`).
       No abre un segundo Cacao si ya hay uno; con un juego activo espera a que se cierre antes de cargar la GPU
       (`ESPERAR_JUEGO=1`); con `-AlInicio` espera 60 s tras iniciar sesión; con `-Simular` solo comprueba;
@@ -452,19 +462,33 @@ la tercera, la del script actual, con tonos desplazados y frases de corrido, no 
 El modo sin confirmación empieza apagado en cada arranque (no se guarda en ningún archivo). Cada pedido lleva la fecha
 y la hora ("[Ahora: martes 6 de octubre de 2026, 21:50]"), así Cacao responde "¿qué hora es?" sin buscar.
 
+### Isla y escucha de seguimiento (2026-10-06, en simulación)
+
+| Prueba | Resultado |
+|---|---|
+| Texto encimado en la isla («cerrar_app: Cerré la ventana…» sobre «Te escucho…») | Reproducido en el navegador: la copia atenuada de un paso largo bajaba a la línea siguiente. **Corregido**; además, tras 20 pasos el ticker dejaba de avanzar (corregido) |
+| Tamaño (`npm run dev`, mensajes simulados con `window.cacao`) | Mediano legible; Ajustes con la fila «Tamaño» cabe entero |
+| Cierre automático | Sin voz, a los 4 s; con voz, 4 s después de terminar de hablar; con el mouse encima espera a que salga; una confirmación no se esconde |
+| `probar_seguimiento.py` (escucha de seguimiento: silencio, cola de la voz de Cacao, un clic, otra app sonando, bloques del G435, frenos, Ctrl+Espacio, modos) | 35/35 |
+| Modo sin confirmación, mouse y teclado (`probar_modo_directo.py`) | 99/99 |
+| Regresión | palabra de activación 41/41, confirmación por voz 33/33, campo de la isla 29/29, obstáculos 35/35, autocompletar 46/46, fase 6 142/142 |
+
 ### Pendiente para cuando estés frente al PC (en orden)
 
-1. **autocompletar_login:** activa Windows Hello en Chrome (punto 13) y prueba a mano que Chrome lo pide; luego
+1. **Isla nueva y escucha de seguimiento:** ver la isla compacta con los tres tamaños, el cierre tras una respuesta
+   hablada y el indicador de los 8 s; decir algo en esos 8 s sin "Cacao"; con música sonando, que no se abra.
+   Pasar `probar_voz.py` (necesita la GPU: con Cacao cerrado).
+2. **autocompletar_login:** activa Windows Hello en Chrome (punto 13) y prueba a mano que Chrome lo pide; luego
    `autocompletar_login.activa: true`, añade 2-3 frases al set y vuelve a pasar las 65 frases; prueba en un sitio
    con cuenta guardada: con Hello rellena y no envía; si cancelas Hello no rellena; con otra ventana al frente da
    error.
-2. **Arranque automático (ya activo):** al reiniciar o iniciar sesión, mira que Cacao aparezca a los ~60 s. Prueba
+3. **Arranque automático (ya activo):** al reiniciar o iniciar sesión, mira que Cacao aparezca a los ~60 s. Prueba
    también a iniciar sesión con un juego que se abra solo: Cacao debe esperar.
-3. **"Cacao" en el día a día:** mira `contador_cacao.json` tras unos días (activaciones de la primera etapa frente a
+4. **"Cacao" en el día a día:** mira `contador_cacao.json` tras unos días (activaciones de la primera etapa frente a
    pedidos). "Cacao" dicho rápido aún no se detecta.
-4. **Grabar la isla** con "Permitir capturas".
-5. **Mando:** detección de actividad (no había uno a mano).
-6. **Datos reales:** Obsidian, y la reflexión diaria y las sugerencias tras una semana de hábitos. `apps_banco` sigue
+5. **Grabar la isla** con "Permitir capturas".
+6. **Mando:** detección de actividad (no había uno a mano).
+7. **Datos reales:** Obsidian, y la reflexión diaria y las sugerencias tras una semana de hábitos. `apps_banco` sigue
    vacío (no hay apps de banco en este PC).
 
 ---
@@ -503,4 +527,4 @@ y la hora ("[Ahora: martes 6 de octubre de 2026, 21:50]"), así Cacao responde "
 - [x] Memoria wiki, hábitos y recomendaciones (probado en real; falta el mando y una semana de datos)
 - [x] Voz, isla e inicio automático del registro de hábitos
 - [ ] autocompletar_login con Windows Hello (hecha en simulación, apagada)
-- [ ] Arranque automático de Cacao (preparado en `Cacao.lnk`; activarlo contigo)
+- [x] Arranque automático de Cacao (`Cacao.lnk` en Inicio desde el 2026-10-06)
