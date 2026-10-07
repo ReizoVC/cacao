@@ -19,6 +19,11 @@ from piper import PiperVoice, SynthesisConfig
 import confirmacion_voz as cv
 import palabra_activacion as pa
 
+# el contador diario de las pruebas va a un archivo temporal, no al real (contador_cacao.json)
+import tempfile as _tempfile
+from pathlib import Path as _Path
+pa.RUTA_CONTADOR = _Path(_tempfile.mkdtemp()) / "contador_prueba.json"
+
 resultados = []
 
 
@@ -188,10 +193,40 @@ def pruebas_bucle():
     ok("«Cacao, sube el volumen» -> la orden «sube el volumen.»", texto == "sube el volumen.", texto)
 
 
+def pruebas_contador():
+    import json
+    pa.RUTA_CONTADOR.unlink(missing_ok=True)
+    for etapa in ("primera_etapa", "primera_etapa", "primera_etapa", "segunda_etapa", "segunda_etapa", "pedido"):
+        pa.contar(etapa, hoy="2026-10-06")
+    pa.contar("primera_etapa", hoy="2026-10-07")
+    d = json.loads(pa.RUTA_CONTADOR.read_text(encoding="utf-8"))
+    ok("contador: suma por día y por etapa", d["2026-10-06"] == {"primera_etapa": 3, "segunda_etapa": 2, "pedido": 1}
+       and d["2026-10-07"]["primera_etapa"] == 1, str(d))
+    ok("contador: solo números (sin audio ni texto)", all(isinstance(v, int) for f in d.values() for v in f.values()))
+    pa.RUTA_CONTADOR.unlink(missing_ok=True)
+    ns, escucha, transcriptor, _ = cargar_voz_sin_modelo(None, "Cacao, sube el volumen.", None)
+    escucha.cola.put(("activacion", np.concatenate([silencio(0.3), decir("Cacao, sube el volumen.")]), None))
+
+    class Atajo:
+        pulsado = threading.Event()
+
+    ns["escuchar"](Atajo(), None, transcriptor)
+    d = json.loads(pa.RUTA_CONTADOR.read_text(encoding="utf-8"))
+    hoy = time.strftime("%Y-%m-%d")
+    ok("contador: «Cacao, sube el volumen» suma segunda etapa y pedido", d[hoy]["segunda_etapa"] == 1
+       and d[hoy]["pedido"] == 1, str(d))
+    ns2, escucha2, transcriptor2, _ = cargar_voz_sin_modelo(None, "Me gusta el chocolate con cacao.", None)
+    escucha2.cola.put(("activacion", np.concatenate([silencio(0.3), decir("Me gusta el chocolate con cacao.")]), None))
+    ns2["escuchar"](Atajo(), None, transcriptor2)
+    d = json.loads(pa.RUTA_CONTADOR.read_text(encoding="utf-8"))
+    ok("contador: una activación falsa no suma segunda etapa ni pedido", d[hoy]["segunda_etapa"] == 1
+       and d[hoy]["pedido"] == 1, str(d))
+
+
 if __name__ == "__main__":
     if not pa.RUTA_MODELO.exists():
         sys.exit("Falta modelos/cacao/cacao.npz: corre entrenar_cacao.py")
-    for parte in (pruebas_deteccion, pruebas_grabacion, pruebas_confirmacion, pruebas_texto, pruebas_bucle):
+    for parte in (pruebas_deteccion, pruebas_grabacion, pruebas_confirmacion, pruebas_texto, pruebas_bucle, pruebas_contador):
         print(f"\n== {parte.__name__} ==")
         parte()
     fallos = [r for r in resultados if not r[1]]

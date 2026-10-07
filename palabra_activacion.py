@@ -70,6 +70,29 @@ def quitar_palabra(texto):
     return (texto or "").strip()
 
 
+# ---------- contador diario (sin audio ni texto) ----------
+
+RUTA_CONTADOR = Path(__file__).parent / "contador_cacao.json"
+ETAPAS = ("primera_etapa", "segunda_etapa", "pedido")
+_cerrojo_contador = threading.Lock()
+
+
+def contar(etapa, ruta=None, hoy=None):
+    """Suma 1 a la etapa del día: primera_etapa (el detector se activó), segunda_etapa (Whisper oyó "Cacao" al
+    principio) o pedido (llegó una orden al agente). Solo números por día: nada de audio ni de texto."""
+    import json
+    ruta = Path(ruta or RUTA_CONTADOR)
+    dia = (hoy or time.strftime("%Y-%m-%d"))
+    with _cerrojo_contador:
+        try:
+            datos = json.loads(ruta.read_text(encoding="utf-8")) if ruta.exists() else {}
+        except ValueError:
+            datos = {}
+        fila = datos.setdefault(dia, {e: 0 for e in ETAPAS})
+        fila[etapa] = fila.get(etapa, 0) + 1
+        ruta.write_text(json.dumps(datos, ensure_ascii=False, indent=1), encoding="utf-8")
+
+
 def relu(x):
     return np.maximum(x, 0)
 
@@ -239,6 +262,10 @@ class Escucha:
 
     def _detectado(self):
         self.detecciones += 1
+        try:
+            contar("primera_etapa")
+        except OSError:
+            pass
         self.anotar("  [Cacao] palabra de activación detectada")
         self.al_detectar()
         self._vigia = None

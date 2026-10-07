@@ -302,6 +302,7 @@ def escuchar(atajo, microfono, transcriptor, al_pulsar=lambda: None):
         print("  (activación falsa: la transcripción no empieza con «Cacao»; descartada sin guardar)", flush=True)
         a.notificar("reposo")
         return audio, datos, None, soltado
+    palabra_activacion.contar("segunda_etapa")
     if texto is not None:
         orden = palabra_activacion.quitar_palabra(texto)
         if not orden:
@@ -310,6 +311,7 @@ def escuchar(atajo, microfono, transcriptor, al_pulsar=lambda: None):
             a.notificar("reposo")
             return audio, datos, None, soltado
         texto = orden
+        palabra_activacion.contar("pedido")
     else:
         a.notificar("reposo")
     return audio, datos, texto, soltado

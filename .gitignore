@@ -37,3 +37,6 @@ Cacao.lnk
 
 # Instantáneas de diagnóstico (procesos, ventanas, red de este PC)
 diagnostico/
+
+# Contador diario de la palabra de activación (solo números)
+contador_cacao.json
