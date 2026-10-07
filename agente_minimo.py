@@ -731,6 +731,18 @@ def terminar(historial, mensaje, exito, pensamiento):
     return mensaje
 
 
+DIAS = ("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo")
+MESES = ("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre",
+         "noviembre", "diciembre")
+
+
+def con_fecha(pedido, ahora=None):
+    """El pedido con la fecha y la hora de este momento, para que Cacao sepa qué hora es sin buscarla. Va en el
+    mensaje del pedido y no en el prompt de sistema, que así no cambia y sigue en la caché."""
+    t = ahora or datetime.now()
+    return f"{pedido}\n[Ahora: {DIAS[t.weekday()]} {t.day} de {MESES[t.month - 1]} de {t.year}, {t:%H:%M}]"
+
+
 MENSAJE_DETENIDO = "Estoy detenido por el atajo de emergencia; no haré nada hasta que escribas 'reanudar'."
 
 
@@ -739,7 +751,7 @@ def atender(pedido, historial):
         # el atajo se pulsó antes o entre tareas: no se descarta, la tarea nueva no empieza
         print("  [emergencia] agente detenido: la tarea no se ejecuta")
         return MENSAJE_DETENIDO
-    historial.append({"role": "user", "content": pedido})
+    historial.append({"role": "user", "content": con_fecha(pedido)})
     _tarea.update(contaminada=False, herramientas=[], pedido=pedido, movidos=0, intentos=[], avisos=[],
                   sustituidos={})
     herramientas_grupo4.tarea_actual = f"{time.time():.3f}"

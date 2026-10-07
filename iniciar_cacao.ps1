@@ -47,7 +47,9 @@ if ($faltan) {
 }
 if ($enMarcha) {
     Write-Host "Cacao ya esta en marcha (PID $($enMarcha.ProcessId -join ', ')); no abro otro."
-    Start-Sleep -Seconds 5
+    # la ventana del acceso directo va minimizada: el aviso tiene que verse aparte (se cierra solo a los 4 s)
+    try { (New-Object -ComObject WScript.Shell).Popup("Cacao ya esta en marcha; no abro otro.", 4, "Cacao", 64) | Out-Null }
+    catch { Start-Sleep -Seconds 4 }
     exit 0
 }
 foreach ($a in $avisos) { Write-Host "Aviso: $a" }

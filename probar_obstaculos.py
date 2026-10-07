@@ -221,6 +221,15 @@ def pruebas_ejecutor():
        "Windows está en español" in fuente and "Guardar suele ser Ctrl+G" in fuente)
     ok("agente: el prompt lleva los atajos comprobados y se rehace al aprender uno",
        "caminos = obstaculos.para_prompt()" in fuente and "historial[0][\"content\"] = prompt_sistema(voz)" in fuente)
+    arbol = ast.parse(fuente)
+    from datetime import datetime
+    nsf = {"datetime": datetime}
+    exec(compile(ast.Module(body=[n for n in arbol.body if (isinstance(n, ast.FunctionDef) and n.name == "con_fecha")
+                                  or (isinstance(n, ast.Assign) and getattr(n.targets[0], "id", "") in ("DIAS", "MESES"))],
+                            type_ignores=[]), "agente_minimo.py", "exec"), nsf)
+    texto = nsf["con_fecha"]("Cacao, ¿qué hora es?", datetime(2026, 10, 6, 21, 50))
+    ok("agente: cada pedido lleva la fecha y la hora", texto == "Cacao, ¿qué hora es?\n[Ahora: martes 6 de octubre "
+       "de 2026, 21:50]" and 'historial.append({"role": "user", "content": con_fecha(pedido)})' in fuente, texto)
     ok("agente: la respuesta final (isla y voz) lleva el aviso de obstáculos",
        "aviso_obstaculos = cerrar_obstaculos(bool(exito_tarea))" in fuente)
 
