@@ -51,7 +51,7 @@ NOMBRES = {"CATEGORIAS", "LIMITE_RESULTADO", "normalizar", "listar_apps", "ESQUE
            "preparar_apertura", "cubre_bien", "ARTICULOS", "GENERICOS", "APPS_SENSIBLES", "ver_pantalla",
            "terminar", "ACCIONES_A_VERIFICAR", "VERIFICADORAS", "MAX_RECORDATORIOS", "MENSAJE_DETENIDO",
            "MODO_VOZ", "PLANIFICADORES", "TEXTO_EXTERNO", "GUARDAN_SOBRE_REIZO", "SOLO_CONSULTAN", "_tarea",
-           "_modos", "_decision", "_politica", "decision_modo", "_guardia", "enviar_modos", "_isla",
+           "_modos", "_decision", "_politica", "decision_modo", "enviar_modos", "_isla",
            "camino_conocido", "anotar_intento", "legible", "nombre_app", "NOMBRES_APPS", "con_fecha", "DIAS",
            "MESES"}
 arbol = ast.parse((BASE / "agente_minimo.py").read_text(encoding="utf-8"))

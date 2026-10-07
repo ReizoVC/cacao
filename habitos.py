@@ -324,11 +324,16 @@ class Privacidad:
         self.usar_uia = MW.get("incognito_uia", True)
         self._incognito = {}  # hwnd -> bool: una ventana no cambia de modo
 
-    def es_privada(self, ventana):
+    def es_app_privada(self, ventana):
+        """Gestor de contraseñas, Seguridad de Windows o app de banco (sin mirar el incógnito)."""
         exe = (ventana.get("exe_ruta") or "").replace("/", "\\").rsplit("\\", 1)[-1].lower()
         aumid = (ventana.get("aumid") or "").lower()
-        if exe in self.exes or aumid in self.aumids or (aumid and aumid.split("!")[0] in self.familias):
+        return exe in self.exes or aumid in self.aumids or bool(aumid and aumid.split("!")[0] in self.familias)
+
+    def es_privada(self, ventana):
+        if self.es_app_privada(ventana):
             return True
+        exe = (ventana.get("exe_ruta") or "").replace("/", "\\").rsplit("\\", 1)[-1].lower()
         if exe not in self.navegadores:
             return False
         hwnd = ventana["hwnd"]

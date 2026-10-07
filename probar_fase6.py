@@ -822,8 +822,8 @@ def agente_sin_modelo(respuestas_input):
     import sugerencias as sg
     nombres = {"TEXTO_EXTERNO", "GUARDAN_SOBRE_REIZO", "SOLO_CONSULTAN", "_tarea", "_sugerencia", "ejecutar",
                "prompt_sistema", "cerrar_sugerencia_pendiente", "agregar_sugerencia", "CON_MARCADORES", "MODO_VOZ",
-               "normalizar", "_modos", "_decision", "_politica", "decision_modo", "_guardia", "enviar_modos",
-               "_isla"}
+               "normalizar", "_modos", "_decision", "_politica", "decision_modo", "enviar_modos", "_isla",
+               "camino_conocido", "anotar_intento", "legible", "nombre_app", "NOMBRES_APPS"}
     arbol = ast.parse((BASE / "agente_minimo.py").read_text(encoding="utf-8"))
     nodos = [n for n in arbol.body if (isinstance(n, ast.FunctionDef) and n.name in nombres)
              or (isinstance(n, ast.Assign) and any(getattr(t, "id", None) in nombres for t in n.targets))]
@@ -835,7 +835,12 @@ def agente_sin_modelo(respuestas_input):
           "HERRAMIENTAS": {h["nombre"]: h for h in catalogo["herramientas"]},
           "confirmar": lambda *_a, **_k: (respuestas.pop(0) if respuestas else "n") == "s",
           "app_en_marcha": lambda app: False, "herramientas_grupo4": __import__("herramientas_grupo4"),
-          "modo_directo": __import__("modo_directo")}
+          "modo_directo": __import__("modo_directo"),
+          # obstáculos (ejecutar consulta los caminos aprendidos y anota cada intento): sin efecto aquí
+          "obstaculos": type("O", (), {"consultar": staticmethod(lambda app, accion: None),
+                                       "nombre_atajo": staticmethod(lambda teclas: "+".join(teclas or [])),
+                                       "contar_uso": staticmethod(lambda *a: None),
+                                       "para_prompt": staticmethod(lambda: "")})()}
     exec(compile(ast.Module(body=nodos, type_ignores=[]), "agente_minimo.py", "exec"), ns)
     ns["IMPLEMENTACIONES"] = {h: (lambda h_: lambda **a: llamadas.append((h_, a)) or {"ok": True})(h)
                               for h in ns["HERRAMIENTAS"]}

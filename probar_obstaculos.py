@@ -132,14 +132,14 @@ def pruebas_tabla():
 
 def cargar_agente(preguntas, enviados):
     nombres = {"ejecutar", "camino_conocido", "anotar_intento", "cerrar_obstaculos", "legible", "nombre_app",
-               "NOMBRES_APPS", "_tarea", "decision_modo", "_decision", "_modos", "_guardia", "TEXTO_EXTERNO",
+               "NOMBRES_APPS", "_tarea", "decision_modo", "_decision", "_modos", "TEXTO_EXTERNO",
                "GUARDAN_SOBRE_REIZO", "SOLO_CONSULTAN"}
     arbol = ast.parse((BASE / "agente_minimo.py").read_text(encoding="utf-8"))
     nodos = [n for n in arbol.body if (isinstance(n, ast.FunctionDef) and n.name in nombres)
              or (isinstance(n, ast.Assign) and any(getattr(t, "id", None) in nombres for t in n.targets))]
     catalogo = json.loads((BASE / "herramientas.json").read_text(encoding="utf-8"))
     avisos_isla = []
-    g4_falso = type("G4", (), {"proceso_de": staticmethod(lambda h: "notepad.exe"), "guardia_directa": None,
+    g4_falso = type("G4", (), {"proceso_de": staticmethod(lambda h: "notepad.exe"),
                                "win32gui": type("W", (), {"GetForegroundWindow": staticmethod(lambda: 1)})})()
     ns = {"json": json, "modo_directo": md, "obstaculos": obstaculos, "herramientas_grupo4": g4_falso,
           "PLANIFICADORES": {}, "Detenido": KeyError, "print": lambda *a, **k: None,

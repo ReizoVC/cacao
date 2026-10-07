@@ -338,11 +338,16 @@ Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agen
     - la palabra sola nunca confirma nada.
 11. **Modo sin confirmación** (`modo_directo.py`): solo con un clic físico en la bandeja o en la isla (empieza
     apagado; el atajo de emergencia lo apaga). Con él van directos volumen, abrir_app, enfocar_ventana, buscar_web
-    y cerrar_app normal; mouse y teclado solo dentro de la app que nombraste (y teclado solo con texto de tu
-    pedido); mover_archivo hasta 10 archivos, sin ejecutables ni scripts y fuera de `carpetas_importantes`
-    (`datos_locales.json`), con "deshaz lo último". PowerShell y cerrar a la fuerza siempre preguntan. Si en la
-    tarea entró contenido externo (archivo, web, PowerShell), todo vuelve a preguntar. La isla muestra un
-    indicador ámbar mientras está activo.
+    y cerrar_app normal; mover_archivo hasta 10 archivos, sin ejecutables ni scripts y fuera de
+    `carpetas_importantes` (`datos_locales.json`), con "deshaz lo último". PowerShell y cerrar a la fuerza siempre
+    preguntan. Si en la tarea entró contenido externo (archivo, web, PowerShell), todo vuelve a preguntar, salvo
+    mouse y teclado. La isla muestra un indicador ámbar mientras está activo.
+    - **Mouse y teclado** (desde el 2026-10-06): no preguntan nunca, en ninguna ventana, salvo una excepción:
+      escribir un texto que no sale de tu pedido cuando Cacao leyó contenido de fuera (web, archivo, pantalla,
+      títulos de ventanas, carpetas, PowerShell) en esa tarea o en una anterior que aún recuerda: ese texto pudo
+      salir de lo leído, y pregunta. Siguen los bloqueos: atajos peligrosos (punto 12), clic o teclas en la isla y
+      escribir en ventanas sensibles (título con contraseñas o claves, gestores de contraseñas, Seguridad de
+      Windows, apps de banco), que valen en cualquier modo.
 12. **Atajos bloqueados siempre:** con la tecla Windows solo valen los de ventanas y escritorios (Win+D, Win+M,
     Win+Tab, Win+flechas, Win+Shift+S, Win+Ctrl+D/flechas/F4). Bloqueados, entre otros: Win sola, Win+R, X, I, S,
     Q, E, A, U, K, P, N, B, T, V, H, L, G, Win+número, Win+Alt+R, Win+Ctrl+Enter, Win+Ctrl+O, Ctrl+Esc,

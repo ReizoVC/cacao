@@ -1,6 +1,7 @@
 # Especificación de requisitos del software (SRS): Cacao, asistente de escritorio con IA local
 
-Estructura según IEEE 830-1998 e ISO/IEC/IEEE 29148:2018. Versión 1.1, 2026-10-06 (la 1.0 es del 2026-10-05).
+Estructura según IEEE 830-1998 e ISO/IEC/IEEE 29148:2018. Versión 1.2, 2026-10-06 (la 1.1 es del mismo día y la 1.0
+del 2026-10-05).
 
 **Regla de este documento:** toda cifra viene de una medición registrada en el repositorio y lleva su fuente. Si algo
 no se midió, se dice "no medido". Un requisito está **Verificado (real)** si se probó contigo frente al PC,
@@ -10,6 +11,9 @@ no se midió, se dice "no medido". Un requisito está **Verificado (real)** si s
 confirmaciones con entrada física (§3.7); modo sin confirmación y atajos bloqueados (§3.8); confirmación por voz y
 palabra de activación "Cacao" (§3.4); `autocompletar_login`, en simulación (§3.10); arranque automático,
 preparado (§3.11); riesgos R-14 a R-21.
+
+**Cambios de la 1.2:** en el modo sin confirmación, mouse y teclado ya no preguntan salvo un texto que puede venir de
+contenido de fuera (RF-72, RF-73, RF-76); bloqueo de escribir en ventanas sensibles (RF-79); riesgo R-22.
 
 ---
 
@@ -261,12 +265,13 @@ Formato: **ID**, requisito ("debe"), **criterio verificable** y estado.
 |---|---|---|---|
 | RF-70 | El modo debe cambiar solo con un clic físico en la bandeja o en la isla; empieza apagado en cada arranque y el atajo de emergencia lo apaga. Ninguna herramienta, frase ni voz puede cambiarlo | `probar_modo_directo.py` parte 6; clic inyectado: no cambia; con Reizo (2026-10-06): activado y desactivado con su clic; volumen, abrir y cerrar una app, escribir el texto del pedido, mover y deshacer, sin preguntar; PowerShell preguntó | Verificado (simulación y real) |
 | RF-71 | Con el modo activo van directas: volumen, abrir_app, enfocar_ventana, buscar_web, cerrar_app normal y deshacer_movimiento | `probar_modo_directo.py` parte 1 | Verificado (simulación) |
-| RF-72 | `mouse` va directo solo si el punto del clic cae en una ventana de la app que Reizo nombró en el pedido (nunca barra de tareas, escritorio, Inicio ni la isla); `teclado` solo en la ventana al frente de la app nombrada, y "escribir" solo con texto que sale del pedido | Texto leído en pantalla o en un archivo, clic fuera de la ventana y en la barra de tareas: vuelven a preguntar | Verificado (simulación) (`probar_modo_directo.py` partes 2 y 3) |
-| RF-73 | Justo antes de un clic o de escribir sin confirmación, la ventana debe volver a comprobarse; si cambió, no se actúa | `agente_minimo._guardia` | Verificado (simulación) (`probar_modo_directo.py` parte 3) |
+| RF-72 | `mouse` y `teclado` van directos en cualquier ventana y en cualquier caso (decisión de Reizo del 2026-10-06), con una sola excepción: escribir un texto que no sale del pedido (con `escribir`, o letras sueltas con `tecla` o un atajo sin Ctrl ni Alt) cuando el modelo leyó contenido de fuera (web, archivo, pantalla, títulos, carpetas, PowerShell) en la tarea o en una tarea anterior que sigue en su historial: pregunta | Clic tras ver_pantalla, leer un archivo, buscar en la web o PowerShell, en la barra de tareas o en otra app: directo. Texto redactado sin leer nada de fuera, o que sale del pedido: directo. "Contraseña: 1234" tras cualquiera de las 7 herramientas de lectura, o lo leído en la tarea anterior: pregunta. Ctrl+S, Alt+Tab y Enter tras leer contenido de fuera: directos | Verificado (simulación) (`probar_modo_directo.py` partes 2 y 3, 99/99) |
+| RF-73 | Los bloqueos de mouse y teclado se comprueban dentro de la propia herramienta, justo antes de actuar, así que valen aunque el modo deje pasar la acción: atajos (RF-78), clic o teclas en la isla (RF-63, RF-69) y ventanas sensibles (RF-79) | Con el modo activo, un clic en la isla y escribir con una ventana sensible al frente: bloqueados | Verificado (simulación) (`probar_modo_directo.py` partes 2 y 3) |
 | RF-74 | `mover_archivo` va directo hasta 10 archivos por tarea, sin ejecutables ni scripts y fuera de `carpetas_importantes` (`datos_locales.json`) | 10 archivos directo, 11 preguntan; un `.exe` pregunta | Verificado (simulación) (`probar_modo_directo.py` parte 5) |
 | RF-75 | `ejecutar_powershell` y `cerrar_app` forzado preguntan siempre | `probar_modo_directo.py` parte 1 | Verificado (simulación) |
-| RF-76 | Si en la tarea entró contenido externo (leer_archivo, buscar_web, ejecutar_powershell), todo vuelve a preguntar hasta que termine; tras ver_pantalla, listar_controles o listar_ventanas, solo van directas las acciones sobre la app nombrada, y buscar_web y mover_archivo vuelven a preguntar | `probar_modo_directo.py` parte 1 | Verificado (simulación) |
+| RF-76 | Si en la tarea entró contenido externo (leer_archivo, buscar_web, ejecutar_powershell), todo lo demás vuelve a preguntar hasta que termine (mouse y teclado siguen RF-72); tras ver_pantalla, listar_controles o listar_ventanas, enfocar_ventana, cerrar_app y abrir_app solo van directas sobre la app nombrada, y buscar_web y mover_archivo vuelven a preguntar | `probar_modo_directo.py` parte 1 | Verificado (simulación) |
 | RF-77 | La isla debe mostrar un indicador ámbar mientras el modo está activo | Indicador visible al activar el modo con un clic físico | Verificado en código. A la vista: **Pendiente** |
+| RF-79 | En cualquier modo, `teclado` debe negarse (bloqueo, sin pedir confirmación) a escribir o pulsar teclas si la ventana al frente es sensible: su título nombra contraseñas o claves (los 27 patrones que usa `ver_pantalla`) o es una app privada del registro de hábitos (gestores de contraseñas, Seguridad de Windows, `apps_banco`). Si no se puede comprobar, también se niega | KeePassXC y una app de banco: sensibles; el Bloc de notas no. "contraseñas.txt: Bloc de notas", "claves.kdbx - KeePass" y ".env - Visual Studio Code": sensibles | Verificado (simulación) (`probar_modo_directo.py` parte 2) |
 | RF-78 | En cualquier modo, `teclado` debe bloquear los atajos peligrosos: con la tecla Windows solo valen los de ventanas y escritorios (Win+D, Win+M, Win+Tab, Win+flechas, Win+Shift+S, Win+Ctrl+D/flechas/F4); bloqueados Win sola, Win+R/X/I/S/Q/E/A/U/K/P/N/B/T/V/H/L/G, Win+número, Win+Alt+R, Win+Ctrl+Enter, Win+Ctrl+O, Ctrl+Esc, Ctrl+Shift+Esc, Ctrl+Alt+Supr, Alt+F4 y el atajo de emergencia | `probar_modo_directo.py` parte 4 | Verificado (simulación) |
 
 ### 3.9 Nombre del asistente
@@ -366,7 +371,7 @@ primer paso, **3,91 s** de media (`resultados_pruebas_65_fecha.json`).
 | RNF-30 | Los errores de llama.cpp/CUDA deben quedar registrados | `modelo.py` los muestra y los guarda en `errores_llama.log` (`resultados_voz.md`, incidencias) |
 | RNF-31 | La reflexión, el lint y el modo juego nunca deben tumbar al agente | Capturan sus excepciones, las anotan y reintentan más tarde (código) |
 | RNF-32 | Las pruebas no deben tocar datos reales | Bases y vault temporales (`*_prueba*`), borrados al terminar; `probar_voz.py` usa un micrófono falso |
-| RNF-33 | Cada fase tiene su script de pruebas | `evaluar_pruebas.py`, `probar_fase6.py` (142/142), `probar_powershell.py` (59/59), `probar_modo_juego.py` (28/28), `probar_voz.py` (11/11), `probar_fase7.py` (A+B 39/39, C 5/5), `probar_modo_directo.py` (73/73), `probar_confirmacion_voz.py` (33/33), `probar_palabra_activacion.py` (27/27) |
+| RNF-33 | Cada fase tiene su script de pruebas | `evaluar_pruebas.py`, `probar_fase6.py` (142/142), `probar_powershell.py` (59/59), `probar_modo_juego.py` (28/28), `probar_voz.py` (11/11), `probar_fase7.py` (A+B 39/39, C 5/5), `probar_modo_directo.py` (99/99), `probar_confirmacion_voz.py` (33/33), `probar_palabra_activacion.py` (27/27) |
 | RNF-34 | Ctrl+C debe cerrar el modo voz y un comando en pausa no debe tumbarlo | Corregido y verificado en real el 2026-10-05 (guía, "Corregido durante las pruebas") |
 
 ---
@@ -388,7 +393,7 @@ primer paso, **3,91 s** de media (`resultados_pruebas_65_fecha.json`).
 | RS-11 | Los datos personales no van al repositorio | `.gitignore`: `memoria.db`, `habitos.db`, `memoria/`, `datos_locales.json`, `historial_movimientos.json`, resultados y audios. La wiki tiene un git local sin remoto | Verificado (revisión del historial en la Fase 5) |
 | RS-12 | Atajo de emergencia siempre disponible | RF-50 | Verificado (real) |
 | RS-13 | El agente no puede aprobar sus propias acciones | Confirmaciones solo con entrada física (RF-61); la herramienta mouse no hace clic en la isla (RF-63) | Verificado (simulación y real) |
-| RS-14 | El modo sin confirmación solo lo enciende Reizo y solo cubre acciones acotadas y reversibles | RF-70 a RF-76; los bloqueos siguen igual en cualquier modo | Verificado (simulación) |
+| RS-14 | El modo sin confirmación solo lo enciende Reizo; cubre acciones acotadas y reversibles, y mouse y teclado en cualquier ventana salvo un texto que puede venir de contenido de fuera | RF-70 a RF-76 y RF-79; los bloqueos siguen igual en cualquier modo | Verificado (simulación) |
 | RS-15 | Ni la palabra de activación ni una frase cualquiera confirman: solo "confirmo la instrucción" en su propia grabación, con voz real y sin otro audio | RF-34, RF-39 | Verificado (simulación) |
 | RS-16 | Privacidad de la escucha: nada se guarda hasta detectar "Cacao"; las activaciones falsas no se guardan; `voz_registro/` no va a git | RF-36, RF-37; `.gitignore` | Verificado (simulación) |
 | RS-17 | La isla no tiene red saliente ni acepta conexiones de otras páginas o procesos sin el token | RF-64, RF-66 | Verificado (simulación) |
@@ -485,6 +490,7 @@ estos últimos solo para detectar actividad.
 | R-18 | La isla deja de mostrarse o no conecta y Reizo no ve una confirmación | Baja / bajo | Enter/Esc físicos en la consola siguen valiendo; sin respuesta en 30 s = no | — |
 | R-19 | Un arranque automático del agente le quita la GPU a un juego o carga sin que Reizo esté | Baja / medio | El agente espera a que el juego se cierre antes de cargar (RF-54) | Activarlo solo con Reizo presente (§3.11) |
 | R-20 | `autocompletar_login` sin Windows Hello activado en Chrome: el relleno solo depende de la confirmación de Cacao, que puede dar cualquiera frente al PC (R-16) | Media / alto | Apagada por defecto; sitio del pedido, Chrome al frente, sin contenido externo, confirmación siempre; no envía el formulario | Activar Hello antes que la función (guía, Fase 7 punto 13) |
+| R-22 | Con el modo sin confirmación activo, mouse y teclado actúan en cualquier ventana sin preguntar (Inicio, barra de tareas, Configuración, otra app): un error del modelo, o contenido de fuera que lo empuje a hacer clics, cambia cosas sin que Reizo lo apruebe | Media / alto | Empieza apagado y solo lo enciende un clic físico; indicador ámbar; emergencia lo apaga; un texto que no sale del pedido tras leer contenido de fuera pregunta; bloqueos de atajos, isla y ventanas sensibles; PowerShell y cerrar a la fuerza siguen preguntando | Valorar si Inicio, la barra de tareas y Configuración deben volver a preguntar |
 | R-21 | Página con varios campos o una lista de Chrome distinta de la esperada: el clic cae en otro campo o se elige otra opción | Baja / medio | Sin un único campo claro da error; si la lista no se abre no pulsa Enter; si sigue abierta tras Enter, error | Probar en 2-3 sitios reales |
 
 ---

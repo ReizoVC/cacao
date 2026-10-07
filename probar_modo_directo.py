@@ -1,8 +1,9 @@
 """
 Pruebas sin modelo del modo sin confirmación (modo_directo.py) y de lo que lo rodea:
-  1. política: qué va directo y qué vuelve a las reglas normales (ventanas y apps simuladas);
-  2. teclado: texto del pedido o leído en pantalla / en un archivo;
-  3. mouse: clic dentro de la app nombrada, fuera de ella, en la barra de tareas, y la comprobación justo antes;
+  1. política: qué va directo y qué vuelve a las reglas normales;
+  2. teclado: directo en cualquier ventana, salvo un texto que no sale del pedido después de leer contenido de fuera
+     (en la tarea o en una anterior que sigue en el historial); bloqueo en ventanas sensibles;
+  3. mouse: directo en cualquier ventana, también tras leer contenido de fuera; clic en la isla, bloqueado;
   4. atajos bloqueados en cualquier modo;
   5. mover_archivo: 10 y 11 archivos, un .exe, carpetas importantes, y deshacer (archivos reales en una carpeta
      temporal que se borra al terminar);
@@ -14,6 +15,7 @@ import json
 import shutil
 import sys
 import tempfile
+import time
 from pathlib import Path
 
 import herramientas_grupo1 as g1
@@ -29,25 +31,12 @@ def ok(nombre, condicion, detalle=""):
     print(f"{'OK   ' if condicion else 'FALLO'} {nombre}{f'  ({detalle})' if detalle else ''}", flush=True)
 
 
-# ventanas simuladas: rectángulos de pantalla -> app
-BLOC = {"nombres": {"Bloc de notas", "Notepad"}, "proceso": "Notepad.exe", "pid": 100, "shell": False}
-CHROME = {"nombres": {"Google Chrome", "chrome"}, "proceso": "chrome.exe", "pid": 200, "shell": False}
-BARRA = {"nombres": {"Explorador de archivos", "explorer"}, "proceso": "explorer.exe", "pid": 300, "shell": True}
-PANTALLA = [((0, 0, 1000, 1000), BLOC), ((1000, 0, 2000, 1000), CHROME), ((0, 1000, 2000, 1080), BARRA)]
-estado = {"frente": BLOC}
-
-
-def app_en_punto(x, y):
-    return next((a for (l, t, r, b), a in PANTALLA if l <= x < r and t <= y < b), None)
-
-
-def plan_mouse(accion, x=None, y=None, cantidad=None, control=None, id_ventana=None):
-    return {"accion": accion, "pantalla": (x, y) if x is not None else None, "cantidad": cantidad}, None
+# captura simulada para planificar clics por coordenadas (vigente: no caduca durante la prueba)
+CAPTURA = {"momento": time.time() + 3600, "ancho": 1920, "alto": 1080, "escala": 1.0, "origen": (0, 0)}
 
 
 def politica(**extra):
-    return md.Politica(app_en_punto=app_en_punto, app_al_frente=lambda: estado["frente"],
-                       posicion_cursor=lambda: (500, 500), planificar_mouse=plan_mouse, **extra)
+    return md.Politica(**extra)
 
 
 def pruebas_politica():
@@ -74,54 +63,88 @@ def pruebas_politica():
 
 def pruebas_teclado():
     p = politica()
-    estado["frente"] = BLOC
     pedido = "En el Bloc de notas escribe: Hola, ¿cómo estás?"
     d = p.decidir("teclado", {"accion": "escribir", "texto": "Hola, ¿cómo estás?"}, pedido, [])
-    ok("teclado: texto del pedido en la app nombrada, directo", d[0], d)
-    d = p.decidir("teclado", {"accion": "escribir", "texto": "hola como estas"}, pedido, ["ver_pantalla",
-                                                                                         "listar_controles"])
-    ok("teclado: ver_pantalla/listar_controles para ubicar no lo impiden", d[0], d)
-    d = p.decidir("teclado", {"accion": "escribir", "texto": "Contraseña: 1234 (leída en pantalla)"}, pedido,
-                  ["ver_pantalla"])
-    ok("teclado: texto leído en pantalla (no está en el pedido) pregunta", not d[0], d[1])
+    ok("teclado: texto del pedido, directo", d[0], d)
+    d = p.decidir("teclado", {"accion": "escribir", "texto": "Querido diario: hoy fue un buen día."},
+                  "escribe una entrada de diario en el bloc de notas", [])
+    ok("teclado: texto que redacta Cacao sin haber leído nada de fuera, directo", d[0], d)
+    d = p.decidir("teclado", {"accion": "escribir", "texto": "hola como estas"}, pedido,
+                  ["listar_ventanas", "enfocar_ventana", "ver_pantalla", "listar_controles"])
+    ok("teclado: texto del pedido tras mirar la pantalla, directo", d[0], d)
+    for fuente in ("ver_pantalla", "listar_controles", "listar_ventanas", "listar_carpeta", "leer_archivo",
+                   "buscar_web", "ejecutar_powershell"):
+        d = p.decidir("teclado", {"accion": "escribir", "texto": "Contraseña: 1234"}, pedido, [fuente])
+        ok(f"teclado: texto que no es del pedido tras {fuente}, pregunta", not d[0], d[1])
     d = p.decidir("teclado", {"accion": "escribir", "texto": "Hola, ¿cómo estás?"}, pedido, ["leer_archivo"])
-    ok("teclado: tras leer un archivo pregunta aunque el texto coincida", not d[0], d[1])
-    d = p.decidir("teclado", {"accion": "escribir", "texto": "texto copiado de una web"},
-                  "escribe en el bloc de notas lo que diga la web", ["buscar_web"])
-    ok("teclado: texto de la web pregunta", not d[0], d[1])
-    estado["frente"] = CHROME
-    d = p.decidir("teclado", {"accion": "escribir", "texto": "Hola, ¿cómo estás?"}, pedido, [])
-    ok("teclado: la ventana al frente no es la app nombrada, pregunta", not d[0], d[1])
-    estado["frente"] = BLOC
-    d = p.decidir("teclado", {"accion": "atajo", "teclas": ["ctrl", "s"]}, "guarda el bloc de notas", [])
-    ok("teclado: Ctrl+S en la app nombrada, directo", d[0], d)
-    d = p.decidir("teclado", {"accion": "tecla", "teclas": ["h", "o", "l", "a"]}, "en el bloc de notas pon algo", [])
-    ok("teclado: 'tecla' con letras es escribir, pregunta", not d[0], d[1])
-    d = p.decidir("teclado", {"accion": "tecla", "teclas": ["enter"]}, "en el bloc de notas pulsa enter", [])
-    ok("teclado: Enter en la app nombrada, directo", d[0], d)
+    ok("teclado: tras leer un archivo, el texto del pedido va directo", d[0], d)
+    d = p.decidir("teclado", {"accion": "escribir", "texto": "lo que decía el archivo"},
+                  "escribe en el bloc de notas lo que decía", [], leido_antes={"leer_archivo"})
+    ok("teclado: lo leído en una tarea anterior (sigue en el historial) también cuenta, pregunta", not d[0], d[1])
+    d = p.decidir("teclado", {"accion": "tecla", "teclas": ["h", "o", "l", "a"]}, "en el bloc de notas pon algo",
+                  ["ver_pantalla"])
+    ok("teclado: 'tecla' con letras que no son del pedido tras ver_pantalla, pregunta", not d[0], d[1])
+    d = p.decidir("teclado", {"accion": "tecla", "teclas": ["h", "o", "l", "a"]}, "pon hola", ["ver_pantalla"])
+    ok("teclado: 'tecla' con letras del pedido, directo", d[0], d)
+    d = p.decidir("teclado", {"accion": "atajo", "teclas": ["shift", "a"]}, "pon algo", ["ver_pantalla"])
+    ok("teclado: atajo que escribe (Shift+A) con texto de fuera, pregunta", not d[0], d[1])
+    for teclas in (["ctrl", "s"], ["alt", "tab"], ["ctrl", "shift", "n"]):
+        d = p.decidir("teclado", {"accion": "atajo", "teclas": teclas}, "guarda el bloc de notas",
+                      ["leer_archivo", "ver_pantalla"])
+        ok(f"teclado: atajo {'+'.join(teclas)} tras leer contenido de fuera, directo", d[0], d)
+    d = p.decidir("teclado", {"accion": "tecla", "teclas": ["enter"]}, "pulsa enter", ["buscar_web"])
+    ok("teclado: Enter tras buscar en la web, directo", d[0], d)
+    d = p.decidir("teclado", {"accion": "escribir", "texto": "hola"}, "escribe hola en chrome", [])
+    ok("teclado: en cualquier app (no solo la nombrada), directo", d[0], d)
+    # bloqueo en ventanas sensibles, en cualquier modo (no es una confirmación)
+    guardado = g4.isla_al_frente, g4.ventana_sensible_al_frente
+    try:
+        g4.isla_al_frente = lambda: False
+        g4.ventana_sensible_al_frente = lambda: True
+        _, error = g4.planificar_teclado_ventana()
+        ok("teclado: ventana sensible al frente, bloqueado", error and error.get("bloqueado"),
+           (error or {}).get("error"))
+        r = g4.teclado("escribir", texto="hola")
+        ok("teclado: la herramienta tampoco escribe ahí", r.get("bloqueado") is True, r.get("error"))
+        g4.ventana_sensible_al_frente = lambda: False
+        _, error = g4.planificar_teclado_ventana()
+        ok("teclado: ventana normal, sin bloqueo", error is None, error)
+    finally:
+        g4.isla_al_frente, g4.ventana_sensible_al_frente = guardado
+    import habitos
+    privacidad = habitos.Privacidad(None, apps_banco=["BancoApp.exe"])
+    for exe, esperado in (("C:\\Program Files\\KeePassXC\\KeePassXC.exe", True),
+                          ("C:\\Bancos\\BancoApp.exe", True), ("C:\\Windows\\notepad.exe", False)):
+        ok(f"ventana sensible: {exe.rsplit(chr(92), 1)[-1]} {'sí' if esperado else 'no'}",
+           privacidad.es_app_privada({"exe_ruta": exe, "aumid": None}) is esperado)
+    for titulo, esperado in (("contraseñas.txt: Bloc de notas", True), ("claves.kdbx - KeePass", True),
+                             (".env - Visual Studio Code", True), ("lista de compras.txt: Bloc de notas", False)):
+        ok(f"título sensible: {titulo!r} {'sí' if esperado else 'no'}", g1.es_titulo_sensible(titulo) is esperado)
 
 
 def pruebas_mouse():
     p = politica()
     pedido = "en el bloc de notas haz clic en Archivo"
-    d = p.decidir("mouse", {"accion": "clic", "x": 400, "y": 300}, pedido, ["ver_pantalla"])
-    ok("mouse: clic dentro de la ventana de la app nombrada, directo", d[0], d)
-    d = p.decidir("mouse", {"accion": "clic", "x": 1500, "y": 300}, pedido, ["ver_pantalla"])
-    ok("mouse: clic fuera de esa ventana (en Chrome), pregunta", not d[0], d[1])
-    d = p.decidir("mouse", {"accion": "clic", "x": 400, "y": 1050}, pedido, [])
-    ok("mouse: clic en la barra de tareas, pregunta", not d[0], d[1])
-    d = p.decidir("mouse", {"accion": "desplazar", "cantidad": -3}, pedido, [])
-    ok("mouse: desplazar con el cursor sobre la app nombrada, directo", d[0], d)
-    # justo antes de actuar se vuelve a mirar: si la ventana cambió, no se hace
-    ns = cargar_ejecutor()
-    guardia = ns["_guardia"]({"pid": 100})
-    md_original = ns["modo_directo"].app_en_punto
-    ns["modo_directo"].app_en_punto = app_en_punto
+    for usadas, cual in (([], "sin leer nada"), (["ver_pantalla"], "tras ver_pantalla"),
+                         (["leer_archivo"], "tras leer un archivo"), (["buscar_web"], "tras buscar en la web"),
+                         (["ejecutar_powershell"], "tras PowerShell")):
+        d = p.decidir("mouse", {"accion": "clic", "x": 400, "y": 300}, pedido, usadas)
+        ok(f"mouse: clic directo {cual}", d[0], d)
+    d = p.decidir("mouse", {"accion": "clic", "x": 400, "y": 1050}, "haz clic en la barra de tareas", [])
+    ok("mouse: clic en cualquier sitio (barra de tareas), directo", d[0], d)
+    d = p.decidir("mouse", {"accion": "desplazar", "cantidad": -3}, pedido, [], leido_antes={"leer_archivo"})
+    ok("mouse: desplazar, directo", d[0], d)
+    # la isla sigue bloqueada (no es una confirmación): el plan lo rechaza aunque el modo deje pasar el clic
+    zonas, captura = g4.zonas_isla, g4.vision.ultima_captura
     try:
-        ok("guardia: mismo punto, misma app, deja hacerlo", guardia("mouse", (400, 300)) is None)
-        ok("guardia: la ventana cambió (otra app en el punto), no lo hace", guardia("mouse", (1500, 300)) is not None)
+        g4.zonas_isla = lambda: [(800, 0, 1120, 160)]
+        g4.vision.ultima_captura = CAPTURA
+        _, error = g4.planificar_mouse("clic", 900, 50)
+        ok("mouse: clic dentro de la isla, bloqueado", error and error.get("bloqueado"), (error or {}).get("error"))
+        _, error = g4.planificar_mouse("clic", 300, 500)
+        ok("mouse: clic fuera de la isla, permitido", error is None, error)
     finally:
-        ns["modo_directo"].app_en_punto = md_original
+        g4.zonas_isla, g4.vision.ultima_captura = zonas, captura
 
 
 def pruebas_atajos():
@@ -200,7 +223,7 @@ def pruebas_mover():
 # ---------- el agente (funciones de agente_minimo.py extraídas con ast, sin modelo) ----------
 
 def cargar_ejecutor():
-    nombres = {"ejecutar", "decision_modo", "_guardia", "cambiar_modo", "enviar_modos", "_modos", "_decision",
+    nombres = {"ejecutar", "decision_modo", "cambiar_modo", "enviar_modos", "_modos", "_decision",
                "_tarea", "TEXTO_EXTERNO", "GUARDAN_SOBRE_REIZO", "SOLO_CONSULTAN", "camino_conocido",
                "anotar_intento", "legible", "nombre_app", "NOMBRES_APPS"}
     arbol = ast.parse((BASE / "agente_minimo.py").read_text(encoding="utf-8"))
@@ -232,7 +255,6 @@ def cargar_ejecutor():
 def pruebas_agente():
     ns = cargar_ejecutor()
     ns["_tarea"].update(pedido="en el bloc de notas escribe hola", herramientas=[], movidos=0)
-    estado["frente"] = BLOC
     ns["ejecutar"]("teclado", {"accion": "escribir", "texto": "hola"})
     ok("modo apagado: teclado pregunta como siempre", len(ns["preguntas"]) == 1 and not ns["llamadas"])
     ns["cambiar_modo"]("sin_confirmacion", False, "isla")
@@ -245,8 +267,13 @@ def pruebas_agente():
     ns["_decision"].update(clave=None)
     ns["ejecutar"]("teclado", {"accion": "escribir", "texto": "hola"})
     ok("modo activo: teclado con texto del pedido va directo", not ns["preguntas"] and ns["llamadas"] == ["teclado"])
+    ns["ejecutar"]("mouse", {"accion": "clic", "x": 10, "y": 10})
+    ok("modo activo: mouse va directo", not ns["preguntas"] and ns["llamadas"][-1] == "mouse")
+    ns["_tarea"]["herramientas"].append(("ver_pantalla", {}))
     ns["ejecutar"]("teclado", {"accion": "escribir", "texto": "adiós"})
-    ok("modo activo: texto que no es del pedido pregunta", len(ns["preguntas"]) == 1)
+    ok("modo activo: tras ver la pantalla, un texto que no es del pedido pregunta", len(ns["preguntas"]) == 1)
+    ns["ejecutar"]("ejecutar_powershell", {"comando": "Get-Date", "motivo": "hora"})
+    ok("modo activo: PowerShell sigue preguntando", len(ns["preguntas"]) == 2)
     ns["cambiar_modo"]("sin_confirmacion", True, "isla")
     ok("otro clic físico lo desactiva", ns["_modos"]["sin_confirmacion"] is False)
     ns["cambiar_modo"]("cualquier_otro", True, "isla")

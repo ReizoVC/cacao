@@ -37,10 +37,6 @@ except (AttributeError, OSError):
 
 # el agente la reemplaza por Emergencia.comprobar: las herramientas largas la llaman para poder cortarse
 comprobar_emergencia = lambda: None  # noqa: E731
-# Modo sin confirmación: si el ejecutor dejó pasar un mouse o un teclado sin preguntar, pone aquí una función
-# (tipo, dato) -> error o None que se vuelve a comprobar justo antes de actuar (el punto del clic o la ventana al
-# frente pudieron cambiar desde que se decidió). Fuera de esas llamadas es None.
-guardia_directa = None
 # id de la tarea en curso (lo pone el agente): el historial de movimientos se deshace por tareas
 tarea_actual = None
 
@@ -553,10 +549,6 @@ def mouse(accion: str, x: int = None, y: int = None, cantidad: int = None, contr
     if error:
         return error
     comprobar_emergencia()
-    if guardia_directa:
-        problema = guardia_directa("mouse", plan["pantalla"] or tuple(win32api.GetCursorPos()))
-        if problema:
-            return {"ok": False, "error": problema}
     antes = instantanea() if accion in ("clic", "doble_clic", "clic_derecho") else None
     if plan["pantalla"]:
         win32api.SetCursorPos(plan["pantalla"])
@@ -745,11 +737,30 @@ def isla_al_frente():
         return False
 
 
+def ventana_sensible_al_frente():
+    """True si la ventana al frente es sensible: su título nombra contraseñas o claves (lo mismo que ver_pantalla
+    no captura) o es un gestor de contraseñas, Seguridad de Windows o una app de banco (las apps privadas del
+    registro de hábitos). Ante la duda, también."""
+    try:
+        import habitos
+        fuente = habitos.FuenteWindows()
+        ventana = fuente.ventana_al_frente()
+        if ventana is None:
+            return False
+        return es_titulo_sensible(fuente.titulo(ventana["hwnd"])) or habitos.Privacidad(fuente).es_app_privada(ventana)
+    except Exception:
+        return True
+
+
 def planificar_teclado_ventana():
-    """(None, error) si teclado no debe escribir en la ventana al frente. En la isla nunca: su campo manda pedidos
-    al agente, y el agente no puede dictarse pedidos a sí mismo. Es un bloqueo: corta la tarea."""
+    """(None, error) si teclado no debe escribir en la ventana al frente. Son bloqueos (cortan la tarea) en cualquier
+    modo: en la isla nunca, porque su campo manda pedidos al agente y el agente no puede dictarse pedidos a sí mismo;
+    en una ventana sensible tampoco."""
     if isla_al_frente():
         return _bloqueado("La ventana al frente es la isla de Cacao: no escribo ni pulso teclas en ella.")
+    if ventana_sensible_al_frente():
+        return _bloqueado("La ventana al frente es sensible (contraseñas, claves, seguridad o banco): no escribo ni "
+                          "pulso teclas en ella.")
     return None, None
 
 
@@ -761,10 +772,6 @@ def teclado(accion: str, texto: str = None, teclas: list = None):
     if error:
         return error
     comprobar_emergencia()
-    if guardia_directa:
-        problema = guardia_directa("teclado", win32gui.GetForegroundWindow())
-        if problema:
-            return {"ok": False, "error": problema}
     antes = instantanea() if accion in ("atajo", "tecla") else None
     if accion == "escribir" and MODO_ESCRIBIR == "pegar":
         if _pegar(plan["texto"]):

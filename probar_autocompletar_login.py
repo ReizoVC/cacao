@@ -235,8 +235,7 @@ def pruebas_integracion():
     activas = next(ast.literal_eval(n.value) for n in arbol.body
                    if isinstance(n, ast.Assign) and getattr(n.targets[0], "id", None) == "ACTIVAS")
     ok("no está en ACTIVAS fijas (el prompt no cambia mientras esté apagada)", "autocompletar_login" not in activas)
-    p = md.Politica(app_en_punto=lambda x, y: None, app_al_frente=lambda: None, posicion_cursor=lambda: (0, 0),
-                    planificar_mouse=lambda *a, **k: (None, "x"))
+    p = md.Politica()
     d = p.decidir("autocompletar_login", {"sitio": "github"}, PEDIDO, [])
     ok("con el modo sin confirmación, sigue preguntando", not d[0], d[1])
     voz = (BASE / "voz.py").read_text(encoding="utf-8")

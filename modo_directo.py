@@ -8,18 +8,20 @@ en el agente y solo lo toca ServidorIsla al recibir ese clic. Empieza apagado en
 Con el modo activo, Politica.decidir() dice si una herramienta va directa (sin preguntar) o sigue las reglas
 normales (que piden confirmación según el permiso, y en modo voz para todo lo que cambia algo):
   - directas: volumen, abrir_app, enfocar_ventana, buscar_web y cerrar_app con cierre normal;
-  - mouse: solo si el punto del clic está en una ventana de la app que Reizo nombró en el pedido (nunca la barra de
-    tareas, el escritorio, Inicio ni la isla);
-  - teclado: solo en la ventana al frente de la app nombrada, y 'escribir' solo con texto que sale del pedido. Una
-    'tecla' con letras o números, o un atajo con letras sin Ctrl ni Alt, es escribir: sigue las reglas normales;
+  - mouse y teclado (decisión de Reizo del 2026-10-06): directos en cualquier ventana, también tras leer contenido de
+    fuera. Única excepción: escribir un texto que no sale del pedido cuando el modelo leyó contenido de fuera (web,
+    archivo, pantalla, títulos, carpetas, PowerShell) en esta tarea o en una anterior que sigue en su historial: ese
+    texto puede venir de lo leído, y se pregunta. Una 'tecla' con letras o números, o un atajo con letras sin Ctrl
+    ni Alt, también escribe texto;
   - mover_archivo: directo hasta 10 archivos por tarea, sin ejecutables ni scripts y fuera de las carpetas
     importantes (datos_locales.json -> carpetas_importantes). Cada movimiento queda en un historial para deshacer;
   - siempre con confirmación: ejecutar_powershell, autocompletar_login y cerrar_app forzado;
-  - si en la tarea entró contenido externo (leer_archivo, buscar_web, ejecutar_powershell), todo vuelve a las reglas
-    normales hasta que termine. ver_pantalla, listar_controles y listar_ventanas sirven para ubicar botones y
-    ventanas: después de usarlas, mouse, teclado, enfocar_ventana, cerrar_app y abrir_app solo van directos sobre la
-    app nombrada, y buscar_web y mover_archivo vuelven a las reglas normales (lo de la pantalla no puede dictarlos).
-Los bloqueos no cambian: lo bloqueado sigue bloqueado en cualquier modo.
+  - si en la tarea entró contenido externo (leer_archivo, buscar_web, ejecutar_powershell), todo lo demás vuelve a
+    las reglas normales hasta que termine. ver_pantalla, listar_controles y listar_ventanas sirven para ubicar botones
+    y ventanas: después de usarlas, enfocar_ventana, cerrar_app y abrir_app solo van directos sobre la app nombrada,
+    y buscar_web y mover_archivo vuelven a las reglas normales (lo de la pantalla no puede dictarlos).
+Los bloqueos no cambian: lo bloqueado sigue bloqueado en cualquier modo (atajos peligrosos, clic o teclas en la isla,
+escribir en ventanas sensibles; herramientas_grupo4.py).
 """
 import ctypes
 import json
@@ -35,6 +37,8 @@ RUTA_DATOS_LOCALES = BASE / "datos_locales.json"
 DIRECTAS = {"volumen", "abrir_app", "enfocar_ventana", "buscar_web"}
 EXTERNO = {"leer_archivo", "buscar_web", "ejecutar_powershell"}
 UBICACION = {"ver_pantalla", "listar_controles", "listar_ventanas"}
+# todo lo que pone texto de fuera delante del modelo (como agente_minimo.TEXTO_EXTERNO)
+LECTURA_EXTERNA = EXTERNO | UBICACION | {"listar_carpeta"}
 SIEMPRE_CONFIRMAR = {"ejecutar_powershell", "autocompletar_login"}
 MAX_ARCHIVOS = 10
 EXTENSIONES_RIESGO = {".exe", ".dll", ".bat", ".ps1", ".cmd", ".msi", ".lnk",
@@ -121,20 +125,6 @@ def app_de_ventana(hwnd):
             "shell": _clase(raiz) in CLASES_SHELL or exe.lower() in PROCESOS_SHELL or bool(propio)}
 
 
-def app_en_punto(x, y):
-    return app_de_ventana(user32.WindowFromPoint(wintypes.POINT(int(x), int(y))))
-
-
-def app_al_frente():
-    return app_de_ventana(user32.GetForegroundWindow())
-
-
-def posicion_cursor():
-    p = wintypes.POINT()
-    user32.GetCursorPos(ctypes.byref(p))
-    return p.x, p.y
-
-
 # ---------- archivos ----------
 
 def contar_archivos(ruta, limite=MAX_ARCHIVOS + 1):
@@ -161,11 +151,8 @@ def en_importante(ruta, importantes):
 # ---------- política ----------
 
 class Politica:
-    def __init__(self, app_en_punto=app_en_punto, app_al_frente=app_al_frente, posicion_cursor=posicion_cursor,
-                 planificar_mouse=None, planificar_movimiento=None, importantes=None, contar=contar_archivos):
+    def __init__(self, planificar_movimiento=None, importantes=None, contar=contar_archivos):
         import herramientas_grupo4 as g4
-        self.app_en_punto, self.app_al_frente, self.posicion_cursor = app_en_punto, app_al_frente, posicion_cursor
-        self.planificar_mouse = planificar_mouse or g4.planificar_mouse
         self.planificar_movimiento = planificar_movimiento or g4.planificar_movimiento
         self._importantes = importantes
         self.contar = contar
@@ -174,14 +161,18 @@ class Politica:
     def importantes(self):
         return self._importantes if self._importantes is not None else carpetas_importantes()
 
-    def decidir(self, nombre, args, pedido, usadas, movidos=0):
+    def decidir(self, nombre, args, pedido, usadas, movidos=0, leido_antes=()):
         """(True, detalle) si va directa; (False, motivo) si sigue las reglas normales. 'usadas': nombres de las
-        herramientas ya usadas en la tarea; 'movidos': archivos ya movidos sin confirmación en la tarea.
-        Para mouse y teclado, el detalle trae lo que la ejecución debe volver a comprobar (la app y el punto)."""
+        herramientas ya usadas en la tarea; 'movidos': archivos ya movidos sin confirmación en la tarea;
+        'leido_antes': herramientas de LECTURA_EXTERNA de tareas anteriores cuyo resultado sigue en el historial."""
         if nombre in SIEMPRE_CONFIRMAR:
             return False, f"{nombre} siempre se confirma"
         if nombre == "cerrar_app" and args.get("forzar"):
             return False, "cerrar a la fuerza siempre se confirma"
+        if nombre == "mouse":
+            return True, None
+        if nombre == "teclado":
+            return self._teclado(args, pedido, sorted((set(usadas) | set(leido_antes)) & LECTURA_EXTERNA))
         externo = sorted(set(usadas) & EXTERNO)
         if externo:
             return False, f"en esta tarea entró contenido externo ({', '.join(externo)})"
@@ -201,10 +192,6 @@ class Politica:
             if app and not app["shell"] and nombrada_en(app["nombres"], pedido):
                 return True, None
             return False, "la ventana no es de la app que nombraste"
-        if nombre == "mouse":
-            return self._mouse(args, pedido)
-        if nombre == "teclado":
-            return self._teclado(args, pedido)
         if nombre == "mover_archivo":
             return self._mover(args, movidos, ubico)
         if nombre == "deshacer_movimiento":
@@ -218,38 +205,22 @@ class Politica:
             return app_de_ventana(hwnd)
         return None
 
-    def _mouse(self, args, pedido):
-        plan, error = self.planificar_mouse(args.get("accion"), args.get("x"), args.get("y"), args.get("cantidad"),
-                                            control=args.get("control"), id_ventana=args.get("id_ventana"))
-        if error:
-            return False, "el clic no se pudo planificar"
-        punto = plan["pantalla"] or self.posicion_cursor()
-        app = self.app_en_punto(*punto)
-        if not app or app["shell"]:
-            return False, "el clic cae en Windows (barra de tareas, escritorio, Inicio) o en el propio Cacao"
-        if not nombrada_en(app["nombres"], pedido):
-            return False, f"el clic cae en {app['proceso']}, que no es la app que nombraste"
-        return True, {"pid": app["pid"], "nombres": sorted(app["nombres"])}
-
-    def _teclado(self, args, pedido):
-        app = self.app_al_frente()
-        if not app or app["shell"]:
-            return False, "la ventana al frente es de Windows o del propio Cacao"
-        if not nombrada_en(app["nombres"], pedido):
-            return False, f"la ventana al frente es {app['proceso']}, que no es la app que nombraste"
+    def _teclado(self, args, pedido, leido):
+        """Directo salvo un texto que no sale del pedido después de leer contenido de fuera ('leido')."""
+        if not leido:
+            return True, None
         accion = args.get("accion")
         teclas = [normalizar(t) for t in args.get("teclas") or []]
+        escribe = [t for t in teclas if t not in TECLAS_SIN_TEXTO]
         if accion == "escribir":
-            if not texto_del_pedido(args.get("texto", ""), pedido):
-                return False, "el texto no sale de tu pedido"
-        elif accion == "tecla":
-            if any(t not in TECLAS_SIN_TEXTO for t in teclas):
-                return False, "esas teclas escriben texto"
-        elif accion == "atajo":
-            modificadores = {"ctrl", "control", "alt"}
-            if not modificadores & set(teclas) and any(t not in TECLAS_SIN_TEXTO for t in teclas):
-                return False, "ese atajo escribe texto"
-        return True, {"pid": app["pid"], "nombres": sorted(app["nombres"])}
+            texto = args.get("texto", "")
+        elif escribe and (accion == "tecla" or not {"ctrl", "control", "alt"} & set(teclas)):
+            texto = "".join(escribe)  # letras o números sueltos, o un atajo con letras sin Ctrl ni Alt
+        else:
+            return True, None
+        if texto_del_pedido(texto, pedido):
+            return True, None
+        return False, f"el texto no sale de tu pedido y ya leí contenido de fuera ({', '.join(leido)})"
 
     def _mover(self, args, movidos, ubico):
         if ubico:

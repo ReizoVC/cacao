@@ -381,7 +381,7 @@ TEXTO_EXTERNO = {"leer_archivo", "buscar_web", "ver_pantalla", "ejecutar_powersh
 GUARDAN_SOBRE_REIZO = {"recordar", "sugerencias", "registro_habitos"}
 SOLO_CONSULTAN = {("sugerencias", "listar"), ("registro_habitos", "estado")}
 _tarea = {"contaminada": False, "herramientas": [], "pedido": "", "movidos": 0,  # de la tarea en curso
-          "intentos": [], "avisos": [], "sustituidos": {}}  # obstáculos: atajos y clics con o sin efecto, lo que
+          "intentos": [], "avisos": [], "sustituidos": {}, "leido_antes": set()}  # obstáculos: atajos y clics con o sin efecto, lo que
 # se le dirá a Reizo y los atajos cambiados por uno aprendido ({atajo enviado: atajo pedido})
 NOMBRES_APPS = {"notepad.exe": "el Bloc de notas", "winword.exe": "Word", "excel.exe": "Excel",
                 "powerpnt.exe": "PowerPoint", "chrome.exe": "Chrome", "msedge.exe": "Edge", "code.exe": "VS Code",
@@ -618,8 +618,6 @@ def ejecutar(nombre, args):
         emergencia.comprobar()  # el atajo pudo pulsarse mientras se esperaba la respuesta
         if not si:
             return {"ok": False, "rechazado": True, "error": "Reizo no lo autorizó (Denegar, Esc o sin respuesta)."}
-    if directo and nombre in ("mouse", "teclado"):
-        herramientas_grupo4.guardia_directa = _guardia(detalle)
     try:
         resultado = IMPLEMENTACIONES[nombre](**args)
         anotar_intento(nombre, args, resultado)
@@ -630,8 +628,6 @@ def ejecutar(nombre, args):
         raise
     except Exception as e:  # el error vuelve al modelo para que se corrija
         return {"ok": False, "error": str(e)}
-    finally:
-        herramientas_grupo4.guardia_directa = None
 
 
 def decision_modo(nombre, args):
@@ -643,22 +639,11 @@ def decision_modo(nombre, args):
     if _decision["clave"] != clave:
         try:
             valor = _politica.decidir(nombre, args, _tarea["pedido"], [n for n, _ in _tarea["herramientas"]],
-                                      _tarea["movidos"])
+                                      _tarea["movidos"], _tarea["leido_antes"])
         except Exception as e:  # ante la duda, se pregunta
             valor = (False, f"no pude comprobarlo ({type(e).__name__})")
         _decision.update(clave=clave, valor=valor)
     return _decision["valor"]
-
-
-def _guardia(detalle):
-    """Se vuelve a mirar justo antes de hacer clic o escribir: la ventana tiene que seguir siendo la de la app."""
-    def revisar(tipo, dato):
-        app = modo_directo.app_en_punto(*dato) if tipo == "mouse" else modo_directo.app_de_ventana(dato)
-        if not app or app["shell"] or app["pid"] != detalle["pid"]:
-            return ("La ventana cambió desde que lo decidí: no lo hago sin confirmación. Vuelve a ubicarla con "
-                    "listar_controles o ver_pantalla.")
-        return None
-    return revisar
 
 
 def cambiar_modo(modo, fisico, origen):
@@ -751,9 +736,13 @@ def atender(pedido, historial):
         # el atajo se pulsó antes o entre tareas: no se descarta, la tarea nueva no empieza
         print("  [emergencia] agente detenido: la tarea no se ejecuta")
         return MENSAJE_DETENIDO
+    # lo leído de fuera en tareas anteriores que el modelo aún tiene en el historial (para el modo sin confirmación)
+    leido_antes = {m["content"].removeprefix("Resultado de ").split(":")[0].split(" ")[0] for m in historial
+                   if m["role"] == "user" and isinstance(m["content"], str)
+                   and m["content"].startswith("Resultado de ")} & TEXTO_EXTERNO
     historial.append({"role": "user", "content": con_fecha(pedido)})
     _tarea.update(contaminada=False, herramientas=[], pedido=pedido, movidos=0, intentos=[], avisos=[],
-                  sustituidos={})
+                  sustituidos={}, leido_antes=leido_antes)
     herramientas_grupo4.tarea_actual = f"{time.time():.3f}"
     _decision.update(clave=None, valor=None)
     sin_verificar, recordatorios = None, 0  # último clic o atajo que el modelo aún no comprobó
