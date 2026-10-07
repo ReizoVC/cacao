@@ -256,7 +256,7 @@ Diseño completo en `diseno_fase6.md`: es el patrón *LLM Wiki* de Karpathy, con
    - solo texto, máximo 2 al día;
    - solo para apps que empiezas a usar a la misma hora en ≥ 4 de 7 días;
    - "no me sugieras eso" las bloquea; para verlas y desbloquearlas, la herramienta `sugerencias` o las casillas de `rutinas.md`.
-6. **Modo juego** (`modo_juego.py`, `deteccion.py`):
+6. **Modo juego** (`modo_juego.py`, `deteccion.py`; la isla queda compacta con Cacao dormido, ver Fase 7 punto 8):
    - un juego cuenta como activo si tiene una ventana visible o usa la GPU de forma sostenida; termina tras 2 min
      sin esas señales (cerrado o en la bandeja);
    - en pausa se descargan Gemma, el mmproj y Whisper de la GPU; un Whisper "base" en la CPU entiende solo
@@ -300,7 +300,8 @@ Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agen
 5. **Registro:** cada comando queda en `voz_registro/` (WAV + `registro.jsonl`); esa carpeta no va a git.
 6. **Configuración:** sección `voz` de `config.json`, con su nota.
 7. **Uso:** `.venv\Scripts\python voz.py`. Lánzalo desde tu propia terminal: con Gemma y Whisper cargados, el proceso compromete ~16 GB de memoria virtual, porque la VRAM de CUDA cuenta así en Windows. Cierra apps pesadas si el sistema anda justo.
-   - Para salir, di "salir" o pulsa Ctrl+C. Si cierras la terminal con la X, la isla se cierra igual.
+   - Para salir, di "salir" o, en la bandeja de la isla, «Salir de Cacao». Lanzado a mano desde una terminal,
+     también Ctrl+C. Arrancado con `Cacao.lnk` corre sin terminal (punto 14).
 8. **Isla** (`C:\asistente-ui`, Tauri 2; diseño en `diseno_fase7.md`):
    - muestra el estado del agente (pensando, trabajando, terminado, error, pausa por juego) y pide las
      confirmaciones con Permitir/Denegar;
@@ -311,6 +312,13 @@ Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agen
      herramienta mouse no puede hacer clic en ella. Para grabarla: bandeja → "Permitir capturas";
    - **tamaño** (Ajustes → Tamaño): pequeño, mediano (por defecto) o grande, y proporcional al monitor y al escalado
      de Windows. En tu 1920×1080 al 100 % la isla abierta mide 448×112, 512×128 o 589×147 px (antes 640×160);
+   - **íconos de los modos**: candado abierto ámbar (modo sin confirmación) y oído verde (escucha de «Cacao»; late
+     mientras graba y en la escucha de seguimiento, con los segundos). En la compacta, Cacao va en el centro con el
+     candado a la izquierda y el oído a la derecha; apagados se ocultan. Al pasar el mouse, el nombre del estado;
+   - **modo juego**: la isla no se cierra; queda compacta con Cacao dormido, a 6 cuadros por segundo (0,2 % de GPU
+     de media, frente al 1,6 % despierta: `medir_isla_juego.py`). Al decir "Cacao, …" muestra que escucha y luego
+     vuelve a dormido o despierta («Despierto: vuelvo a cargar el modelo…»). Ajustes → «Ocultar la isla en juegos a
+     pantalla completa» (apagado por defecto) la esconde del todo mientras un juego ocupa toda la pantalla;
    - **tras una respuesta se esconde sola**: abierta mientras Cacao habla y 4 a 10 s más según el largo del mensaje;
      luego vuelve al notch pequeño, sin pulsar OK. Con el mouse encima no se esconde. Las confirmaciones nunca;
    - **campo "Escribe a Cacao…"** (vista de inicio y de pregunta):
@@ -351,7 +359,7 @@ Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agen
     y cerrar_app normal; mover_archivo hasta 10 archivos, sin ejecutables ni scripts y fuera de
     `carpetas_importantes` (`datos_locales.json`), con "deshaz lo último". PowerShell y cerrar a la fuerza siempre
     preguntan. Si en la tarea entró contenido externo (archivo, web, PowerShell), todo vuelve a preguntar, salvo
-    mouse y teclado. La isla muestra un indicador ámbar mientras está activo.
+    mouse y teclado. La isla muestra un candado abierto ámbar mientras está activo.
     - **Mouse y teclado** (desde el 2026-10-06): no preguntan nunca, en ninguna ventana, salvo una excepción:
       escribir un texto que no sale de tu pedido cuando Cacao leyó contenido de fuera (web, archivo, pantalla,
       carpetas, PowerShell) en esa tarea o en una anterior que aún recuerda: ese texto pudo salir de lo leído, y
@@ -380,16 +388,22 @@ Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agen
       relleno pide huella, cara o PIN, que no se pueden aprobar con teclas inyectadas;
     - activarla: `config.json` → `autocompletar_login.activa: true`. Cambia el prompt, así que antes vuelve a pasar
       `SIN_REALES=1 evaluar_pruebas.py`.
-14. **Arranque automático de Cacao** (**activado** el 2026-10-06):
-    - `iniciar_cacao.ps1` lanza `voz.py`, que abre la isla y escucha "Cacao" (`voz.palabra_activacion.activa_al_iniciar`).
-      No abre un segundo Cacao si ya hay uno; con un juego activo espera a que se cierre antes de cargar la GPU
-      (`ESPERAR_JUEGO=1`); con `-AlInicio` espera 60 s tras iniciar sesión; con `-Simular` solo comprueba;
-    - `crear_acceso_directo.ps1` crea `Cacao.lnk` en `C:\asistente` (ventana minimizada, con el icono de la isla).
-      Ya está creado: doble clic para arrancar Cacao a mano;
-    - **activarlo (contigo frente al PC):** `powershell -ExecutionPolicy Bypass -File .\crear_acceso_directo.ps1 -Inicio`
-      lo copia a `shell:startup` (solo tu usuario, sin administrador). Quitarlo: `... -Quitar`;
-    - la ventana minimizada "Cacao" es el agente: Ctrl+C o "salir" lo cierran (y la isla con él). Si termina con
-      error, la ventana se queda abierta con el mensaje.
+14. **Arranque automático de Cacao, sin terminal** (**activado** el 2026-10-06; sin terminal desde el 2026-10-07):
+    - `Cacao.lnk` y el acceso de Inicio ejecutan `pythonw.exe iniciar_cacao.py` (el de Inicio con `--al-inicio`):
+      ninguna ventana de terminal. El lanzador arranca `voz.py` (isla y escucha de "Cacao") con `python.exe` sin
+      ventana y manda toda su salida, también la de llama.cpp y Whisper, a `registro_cacao.log` (a los 5 MB pasa a
+      `registro_cacao.1.log`). No abre un segundo Cacao (te avisa con una notificación); con un juego activo espera
+      a que se cierre antes de cargar la GPU (`ESPERAR_JUEGO=1`); con `--al-inicio` espera 60 s; con `--simular`
+      (`.venv\Scripts\python iniciar_cacao.py --simular`) solo comprueba;
+    - **si Cacao se cierra por un error** (también si el proceso cae sin traza), notificación de Windows y una línea
+      en el registro con el código;
+    - **bandeja de la isla** (flecha de íconos ocultos, clic derecho en Cacao): «Ver terminal» abre una ventana con
+      la salida en vivo y las últimas 300 líneas (cerrarla no cierra Cacao); «Salir de Cacao» lo cierra limpio
+      (isla, micrófono, modelo y `ui.json`), solo con tu clic físico. Decir o escribir "salir" hace lo mismo;
+    - **confirmaciones:** sin terminal, la pregunta solo se ve en la isla; si la isla no está conectada, la respuesta
+      es no. Con la isla: sus botones, Enter/Esc físicos o "confirmo la instrucción", como siempre;
+    - `crear_acceso_directo.ps1` crea `Cacao.lnk` en `C:\asistente` (con el icono de la isla); con `-Inicio` también
+      en `shell:startup` (solo tu usuario, sin administrador). Quitarlo de Inicio: `... -Quitar`.
 
 ### Estado real (probado contigo frente al PC el 2026-10-05)
 
@@ -427,7 +441,7 @@ la tercera, la del script actual, con tonos desplazados y frases de corrido, no 
 | Prueba | Resultado |
 |---|---|
 | `probar_autocompletar_login.py` (sitio no nombrado, otra app o sitio al frente, contenido externo, campo ambiguo o tapado, la isla, lista que no aparece, ventana que cambia, atajo de emergencia, nada de credenciales hacia el modelo, siempre pregunta) | 46/46 |
-| `iniciar_cacao.ps1 -Simular` | Encuentra todo; con un proceso falso de `voz.py` en marcha, no abre otro |
+| `iniciar_cacao.ps1 -Simular` (hoy `iniciar_cacao.py --simular`) | Encuentra todo; con un proceso falso de `voz.py` en marcha, no abre otro |
 | `crear_acceso_directo.ps1` (sin `-Inicio`) | `Cacao.lnk` en `C:\asistente`; la carpeta de Inicio sigue solo con el registro de hábitos |
 
 ### Campo de texto de la isla (2026-10-06, en simulación)
@@ -477,22 +491,36 @@ y la hora ("[Ahora: martes 6 de octubre de 2026, 21:50]"), así Cacao responde "
 | Modo sin confirmación, mouse y teclado (`probar_modo_directo.py`): navegadores sin el título de la pestaña ("escribe un saludo en el Bloc de notas" no pregunta), "regedit" en el Inicio y la búsqueda bloqueado, nada dentro de Configuración ni del Panel de control | 138/138 |
 | Regresión | palabra de activación 41/41, confirmación por voz 33/33, campo de la isla 29/29, obstáculos 35/35, autocompletar 46/46, fase 6 142/142, `probar_voz.py` 11/11 (Gemma y Whisper en la GPU) |
 
+### Íconos, modo juego y Cacao sin terminal (2026-10-07, en simulación)
+
+| Prueba | Resultado |
+|---|---|
+| Isla con `npm run dev` | Compacta: candado a la izquierda, Cacao en el centro, oído a la derecha; apagar un modo no descentra a Cacao; texto emergente al pasar el mouse; Ajustes con la fila nueva |
+| GPU de la isla real (`medir_isla_juego.py`, servidor de prueba, sin Cacao) | Compacta despierta 1,6 % de media (máx. 2,6 %); modo juego 0,2 % (máx. 1,0 %) |
+| `probar_modo_juego.py` (dormida al entrar, «Despierto…» y reposo al salir, dormida otra vez tras escuchar en pausa) | 32/32 |
+| `probar_segundo_plano.py` (lanzador con un `voz.py` falso, aviso de Windows, registro, un solo Cacao, confirmaciones sin isla, bandeja) | 23/23 |
+| Notificación de Windows de prueba | PowerShell sin errores (falta confirmar que la viste) |
+| Rust (`cargo test`) | 14/14 |
+
 ### Pendiente para cuando estés frente al PC (en orden)
 
-1. **Isla nueva y escucha de seguimiento:** ver la isla compacta con los tres tamaños, el cierre tras una respuesta
+1. **Cacao sin terminal:** arrancar con `Cacao.lnk` (ninguna ventana), «Ver terminal» y «Salir de Cacao» en la
+   bandeja, una confirmación con la isla, el atajo de emergencia; un juego con la isla dormida (y con «Ocultar la
+   isla en juegos a pantalla completa»); los íconos y su texto al pasar el mouse.
+2. **Isla nueva y escucha de seguimiento:** ver la isla compacta con los tres tamaños, el cierre tras una respuesta
    hablada y el indicador de los 8 s; decir algo en esos 8 s sin "Cacao"; con música sonando, que no se abra. Con el Panel de control abierto en el
    Explorador, que Cacao no haga clic ni escriba ahí.
-2. **autocompletar_login:** activa Windows Hello en Chrome (punto 13) y prueba a mano que Chrome lo pide; luego
+3. **autocompletar_login:** activa Windows Hello en Chrome (punto 13) y prueba a mano que Chrome lo pide; luego
    `autocompletar_login.activa: true`, añade 2-3 frases al set y vuelve a pasar las 65 frases; prueba en un sitio
    con cuenta guardada: con Hello rellena y no envía; si cancelas Hello no rellena; con otra ventana al frente da
    error.
-3. **Arranque automático (ya activo):** al reiniciar o iniciar sesión, mira que Cacao aparezca a los ~60 s. Prueba
+4. **Arranque automático (ya activo):** al reiniciar o iniciar sesión, mira que Cacao aparezca a los ~60 s. Prueba
    también a iniciar sesión con un juego que se abra solo: Cacao debe esperar.
-4. **"Cacao" en el día a día:** mira `contador_cacao.json` tras unos días (activaciones de la primera etapa frente a
+5. **"Cacao" en el día a día:** mira `contador_cacao.json` tras unos días (activaciones de la primera etapa frente a
    pedidos). "Cacao" dicho rápido aún no se detecta.
-5. **Grabar la isla** con "Permitir capturas".
-6. **Mando:** detección de actividad (no había uno a mano).
-7. **Datos reales:** Obsidian, y la reflexión diaria y las sugerencias tras una semana de hábitos. `apps_banco` sigue
+6. **Grabar la isla** con "Permitir capturas".
+7. **Mando:** detección de actividad (no había uno a mano).
+8. **Datos reales:** Obsidian, y la reflexión diaria y las sugerencias tras una semana de hábitos. `apps_banco` sigue
    vacío (no hay apps de banco en este PC).
 
 ---
