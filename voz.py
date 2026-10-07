@@ -16,6 +16,9 @@ Modo voz del asistente: pulsar para hablar y respuesta hablada. El modo texto (a
 - Palabra de activación "Cacao" (palabra_activacion.py, en la CPU; se enciende y apaga con un clic físico en la
   bandeja o en la isla): al oírla, la isla muestra "escuchando", se graba con un búfer previo hasta un silencio o
   30 s y pasa por los mismos frenos y por Whisper. Mientras Cacao habla se ignora. Sigue activa en modo juego.
+- Escucha de seguimiento (seguimiento.py; modo «seguimiento», con un clic físico en Ajustes de la isla): al terminar
+  de hablar, Cacao sigue oyendo 8 s sin la palabra, con un indicador en la isla. Si hablas, es un pedido normal (mismos
+  frenos y confirmaciones); si no, termina. No se abre con otra app sonando ni con la escucha de «Cacao» apagada.
 
 Uso: .venv\\Scripts\\python voz.py              (modo normal)
      .venv\\Scripts\\python voz.py --medir 5    (mide la latencia de 5 comandos -> resultados_latencia_voz.json)
@@ -38,6 +41,7 @@ from piper import PiperVoice, SynthesisConfig
 import agente_minimo as a
 import confirmacion_voz
 import palabra_activacion
+import seguimiento
 from microfono import TASA, UMBRAL_VOZ, AtajoHablar, Microfono, analizar_audio
 from transcripcion import TranscriptorNativo, TranscriptorWhisper, a_wav, contar_palabras, transcripcion_plausible
 
@@ -172,11 +176,69 @@ def crear_escucha(microfono, locutor):
     a._modos["escucha"] = bool(cfg["activa_al_iniciar"])
     escucha = palabra_activacion.Escucha(
         microfono.tasa, activa=lambda: a._modos.get("escucha", False),
-        ignorar=lambda: locutor.hablando() or microfono.grabando,
+        ignorar=lambda: locutor.hablando() or microfono.grabando or (
+            _piezas.get("seguimiento") is not None and _piezas["seguimiento"].abierta),
         al_detectar=lambda: (locutor.callar(), a.notificar("escuchando")),
         umbral_voz=UMBRAL_VOZ, mirar_audio=confirmacion_voz.otro_audio_sonando)
     microfono.oyentes.append(escucha.recibir)
     return escucha
+
+
+def crear_seguimiento(microfono):
+    """La escucha de seguimiento tras cada respuesta (modo «seguimiento»; empieza según config.json)."""
+    cfg = {"activa_al_iniciar": True, "segundos": 8, **CONFIG_VOZ.get("seguimiento", {})}
+    a._modos["seguimiento"] = bool(cfg["activa_al_iniciar"])
+    s = seguimiento.Seguimiento(microfono.tasa, UMBRAL_VOZ, mirar_audio=confirmacion_voz.otro_audio_sonando,
+                                al_empezar=lambda: (a_la_isla({"tipo": "seguimiento", "activo": False}),
+                                                    a.notificar("escuchando")))
+    s.segundos = cfg["segundos"]
+    microfono.oyentes.append(s.recibir)
+    return s
+
+
+def a_la_isla(mensaje):
+    if a._isla is not None:
+        a._isla.enviar(mensaje)
+
+
+class DespuesDeResponder:
+    """Lo que pasa tras cada respuesta hablada (el bucle lo revisa mientras espera el siguiente pedido): avisa a la
+    isla cuando Cacao termina de hablar (fin_habla: la isla empieza a contar para esconderse) y abre la escucha de
+    seguimiento si se puede."""
+
+    def __init__(self, locutor, oido):
+        self.locutor, self.oido, self.fase = locutor, oido, None
+
+    def empezar(self):
+        self.fase = "hablando"
+
+    def puede_seguir(self):
+        return bool(self.oido is not None and a._modos.get("seguimiento") and a._modos.get("escucha")
+                    and not (a._modo_juego is not None and a._modo_juego.en_pausa()) and not a.emergencia.detenido())
+
+    def revisar(self):
+        if self.fase == "hablando" and not self.locutor.hablando():
+            a_la_isla({"tipo": "fin_habla"})
+            self.fase = None
+            if self.puede_seguir():
+                if self.oido.abrir(self.oido.segundos):
+                    self.fase = "siguiendo"
+                    a_la_isla({"tipo": "seguimiento", "activo": True, "segundos": self.oido.segundos})
+                    print(f"  (te sigo oyendo {self.oido.segundos} s sin «Cacao»)", flush=True)
+                else:
+                    print("  (otra app está sonando: sin escucha de seguimiento; di «Cacao»)", flush=True)
+        elif self.fase == "siguiendo" and not self.oido.abierta:
+            self.fase = None
+            a_la_isla({"tipo": "seguimiento", "activo": False})
+
+    def cancelar(self):
+        """Llegó otro disparo (Ctrl+Espacio, un pedido escrito): la respuesta se calla y la escucha se cierra."""
+        if self.fase == "hablando":
+            a_la_isla({"tipo": "fin_habla"})
+        elif self.fase == "siguiendo":
+            self.oido.cerrar()
+            a_la_isla({"tipo": "seguimiento", "activo": False})
+        self.fase = None
 
 
 # ---------- registro ----------
@@ -214,6 +276,8 @@ def preparar():
     locutor = Locutor(ruta_voz if ruta_voz.is_absolute() else BASE / ruta_voz, CONFIG_VOZ["velocidad"])
     _piezas.update(atajo=atajo, microfono=microfono, transcriptor=transcriptor, locutor=locutor)
     _piezas["escucha"] = crear_escucha(microfono, locutor)
+    _piezas["seguimiento"] = crear_seguimiento(microfono)
+    _piezas["despues"] = DespuesDeResponder(locutor, _piezas["seguimiento"])
     a.iniciar_isla()
     planificador, aviso = a.iniciar_memoria_wiki()
     if hasattr(transcriptor, "descargar"):  # el modo juego también libera Whisper
@@ -259,7 +323,18 @@ def esperar_disparo(atajo, segundos=None, isla=False):
     tiempo. Lo usan el bucle y, durante una confirmación, el oyente de la frase."""
     limite = None if segundos is None else time.monotonic() + segundos
     escucha = _piezas.get("escucha")
+    oido, despues = _piezas.get("seguimiento"), _piezas.get("despues")
     while True:
+        if isla and despues is not None:  # solo el bucle principal, no la confirmación por voz
+            despues.revisar()
+            try:
+                llegado = oido.cola.get_nowait()
+                if llegado[0] == "seguimiento":
+                    return llegado
+                print("  (fin de la escucha de seguimiento: "
+                      f"{'otra app sonando' if llegado[1] == 'otro_audio' else 'nadie habló'})", flush=True)
+            except queue.Empty:
+                pass
         if atajo.pulsado.is_set():
             atajo.pulsado.clear()
             return "atajo"
@@ -280,7 +355,24 @@ def escuchar(atajo, microfono, transcriptor, al_pulsar=lambda: None):
     """Espera Ctrl+Espacio o la palabra "Cacao", graba y aplica los frenos. Devuelve (audio, datos del registro,
     texto o None si se descartó, momento de soltar)."""
     disparo = esperar_disparo(atajo, isla=True)
+    if disparo[0] != "seguimiento" and _piezas.get("despues") is not None:
+        _piezas["despues"].cancelar()
     al_pulsar()
+    if disparo[0] == "seguimiento":
+        # dicho en la escucha de seguimiento, sin "Cacao": mismos frenos; con otra app sonando, no vale
+        audio, otro_audio, soltado = disparo[1], disparo[2], time.perf_counter()
+        datos, texto = filtrar(audio, soltado, transcriptor)
+        datos["disparo"] = "seguimiento"
+        if texto is not None and otro_audio:
+            datos["freno"], texto = "otro_audio", None
+            print("  (descartado: otra app sonaba mientras hablabas)", flush=True)
+        if texto is not None and palabra_activacion.empieza_con_la_palabra(texto):
+            texto = palabra_activacion.quitar_palabra(texto) or None  # "Cacao, ..." también vale aquí
+        if texto is None:
+            a.notificar("reposo")
+        else:
+            palabra_activacion.contar("seguimiento")
+        return audio, datos, texto, soltado
     if disparo[0] == "isla":
         # escrito en la isla: sin audio ni frenos de voz; los permisos y las confirmaciones son los de siempre
         print(f"\nTú (isla): {disparo[1]}", flush=True)
@@ -374,7 +466,8 @@ def bucle(medir=0):
             n += 1
             comando_actual.clear()
             if texto is None:
-                if datos.get("freno") != "sin_la_palabra":  # una activación falsa no deja rastro
+                # una activación falsa, o lo que se oyó en la escucha de seguimiento sin ser un pedido, no deja rastro
+                if datos.get("freno") != "sin_la_palabra" and datos.get("disparo") != "seguimiento":
                     registrar(n, audio, datos)
                 if datos.get("freno") == "modo_juego":
                     locutor.hablar(limpiar_para_voz(a._modo_juego.mensaje()))  # Piper va en la CPU
@@ -398,6 +491,7 @@ def bucle(medir=0):
             pulsaciones = a.emergencia.pulsaciones
             locutor.hablar(limpiar_para_voz(respuesta), al_empezar=lambda t: inicio.setdefault("t", t),
                            cortar=lambda: a.emergencia.pulsaciones != pulsaciones)  # el atajo también la calla
+            _piezas["despues"].empezar()  # al terminar de hablar: fin_habla a la isla y escucha de seguimiento
             limite = time.perf_counter() + 15
             while "t" not in inicio and locutor.hablando() and time.perf_counter() < limite:
                 time.sleep(0.005)
@@ -426,6 +520,8 @@ def bucle(medir=0):
     except KeyboardInterrupt:
         print("\nHasta luego.")
     finally:
+        if _piezas.get("seguimiento") is not None:
+            _piezas["seguimiento"].apagar()
         atajo.cerrar()
         microfono.cerrar()
         a.cerrar_isla()

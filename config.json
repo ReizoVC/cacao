@@ -25,6 +25,10 @@
   "palabra_activacion": {
    "activa": true,
    "activa_al_iniciar": true
+  },
+  "seguimiento": {
+   "activa_al_iniciar": true,
+   "segundos": 8
   }
  },
  "notas": {
@@ -36,6 +40,7 @@
   "memoria_wiki": "Fase 6 (diseno_fase6.md). vault: carpeta de la wiki (Obsidian). habitos_db: registro de hábitos. muestreo_s: cada cuánto registra registro_habitos.py la app al frente. inactivo_min: sin teclado, mouse ni mando este tiempo, la muestra cuenta como 'inactivo'. conservar_dias: muestras crudas (el resumen diario no se borra). reflexion: condiciones de arranque (inactividad_min, gpu_max_pct durante gpu_ventana_s, audio con pico > audio_umbral durante audio_min_s) y respaldo si hay más de respaldo_horas pendientes. procesos_privados / appids_privados / apps_banco (en datos_locales.json) y ventanas de incógnito (marcas_incognito en el título de navegadores, o el botón de perfil por UI Automation si incognito_uia) no dejan ninguna fila. procesos_sin_titulo: guarda para el futuro; hoy no se guarda ningún título. lanzadores y no_son_juegos (Wallpaper Engine, que vive en steamapps\\common y está siempre abierto): no cuentan como juego abierto. categorias_procesos: categoría de ejecutables que no salen en apps_categorias.json. juegos: un proceso de juego cuenta como ACTIVO (reflexión y modo juego) solo con una ventana visible o con la GPU (motor 3D) ≥ gpu_umbral_pct en una fracción gpu_fraccion de las muestras de gpu_ventana_s; termina tras gracia_s sin esas señales.",
   "modo_juego": "Con un juego abierto (mismas reglas que la Fase 6: sin lanzadores ni Wallpaper Engine) el agente descarga Gemma, la visión y Whisper para dejar la VRAM al juego, y los recarga al cerrarlo. Entra y sale tras 'confirmar' comprobaciones seguidas cada intervalo_s segundos. Un pedido en pausa recibe un aviso.",
   "ui": "Fase 7: isla (C:\\asistente-ui). activa: el agente abre el servidor WebSocket en 127.0.0.1:8765 con un token por sesión en %LOCALAPPDATA%\\Asistente\\ui.json. lanzar: abre la isla (exe) al arrancar y la cierra al salir. Las confirmaciones solo aceptan entrada física (Enter/Esc o los botones de la isla); sin respuesta en confirmar_timeout_s = no.",
+  "seguimiento": "Escucha de seguimiento (seguimiento.py): tras cada respuesta hablada, Cacao sigue oyendo 'segundos' sin la palabra «Cacao»; lo que digas entra como un pedido normal (mismos frenos y confirmaciones). No se abre con otra app sonando ni con la escucha de «Cacao» apagada. activa_al_iniciar: si empieza activa; luego se enciende y apaga con un clic físico en Ajustes de la isla (modo «seguimiento»).",
   "palabra_activacion": "Palabra «Cacao» (palabra_activacion.py, en la CPU; modelo de entrenar_cacao.py en modelos/cacao/). activa: false la quita del todo. activa_al_iniciar: si empieza escuchando; luego se enciende y apaga con un clic físico en la bandeja o en la isla. El audio se procesa en memoria y nada se guarda hasta detectar la palabra.",
   "autocompletar_login": "autocompletar_login.py: en la ventana de Chrome al frente, del sitio que Reizo nombró, hace clic en el campo de usuario y elige la primera cuenta guardada; el modelo nunca recibe usuario ni contraseña. activa: false hasta probarla en real con Windows Hello activado en Chrome (Configuración > Autocompletar y contraseñas > Gestor de contraseñas > Configuración > 'Usar Windows Hello al completar contraseñas'); al activarla cambia el prompt, así que hay que volver a pasar las 65 frases.",
   "modo_sin_confirmacion": "Modo sin confirmación (modo_directo.py): solo con un clic físico en la bandeja o en la isla; empieza apagado. Carpetas donde mover_archivo siempre pregunta: datos_locales.json -> carpetas_importantes."

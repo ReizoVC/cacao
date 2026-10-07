@@ -1069,7 +1069,8 @@ def atender_con_memoria(pedido, historial, planificador, voz=False):
                 exito = json.loads(historial[-1]["content"]).get("argumentos", {}).get("exito", True)
             except (ValueError, KeyError, IndexError, AttributeError):
                 exito = True
-            _isla.enviar({"tipo": "respuesta", "texto": respuesta, "exito": bool(exito)})
+            # habla: en modo voz se lee en voz alta; la isla espera a fin_habla (voz.py) para empezar a esconderse
+            _isla.enviar({"tipo": "respuesta", "texto": respuesta, "exito": bool(exito), "habla": bool(voz)})
         return respuesta
 
 
