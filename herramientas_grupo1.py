@@ -43,6 +43,21 @@ BINARIOS = {".pdf", ".docx", ".xlsx", ".pptx", ".doc", ".xls", ".ppt", ".zip", "
 # ---------- Ventanas ----------
 
 PROCESOS_OCULTOS = {"asistente-ui.exe"}  # la isla (Fase 7): el agente no la ve ni la toca
+# El título de una ventana de navegador lo pone la página web abierta (podría traer instrucciones): al modelo solo
+# le llega el nombre de la app. Los navegadores son los de config.json -> memoria_wiki.navegadores.
+NAVEGADORES = {x.lower() for x in json.loads((BASE / "config.json").read_text(encoding="utf-8"))
+               .get("memoria_wiki", {}).get("navegadores", [])}
+NOMBRES_NAVEGADORES = {"chrome.exe": "Google Chrome", "msedge.exe": "Microsoft Edge", "firefox.exe": "Mozilla Firefox",
+                       "brave.exe": "Brave", "opera.exe": "Opera", "vivaldi.exe": "Vivaldi",
+                       "librewolf.exe": "LibreWolf", "zen.exe": "Zen Browser"}
+
+
+def titulo_para_el_modelo(titulo, proceso):
+    """El título tal cual, salvo en los navegadores: ahí solo el nombre de la app, sin el de la pestaña."""
+    p = (proceso or "").lower()
+    if p in NAVEGADORES or p in NOMBRES_NAVEGADORES:
+        return NOMBRES_NAVEGADORES.get(p, (proceso or "").removesuffix(".exe").removesuffix(".EXE"))
+    return titulo
 
 
 def es_de_la_isla(hwnd):
@@ -80,7 +95,7 @@ def listar_ventanas():
                 proceso = psutil.Process(pid).name()
             except psutil.Error:
                 proceso = ""
-            ventanas.append({"id_ventana": hwnd, "titulo": win32gui.GetWindowText(hwnd),
+            ventanas.append({"id_ventana": hwnd, "titulo": titulo_para_el_modelo(win32gui.GetWindowText(hwnd), proceso),
                              "proceso": proceso, "pid": pid, "enfocada": hwnd == enfocada})
         return True
 

@@ -24,7 +24,8 @@ import win32process
 
 import vision
 from herramientas_grupo1 import (ALIAS, CARPETAS_PERMITIDAS, PROCESOS_OCULTOS, _normalizar, es_de_la_isla,
-                                 es_sensible, es_titulo_sensible, listar_ventanas, resolver_ruta)
+                                 es_sensible, es_titulo_sensible, listar_ventanas, resolver_ruta,
+                                 titulo_para_el_modelo)
 
 user32 = ctypes.windll.user32
 shcore = ctypes.windll.shcore
@@ -573,7 +574,7 @@ def estado_despues():
     """Lo que hay al frente justo después de una acción: evidencia para que el modelo verifique el resultado."""
     time.sleep(0.6)  # deja que la app reaccione (abrir un menú, un diálogo)
     hwnd = win32gui.GetForegroundWindow()
-    titulo = win32gui.GetWindowText(hwnd)
+    titulo = titulo_para_el_modelo(win32gui.GetWindowText(hwnd), proceso_de(hwnd))  # navegadores: sin la pestaña
     return {"ventana_al_frente": "[título sensible]" if es_titulo_sensible(titulo) else titulo,
             "id_ventana": hwnd}
 

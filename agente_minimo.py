@@ -768,7 +768,7 @@ def atender(pedido, historial):
             emergencia.comprobar()
             resultado = ejecutar(nombre, args)
             _tarea["herramientas"].append((nombre, args))
-            if modo_directo.lectura_externa(nombre, resultado):
+            if nombre in modo_directo.LECTURA_EXTERNA:
                 _tarea["leido"].add(nombre)
             if nombre in TEXTO_EXTERNO:
                 _tarea["contaminada"] = True
