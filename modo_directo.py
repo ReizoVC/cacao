@@ -10,8 +10,9 @@ normales (que piden confirmación según el permiso, y en modo voz para todo lo 
   - directas: volumen, abrir_app, enfocar_ventana, buscar_web y cerrar_app con cierre normal;
   - mouse y teclado (decisión de Reizo del 2026-10-06): directos en cualquier ventana, también tras leer contenido de
     fuera. Única excepción: escribir un texto que no sale del pedido cuando el modelo leyó contenido de fuera (web,
-    archivo, pantalla, títulos, carpetas, PowerShell) en esta tarea o en una anterior que sigue en su historial: ese
-    texto puede venir de lo leído, y se pregunta. Una 'tecla' con letras o números, o un atajo con letras sin Ctrl
+    archivo, pantalla, carpetas, PowerShell, y títulos de ventanas solo si alguna es de un navegador, porque ese
+    título lo pone cada página web) en esta tarea o en una anterior que sigue en su historial: ese texto puede venir
+    de lo leído, y se pregunta. Una 'tecla' con letras o números, o un atajo con letras sin Ctrl
     ni Alt, también escribe texto;
   - mover_archivo: directo hasta 10 archivos por tarea, sin ejecutables ni scripts y fuera de las carpetas
     importantes (datos_locales.json -> carpetas_importantes). Cada movimiento queda en un historial para deshacer;
@@ -39,6 +40,9 @@ EXTERNO = {"leer_archivo", "buscar_web", "ejecutar_powershell"}
 UBICACION = {"ver_pantalla", "listar_controles", "listar_ventanas"}
 # todo lo que pone texto de fuera delante del modelo (como agente_minimo.TEXTO_EXTERNO)
 LECTURA_EXTERNA = EXTERNO | UBICACION | {"listar_carpeta"}
+# los títulos de sus ventanas los pone cada página web (config.json -> memoria_wiki.navegadores)
+NAVEGADORES = {x.lower() for x in json.loads((BASE / "config.json").read_text(encoding="utf-8"))
+               .get("memoria_wiki", {}).get("navegadores", [])}
 SIEMPRE_CONFIRMAR = {"ejecutar_powershell", "autocompletar_login"}
 MAX_ARCHIVOS = 10
 EXTENSIONES_RIESGO = {".exe", ".dll", ".bat", ".ps1", ".cmd", ".msi", ".lnk",
@@ -59,6 +63,36 @@ def normalizar(texto):
     sin_tildes = unicodedata.normalize("NFKD", texto or "")
     t = "".join(c for c in sin_tildes if not unicodedata.combining(c)).lower()
     return " ".join(re.sub(r"[^\w]+", " ", t).split())
+
+
+def lectura_externa(nombre, resultado):
+    """True si el resultado de la herramienta pone delante del modelo texto que no controla Reizo. listar_ventanas
+    solo cuenta si alguna ventana es de un navegador: los títulos de las demás apps no los escribe una página web."""
+    if nombre not in LECTURA_EXTERNA:
+        return False
+    if nombre == "listar_ventanas":
+        return isinstance(resultado, list) and any(
+            isinstance(v, dict) and str(v.get("proceso", "")).lower() in NAVEGADORES for v in resultado)
+    return True
+
+
+def leido_en_historial(historial):
+    """Herramientas de tareas anteriores cuyo contenido de fuera el modelo aún tiene en el historial. Un
+    listar_ventanas ya resumido (sin títulos) no cuenta."""
+    leido = set()
+    for m in historial:
+        c = m.get("content")
+        if m.get("role") != "user" or not isinstance(c, str) or not c.startswith("Resultado de "):
+            continue
+        cabecera, _, cuerpo = c.removeprefix("Resultado de ").partition(": ")
+        nombre = cabecera.split(" ")[0]
+        try:
+            resultado = json.loads(cuerpo) if " " not in cabecera else None  # "(resumido)": sin el JSON entero
+        except ValueError:
+            resultado = None
+        if lectura_externa(nombre, resultado):
+            leido.add(nombre)
+    return leido
 
 
 def carpetas_importantes(ruta=RUTA_DATOS_LOCALES):
@@ -161,10 +195,11 @@ class Politica:
     def importantes(self):
         return self._importantes if self._importantes is not None else carpetas_importantes()
 
-    def decidir(self, nombre, args, pedido, usadas, movidos=0, leido_antes=()):
+    def decidir(self, nombre, args, pedido, usadas, movidos=0, leido=None):
         """(True, detalle) si va directa; (False, motivo) si sigue las reglas normales. 'usadas': nombres de las
         herramientas ya usadas en la tarea; 'movidos': archivos ya movidos sin confirmación en la tarea;
-        'leido_antes': herramientas de LECTURA_EXTERNA de tareas anteriores cuyo resultado sigue en el historial."""
+        'leido': herramientas cuyo contenido de fuera tiene el modelo delante (lectura_externa, en esta tarea o en
+        el historial); sin darlo, cuenta toda herramienta de LECTURA_EXTERNA usada en la tarea."""
         if nombre in SIEMPRE_CONFIRMAR:
             return False, f"{nombre} siempre se confirma"
         if nombre == "cerrar_app" and args.get("forzar"):
@@ -172,7 +207,7 @@ class Politica:
         if nombre == "mouse":
             return True, None
         if nombre == "teclado":
-            return self._teclado(args, pedido, sorted((set(usadas) | set(leido_antes)) & LECTURA_EXTERNA))
+            return self._teclado(args, pedido, sorted(set(usadas) & LECTURA_EXTERNA if leido is None else leido))
         externo = sorted(set(usadas) & EXTERNO)
         if externo:
             return False, f"en esta tarea entró contenido externo ({', '.join(externo)})"
