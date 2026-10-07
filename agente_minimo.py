@@ -381,7 +381,8 @@ TEXTO_EXTERNO = {"leer_archivo", "buscar_web", "ver_pantalla", "ejecutar_powersh
 GUARDAN_SOBRE_REIZO = {"recordar", "sugerencias", "registro_habitos"}
 SOLO_CONSULTAN = {("sugerencias", "listar"), ("registro_habitos", "estado")}
 _tarea = {"contaminada": False, "herramientas": [], "pedido": "", "movidos": 0,  # de la tarea en curso
-          "intentos": [], "avisos": []}  # obstáculos: atajos y clics con o sin efecto, y lo que se le dirá a Reizo
+          "intentos": [], "avisos": [], "sustituidos": {}}  # obstáculos: atajos y clics con o sin efecto, lo que
+# se le dirá a Reizo y los atajos cambiados por uno aprendido ({atajo enviado: atajo pedido})
 NOMBRES_APPS = {"notepad.exe": "el Bloc de notas", "winword.exe": "Word", "excel.exe": "Excel",
                 "powerpnt.exe": "PowerPoint", "chrome.exe": "Chrome", "msedge.exe": "Edge", "code.exe": "VS Code",
                 "explorer.exe": "el Explorador"}
@@ -518,6 +519,7 @@ def camino_conocido(nombre, args):
         print(f"  [obstáculo conocido] {accion} no funciona en {app}; uso {conocido['alternativa']}")
         _tarea["avisos"].append(f"Usé {legible(conocido['alternativa'])} en vez de {legible(accion)}: en "
                                 f"{nombre_app(app)} es el que funciona.")
+        _tarea["sustituidos"][conocido["alternativa"]] = accion
         return {**args, "teclas": obstaculos.teclas_de(conocido["alternativa"])}, None
     return args, {"ok": False, "error": f"En {nombre_app(app)}, {legible(accion)} no tiene efecto (ya comprobado). "
                                         f"Lo que funcionó antes: el menú {conocido['alternativa']}. Hazlo así, con "
@@ -529,14 +531,21 @@ def anotar_intento(nombre, args, resultado):
     if nombre not in ("teclado", "mouse") or not isinstance(resultado, dict) or "efecto_visible" not in resultado:
         return
     if nombre == "teclado":
-        intento = {"tipo": "atajo", "accion": obstaculos.nombre_atajo(args.get("teclas"))}
+        intento = {"tipo": "atajo" if args.get("accion") == "atajo" else "tecla",
+                   "accion": obstaculos.nombre_atajo(args.get("teclas"))}
     else:
         intento = {"tipo": "control", "accion": (resultado.get("control") or "clic por coordenadas").split(" (")[0]}
     intento.update(app=resultado.get("app", ""), efecto=bool(resultado["efecto_visible"]))
     _tarea["intentos"].append(intento)
+    original = _tarea["sustituidos"].pop(intento["accion"], None) if intento["tipo"] == "atajo" else None
+    if original and not intento["efecto"]:
+        # el atajo aprendido tampoco funcionó: se olvida y el fallo vuelve a contar como el del atajo pedido
+        obstaculos.olvidar(intento["app"], original)
+        _tarea["avisos"] = [a for a in _tarea["avisos"] if not a.startswith(f"Usé {legible(intento['accion'])}")]
+        intento["accion"] = original
     if not intento["efecto"]:
-        texto = (f"{legible(intento['accion']) if intento['tipo'] == 'atajo' else intento['accion']} no tuvo efecto "
-                 f"en {nombre_app(intento['app'])}. Busco otro camino.")
+        texto = (f"{legible(intento['accion']) if intento['tipo'] != 'control' else intento['accion']} no tuvo "
+                 f"efecto en {nombre_app(intento['app'])}. Busco otro camino.")
         print(f"  [obstáculo] {texto}")
         if _isla is not None:
             _isla.enviar({"tipo": "aviso", "texto": texto})
@@ -721,7 +730,8 @@ def atender(pedido, historial):
         print("  [emergencia] agente detenido: la tarea no se ejecuta")
         return MENSAJE_DETENIDO
     historial.append({"role": "user", "content": pedido})
-    _tarea.update(contaminada=False, herramientas=[], pedido=pedido, movidos=0, intentos=[], avisos=[])
+    _tarea.update(contaminada=False, herramientas=[], pedido=pedido, movidos=0, intentos=[], avisos=[],
+                  sustituidos={})
     herramientas_grupo4.tarea_actual = f"{time.time():.3f}"
     _decision.update(clave=None, valor=None)
     sin_verificar, recordatorios = None, 0  # último clic o atajo que el modelo aún no comprobó

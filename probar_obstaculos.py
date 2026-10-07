@@ -94,6 +94,24 @@ def pruebas_tabla():
         g = obstaculos.resolver(intentos, False)
         ok("tabla: por el menú -> alternativa 'controles' (solo la misma app, nombres limpios)",
            g == [("word.exe", "ctrl+s", "Archivo > Guardar como", "controles")], g)
+        real = [{"app": "notepad.exe", "accion": "ctrl+s", "tipo": "atajo", "efecto": False},
+                {"app": "notepad.exe", "accion": "Archivo", "tipo": "control", "efecto": True},
+                {"app": "notepad.exe", "accion": "Guardar", "tipo": "control", "efecto": True},
+                {"app": "notepad.exe", "accion": "esc", "tipo": "tecla", "efecto": True}]
+        g = obstaculos.resolver(real, False)
+        ok("tabla (secuencia real 1): Ctrl+S -> 'Archivo > Guardar'; el Esc que cierra el diálogo no cuenta",
+           g == [("notepad.exe", "ctrl+s", "Archivo > Guardar", "controles")], g)
+        real2 = [{"app": "notepad.exe", "accion": "ctrl+s", "tipo": "atajo", "efecto": False},
+                 {"app": "notepad.exe", "accion": "Archivo", "tipo": "control", "efecto": True},
+                 {"app": "notepad.exe", "accion": "Guardar", "tipo": "control", "efecto": False},
+                 {"app": "notepad.exe", "accion": "Guardar como", "tipo": "control", "efecto": True},
+                 {"app": "notepad.exe", "accion": "esc", "tipo": "tecla", "efecto": True}]
+        g = obstaculos.resolver(real2, False)
+        ok("tabla (secuencia real 2): los clics sin efecto se saltan -> 'Archivo > Guardar como'",
+           g == [("notepad.exe", "ctrl+s", "Archivo > Guardar como", "controles")], g)
+        obstaculos.olvidar("notepad.exe", "ctrl+s")
+        ok("tabla: olvidar deja la fila sin alternativa", obstaculos.consultar("notepad.exe", "ctrl+s") is None
+           and any(f[0] == "notepad.exe" and f[1] == "ctrl+s" for f in obstaculos.listar()))
         intentos = [{"app": "x.exe", "accion": "ctrl+a", "tipo": "atajo", "efecto": False}]
         ok("tabla: un fallo sin otro camino no guarda alternativa", obstaculos.resolver(intentos, False) == []
            and obstaculos.consultar("x.exe", "ctrl+a") is None)
@@ -135,6 +153,7 @@ def pruebas_ejecutor():
         preguntas, enviados = [], []
         ns, avisos = cargar_agente(preguntas, enviados)
         ns["_tarea"].update(pedido="guarda el bloc de notas", herramientas=[], intentos=[], avisos=[])
+        teclado_original = ns["IMPLEMENTACIONES"]["teclado"]
         ns["ejecutar"]("teclado", {"accion": "atajo", "teclas": ["ctrl", "s"]})
         ok("ejecutor: un atajo sin efecto se avisa en la isla al momento",
            avisos and "no tuvo efecto en el Bloc de notas" in avisos[-1]["texto"], avisos)
@@ -150,6 +169,17 @@ def pruebas_ejecutor():
         ok("ejecutor: la confirmación ya muestra Ctrl+G (no Ctrl+S)", preguntas and '"g"' in preguntas[-1]
            and '"s"' not in preguntas[-1], preguntas)
         ok("ejecutor: y avisa del cambio", "Usé Ctrl+G en vez de Ctrl+S" in ns["cerrar_obstaculos"](True))
+        # una alternativa aprendida que tampoco funciona se olvida
+        obstaculos.registrar_alternativa("notepad.exe", "ctrl+s", "esc", "atajo")
+        ns["_tarea"].update(intentos=[], avisos=[], sustituidos={})
+        ns["IMPLEMENTACIONES"]["teclado"] = lambda accion, teclas=None, **k: {"ok": True, "efecto_visible": False,
+                                                                              "app": "notepad.exe"}
+        ns["ejecutar"]("teclado", {"accion": "atajo", "teclas": ["ctrl", "s"]})
+        ok("ejecutor: la alternativa aprendida sin efecto se olvida y no se anuncia",
+           obstaculos.consultar("notepad.exe", "ctrl+s") is None and not ns["_tarea"]["avisos"]
+           and ns["_tarea"]["intentos"][-1]["accion"] == "ctrl+s", ns["_tarea"])
+        ns["IMPLEMENTACIONES"]["teclado"] = teclado_original
+        obstaculos.registrar_alternativa("notepad.exe", "ctrl+s", "ctrl+g", "atajo")
         # camino por menú
         obstaculos.registrar_alternativa("notepad.exe", "ctrl+shift+s", "Archivo > Guardar como", "controles")
         enviados.clear()

@@ -81,6 +81,13 @@ def registrar_alternativa(app, accion, alternativa, tipo, ahora=None):
                     "ultima = excluded.ultima", (app, accion, limpiar(alternativa), tipo, t, t))
 
 
+def olvidar(app, accion):
+    """La alternativa guardada no funcionó al usarla: se olvida (la fila y sus fallos se quedan) para aprender otra."""
+    with _conectar() as con:
+        con.execute("UPDATE obstaculos SET alternativa = NULL, tipo_alternativa = NULL WHERE app = ? AND accion = ?",
+                    (app, accion))
+
+
 def contar_uso(app, accion):
     with _conectar() as con:
         con.execute("UPDATE obstaculos SET usos_alternativa = usos_alternativa + 1 WHERE app = ? AND accion = ?",
@@ -102,22 +109,33 @@ def listar():
 
 
 def resolver(intentos, externo):
-    """Al terminar una tarea con éxito. intentos: [{'app', 'accion', 'tipo' ('atajo'|'control'), 'efecto'}] en
-    orden. Por cada acción sin efecto, busca las acciones posteriores en la misma app que sí lo tuvieron: un atajo
-    -> alternativa 'atajo'; si no, la secuencia de controles pulsados -> 'controles'. Devuelve
-    [(app, accion, alternativa, tipo)] guardadas. Con contenido externo en la tarea no guarda nada."""
+    """Al terminar una tarea con éxito. intentos: [{'app', 'accion', 'tipo' ('atajo'|'tecla'|'control'), 'efecto'}]
+    en orden. Para cada atajo sin efecto mira lo que vino JUSTO después en la misma app:
+      - si lo siguiente con efecto es otro atajo -> alternativa 'atajo';
+      - si son clics en controles -> la secuencia de los que tuvieron efecto, hasta la primera acción que no sea un
+        clic -> 'controles' (p. ej. "Archivo > Guardar"; el Esc con que luego se cierra el diálogo no cuenta).
+    Las teclas sueltas (Esc, Enter...) nunca son alternativa. Devuelve [(app, accion, alternativa, tipo)] guardadas.
+    Con contenido externo en la tarea no guarda nada."""
     if externo:
         return []
     guardadas = []
     for i, fallo in enumerate(intentos):
         if fallo["efecto"] or fallo["tipo"] != "atajo":
             continue
-        despues = [x for x in intentos[i + 1:] if x["app"] == fallo["app"] and x["efecto"]]
-        atajo = next((x for x in despues if x["tipo"] == "atajo" and x["accion"] != fallo["accion"]), None)
-        if atajo:
-            alternativa = (atajo["accion"], "atajo")
-        elif despues and all(x["tipo"] == "control" for x in despues):
-            alternativa = (" > ".join(limpiar(x["accion"]) for x in despues[:4]), "controles")
+        siguientes = [x for x in intentos[i + 1:] if x["app"] == fallo["app"]]
+        primero = next((x for x in siguientes if x["efecto"]), None)
+        if primero is None:
+            continue
+        if primero["tipo"] == "atajo" and primero["accion"] != fallo["accion"]:
+            alternativa = (primero["accion"], "atajo")
+        elif primero["tipo"] == "control":
+            clics = []
+            for x in siguientes:
+                if x["tipo"] != "control":
+                    break
+                if x["efecto"]:
+                    clics.append(limpiar(x["accion"]))
+            alternativa = (" > ".join(clics[:4]), "controles")
         else:
             continue
         registrar_alternativa(fallo["app"], fallo["accion"], *alternativa)
