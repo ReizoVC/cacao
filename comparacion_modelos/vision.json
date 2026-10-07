@@ -1,0 +1,7 @@
+[
+  {"id":1,"imagen":"calculadora.png","objetivo":"el botón del número 7","rect":[5,379,64,415]},
+  {"id":2,"imagen":"calculadora.png","objetivo":"el botón más (+), para sumar","rect":[259,456,317,491]},
+  {"id":3,"imagen":"calculadora.png","objetivo":"el botón igual (=)","rect":[259,494,317,529]},
+  {"id":4,"imagen":"bloc_notas.png","objetivo":"el menú Archivo","rect":[8,45,68,72]},
+  {"id":5,"imagen":"bloc_notas.png","objetivo":"el botón + para crear una pestaña nueva","rect":[293,10,326,42]}
+]

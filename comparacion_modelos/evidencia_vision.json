@@ -1,0 +1,942 @@
+[
+  {
+    "model": "gemma_q5",
+    "normalized": false,
+    "id": 1,
+    "task": {
+      "id": 1,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón del número 7",
+      "rect": [
+        5,
+        379,
+        64,
+        415
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 315, \"y\": 786}",
+    "pixel_point": null,
+    "hit": false,
+    "seconds": 1.9916864999977406
+  },
+  {
+    "model": "gemma_q5",
+    "normalized": false,
+    "id": 2,
+    "task": {
+      "id": 2,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón más (+), para sumar",
+      "rect": [
+        259,
+        456,
+        317,
+        491
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 896, \"y\": 973}",
+    "pixel_point": null,
+    "hit": false,
+    "seconds": 1.2941116000001784
+  },
+  {
+    "model": "gemma_q5",
+    "normalized": false,
+    "id": 3,
+    "task": {
+      "id": 3,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón igual (=)",
+      "rect": [
+        259,
+        494,
+        317,
+        529
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 871, \"y\": 895}",
+    "pixel_point": null,
+    "hit": false,
+    "seconds": 1.2982159000021056
+  },
+  {
+    "model": "gemma_q5",
+    "normalized": false,
+    "id": 4,
+    "task": {
+      "id": 4,
+      "imagen": "bloc_notas.png",
+      "objetivo": "el menú Archivo",
+      "rect": [
+        8,
+        45,
+        68,
+        72
+      ]
+    },
+    "width": 986,
+    "height": 748,
+    "response": "{\"x\": 38, \"y\": 185}",
+    "pixel_point": null,
+    "hit": false,
+    "seconds": 1.3586060000016005
+  },
+  {
+    "model": "gemma_q5",
+    "normalized": false,
+    "id": 5,
+    "task": {
+      "id": 5,
+      "imagen": "bloc_notas.png",
+      "objetivo": "el botón + para crear una pestaña nueva",
+      "rect": [
+        293,
+        10,
+        326,
+        42
+      ]
+    },
+    "width": 986,
+    "height": 748,
+    "response": "{\"x\": 312, \"y\": 89}",
+    "pixel_point": null,
+    "hit": false,
+    "seconds": 1.3341963999992004
+  },
+  {
+    "model": "gemma_q5",
+    "normalized": true,
+    "id": 1,
+    "task": {
+      "id": 1,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón del número 7",
+      "rect": [
+        5,
+        379,
+        64,
+        415
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 312, \"y\": 784}",
+    "pixel_point": {
+      "x": 100.464,
+      "y": 418.656
+    },
+    "hit": false,
+    "seconds": 1.9311955000011949
+  },
+  {
+    "model": "gemma_q5",
+    "normalized": true,
+    "id": 2,
+    "task": {
+      "id": 2,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón más (+), para sumar",
+      "rect": [
+        259,
+        456,
+        317,
+        491
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 893, \"y\": 971}",
+    "pixel_point": {
+      "x": 287.546,
+      "y": 518.514
+    },
+    "hit": false,
+    "seconds": 1.308330499996373
+  },
+  {
+    "model": "gemma_q5",
+    "normalized": true,
+    "id": 3,
+    "task": {
+      "id": 3,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón igual (=)",
+      "rect": [
+        259,
+        494,
+        317,
+        529
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 875, \"y\": 906}",
+    "pixel_point": {
+      "x": 281.75,
+      "y": 483.804
+    },
+    "hit": false,
+    "seconds": 1.2975772999998298
+  },
+  {
+    "model": "gemma_q5",
+    "normalized": true,
+    "id": 4,
+    "task": {
+      "id": 4,
+      "imagen": "bloc_notas.png",
+      "objetivo": "el menú Archivo",
+      "rect": [
+        8,
+        45,
+        68,
+        72
+      ]
+    },
+    "width": 986,
+    "height": 748,
+    "response": "{\"x\": 39, \"y\": 184}",
+    "pixel_point": {
+      "x": 38.454,
+      "y": 137.632
+    },
+    "hit": false,
+    "seconds": 1.3513488000025973
+  },
+  {
+    "model": "gemma_q5",
+    "normalized": true,
+    "id": 5,
+    "task": {
+      "id": 5,
+      "imagen": "bloc_notas.png",
+      "objetivo": "el botón + para crear una pestaña nueva",
+      "rect": [
+        293,
+        10,
+        326,
+        42
+      ]
+    },
+    "width": 986,
+    "height": 748,
+    "response": "{\"x\": 312, \"y\": 89}",
+    "pixel_point": {
+      "x": 307.632,
+      "y": 66.572
+    },
+    "hit": false,
+    "seconds": 1.3303439000010258
+  },
+  {
+    "model": "gemma_q4",
+    "normalized": false,
+    "id": 1,
+    "task": {
+      "id": 1,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón del número 7",
+      "rect": [
+        5,
+        379,
+        64,
+        415
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 314, \"y\": 795}",
+    "pixel_point": null,
+    "hit": false,
+    "seconds": 1.8857485999978962
+  },
+  {
+    "model": "gemma_q4",
+    "normalized": false,
+    "id": 2,
+    "task": {
+      "id": 2,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón más (+), para sumar",
+      "rect": [
+        259,
+        456,
+        317,
+        491
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 849, \"y\": 961}",
+    "pixel_point": null,
+    "hit": false,
+    "seconds": 1.2336891000013566
+  },
+  {
+    "model": "gemma_q4",
+    "normalized": false,
+    "id": 3,
+    "task": {
+      "id": 3,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón igual (=)",
+      "rect": [
+        259,
+        494,
+        317,
+        529
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 875, \"y\": 946}",
+    "pixel_point": null,
+    "hit": false,
+    "seconds": 1.2613048999992316
+  },
+  {
+    "model": "gemma_q4",
+    "normalized": false,
+    "id": 4,
+    "task": {
+      "id": 4,
+      "imagen": "bloc_notas.png",
+      "objetivo": "el menú Archivo",
+      "rect": [
+        8,
+        45,
+        68,
+        72
+      ]
+    },
+    "width": 986,
+    "height": 748,
+    "response": "{\"x\": 38, \"y\": 185}",
+    "pixel_point": null,
+    "hit": false,
+    "seconds": 1.2760202000063146
+  },
+  {
+    "model": "gemma_q4",
+    "normalized": false,
+    "id": 5,
+    "task": {
+      "id": 5,
+      "imagen": "bloc_notas.png",
+      "objetivo": "el botón + para crear una pestaña nueva",
+      "rect": [
+        293,
+        10,
+        326,
+        42
+      ]
+    },
+    "width": 986,
+    "height": 748,
+    "response": "{\"x\": 312, \"y\": 94}",
+    "pixel_point": null,
+    "hit": false,
+    "seconds": 1.2449749000006705
+  },
+  {
+    "model": "gemma_q4",
+    "normalized": true,
+    "id": 1,
+    "task": {
+      "id": 1,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón del número 7",
+      "rect": [
+        5,
+        379,
+        64,
+        415
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 314, \"y\": 795}",
+    "pixel_point": {
+      "x": 101.108,
+      "y": 424.53
+    },
+    "hit": false,
+    "seconds": 1.9046435999989626
+  },
+  {
+    "model": "gemma_q4",
+    "normalized": true,
+    "id": 2,
+    "task": {
+      "id": 2,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón más (+), para sumar",
+      "rect": [
+        259,
+        456,
+        317,
+        491
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 897, \"y\": 963}",
+    "pixel_point": {
+      "x": 288.834,
+      "y": 514.242
+    },
+    "hit": false,
+    "seconds": 1.2485052999982145
+  },
+  {
+    "model": "gemma_q4",
+    "normalized": true,
+    "id": 3,
+    "task": {
+      "id": 3,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón igual (=)",
+      "rect": [
+        259,
+        494,
+        317,
+        529
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 876, \"y\": 941}",
+    "pixel_point": {
+      "x": 282.072,
+      "y": 502.494
+    },
+    "hit": true,
+    "seconds": 1.2405594000010751
+  },
+  {
+    "model": "gemma_q4",
+    "normalized": true,
+    "id": 4,
+    "task": {
+      "id": 4,
+      "imagen": "bloc_notas.png",
+      "objetivo": "el menú Archivo",
+      "rect": [
+        8,
+        45,
+        68,
+        72
+      ]
+    },
+    "width": 986,
+    "height": 748,
+    "response": "{\"x\": 38, \"y\": 184}",
+    "pixel_point": {
+      "x": 37.468,
+      "y": 137.632
+    },
+    "hit": false,
+    "seconds": 1.3099033999969834
+  },
+  {
+    "model": "gemma_q4",
+    "normalized": true,
+    "id": 5,
+    "task": {
+      "id": 5,
+      "imagen": "bloc_notas.png",
+      "objetivo": "el botón + para crear una pestaña nueva",
+      "rect": [
+        293,
+        10,
+        326,
+        42
+      ]
+    },
+    "width": 986,
+    "height": 748,
+    "response": "{\"x\": 312, \"y\": 94}",
+    "pixel_point": {
+      "x": 307.632,
+      "y": 70.312
+    },
+    "hit": false,
+    "seconds": 1.2665061999941827
+  },
+  {
+    "model": "qwen_q4",
+    "normalized": false,
+    "id": 1,
+    "task": {
+      "id": 1,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón del número 7",
+      "rect": [
+        5,
+        379,
+        64,
+        415
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 297, \"y\": 740}",
+    "pixel_point": null,
+    "hit": false,
+    "seconds": 5.057221200004278
+  },
+  {
+    "model": "qwen_q4",
+    "normalized": false,
+    "id": 2,
+    "task": {
+      "id": 2,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón más (+), para sumar",
+      "rect": [
+        259,
+        456,
+        317,
+        491
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 892, \"y\": 874}",
+    "pixel_point": null,
+    "hit": false,
+    "seconds": 1.3509946999984095
+  },
+  {
+    "model": "qwen_q4",
+    "normalized": false,
+    "id": 3,
+    "task": {
+      "id": 3,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón igual (=)",
+      "rect": [
+        259,
+        494,
+        317,
+        529
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 891, \"y\": 947}",
+    "pixel_point": null,
+    "hit": false,
+    "seconds": 1.3389846999998554
+  },
+  {
+    "model": "qwen_q4",
+    "normalized": false,
+    "id": 4,
+    "task": {
+      "id": 4,
+      "imagen": "bloc_notas.png",
+      "objetivo": "el menú Archivo",
+      "rect": [
+        8,
+        45,
+        68,
+        72
+      ]
+    },
+    "width": 986,
+    "height": 748,
+    "response": "{\"x\": 38, \"y\": 79}",
+    "pixel_point": null,
+    "hit": false,
+    "seconds": 1.3761148999983561
+  },
+  {
+    "model": "qwen_q4",
+    "normalized": false,
+    "id": 5,
+    "task": {
+      "id": 5,
+      "imagen": "bloc_notas.png",
+      "objetivo": "el botón + para crear una pestaña nueva",
+      "rect": [
+        293,
+        10,
+        326,
+        42
+      ]
+    },
+    "width": 986,
+    "height": 748,
+    "response": "{\"x\": 316, \"y\": 40}",
+    "pixel_point": null,
+    "hit": true,
+    "seconds": 1.4182658999998239
+  },
+  {
+    "model": "qwen_q4",
+    "normalized": true,
+    "id": 1,
+    "task": {
+      "id": 1,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón del número 7",
+      "rect": [
+        5,
+        379,
+        64,
+        415
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 314, \"y\": 752}",
+    "pixel_point": {
+      "x": 101.108,
+      "y": 401.568
+    },
+    "hit": false,
+    "seconds": 4.57246689999738
+  },
+  {
+    "model": "qwen_q4",
+    "normalized": true,
+    "id": 2,
+    "task": {
+      "id": 2,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón más (+), para sumar",
+      "rect": [
+        259,
+        456,
+        317,
+        491
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 893, \"y\": 874}",
+    "pixel_point": {
+      "x": 287.546,
+      "y": 466.716
+    },
+    "hit": true,
+    "seconds": 1.3843007999967085
+  },
+  {
+    "model": "qwen_q4",
+    "normalized": true,
+    "id": 3,
+    "task": {
+      "id": 3,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón igual (=)",
+      "rect": [
+        259,
+        494,
+        317,
+        529
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 891, \"y\": 947}",
+    "pixel_point": {
+      "x": 286.902,
+      "y": 505.698
+    },
+    "hit": true,
+    "seconds": 1.3687655000030645
+  },
+  {
+    "model": "qwen_q4",
+    "normalized": true,
+    "id": 4,
+    "task": {
+      "id": 4,
+      "imagen": "bloc_notas.png",
+      "objetivo": "el menú Archivo",
+      "rect": [
+        8,
+        45,
+        68,
+        72
+      ]
+    },
+    "width": 986,
+    "height": 748,
+    "response": "{\"x\": 36, \"y\": 81}",
+    "pixel_point": {
+      "x": 35.496,
+      "y": 60.588
+    },
+    "hit": true,
+    "seconds": 1.4071041999995941
+  },
+  {
+    "model": "qwen_q4",
+    "normalized": true,
+    "id": 5,
+    "task": {
+      "id": 5,
+      "imagen": "bloc_notas.png",
+      "objetivo": "el botón + para crear una pestaña nueva",
+      "rect": [
+        293,
+        10,
+        326,
+        42
+      ]
+    },
+    "width": 986,
+    "height": 748,
+    "response": "{\"x\": 314, \"y\": 40}",
+    "pixel_point": {
+      "x": 309.604,
+      "y": 29.92
+    },
+    "hit": true,
+    "seconds": 1.4202746000009938
+  },
+  {
+    "model": "qwen_q5",
+    "normalized": false,
+    "id": 1,
+    "task": {
+      "id": 1,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón del número 7",
+      "rect": [
+        5,
+        379,
+        64,
+        415
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 298, \"y\": 740}",
+    "pixel_point": null,
+    "hit": false,
+    "seconds": 5.463844300000346
+  },
+  {
+    "model": "qwen_q5",
+    "normalized": false,
+    "id": 2,
+    "task": {
+      "id": 2,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón más (+), para sumar",
+      "rect": [
+        259,
+        456,
+        317,
+        491
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 893, \"y\": 875}",
+    "pixel_point": null,
+    "hit": false,
+    "seconds": 1.4595177000010153
+  },
+  {
+    "model": "qwen_q5",
+    "normalized": false,
+    "id": 3,
+    "task": {
+      "id": 3,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón igual (=)",
+      "rect": [
+        259,
+        494,
+        317,
+        529
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 889, \"y\": 947}",
+    "pixel_point": null,
+    "hit": false,
+    "seconds": 1.4018335000000661
+  },
+  {
+    "model": "qwen_q5",
+    "normalized": false,
+    "id": 4,
+    "task": {
+      "id": 4,
+      "imagen": "bloc_notas.png",
+      "objetivo": "el menú Archivo",
+      "rect": [
+        8,
+        45,
+        68,
+        72
+      ]
+    },
+    "width": 986,
+    "height": 748,
+    "response": "{\"x\": 42, \"y\": 81}",
+    "pixel_point": null,
+    "hit": false,
+    "seconds": 1.4239563999944949
+  },
+  {
+    "model": "qwen_q5",
+    "normalized": false,
+    "id": 5,
+    "task": {
+      "id": 5,
+      "imagen": "bloc_notas.png",
+      "objetivo": "el botón + para crear una pestaña nueva",
+      "rect": [
+        293,
+        10,
+        326,
+        42
+      ]
+    },
+    "width": 986,
+    "height": 748,
+    "response": "{\"x\": 314, \"y\": 40}",
+    "pixel_point": null,
+    "hit": true,
+    "seconds": 1.4433584999933373
+  },
+  {
+    "model": "qwen_q5",
+    "normalized": true,
+    "id": 1,
+    "task": {
+      "id": 1,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón del número 7",
+      "rect": [
+        5,
+        379,
+        64,
+        415
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 296, \"y\": 738}",
+    "pixel_point": {
+      "x": 95.312,
+      "y": 394.092
+    },
+    "hit": false,
+    "seconds": 4.956775799997558
+  },
+  {
+    "model": "qwen_q5",
+    "normalized": true,
+    "id": 2,
+    "task": {
+      "id": 2,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón más (+), para sumar",
+      "rect": [
+        259,
+        456,
+        317,
+        491
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 894, \"y\": 876}",
+    "pixel_point": {
+      "x": 287.868,
+      "y": 467.784
+    },
+    "hit": true,
+    "seconds": 1.4430559999964316
+  },
+  {
+    "model": "qwen_q5",
+    "normalized": true,
+    "id": 3,
+    "task": {
+      "id": 3,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón igual (=)",
+      "rect": [
+        259,
+        494,
+        317,
+        529
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"x\": 890, \"y\": 947}",
+    "pixel_point": {
+      "x": 286.58,
+      "y": 505.698
+    },
+    "hit": true,
+    "seconds": 1.436012899997877
+  },
+  {
+    "model": "qwen_q5",
+    "normalized": true,
+    "id": 4,
+    "task": {
+      "id": 4,
+      "imagen": "bloc_notas.png",
+      "objetivo": "el menú Archivo",
+      "rect": [
+        8,
+        45,
+        68,
+        72
+      ]
+    },
+    "width": 986,
+    "height": 748,
+    "response": "{\"x\": 38, \"y\": 81}",
+    "pixel_point": {
+      "x": 37.468,
+      "y": 60.588
+    },
+    "hit": true,
+    "seconds": 1.4496739000023808
+  },
+  {
+    "model": "qwen_q5",
+    "normalized": true,
+    "id": 5,
+    "task": {
+      "id": 5,
+      "imagen": "bloc_notas.png",
+      "objetivo": "el botón + para crear una pestaña nueva",
+      "rect": [
+        293,
+        10,
+        326,
+        42
+      ]
+    },
+    "width": 986,
+    "height": 748,
+    "response": "{\"x\": 317, \"y\": 40}",
+    "pixel_point": {
+      "x": 312.562,
+      "y": 29.92
+    },
+    "hit": true,
+    "seconds": 1.4856733000051463
+  }
+]

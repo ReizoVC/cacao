@@ -1,6 +1,9 @@
 # Modelos (GGUF, varios GB) y entorno virtual
 modelos/
 .venv/
+.venv-pruebas/
+.comparacion-runtime/
+comparacion_modelos/datos/
 __pycache__/
 *.pyc
 

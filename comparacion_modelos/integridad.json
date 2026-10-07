@@ -1,0 +1,209 @@
+{
+  "date": "2026-10-07",
+  "cacao_commit": "3e9a735",
+  "llama_cpp_python": "0.3.36",
+  "production_config_sha256": "fb10d3ec38a7ae49ce3c51cfeca6740d7cefe19aa5d1ede08eee078fe74c884e",
+  "engine_files": [
+    {
+      "path": "__init__.py",
+      "bytes": 70,
+      "sha256": "b05f3332080ca0313fea46964d9ee8f5183197360cf26247ad8fea9fa6b0e62b"
+    },
+    {
+      "path": "_ctypes_extensions.py",
+      "bytes": 5508,
+      "sha256": "a7864ec4b9ed9a0341bc545e8622af91132866c759cdbab053eeebb04d46d9c3"
+    },
+    {
+      "path": "_ggml.py",
+      "bytes": 369,
+      "sha256": "7d06a84bb20e72ee80129408cb118b244b351ba977ff47f45b656050291c0278"
+    },
+    {
+      "path": "_internals.py",
+      "bytes": 30094,
+      "sha256": "349a1794a0061685ce1ad52e38aba0c9906a7907e83df1167cf36bfbbba0dd58"
+    },
+    {
+      "path": "_logger.py",
+      "bytes": 1326,
+      "sha256": "e9f545f319c32bd52846b83c7a7b2a4b7d04df553c776b0157762f3a2a8e93f4"
+    },
+    {
+      "path": "_utils.py",
+      "bytes": 3407,
+      "sha256": "b8149396b2460cb33c8dc57f0328760be19d59867a91de4eccf2a1243559159e"
+    },
+    {
+      "path": "lib/ggml-base.dll",
+      "bytes": 675840,
+      "sha256": "5d7311c1ee6e453b0824a943d4191b314b33a8cbb32894f1d45014018d558c6b"
+    },
+    {
+      "path": "lib/ggml-base.lib",
+      "bytes": 153994,
+      "sha256": "c9702b271a7978d3513e9394f2d31205812503e55999352f291b195311dc553b"
+    },
+    {
+      "path": "lib/ggml-cpu.dll",
+      "bytes": 1102336,
+      "sha256": "86cdb40a552031896cebf81d87de2f0c7306359d349beb896c8af96dcc31114d"
+    },
+    {
+      "path": "lib/ggml-cpu.lib",
+      "bytes": 15744,
+      "sha256": "3978d27a1a79bf10a499e6764d4a3e93e3ac701db6692ca4c6adb07fca46416e"
+    },
+    {
+      "path": "lib/ggml-cuda.dll",
+      "bytes": 56410112,
+      "sha256": "d47a72fdcf1f0800c1f7de5b6438183804499bfa86de4dd125b31996fb8d53aa"
+    },
+    {
+      "path": "lib/ggml-cuda.lib",
+      "bytes": 4400,
+      "sha256": "e9cc3ac26f0ce37a28453ca7648412e8320878fa56bf89604326a489b2e4e6d8"
+    },
+    {
+      "path": "lib/ggml.dll",
+      "bytes": 61952,
+      "sha256": "d3c54c4626c0b755c1b9addc0331b71a5885449e34498fa8601ebe7d671759f7"
+    },
+    {
+      "path": "lib/ggml.lib",
+      "bytes": 5288,
+      "sha256": "727634f92d5f5e8d3201c3019c544bc09214a56d3233ac8a43b5dd89b88293e7"
+    },
+    {
+      "path": "lib/llama.dll",
+      "bytes": 7489536,
+      "sha256": "d582f305a785c0c47e232caf4104c144c8e937c8411a5c52a26620f7c42f9294"
+    },
+    {
+      "path": "lib/llama.lib",
+      "bytes": 23321896,
+      "sha256": "55a0e67e4773eb012111500a208fab5db18f1a8314c420a5be832abc90cb30fa"
+    },
+    {
+      "path": "lib/mtmd.dll",
+      "bytes": 2421760,
+      "sha256": "a18f058b51f0c51e9dd0d27c98224ac66e8aee56a6779205bd33d0fac0e410e8"
+    },
+    {
+      "path": "lib/mtmd.lib",
+      "bytes": 5285258,
+      "sha256": "a6ceba61bb428798dbba76a0e8a52a28c079204e25c7d0d6b2dc09fa08d770aa"
+    },
+    {
+      "path": "llama.py",
+      "bytes": 100685,
+      "sha256": "fff35cbe5f93076683089447cf7b38195c85a9d7bb344459fa22361994b1f228"
+    },
+    {
+      "path": "llama_cache.py",
+      "bytes": 5012,
+      "sha256": "fe9e5fdad7c3e67e9c4c00c52fd6ed130443a101875ebc6435bb41d5f312fe39"
+    },
+    {
+      "path": "llama_chat_format.py",
+      "bytes": 178966,
+      "sha256": "b9e3ce37b1e09df6d90a13ed26b39d83759dcf2a616b4c1d329aae704d056d97"
+    },
+    {
+      "path": "llama_cpp.py",
+      "bytes": 189135,
+      "sha256": "db8d48ce5003d8ed1bb690b3b529ae112ca71881110a43fb9acd164210848fd0"
+    },
+    {
+      "path": "llama_cpp_ext.py",
+      "bytes": 3854,
+      "sha256": "c58c6978fe35008efe59573fd779cef37f044ad5f70dbff2edd85c1ca66c83e8"
+    },
+    {
+      "path": "llama_grammar.py",
+      "bytes": 32915,
+      "sha256": "b6a457fcb4e010885a29a47eec3525c1316c36e4ad0a3b24373704c8d0be0255"
+    },
+    {
+      "path": "llama_speculative.py",
+      "bytes": 2088,
+      "sha256": "37dabf1ee9aad01d82da6d5e69fbc0a37cdebd7ac5bc042cac8ead4e3d6fb6ba"
+    },
+    {
+      "path": "llama_tokenizer.py",
+      "bytes": 3876,
+      "sha256": "482e57da563dd537fba8c5d2ae09dc352c3054dfd8622957a2cb919b8478ca9f"
+    },
+    {
+      "path": "llama_types.py",
+      "bytes": 8666,
+      "sha256": "103a91a9f890d7f314c1f85173ae5e1efd2c12139202ffd4307fb754c055859e"
+    },
+    {
+      "path": "llava_cpp.py",
+      "bytes": 4562,
+      "sha256": "53ee7279d9d4562466dae231964ccefe6bfe0b8d93f8b643c1b578e33793b206"
+    },
+    {
+      "path": "mtmd_cpp.py",
+      "bytes": 50428,
+      "sha256": "eda06ad84739b64605fa38986b75c2edea521e8710fea593962ba761c9e308f9"
+    },
+    {
+      "path": "py.typed",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "server/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "server/__main__.py",
+      "bytes": 2849,
+      "sha256": "1cbf72bcf5f497b172fc1e2dec96e892e714f425f95270b1e284549c18a4b696"
+    },
+    {
+      "path": "server/app.py",
+      "bytes": 19572,
+      "sha256": "81c5a5be463cfb89b6961fe5c0085234a9004f7d2e41571b224ede45dd47cba7"
+    },
+    {
+      "path": "server/cli.py",
+      "bytes": 4204,
+      "sha256": "bb85b8d325de4ccb1e0066c051576d9c61438951ea945af72d7b8f2c09140e16"
+    },
+    {
+      "path": "server/errors.py",
+      "bytes": 7164,
+      "sha256": "ca5f95333829d58d233b7a4c137e78ef99c44f5442c2746db213ecf481e173b3"
+    },
+    {
+      "path": "server/model.py",
+      "bytes": 14959,
+      "sha256": "b8a420be28a183bb7cdb9f361623747fbc0666b511ddae328b7328784896a848"
+    },
+    {
+      "path": "server/settings.py",
+      "bytes": 8803,
+      "sha256": "8cd8036dea4ce73f16d525ecad2d267ab5786f6f2cd7cf40343f238ec2736b36"
+    },
+    {
+      "path": "server/types.py",
+      "bytes": 12216,
+      "sha256": "6b61385ac75ea7068faab2829540ffdb703a8f19a5a4b8b61848b6da798fb347"
+    }
+  ],
+  "fixtures_sha256": {
+    "pruebas.json": "55c8eab120a8d09e7eef4e7e57aec22c8fd33df7d4f43f2831d5eefd1e6f77b4",
+    "herramientas.json": "3fb0d200ef8c8523500dc8475d2e394c73d0dfe19af169c4e64e70a595e7549a",
+    "apps_categorias.json": "c5a673978d66b7670caf3dfbbde4d5bb9654162f641f1ad37ac995831fe7ec7d"
+  },
+  "screenshots_sha256": {
+    "bloc_notas.png": "7f05960ae6def78fbdd8321e4513478fbdf2df2b59afcb3aaaab3558359d7278",
+    "calculadora.png": "f1cb24491ec96026a9887a1d8744c6ebfd673bbaabc5191129744d2c02dc0e14"
+  },
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "status": "195 casos por candidato, 40 conversaciones, 40 localizaciones; motor idéntico al de producción"
+}

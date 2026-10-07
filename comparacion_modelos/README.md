@@ -1,0 +1,66 @@
+# Comparación aislada de Cacao
+
+Resultados: `../resultados_comparacion_modelos.md`. Respuestas humanas en
+`../respuestas_comparacion_ciegas.md`; clave en `../clave_comparacion_modelos.md`.
+La puntuación humana queda pendiente. No abrir la clave antes de puntuar.
+
+## Preparación utilizada
+
+Windows, RTX 5060 Ti 16 GB, 16 GB de RAM. Código de Cacao: commit `3e9a735`.
+Leer primero la guía, SRS, configuración, herramientas, pruebas y resultados
+históricos. Medir el disco antes de descargar; `descargar.ps1` comprueba tamaños,
+SHA256 y margen de 4 GiB por archivo. Los cuatro archivos nuevos ocupan 19,55 GiB.
+La memoria virtual puede reducir el espacio disponible durante una carga.
+
+Se creó `.venv-pruebas` con el Python de producción usando `-B -m venv`.
+Se copiaron **solo** `llama_cpp` y su carpeta de metadatos dist-info desde
+`.venv/Lib/site-packages` al nuevo entorno para conservar exactamente el binario
+CUDA 0.3.36. No instalar llama-cpp-python desde PyPI encima de esa copia:
+podría reemplazar el binario CUDA. Las restantes dependencias se instalaron
+en el entorno de pruebas con `pip install --no-cache-dir -r comparacion_modelos/requirements.txt`.
+Ver `integridad.json` para las huellas de configuración y archivos del motor.
+
+No modificar `.venv` ni `config.json`. Las configuraciones y copias de código
+de cada candidato quedan en `.comparacion-runtime`. Los modelos, entorno,
+copias, datos crudos y logs están excluidos de Git.
+
+## Repetir
+
+Cerrar Cacao con permiso del usuario y esperar si hay un juego. Ejecutar un
+solo proceso de inferencia a la vez, desde `C:\asistente`:
+
+```powershell
+.\.venv-pruebas\Scripts\python.exe -B comparacion_modelos\continuar.py
+.\.venv-pruebas\Scripts\python.exe -B comparacion_modelos\vision_normalizada.py
+.\.venv-pruebas\Scripts\python.exe -B comparacion_modelos\probar_criterios.py
+.\.venv-pruebas\Scripts\python.exe -B comparacion_modelos\resumir.py
+.\.venv-pruebas\Scripts\python.exe -B comparacion_modelos\verificar.py
+```
+
+`continuar.py` omite tandas marcadas completas; para medir desde cero, conservar
+los resultados anteriores en otro directorio antes de ejecutar. No lanzar el
+resumen mientras haya tandas activas. La clave existente mantiene las mismas
+etiquetas al regenerar los documentos. Para cancelar, crear
+`comparacion_modelos/DETENER`; retirarlo antes de reanudar.
+
+El ejecutor verifica la guardia de juegos y se detiene si detecta uno durante
+la inferencia. Las herramientas usan fixtures, no controlan Windows ni leen
+archivos personales. El catálogo instalado sí se copia de solo lectura: sus
+nombres pueden aparecer en los registros crudos locales, por eso se excluyen.
+
+La primera tanda de visión pide píxeles; el seguimiento pide 0–1000. Las dos
+capturas limpias son ventanas reales de Calculadora y Bloc de notas vacío.
+Los rectángulos en `vision.json` se fijaron antes de las inferencias.
+
+## Evidencia y límites
+
+`metricas.json`: 780 filas sin respuestas, argumentos ni rutas personales.
+`evidencia_vision.json`: puntos, aciertos y latencias de las 40 localizaciones.
+`integridad.json`: huellas del motor y la configuración protegida.
+Los datos completos quedan en `datos/`, sin commit. `criterios.py` implementa
+la comprobación automática y sus límites figuran en el informe; no representa
+éxito comprobado sobre Windows real ni calificación humana de conversación.
+
+La VRAM es de toda la GPU y el margen tras cargar voz es estimado. La comparación
+usa el protocolo JSON y las plantillas descritas en el informe, no un servidor
+independiente con prompts optimizados para cada familia.
