@@ -276,7 +276,8 @@ def preparar():
     locutor = Locutor(ruta_voz if ruta_voz.is_absolute() else BASE / ruta_voz, CONFIG_VOZ["velocidad"])
     _piezas.update(atajo=atajo, microfono=microfono, transcriptor=transcriptor, locutor=locutor)
     _piezas["escucha"] = crear_escucha(microfono, locutor)
-    _piezas["seguimiento"] = crear_seguimiento(microfono)
+    # sin la escucha de "Cacao" (apagada en config.json) tampoco hay escucha de seguimiento
+    _piezas["seguimiento"] = crear_seguimiento(microfono) if _piezas["escucha"] is not None else None
     _piezas["despues"] = DespuesDeResponder(locutor, _piezas["seguimiento"])
     a.iniciar_isla()
     planificador, aviso = a.iniciar_memoria_wiki()
@@ -327,14 +328,17 @@ def esperar_disparo(atajo, segundos=None, isla=False):
     while True:
         if isla and despues is not None:  # solo el bucle principal, no la confirmación por voz
             despues.revisar()
-            try:
-                llegado = oido.cola.get_nowait()
-                if llegado[0] == "seguimiento":
-                    return llegado
+            llegado = None
+            if oido is not None:
+                try:
+                    llegado = oido.cola.get_nowait()
+                except queue.Empty:
+                    pass
+            if llegado and llegado[0] == "seguimiento":
+                return llegado
+            if llegado:
                 print("  (fin de la escucha de seguimiento: "
                       f"{'otra app sonando' if llegado[1] == 'otro_audio' else 'nadie habló'})", flush=True)
-            except queue.Empty:
-                pass
         if atajo.pulsado.is_set():
             atajo.pulsado.clear()
             return "atajo"
