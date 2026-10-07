@@ -259,7 +259,7 @@ Formato: **ID**, requisito ("debe"), **criterio verificable** y estado.
 
 | ID | Requisito | Criterio | Estado |
 |---|---|---|---|
-| RF-70 | El modo debe cambiar solo con un clic físico en la bandeja o en la isla; empieza apagado en cada arranque y el atajo de emergencia lo apaga. Ninguna herramienta, frase ni voz puede cambiarlo | `probar_modo_directo.py` parte 6; clic inyectado: no cambia (`probar_fase7.py` C); clic de Reizo en la isla y la bandeja: llega como físico (servidor de prueba, sin activar el modo) | Verificado (simulación y clic real). El modo en uso real: **Pendiente** |
+| RF-70 | El modo debe cambiar solo con un clic físico en la bandeja o en la isla; empieza apagado en cada arranque y el atajo de emergencia lo apaga. Ninguna herramienta, frase ni voz puede cambiarlo | `probar_modo_directo.py` parte 6; clic inyectado: no cambia; con Reizo (2026-10-06): activado y desactivado con su clic; volumen, abrir y cerrar una app, escribir el texto del pedido, mover y deshacer, sin preguntar; PowerShell preguntó | Verificado (simulación y real) |
 | RF-71 | Con el modo activo van directas: volumen, abrir_app, enfocar_ventana, buscar_web, cerrar_app normal y deshacer_movimiento | `probar_modo_directo.py` parte 1 | Verificado (simulación) |
 | RF-72 | `mouse` va directo solo si el punto del clic cae en una ventana de la app que Reizo nombró en el pedido (nunca barra de tareas, escritorio, Inicio ni la isla); `teclado` solo en la ventana al frente de la app nombrada, y "escribir" solo con texto que sale del pedido | Texto leído en pantalla o en un archivo, clic fuera de la ventana y en la barra de tareas: vuelven a preguntar | Verificado (simulación) (`probar_modo_directo.py` partes 2 y 3) |
 | RF-73 | Justo antes de un clic o de escribir sin confirmación, la ventana debe volver a comprobarse; si cambió, no se actúa | `agente_minimo._guardia` | Verificado (simulación) (`probar_modo_directo.py` parte 3) |
@@ -292,9 +292,12 @@ Formato: **ID**, requisito ("debe"), **criterio verificable** y estado.
 
 | ID | Requisito | Criterio | Estado |
 |---|---|---|---|
-| RF-97 | `iniciar_cacao.ps1` debe lanzar `voz.py` (agente con isla y palabra de activación) sin permisos de administrador, esperando 60 s con `-AlInicio` y con `ESPERAR_JUEGO=1` | `-Simular` muestra el comando y no carga nada | Verificado (simulación) |
-| RF-98 | No debe abrir un segundo Cacao si ya hay uno en marcha | Con un proceso falso de `voz.py`: "ya está en marcha" y sale | Verificado (simulación) |
-| RF-99 | El acceso directo debe crearse en `C:\asistente` y solo pasar a `shell:startup` con `crear_acceso_directo.ps1 -Inicio` (quitarlo con `-Quitar`) | `Cacao.lnk` creado; la carpeta de Inicio sigue solo con el registro de hábitos | Verificado (real, solo creación). Arranque al iniciar sesión: **Pendiente** |
+| RF-97 | `iniciar_cacao.ps1` debe lanzar `voz.py` (agente con isla y palabra de activación) sin permisos de administrador, esperando 60 s con `-AlInicio` y con `ESPERAR_JUEGO=1` | Doble clic en `Cacao.lnk`: voz, isla y escucha; respondió a "Cacao" | Verificado (real, 2026-10-06) |
+| RF-98 | No debe abrir un segundo Cacao si ya hay uno en marcha, y debe avisarlo de forma visible | Segundo doble clic: un solo Cacao y una ventanita de 4 s | Verificado (real) |
+| RF-99 | El acceso directo debe crearse en `C:\asistente` y solo pasar a `shell:startup` con `crear_acceso_directo.ps1 -Inicio` (quitarlo con `-Quitar`) | `Cacao.lnk` en la carpeta de Inicio, con `-AlInicio` y ventana minimizada | **Activado** el 2026-10-06. Arranque al iniciar sesión: **Pendiente** |
+| RF-100 | Tras cada atajo, tecla o clic, Cacao debe comprobar si tuvo efecto (ventana al frente, título, ventanas del proceso, foco, portapapeles; hasta 1,5 s) y, si no, decírselo al modelo y avisar en la isla; al terminar, decir qué falló y cómo se resolvió, o pedir ayuda | Ctrl+S en el Bloc de notas: aviso en la isla y en la respuesta (real) | Verificado (simulación y real) |
+| RF-101 | La tabla `obstaculos` (memoria.db) debe guardar por app y acción el camino que funcionó (atajo o ruta de menú), escrita solo por el código, nunca con contenido externo en la tarea; la próxima vez se usa directo y entra en el prompt | Real: Bloc de notas, Ctrl+S → Ctrl+G, usado 3 veces; `probar_obstaculos.py` 35/35 | Verificado (simulación y real). Límite: guardar algo sin cambios no deja efecto visible |
+| RF-102 | Cada pedido debe llevar la fecha y la hora actuales | `[Ahora: martes 6 de octubre de 2026, 21:50]` | Verificado (simulación) |
 
 ---
 
@@ -352,6 +355,9 @@ ventana activa") empezara con `listar_ventanas` en 3/3. Se acotó a "cuando nomb
 
 **Medido otra vez el 2026-10-06** con el prompt actual (nombre "Cacao", `deshacer_movimiento`): 195/195 (100 %)
 en primera herramienta y tarea completa, JSON 100 %, frase 58 3/3, **3,71 s** de media (`resultados_pruebas_65_cacao.json`).
+Con los atajos comprobados, el aviso de idioma y la fecha en cada pedido: primera herramienta 195/195, tarea completa
+193/195 (frase 44: en la simulación la terminal ya está al frente), frase 56 con `listar_ventanas` aceptado como
+primer paso, **3,91 s** de media (`resultados_pruebas_65_fecha.json`).
 
 ### 4.5 Fiabilidad y mantenimiento
 

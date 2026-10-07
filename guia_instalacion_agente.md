@@ -434,22 +434,32 @@ la tercera, la del script actual, con tonos desplazados y frases de corrido, no 
 | Isla con tu clic (`prueba_presencial_isla.py`, servidor de prueba) | Interruptores de la isla y de la bandeja: físicos; indicadores a la vista. Campo: Enter y Esc devuelven el foco al Bloc de notas, el clic fuera lo deja en la ventana del clic, el clic en la isla vuelve al Bloc de notas, los botones no quitan el foco; se ve bien. 13/13 |
 | "Confirmo la instrucción" con tu voz (Cacao real, modo voz) | Ctrl+Espacio + frase: vale (abrió la Calculadora). "Cacao, confirmo la instrucción" sin teclas: vale (abrió el Bloc de notas). "Sí" solo: no vale; Esc: no se abrió nada |
 
+### Segunda tanda presencial (2026-10-06, noche)
+
+| Prueba | Resultado |
+|---|---|
+| Ctrl+S en el Bloc de notas (`diagnostico_atajos.py`: código virtual, de escaneo, KEYEVENTF_SCANCODE, con y sin pausas) | 0/10: no era el envío. En español, **Guardar es Ctrl+G** (Ctrl+S no existe en el Bloc de notas; en Word es Subrayado) |
+| Obstáculos (`obstaculos.py`): Cacao comprueba el efecto de cada atajo y clic, avisa y recuerda el camino | Tres rondas reales: la primera aprendió mal (el Esc que cierra el diálogo) y la segunda solo "Archivo"; corregido. Al final: Ctrl+S → **Ctrl+G** directo, con aviso. `probar_obstaculos.py` 35/35 |
+| Modo sin confirmación, contigo (pedidos escritos en la isla) | Volumen, abrir y cerrar la Calculadora, escribir en el Bloc de notas el texto del pedido, mover un archivo y deshacerlo: sin preguntar. PowerShell **sí** preguntó (dos veces). Se activa y apaga con tu clic |
+| Arranque con `Cacao.lnk` | Arranca la voz, la isla y la escucha; respondió a "Cacao". Un segundo doble clic no abre otro Cacao (aviso de 4 s). **Activado en Inicio** |
+| 65 frases × 3 con el prompt nuevo (atajos comprobados, Windows en español, fecha y hora en cada pedido) | Primera herramienta 195/195; tarea completa 193/195 (la frase 44: en la simulación la terminal ya está al frente y responde eso); 3,91 s de media |
+
+El modo sin confirmación empieza apagado en cada arranque (no se guarda en ningún archivo). Cada pedido lleva la fecha
+y la hora ("[Ahora: martes 6 de octubre de 2026, 21:50]"), así Cacao responde "¿qué hora es?" sin buscar.
+
 ### Pendiente para cuando estés frente al PC (en orden)
 
-1. **Modo sin confirmación en real:** volumen y abrir una app directos; escribir en el Bloc de notas con texto de tu
-   pedido; mover 2 archivos de prueba y "deshaz lo último"; el atajo de emergencia lo apaga.
-2. **autocompletar_login:** activa Windows Hello en Chrome (punto 13) y prueba a mano que Chrome lo pide; luego
+1. **autocompletar_login:** activa Windows Hello en Chrome (punto 13) y prueba a mano que Chrome lo pide; luego
    `autocompletar_login.activa: true`, añade 2-3 frases al set y vuelve a pasar las 65 frases; prueba en un sitio
    con cuenta guardada: con Hello rellena y no envía; si cancelas Hello no rellena; con otra ventana al frente da
    error.
-3. **Arranque automático:** doble clic en `Cacao.lnk`; si arranca bien (isla, "Cacao", Ctrl+Espacio), actívalo con
-   `crear_acceso_directo.ps1 -Inicio`, cierra sesión y vuelve a entrar. Prueba también a iniciar sesión con un juego
-   que se abra solo: Cacao debe esperar.
-4. **"Cacao" en el día a día:** mira `contador_cacao.json` tras unos días (activaciones de la primera etapa frente a
+2. **Arranque automático (ya activo):** al reiniciar o iniciar sesión, mira que Cacao aparezca a los ~60 s. Prueba
+   también a iniciar sesión con un juego que se abra solo: Cacao debe esperar.
+3. **"Cacao" en el día a día:** mira `contador_cacao.json` tras unos días (activaciones de la primera etapa frente a
    pedidos). "Cacao" dicho rápido aún no se detecta.
-5. **Grabar la isla** con "Permitir capturas".
-6. **Mando:** detección de actividad (no había uno a mano).
-7. **Datos reales:** Obsidian, y la reflexión diaria y las sugerencias tras una semana de hábitos. `apps_banco` sigue
+4. **Grabar la isla** con "Permitir capturas".
+5. **Mando:** detección de actividad (no había uno a mano).
+6. **Datos reales:** Obsidian, y la reflexión diaria y las sugerencias tras una semana de hábitos. `apps_banco` sigue
    vacío (no hay apps de banco en este PC).
 
 ---
