@@ -17,7 +17,12 @@ Entrena y mide el detector de la palabra "Cacao" (palabra_activacion.py). Todo l
    ~11 h del conjunto de validación de openWakeWord (modelos/cacao/validation_set_features.npy).
 Sale modelos/cacao/cacao.npz y resultados_cacao.json.
 
-Uso: .venv\\Scripts\\python entrenar_cacao.py [--palabra "oye cacao"]   (para comparar con "Oye, Cacao")
+Con --reales se añaden las grabaciones de Reizo de voz_pruebas/cacao_real (grabar_cacao.py): dos tercios de cada
+categoría entrenan (la palabra sola, con REPETICIONES_REAL variaciones de ruido, eco, volumen y tono; las palabras
+parecidas como negativos; "de corrido" no, porque no se sabe dónde acaba la palabra) y el tercio restante, que el
+modelo no ve, se mide en 'reales_prueba'. --salida NOMBRE guarda en modelos/cacao/NOMBRE.npz (sin tocar cacao.npz).
+
+Uso: .venv\\Scripts\\python entrenar_cacao.py [--palabra "oye cacao"] [--reales] [--salida cacao_v4]
 """
 import json
 import sys
@@ -39,6 +44,25 @@ PALABRA = "cacao"
 if "--palabra" in sys.argv:
     PALABRA = sys.argv[sys.argv.index("--palabra") + 1].lower()
 NOMBRE = PALABRA.replace(" ", "_")
+REALES = "--reales" in sys.argv
+SALIDA = sys.argv[sys.argv.index("--salida") + 1] if "--salida" in sys.argv else NOMBRE
+CARPETA_REALES = BASE / "voz_pruebas" / "cacao_real"
+REPETICIONES_REAL = 30
+
+
+def dividir_reales():
+    """(entrenamiento, prueba): listas de (archivo, categoría, audio). La prueba es una toma de cada tres de cada
+    categoría (la 3.ª, 6.ª...), siempre las mismas; 'de corrido' va entera a la prueba."""
+    indice = json.loads((CARPETA_REALES / "indice.json").read_text(encoding="utf-8"))
+    entrenamiento, prueba = [], []
+    por_cat = {}
+    for x in indice:
+        por_cat.setdefault(x["categoria"], []).append(x)
+    for cat, tomas in por_cat.items():
+        for i, x in enumerate(sorted(tomas, key=lambda t: t["archivo"]), 1):
+            fila = (x["archivo"], cat, leer_wav(CARPETA_REALES / x["archivo"]))
+            (prueba if cat == "de_corrido" or i % 3 == 0 else entrenamiento).append(fila)
+    return entrenamiento, prueba
 TEXTOS_POSITIVOS = {"cacao": ["Cacao", "Cacao.", "¡Cacao!", "Cacao,", "¿Cacao?"],
                     "oye cacao": ["Oye, Cacao", "Oye Cacao.", "¡Oye, Cacao!", "Oye Cacao,"]}[PALABRA]
 PARECIDAS = ["caso", "acaso", "Macao", "cacahuate", "caca", "Caracas", "cacatúa", "Callao", "cazo", "ocaso",
@@ -293,6 +317,15 @@ def datos(voces):
                 frases = [otra_voz(sintetizar(voz, f, sid, RNG.uniform(0.85, 1.2))) for f in FRASES_ENTRENAMIENTO]
                 neg_largos.append(flujo(frases, fondo_snr=RNG.uniform(10, 30)))
         print(f"  voz {nombre}: {len(pos)} positivos, {len(neg_clips)} negativos cortos", flush=True)
+    if REALES:
+        entrenamiento, _ = dividir_reales()
+        for _, cat, audio in entrenamiento:
+            palabra = recortar(audio, umbral=700)
+            destino = neg_clips if cat == "parecida" else pos
+            for _ in range(REPETICIONES_REAL if cat != "parecida" else REPETICIONES_REAL // 2):
+                destino.append(ventana_con_palabra(otra_voz(palabra)))
+        print(f"  tus grabaciones: {sum(c != 'parecida' for _, c, _ in entrenamiento)} positivas y "
+              f"{sum(c == 'parecida' for _, c, _ in entrenamiento)} parecidas para entrenar", flush=True)
     if registro:
         neg_largos.append(flujo(registro))
     neg_largos.append(a_int16(ruido(5 * 60 * pa.TASA, "blanco") * 300))
@@ -416,6 +449,14 @@ def medir(modelo, umbral, paciencia, voces_prueba):
     fp = detecciones(modelo, fondo, umbral, paciencia)
     r["audio_de_fondo"] = {"minutos": round(len(fondo) / pa.TASA / 60, 1), "activaciones": len(fp)}
     r["validacion_openwakeword"] = validacion_fp(modelo, umbral, paciencia)
+    if REALES:  # tus grabaciones que el modelo no vio (1 s de silencio antes, como en la escucha real)
+        _, prueba = dividir_reales()
+        pos_ok = [bool(detecciones(modelo, np.concatenate([np.zeros(pa.TASA, np.int16), a, np.zeros(pa.TASA // 2, np.int16)]), umbral, paciencia))
+                  for _, c, a in prueba if c != "parecida"]
+        neg_ok = [bool(detecciones(modelo, np.concatenate([np.zeros(pa.TASA, np.int16), a, np.zeros(pa.TASA // 2, np.int16)]), umbral, paciencia))
+                  for _, c, a in prueba if c == "parecida"]
+        r["reales_prueba"] = {"detectadas": sum(pos_ok), "total": len(pos_ok),
+                              "parecidas_activadas": sum(neg_ok), "parecidas": len(neg_ok)}
     # 5) tus grabaciones de voz_pruebas (no se usaron al entrenar)
     wavs = sorted((BASE / "voz_pruebas").glob("*.wav"))
     if wavs:
@@ -460,10 +501,10 @@ def main():
         print(f"Ronda {ronda}: {len(dificiles)} negativos reales difíciles ({time.time() - t0:.0f} s)", flush=True)
         mlp, media, escala = entrenar(x_pos, np.concatenate([x_neg, x_real] + [dificiles] * 3))
     print(f"Entrenado ({time.time() - t0:.0f} s). Midiendo con voces que no vio...", flush=True)
-    ruta = BASE / "modelos" / "cacao" / f"{NOMBRE}.npz"
+    ruta = BASE / "modelos" / "cacao" / f"{SALIDA}.npz"
     voces_prueba = [v for v in voces if v[0] in PRUEBA]
     resultados = []
-    for umbral in (0.3, 0.5, 0.7, 0.85, 0.95):
+    for umbral in (0.3, 0.5, 0.7, 0.85, 0.9, 0.95):
         guardar(mlp, media, escala, umbral, 2, ruta)
         r = medir(pa.ModeloCacao(ruta), umbral, 2, voces_prueba)
         print(json.dumps(r, ensure_ascii=False), flush=True)
@@ -479,7 +520,7 @@ def main():
     salida = {"palabra": PALABRA, "voces_entrenamiento": [n for n, _, _ in voces if n not in PRUEBA],
               "voces_prueba": sorted(PRUEBA), "positivos": len(x_pos), "negativos": len(x_neg),
               "segundos": round(time.time() - t0), "por_umbral": resultados, "elegido": elegido}
-    (BASE / f"resultados_{NOMBRE}.json").write_text(json.dumps(salida, ensure_ascii=False, indent=1), encoding="utf-8")
+    (BASE / f"resultados_{SALIDA}.json").write_text(json.dumps(salida, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"\nElegido: umbral {elegido['umbral']}. Modelo en {ruta}. Total {time.time() - t0:.0f} s.")
 
 

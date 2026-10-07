@@ -123,6 +123,8 @@ def pruebas_texto():
         ok(f"quitar_palabra: «{entrada}» -> «{salida}»", pa.quitar_palabra(entrada) == salida, pa.quitar_palabra(entrada))
     for texto, esperado in (("Cacao, sube el volumen.", True), ("Oye, Cacao, pon música.", True),
                             ("Kakao abre Spotify", True), ("Me gusta el chocolate con mucho cacao.", False),
+                            ("Entonces el cacao se produce muy bien en Colombia.", False), ("¡Caca!", False),
+                            ("Hola, Cacao, pon música.", True), ("Del cacao sale el chocolate.", False),
                             ("El caso es que no tengo tiempo.", False), ("Caracas es bonita.", False),
                             ("Gracias por ver el video.", False), ("", False)):
         ok(f"segunda etapa: «{texto}» {'empieza' if esperado else 'no empieza'} con la palabra",

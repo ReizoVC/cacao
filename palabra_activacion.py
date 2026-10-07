@@ -40,12 +40,22 @@ def _normalizar(texto):
 
 def es_la_palabra(palabra):
     from rapidfuzz import fuzz
-    return palabra in FORMAS or fuzz.ratio(palabra, "cacao") >= 80
+    # palabras cortas solo exactas: "caca" se parece un 89 % a "cacao" y no es la palabra
+    return palabra in FORMAS or (len(palabra) >= 5 and fuzz.ratio(palabra, "cacao") >= 80)
+
+
+# lo único que puede ir antes de la palabra: un saludo o llamada ("Oye, Cacao", "Hola Cacao"). "Entonces el cacao
+# se produce..." (un video) no es una llamada: la palabra no va tras un artículo ni en medio de una frase.
+LLAMADAS = {"oye", "oiga", "hola", "ey", "hey", "eh", "a", "ah", "oh"}
 
 
 def empieza_con_la_palabra(texto):
-    """True si una de las 3 primeras palabras es "Cacao" ("Cacao, sube...", "Oye, Cacao, ...")."""
-    return any(es_la_palabra(p) for p in _normalizar(texto)[:3])
+    """True si la transcripción empieza con "Cacao", o con una o dos llamadas y "Cacao" ("Oye, Cacao, ...")."""
+    palabras = _normalizar(texto)
+    for i, p in enumerate(palabras[:3]):
+        if es_la_palabra(p):
+            return all(q in LLAMADAS for q in palabras[:i])
+    return False
 
 
 def quitar_palabra(texto):
