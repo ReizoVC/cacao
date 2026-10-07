@@ -1,4 +1,5 @@
-# Crea el acceso directo de Cacao (iniciar_cacao.ps1, en una ventana minimizada). Sin permisos de administrador.
+# Crea el acceso directo de Cacao (pythonw.exe iniciar_cacao.py: sin ninguna ventana de terminal). Sin permisos de
+# administrador.
 #   sin parametros  Cacao.lnk en esta carpeta, para arrancarlo con doble clic (no arranca con Windows).
 #   -Inicio         lo pone tambien en la carpeta de Inicio del usuario (shell:startup): Cacao arranca al iniciar
 #                   sesion. Hazlo solo estando frente al PC.
@@ -20,11 +21,11 @@ if ($Quitar) {
 function New-AccesoCacao([string]$ruta, [bool]$alInicio) {
     $shell = New-Object -ComObject WScript.Shell
     $lnk = $shell.CreateShortcut($ruta)
-    $lnk.TargetPath = Join-Path $env:SystemRoot "System32\WindowsPowerShell\v1.0\powershell.exe"
-    $extra = if ($alInicio) { " -AlInicio" } else { "" }
-    $lnk.Arguments = "-NoProfile -ExecutionPolicy Bypass -WindowStyle Minimized -File `"$base\iniciar_cacao.ps1`"$extra"
+    $lnk.TargetPath = Join-Path $base ".venv\Scripts\pythonw.exe"   # pythonw: sin consola
+    $extra = if ($alInicio) { " --al-inicio" } else { "" }
+    $lnk.Arguments = "`"$base\iniciar_cacao.py`"$extra"
     $lnk.WorkingDirectory = $base
-    $lnk.WindowStyle = 7  # minimizada
+    $lnk.WindowStyle = 1
     $lnk.Description = "Cacao: asistente de escritorio (voz, isla y palabra de activacion)"
     $config = Get-Content (Join-Path $base "config.json") -Raw -Encoding UTF8 | ConvertFrom-Json
     if (Test-Path $config.ui.exe) { $lnk.IconLocation = "$($config.ui.exe),0" }

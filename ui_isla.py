@@ -81,6 +81,8 @@ class ServidorIsla:
         self.al_cambiar_modo = None  # función(modo, fisico, origen): solo el agente cambia sus modos
         self.al_conectar = None   # función() al conectarse la isla (el agente le manda sus modos)
         self.al_pedido = None     # función(texto) con lo escrito en el campo de la isla (pedidos.ColaPedidos)
+        self.al_salir = None      # función() de «Salir de Cacao» en la bandeja (la isla ya comprobó el clic físico)
+        self.al_ver_terminal = None  # función() de «Ver terminal» en la bandeja
         self.rechazos = []        # (motivo) de conexiones rechazadas, para las pruebas y el registro
         self._loop = None
         self._hilo = None
@@ -158,6 +160,10 @@ class ServidorIsla:
                                          "bandeja" if m.get("origen") == "bandeja" else "isla")
                 elif m.get("tipo") == "pedido" and self.al_pedido:
                     self.al_pedido(m.get("texto"))
+                elif m.get("tipo") == "salir" and self.al_salir:
+                    self.al_salir()
+                elif m.get("tipo") == "ver_terminal" and self.al_ver_terminal:
+                    self.al_ver_terminal()
                 elif m.get("tipo") == "rect":
                     self.rect = {k: float(m.get(k, 0)) for k in ("x", "y", "ancho", "alto", "escala")}
         except websockets.ConnectionClosed:

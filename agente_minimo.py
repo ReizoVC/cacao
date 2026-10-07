@@ -14,6 +14,7 @@ Las categorías de las apps se guardan en apps_categorias.json y solo se calcula
 """
 import gc
 import json
+import os
 import re
 import subprocess
 import time
@@ -881,11 +882,21 @@ _proceso_isla = None
 cola_pedidos = pedidos.ColaPedidos()
 
 
+# Cacao en segundo plano (iniciar_cacao.py, sin terminal): su salida va a REGISTRO y la pregunta de una confirmación
+# solo se ve en la isla, así que sin isla conectada la respuesta es no.
+SEGUNDO_PLANO = os.environ.get("CACAO_SEGUNDO_PLANO") == "1"
+REGISTRO = Path(__file__).parent / "registro_cacao.log"
+
+
 def confirmar(herramienta, resumen, motivo=None, comando=None):
     """Sí/no de Reizo, solo con entrada física: Enter/Esc del teclado o los botones de la isla (clic físico). Nunca
     con teclas o clics inyectados, así el agente no puede aprobar sus propias acciones con mouse o teclado.
-    Sin respuesta en 30 s (o con el atajo de emergencia) cuenta como no."""
+    Sin respuesta en 30 s (o con el atajo de emergencia) cuenta como no. En segundo plano, sin la isla conectada
+    no hay dónde ver la pregunta: no."""
     global _confirmacion
+    if SEGUNDO_PLANO and (_isla is None or not _isla.conectada):
+        print(f"  ¿{resumen}?  -> no (la isla no está conectada y no hay terminal donde preguntar)", flush=True)
+        return False
     if _confirmacion is None:
         from ui_isla import Confirmar
         _confirmacion = Confirmar(_isla, CONFIG.get("ui", {}).get("confirmar_timeout_s", 30),
@@ -904,6 +915,14 @@ def notificar(estado, detalle=""):
         _isla.estado(estado, detalle)
 
 
+def notificar_reposo():
+    """Vuelta al reposo; en modo juego, a dormido (la isla compacta con Cacao durmiendo), no a despierto."""
+    if _modo_juego is not None and _modo_juego.en_pausa():
+        notificar("juego", _modo_juego.mensaje())
+    else:
+        notificar("reposo")
+
+
 def iniciar_isla():
     """Servidor WebSocket local, guardas para que mouse/capturas no toquen la isla, y la isla si está compilada."""
     global _isla, _proceso_isla
@@ -915,6 +934,10 @@ def iniciar_isla():
     _isla.al_cambiar_modo = cambiar_modo
     _isla.al_conectar = enviar_modos
     _isla.al_pedido = cola_pedidos.desde_isla
+    # bandeja de la isla: «Salir de Cacao» entra como el pedido "salir" (la misma salida limpia que escribirlo o
+    # decirlo) y «Ver terminal» abre la salida en vivo
+    _isla.al_salir = lambda: cola_pedidos.desde_isla("salir")
+    _isla.al_ver_terminal = ver_terminal
     _isla.iniciar()
     herramientas_grupo4.zonas_isla = _isla.zonas_isla
     import vision as _vision
@@ -925,6 +948,21 @@ def iniciar_isla():
         _proceso_isla = subprocess.Popen([str(exe)], cwd=str(exe.parent))
         _atar_isla(_proceso_isla)
     return _isla
+
+
+def ver_terminal():
+    """Una ventana con la salida de Cacao en vivo y lo último del registro (PowerShell con Get-Content -Wait). Es
+    otro proceso: cerrarla no cierra Cacao. Sin segundo plano, la salida ya está en la terminal donde corre."""
+    if not SEGUNDO_PLANO:
+        if _isla is not None:
+            _isla.enviar({"tipo": "aviso", "texto": "Cacao corre en una terminal propia: su salida está ahí."})
+        return
+    ruta = str(REGISTRO).replace("'", "''")
+    orden = ("$Host.UI.RawUI.WindowTitle = 'Cacao: terminal (cerrarla no cierra Cacao)'; "
+             f"Get-Content -LiteralPath '{ruta}' -Tail 300 -Wait -Encoding UTF8")
+    subprocess.Popen(["powershell.exe", "-NoProfile", "-NoLogo", "-Command", orden],
+                     creationflags=subprocess.CREATE_NEW_CONSOLE)
+    print("  [bandeja] ventana de la terminal abierta", flush=True)
 
 
 def _atar_isla(proceso):
@@ -978,17 +1016,20 @@ def descargar_modelos():
     llm.close()
     llm = None
     gc.collect()
+    notificar_reposo()  # la isla queda compacta, con Cacao dormido
 
 
 def cargar_modelos():
     """Al cerrar el juego: vuelve a cargar Gemma con los mismos parámetros y lo conecta de nuevo."""
     global llm
+    notificar("pensando", "Despierto: vuelvo a cargar el modelo…")
     llm = crear_llm(CONFIG, comprobar_juego=False)  # el detector del modo juego ya dio el juego por terminado
     llm.interrumpir = emergencia.comprobar
     for _, cargar in EXTRAS_MODO_JUEGO:
         cargar()
     if _planificador is not None:
         _planificador.llm = llm
+    notificar("reposo")
 
 
 def iniciar_memoria_wiki():
