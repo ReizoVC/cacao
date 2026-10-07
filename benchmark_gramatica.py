@@ -51,7 +51,8 @@ NOMBRES = {"CATEGORIAS", "LIMITE_RESULTADO", "normalizar", "listar_apps", "ESQUE
            "preparar_apertura", "cubre_bien", "ARTICULOS", "GENERICOS", "APPS_SENSIBLES", "ver_pantalla",
            "terminar", "ACCIONES_A_VERIFICAR", "VERIFICADORAS", "MAX_RECORDATORIOS", "MENSAJE_DETENIDO",
            "MODO_VOZ", "PLANIFICADORES", "TEXTO_EXTERNO", "GUARDAN_SOBRE_REIZO", "SOLO_CONSULTAN", "_tarea",
-           "_modos", "_decision", "_politica", "decision_modo", "_guardia", "enviar_modos", "_isla"}
+           "_modos", "_decision", "_politica", "decision_modo", "_guardia", "enviar_modos", "_isla",
+           "camino_conocido", "anotar_intento", "legible", "nombre_app", "NOMBRES_APPS"}
 arbol = ast.parse((BASE / "agente_minimo.py").read_text(encoding="utf-8"))
 nodos = [n for n in arbol.body
          if (isinstance(n, ast.FunctionDef) and n.name in NOMBRES)
@@ -63,7 +64,12 @@ if os.environ.get("SOLO_FASE3"):  # para comparar con el prompt de la Fase 3
     ACTIVAS = {"listar_apps", "abrir_app", "volumen", "finalizar"}
 import herramientas_grupo4
 import modo_directo
-ns = {"json": json, "re": re, "time": time, "herramientas_grupo4": herramientas_grupo4, "modo_directo": modo_directo, "Counter": Counter, "process": process, "fuzz": fuzz, "unicodedata": unicodedata,
+import obstaculos
+from types import SimpleNamespace
+# el prompt lleva los atajos comprobados reales; las sustituciones no se aplican (dependerían de la ventana al frente)
+obstaculos_sim = SimpleNamespace(para_prompt=obstaculos.para_prompt, nombre_atajo=obstaculos.nombre_atajo,
+                                 consultar=lambda app, accion: None, contar_uso=lambda *a: None)
+ns = {"obstaculos": obstaculos_sim, "json": json, "re": re, "time": time, "herramientas_grupo4": herramientas_grupo4, "modo_directo": modo_directo, "Counter": Counter, "process": process, "fuzz": fuzz, "unicodedata": unicodedata,
       "CATALOGO": CATALOGO, "planificar_powershell": ps.planificar_powershell, "capturar": capturar, "PRESUPUESTOS": PRESUPUESTOS, "CapturaBloqueada": CapturaBloqueada,
       "_presupuesto_imagen": 280, "_ultima_captura": None,
       "HERRAMIENTAS": {h["nombre"]: h for h in CATALOGO["herramientas"] if h["nombre"] in ACTIVAS},

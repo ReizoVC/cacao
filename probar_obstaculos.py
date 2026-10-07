@@ -120,6 +120,10 @@ def pruebas_tabla():
         obstaculos.olvidar("notepad.exe", "ctrl+s")
         ok("tabla: olvidar deja la fila sin alternativa", obstaculos.consultar("notepad.exe", "ctrl+s") is None
            and any(f[0] == "notepad.exe" and f[1] == "ctrl+s" for f in obstaculos.listar()))
+        obstaculos.registrar_alternativa("notepad.exe", "ctrl+s", "ctrl+g", "atajo")
+        lineas = obstaculos.para_prompt()
+        ok("prompt: los caminos comprobados entran como líneas para el modelo",
+           "En el Bloc de notas, Ctrl+S no funciona: usa Ctrl+G." in lineas, lineas)
         intentos = [{"app": "x.exe", "accion": "ctrl+a", "tipo": "atajo", "efecto": False}]
         ok("tabla: un fallo sin otro camino no guarda alternativa", obstaculos.resolver(intentos, False) == []
            and obstaculos.consultar("x.exe", "ctrl+a") is None)
@@ -213,6 +217,10 @@ def pruebas_ejecutor():
            is None)
     con_base_temporal(cuerpo)
     fuente = (BASE / "agente_minimo.py").read_text(encoding="utf-8")
+    ok("agente: el prompt dice que Windows está en español y que Guardar suele ser Ctrl+G",
+       "Windows está en español" in fuente and "Guardar suele ser Ctrl+G" in fuente)
+    ok("agente: el prompt lleva los atajos comprobados y se rehace al aprender uno",
+       "caminos = obstaculos.para_prompt()" in fuente and "historial[0][\"content\"] = prompt_sistema(voz)" in fuente)
     ok("agente: la respuesta final (isla y voz) lleva el aviso de obstáculos",
        "aviso_obstaculos = cerrar_obstaculos(bool(exito_tarea))" in fuente)
 

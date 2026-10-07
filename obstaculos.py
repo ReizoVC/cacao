@@ -102,6 +102,31 @@ def consultar(app, accion):
     return {"fallos": fila[0], "alternativa": fila[1], "tipo": fila[2]} if fila else None
 
 
+NOMBRES = {"notepad.exe": "el Bloc de notas", "winword.exe": "Word", "excel.exe": "Excel",
+           "powerpnt.exe": "PowerPoint", "chrome.exe": "Chrome", "msedge.exe": "Edge", "code.exe": "VS Code",
+           "explorer.exe": "el Explorador"}
+
+
+def _legible(atajo):
+    return "+".join(t.capitalize() if len(t) > 1 else t.upper() for t in atajo.split("+"))
+
+
+def para_prompt(limite=15):
+    """Líneas para el prompt de sistema: los caminos que funcionan en este PC, para que el modelo planifique ya con
+    ellos (y lo diga en su pensamiento). Solo filas con alternativa, las más usadas primero."""
+    if not memoria.RUTA.exists():
+        return []
+    with _conectar() as con:
+        filas = con.execute("SELECT app, accion, alternativa, tipo_alternativa FROM obstaculos WHERE alternativa IS "
+                            "NOT NULL ORDER BY usos_alternativa DESC, ultima DESC LIMIT ?", (limite,)).fetchall()
+    lineas = []
+    for app, accion, alternativa, tipo in filas:
+        nombre = NOMBRES.get(app, app.removesuffix(".exe"))
+        camino = _legible(alternativa) if tipo == "atajo" else f"el menú {alternativa}"
+        lineas.append(f"En {nombre}, {_legible(accion)} no funciona: usa {camino}.")
+    return lineas
+
+
 def listar():
     with _conectar() as con:
         return con.execute("SELECT app, accion, fallos, alternativa, tipo_alternativa, usos_alternativa, ultima "
