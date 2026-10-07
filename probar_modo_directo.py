@@ -201,7 +201,8 @@ def pruebas_mover():
 
 def cargar_ejecutor():
     nombres = {"ejecutar", "decision_modo", "_guardia", "cambiar_modo", "enviar_modos", "_modos", "_decision",
-               "_tarea", "TEXTO_EXTERNO", "GUARDAN_SOBRE_REIZO", "SOLO_CONSULTAN"}
+               "_tarea", "TEXTO_EXTERNO", "GUARDAN_SOBRE_REIZO", "SOLO_CONSULTAN", "camino_conocido",
+               "anotar_intento", "legible", "nombre_app", "NOMBRES_APPS"}
     arbol = ast.parse((BASE / "agente_minimo.py").read_text(encoding="utf-8"))
     nodos = [n for n in arbol.body if (isinstance(n, ast.FunctionDef) and n.name in nombres)
              or (isinstance(n, ast.Assign) and any(getattr(t, "id", None) in nombres for t in n.targets))]
@@ -212,7 +213,11 @@ def cargar_ejecutor():
         def enviar(self, m):
             enviados.append(m)
 
+    obstaculos_falso = type("O", (), {"consultar": staticmethod(lambda app, accion: None),
+                                      "nombre_atajo": staticmethod(lambda teclas: "+".join(teclas or [])),
+                                      "contar_uso": staticmethod(lambda *a: None)})()
     ns = {"json": json, "modo_directo": md, "herramientas_grupo4": g4, "PLANIFICADORES": {}, "Detenido": KeyError,
+          "obstaculos": obstaculos_falso,
           "HERRAMIENTAS": {h["nombre"]: h for h in catalogo["herramientas"]}, "_isla": IslaFalsa(),
           "confirmar": lambda *a, **k: preguntas.append(a) or False,
           "emergencia": type("E", (), {"comprobar": staticmethod(lambda: None)})(), "print": lambda *a, **k: None}

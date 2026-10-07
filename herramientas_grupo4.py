@@ -441,6 +441,68 @@ def buscar_control(id_ventana, nombre):
     return control, None
 
 
+# ---------- ¿tuvo efecto? (obstaculos.py) ----------
+
+class _GUITHREADINFO(ctypes.Structure):
+    _fields_ = [("cbSize", wintypes.DWORD), ("flags", wintypes.DWORD), ("hwndActive", wintypes.HWND),
+                ("hwndFocus", wintypes.HWND), ("hwndCapture", wintypes.HWND), ("hwndMenuOwner", wintypes.HWND),
+                ("hwndMoveSize", wintypes.HWND), ("hwndCaret", wintypes.HWND), ("rcCaret", wintypes.RECT)]
+
+
+ESPERA_EFECTO_S = 1.5  # un diálogo como "Guardar como" tarda en aparecer
+
+
+def proceso_de(hwnd):
+    try:
+        return psutil.Process(win32process.GetWindowThreadProcessId(hwnd)[1]).name().lower()
+    except (psutil.Error, Exception):
+        return ""
+
+
+def instantanea():
+    """Lo visible de la ventana al frente, para saber si una acción cambió algo: la ventana al frente, su título
+    (solo en memoria, para comparar), las ventanas visibles de su proceso (diálogos, menús), el control con el foco
+    y el número de secuencia del portapapeles."""
+    frente = win32gui.GetForegroundWindow()
+    hilo, pid = win32process.GetWindowThreadProcessId(frente)
+    ventanas = set()
+
+    def agregar(h, _):
+        if win32gui.IsWindowVisible(h) and win32process.GetWindowThreadProcessId(h)[1] == pid:
+            ventanas.add(h)
+        return True
+
+    try:
+        win32gui.EnumWindows(agregar, None)
+    except Exception:
+        pass
+    info = _GUITHREADINFO(cbSize=ctypes.sizeof(_GUITHREADINFO))
+    foco = info.hwndFocus if user32.GetGUIThreadInfo(hilo, ctypes.byref(info)) else None
+    return {"frente": frente, "titulo": win32gui.GetWindowText(frente), "ventanas": frozenset(ventanas),
+            "foco": foco, "portapapeles": user32.GetClipboardSequenceNumber()}
+
+
+def hubo_efecto(antes, despues):
+    return any(antes[k] != despues[k] for k in ("frente", "titulo", "ventanas", "foco", "portapapeles"))
+
+
+def esperar_efecto(antes, espera=ESPERA_EFECTO_S, foto=None, dormir=time.sleep):
+    """True en cuanto algo cambia respecto de 'antes', o False tras 'espera' segundos sin cambios."""
+    foto = foto or instantanea
+    limite = time.monotonic() + espera
+    while True:
+        dormir(0.1)
+        if hubo_efecto(antes, foto()):
+            return True
+        if time.monotonic() >= limite:
+            return False
+
+
+NOTA_SIN_EFECTO = ("No vi ningún cambio (ni ventana nueva, ni título, ni foco): puede que ese atajo o clic no "
+                   "exista en esta app o en este idioma (en español, Guardar suele ser Ctrl+G). Compruébalo con "
+                   "listar_controles o ver_pantalla y prueba otro camino, por ejemplo el menú.")
+
+
 def estado_despues():
     """Lo que hay al frente justo después de una acción: evidencia para que el modelo verifique el resultado."""
     time.sleep(0.6)  # deja que la app reaccione (abrir un menú, un diálogo)
@@ -495,6 +557,7 @@ def mouse(accion: str, x: int = None, y: int = None, cantidad: int = None, contr
         problema = guardia_directa("mouse", plan["pantalla"] or tuple(win32api.GetCursorPos()))
         if problema:
             return {"ok": False, "error": problema}
+    antes = instantanea() if accion in ("clic", "doble_clic", "clic_derecho") else None
     if plan["pantalla"]:
         win32api.SetCursorPos(plan["pantalla"])
     eventos = {"clic": [(win32con.MOUSEEVENTF_LEFTDOWN, win32con.MOUSEEVENTF_LEFTUP)],
@@ -505,8 +568,16 @@ def mouse(accion: str, x: int = None, y: int = None, cantidad: int = None, contr
         win32api.mouse_event(arriba, 0, 0, 0, 0)
     if accion == "desplazar":
         win32api.mouse_event(win32con.MOUSEEVENTF_WHEEL, 0, 0, plan["cantidad"] * win32con.WHEEL_DELTA, 0)
-    return {"ok": True, "pantalla": plan["pantalla"], "control": plan.get("control"), "despues": estado_despues(),
-            "nota": "Comprueba con listar_controles o ver_pantalla que pasó lo que esperabas antes de confirmarlo."}
+    resultado = {"ok": True, "pantalla": plan["pantalla"], "control": plan.get("control")}
+    if antes is not None:
+        efecto = esperar_efecto(antes)
+        resultado.update(efecto_visible=efecto, app=proceso_de(antes["frente"]))
+        if not efecto:
+            resultado["nota"] = NOTA_SIN_EFECTO
+    resultado["despues"] = estado_despues()
+    resultado.setdefault("nota", "Comprueba con listar_controles o ver_pantalla que pasó lo que esperabas antes de "
+                                 "confirmarlo.")
+    return resultado
 
 
 # ---------- teclado ----------
@@ -694,6 +765,7 @@ def teclado(accion: str, texto: str = None, teclas: list = None):
         problema = guardia_directa("teclado", win32gui.GetForegroundWindow())
         if problema:
             return {"ok": False, "error": problema}
+    antes = instantanea() if accion in ("atajo", "tecla") else None
     if accion == "escribir" and MODO_ESCRIBIR == "pegar":
         if _pegar(plan["texto"]):
             return {"ok": True, "nota": "El portapapeles tenía algo que no era texto y se reemplazó."}
@@ -722,5 +794,7 @@ def teclado(accion: str, texto: str = None, teclas: list = None):
             _enviar(vk=vk, flags=KEYEVENTF_KEYUP)
     if accion == "escribir":
         return {"ok": True}
-    return {"ok": True, "despues": estado_despues(),
-            "nota": "Comprueba con listar_controles o ver_pantalla que pasó lo que esperabas antes de confirmarlo."}
+    efecto = esperar_efecto(antes)
+    return {"ok": True, "efecto_visible": efecto, "app": proceso_de(antes["frente"]), "despues": estado_despues(),
+            "nota": "Comprueba con listar_controles o ver_pantalla que pasó lo que esperabas antes de confirmarlo."
+            if efecto else NOTA_SIN_EFECTO}

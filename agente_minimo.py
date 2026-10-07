@@ -29,6 +29,7 @@ import autocompletar_login
 import habitos
 import herramientas_grupo4
 import modo_directo
+import obstaculos
 import pedidos
 import herramientas_powershell
 import memoria
@@ -379,7 +380,19 @@ TEXTO_EXTERNO = {"leer_archivo", "buscar_web", "ver_pantalla", "ejecutar_powersh
                  "listar_ventanas", "listar_carpeta"}
 GUARDAN_SOBRE_REIZO = {"recordar", "sugerencias", "registro_habitos"}
 SOLO_CONSULTAN = {("sugerencias", "listar"), ("registro_habitos", "estado")}
-_tarea = {"contaminada": False, "herramientas": [], "pedido": "", "movidos": 0}  # de la tarea en curso
+_tarea = {"contaminada": False, "herramientas": [], "pedido": "", "movidos": 0,  # de la tarea en curso
+          "intentos": [], "avisos": []}  # obstáculos: atajos y clics con o sin efecto, y lo que se le dirá a Reizo
+NOMBRES_APPS = {"notepad.exe": "el Bloc de notas", "winword.exe": "Word", "excel.exe": "Excel",
+                "powerpnt.exe": "PowerPoint", "chrome.exe": "Chrome", "msedge.exe": "Edge", "code.exe": "VS Code",
+                "explorer.exe": "el Explorador"}
+
+
+def nombre_app(exe):
+    return NOMBRES_APPS.get(exe, exe.removesuffix(".exe") or "esa app")
+
+
+def legible(atajo):
+    return "+".join(t.capitalize() if len(t) > 1 else t.upper() for t in atajo.split("+"))
 # Modo sin confirmación (modo_directo.py). Solo lo cambia cambiar_modo(), que llama ServidorIsla al recibir un clic
 # FÍSICO en la isla o en la bandeja; empieza apagado en cada arranque.
 _modos = {"sin_confirmacion": False}
@@ -487,8 +500,76 @@ def pedir_accion(historial):
     return json.loads(r["choices"][0]["message"]["content"])
 
 
+def camino_conocido(nombre, args):
+    """Antes de un atajo: si en esta app ya se comprobó que no tiene efecto y se sabe qué funciona (obstaculos.py),
+    devuelve (args con el atajo que funciona, None) o (args, error con el camino por menús). Si no, (args, None)."""
+    if nombre != "teclado" or args.get("accion") != "atajo" or not args.get("teclas"):
+        return args, None
+    try:
+        app = herramientas_grupo4.proceso_de(herramientas_grupo4.win32gui.GetForegroundWindow())
+        accion = obstaculos.nombre_atajo(args["teclas"])
+        conocido = obstaculos.consultar(app, accion)
+    except Exception:
+        return args, None
+    if not conocido:
+        return args, None
+    obstaculos.contar_uso(app, accion)
+    if conocido["tipo"] == "atajo":
+        print(f"  [obstáculo conocido] {accion} no funciona en {app}; uso {conocido['alternativa']}")
+        _tarea["avisos"].append(f"Usé {legible(conocido['alternativa'])} en vez de {legible(accion)}: en "
+                                f"{nombre_app(app)} es el que funciona.")
+        return {**args, "teclas": obstaculos.teclas_de(conocido["alternativa"])}, None
+    return args, {"ok": False, "error": f"En {nombre_app(app)}, {legible(accion)} no tiene efecto (ya comprobado). "
+                                        f"Lo que funcionó antes: el menú {conocido['alternativa']}. Hazlo así, con "
+                                        "listar_controles y mouse."}
+
+
+def anotar_intento(nombre, args, resultado):
+    """Cada atajo o clic con su efecto. Uno sin efecto se avisa en la isla al momento."""
+    if nombre not in ("teclado", "mouse") or not isinstance(resultado, dict) or "efecto_visible" not in resultado:
+        return
+    if nombre == "teclado":
+        intento = {"tipo": "atajo", "accion": obstaculos.nombre_atajo(args.get("teclas"))}
+    else:
+        intento = {"tipo": "control", "accion": (resultado.get("control") or "clic por coordenadas").split(" (")[0]}
+    intento.update(app=resultado.get("app", ""), efecto=bool(resultado["efecto_visible"]))
+    _tarea["intentos"].append(intento)
+    if not intento["efecto"]:
+        texto = (f"{legible(intento['accion']) if intento['tipo'] == 'atajo' else intento['accion']} no tuvo efecto "
+                 f"en {nombre_app(intento['app'])}. Busco otro camino.")
+        print(f"  [obstáculo] {texto}")
+        if _isla is not None:
+            _isla.enviar({"tipo": "aviso", "texto": texto})
+
+
+def cerrar_obstaculos(exito):
+    """Al terminar la tarea: guarda lo aprendido (si salió bien y sin contenido externo) y devuelve lo que hay que
+    decirle a Reizo ('' si nada)."""
+    externo = bool({n for n, _ in _tarea["herramientas"]} & modo_directo.EXTERNO)
+    fallidos = [i for i in _tarea["intentos"] if not i["efecto"] and i["tipo"] == "atajo"]
+    if not externo:
+        for i in fallidos:
+            obstaculos.registrar_fallo(i["app"], i["accion"])
+    guardadas = obstaculos.resolver(_tarea["intentos"], externo) if exito else []
+    avisos = list(_tarea["avisos"])
+    for app, accion, alternativa, tipo in guardadas:
+        camino = legible(alternativa) if tipo == "atajo" else f"el menú {alternativa}"
+        avisos.append(f"{legible(accion)} no hizo nada en {nombre_app(app)}; funcionó {camino}. La próxima vez lo "
+                      "usaré directo.")
+    resueltos = {(a, b) for a, b, _, _ in guardadas}
+    pendientes = [i for i in fallidos if (i["app"], i["accion"]) not in resueltos]
+    if pendientes and not exito:
+        i = pendientes[0]
+        avisos.append(f"{legible(i['accion'])} no tuvo efecto en {nombre_app(i['app'])} y no encontré otro camino: "
+                      "¿me ayudas?")
+    return " ".join(avisos)
+
+
 def ejecutar(nombre, args):
     h = HERRAMIENTAS[nombre]
+    args, error = camino_conocido(nombre, args)
+    if error:
+        return error
     if nombre in PLANIFICADORES:
         _, error = PLANIFICADORES[nombre](args)
         if error:
@@ -522,6 +603,7 @@ def ejecutar(nombre, args):
         herramientas_grupo4.guardia_directa = _guardia(detalle)
     try:
         resultado = IMPLEMENTACIONES[nombre](**args)
+        anotar_intento(nombre, args, resultado)
         if directo and nombre == "mover_archivo" and isinstance(resultado, dict) and resultado.get("ok"):
             _tarea["movidos"] += detalle["archivos"]
         return resultado
@@ -639,7 +721,7 @@ def atender(pedido, historial):
         print("  [emergencia] agente detenido: la tarea no se ejecuta")
         return MENSAJE_DETENIDO
     historial.append({"role": "user", "content": pedido})
-    _tarea.update(contaminada=False, herramientas=[], pedido=pedido, movidos=0)
+    _tarea.update(contaminada=False, herramientas=[], pedido=pedido, movidos=0, intentos=[], avisos=[])
     herramientas_grupo4.tarea_actual = f"{time.time():.3f}"
     _decision.update(clave=None, valor=None)
     sin_verificar, recordatorios = None, 0  # último clic o atajo que el modelo aún no comprobó
@@ -949,6 +1031,13 @@ def atender_con_memoria(pedido, historial, planificador, voz=False):
             historial[0]["content"] = prompt_sistema(voz)
             planificador.indice_cambiado = False
         respuesta = atender(pedido, historial)
+        try:
+            exito_tarea = json.loads(historial[-1]["content"]).get("argumentos", {}).get("exito", True)
+        except (ValueError, KeyError, IndexError, AttributeError, TypeError):
+            exito_tarea = True
+        aviso_obstaculos = cerrar_obstaculos(bool(exito_tarea))
+        if aviso_obstaculos:
+            respuesta = f"{respuesta} {aviso_obstaculos}".strip()
         cerrar_sugerencia_pendiente()
         respuesta = agregar_sugerencia(respuesta, historial)
         if _isla is not None:
