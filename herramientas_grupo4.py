@@ -61,6 +61,76 @@ def _bloqueado(motivo):
     return None, {"ok": False, "bloqueado": True, "error": motivo}
 
 
+# ---------- ventanas donde mouse y teclado no actúan, en ningún modo ----------
+
+# El menú Inicio y la búsqueda de Windows lanzan cualquier cosa escribiendo su nombre: para abrir apps está
+# abrir_app, que respeta los bloqueos. Ahí no se escribe (la barra de tareas sí se puede usar).
+PROCESOS_INICIO = {"startmenuexperiencehost.exe", "searchhost.exe", "searchapp.exe", "searchui.exe"}
+# Cambiar la configuración del sistema es una acción prohibida: ni clics ni teclas en Configuración, el Panel de
+# control y sus subprogramas (rundll32, SystemProperties*) ni las consolas de administración (mmc).
+PROCESOS_CONFIGURACION = {"systemsettings.exe": "Configuración de Windows", "control.exe": "el Panel de control",
+                          "rundll32.exe": "un subprograma del Panel de control",
+                          "mmc.exe": "una consola de administración de Windows"}
+# carpetas del Panel de control dentro del Explorador (CLSID de la vista por categorías y de todos los elementos)
+CLSID_PANEL = ("{26ee0668-a00a-44d7-9371-beb064c98683}", "{21ec2020-3aea-1069-a2dd-08002b30309d}")
+TITULOS_PANEL = ("panel de control", "control panel")
+
+
+def _es_panel_de_control(raiz):
+    """Ventana del Explorador que muestra el Panel de control (lo dice su carpeta; si no se puede leer, el título)."""
+    try:
+        import pythoncom
+        import win32com.client
+        pythoncom.CoInitialize()
+        for w in win32com.client.Dispatch("Shell.Application").Windows():
+            try:
+                if int(w.HWND) == int(raiz):
+                    ruta = str(w.Document.Folder.Self.Path).lower()
+                    return any(c in ruta for c in CLSID_PANEL)
+            except Exception:
+                continue
+    except Exception:
+        pass
+    return any(t in _normalizar(win32gui.GetWindowText(raiz)) for t in TITULOS_PANEL)
+
+
+def ventana_prohibida(hwnd, teclado):
+    """Motivo del bloqueo si mouse (teclado=False) o teclado (True) no deben actuar en esta ventana, o None.
+    Ante la duda (no se pudo mirar), también se bloquea."""
+    try:
+        import modo_directo
+        raiz = user32.GetAncestor(hwnd, 2) or hwnd  # GA_ROOT
+        app = modo_directo.app_de_ventana(raiz)
+        exe = (app or {}).get("proceso", "").lower()
+        if teclado and exe in PROCESOS_INICIO:
+            return ("Es el menú Inicio o la búsqueda de Windows: ahí no escribo. Para abrir una app uso abrir_app, "
+                    "que respeta los bloqueos.")
+        nombre = PROCESOS_CONFIGURACION.get(exe) or ("las propiedades del sistema" if exe.startswith("systemproperties")
+                                                     else None)
+        if not nombre and exe == "explorer.exe" and _clase(raiz) == "cabinetwclass" and _es_panel_de_control(raiz):
+            nombre = "el Panel de control"
+        if nombre:
+            return (f"Es {nombre}: cambiar la configuración del sistema está prohibido; no hago clic ni escribo "
+                    "ahí.")
+        return None
+    except Exception:
+        return "No pude comprobar en qué ventana actuaría; por seguridad no lo hago."
+
+
+def _clase(hwnd):
+    return win32gui.GetClassName(hwnd).lower()
+
+
+def prohibida_en_punto(punto):
+    """ventana_prohibida para un clic en ese punto de la pantalla (las pruebas la reemplazan)."""
+    return ventana_prohibida(win32gui.WindowFromPoint(tuple(int(v) for v in punto)), teclado=False)
+
+
+def prohibida_al_frente():
+    """ventana_prohibida para el teclado, que actúa en la ventana al frente (las pruebas la reemplazan)."""
+    return ventana_prohibida(win32gui.GetForegroundWindow(), teclado=True)
+
+
 def _error(motivo, **extra):
     return None, {"ok": False, "error": motivo, **extra}
 
@@ -536,6 +606,9 @@ def planificar_mouse(accion, x=None, y=None, cantidad=None, captura=None, ahora=
         plan["pantalla"] = a_pantalla(x, y, captura)
     if plan["pantalla"] and _en_la_isla(plan["pantalla"]):
         return _bloqueado("Esa posición es la isla de Cacao (sus botones confirman acciones): no hago clic ahí.")
+    motivo = prohibida_en_punto(plan["pantalla"] or win32api.GetCursorPos())  # desplazar y mover: bajo el cursor
+    if motivo:
+        return _bloqueado(motivo)
     if accion == "desplazar":
         if not cantidad:
             return _error("Para desplazar indica 'cantidad' (positivo arriba, negativo abajo).")
@@ -755,12 +828,15 @@ def ventana_sensible_al_frente():
 def planificar_teclado_ventana():
     """(None, error) si teclado no debe escribir en la ventana al frente. Son bloqueos (cortan la tarea) en cualquier
     modo: en la isla nunca, porque su campo manda pedidos al agente y el agente no puede dictarse pedidos a sí mismo;
-    en una ventana sensible tampoco."""
+    tampoco en una ventana sensible, en el menú Inicio o la búsqueda, ni en Configuración o el Panel de control."""
     if isla_al_frente():
         return _bloqueado("La ventana al frente es la isla de Cacao: no escribo ni pulso teclas en ella.")
     if ventana_sensible_al_frente():
         return _bloqueado("La ventana al frente es sensible (contraseñas, claves, seguridad o banco): no escribo ni "
                           "pulso teclas en ella.")
+    motivo = prohibida_al_frente()
+    if motivo:
+        return _bloqueado(motivo)
     return None, None
 
 

@@ -354,10 +354,13 @@ Hecho en `voz.py` (pulsar para hablar y respuesta hablada). El modo texto (`agen
     mouse y teclado. La isla muestra un indicador ámbar mientras está activo.
     - **Mouse y teclado** (desde el 2026-10-06): no preguntan nunca, en ninguna ventana, salvo una excepción:
       escribir un texto que no sale de tu pedido cuando Cacao leyó contenido de fuera (web, archivo, pantalla,
-      títulos de ventanas, carpetas, PowerShell) en esa tarea o en una anterior que aún recuerda: ese texto pudo
-      salir de lo leído, y pregunta. Siguen los bloqueos: atajos peligrosos (punto 12), clic o teclas en la isla y
-      escribir en ventanas sensibles (título con contraseñas o claves, gestores de contraseñas, Seguridad de
-      Windows, apps de banco), que valen en cualquier modo.
+      carpetas, PowerShell, y títulos de ventanas solo si alguna es de un navegador) en esa tarea o en una anterior
+      que aún recuerda: ese texto pudo salir de lo leído, y pregunta. Así, "escribe un saludo en el Bloc de notas"
+      no pregunta, salvo con un navegador abierto. Siguen los bloqueos, que valen en cualquier modo: atajos
+      peligrosos (punto 12), clic o teclas en la isla, escribir en ventanas sensibles (título con contraseñas o
+      claves, gestores de contraseñas, Seguridad de Windows, apps de banco), escribir en el menú Inicio o la
+      búsqueda (para abrir apps está abrir_app), y mouse o teclado en Configuración, el Panel de control y sus
+      subprogramas y las consolas mmc. La barra de tareas sí se puede usar.
 12. **Atajos bloqueados siempre:** con la tecla Windows solo valen los de ventanas y escritorios (Win+D, Win+M,
     Win+Tab, Win+flechas, Win+Shift+S, Win+Ctrl+D/flechas/F4). Bloqueados, entre otros: Win sola, Win+R, X, I, S,
     Q, E, A, U, K, P, N, B, T, V, H, L, G, Win+número, Win+Alt+R, Win+Ctrl+Enter, Win+Ctrl+O, Ctrl+Esc,
@@ -470,7 +473,7 @@ y la hora ("[Ahora: martes 6 de octubre de 2026, 21:50]"), así Cacao responde "
 | Tamaño (`npm run dev`, mensajes simulados con `window.cacao`) | Mediano legible; Ajustes con la fila «Tamaño» cabe entero |
 | Cierre automático | Sin voz, a los 4 s; con voz, 4 s después de terminar de hablar; con el mouse encima espera a que salga; una confirmación no se esconde |
 | `probar_seguimiento.py` (escucha de seguimiento: silencio, cola de la voz de Cacao, un clic, otra app sonando, bloques del G435, frenos, Ctrl+Espacio, modos) | 35/35 |
-| Modo sin confirmación, mouse y teclado (`probar_modo_directo.py`) | 99/99 |
+| Modo sin confirmación, mouse y teclado (`probar_modo_directo.py`): títulos solo de navegadores ("escribe un saludo en el Bloc de notas" ya no pregunta; con Chrome abierto, sí), "regedit" en el Inicio y la búsqueda bloqueado, nada dentro de Configuración ni del Panel de control | 137/137 |
 | Regresión | palabra de activación 41/41, confirmación por voz 33/33, campo de la isla 29/29, obstáculos 35/35, autocompletar 46/46, fase 6 142/142 |
 
 ### Pendiente para cuando estés frente al PC (en orden)
