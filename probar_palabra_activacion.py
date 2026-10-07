@@ -193,6 +193,28 @@ def pruebas_bucle():
     ok("«Cacao, sube el volumen» -> la orden «sube el volumen.»", texto == "sube el volumen.", texto)
 
 
+def pruebas_bloques_pequenos():
+    """El G435 entrega bloques de 416 muestras (menos que una trama de 480): la grabación tiene que terminar igual."""
+    for bloque in (416, 160, 1000):
+        g = pa.Grabacion(np.zeros(0, np.int16), umbral_voz=500)
+        terminada, n = False, 0
+        while not terminada and n < 2000:
+            terminada = g.agregar(np.zeros(bloque, np.int16))
+            n += 1
+        ok(f"grabación con bloques de {bloque}: sin voz termina a los 4 s", terminada and abs(g.t - 4.0) < 0.1,
+           f"t={g.t:.2f}")
+        g = pa.Grabacion(np.zeros(0, np.int16), umbral_voz=500)
+        voz = (np.sin(np.arange(int(0.5 * pa.TASA)) / 3) * 8000).astype(np.int16)
+        audio = np.concatenate([voz, np.zeros(2 * pa.TASA, np.int16)])
+        terminada = False
+        for i in range(0, len(audio), bloque):
+            if g.agregar(audio[i:i + bloque]):
+                terminada = True
+                break
+        ok(f"grabación con bloques de {bloque}: tras hablar, corta en el silencio", terminada
+           and 1.3 < g.t < 1.6, f"t={g.t:.2f}")
+
+
 def pruebas_contador():
     import json
     pa.RUTA_CONTADOR.unlink(missing_ok=True)
@@ -226,7 +248,7 @@ def pruebas_contador():
 if __name__ == "__main__":
     if not pa.RUTA_MODELO.exists():
         sys.exit("Falta modelos/cacao/cacao.npz: corre entrenar_cacao.py")
-    for parte in (pruebas_deteccion, pruebas_grabacion, pruebas_confirmacion, pruebas_texto, pruebas_bucle, pruebas_contador):
+    for parte in (pruebas_deteccion, pruebas_grabacion, pruebas_confirmacion, pruebas_texto, pruebas_bucle, pruebas_bloques_pequenos, pruebas_contador):
         print(f"\n== {parte.__name__} ==")
         parte()
     fallos = [r for r in resultados if not r[1]]

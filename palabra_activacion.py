@@ -175,10 +175,16 @@ class Grabacion:
         self.hablo = False    # empezó a hablar después de la palabra
         self.silencio = 0.0
         self.terminada = False
+        self._resto = np.zeros(0, dtype=np.int16)  # muestras que no llenan una trama: van con el bloque siguiente
 
     def agregar(self, audio):
         self.partes.append(audio)
-        for i in range(0, len(audio) - TRAMA_VAD + 1, TRAMA_VAD):
+        # el micrófono entrega bloques de cualquier tamaño (416 muestras en el G435, menos que una trama de 480):
+        # sin el resto, ningún bloque llenaba una trama y la grabación no terminaba nunca
+        audio = np.concatenate([self._resto, np.asarray(audio, dtype=np.int16)])
+        n = len(audio) // TRAMA_VAD * TRAMA_VAD
+        self._resto = audio[n:]
+        for i in range(0, n, TRAMA_VAD):
             trama = audio[i:i + TRAMA_VAD].astype(np.float32)
             voz = np.sqrt((trama ** 2).mean()) > self.umbral_voz
             self.t += TRAMA_VAD / TASA
