@@ -474,13 +474,13 @@ y la hora ("[Ahora: martes 6 de octubre de 2026, 21:50]"), así Cacao responde "
 | Cierre automático | Sin voz, a los 4 s; con voz, 4 s después de terminar de hablar; con el mouse encima espera a que salga; una confirmación no se esconde |
 | `probar_seguimiento.py` (escucha de seguimiento: silencio, cola de la voz de Cacao, un clic, otra app sonando, bloques del G435, frenos, Ctrl+Espacio, modos) | 35/35 |
 | Modo sin confirmación, mouse y teclado (`probar_modo_directo.py`): títulos solo de navegadores ("escribe un saludo en el Bloc de notas" ya no pregunta; con Chrome abierto, sí), "regedit" en el Inicio y la búsqueda bloqueado, nada dentro de Configuración ni del Panel de control | 137/137 |
-| Regresión | palabra de activación 41/41, confirmación por voz 33/33, campo de la isla 29/29, obstáculos 35/35, autocompletar 46/46, fase 6 142/142 |
+| Regresión | palabra de activación 41/41, confirmación por voz 33/33, campo de la isla 29/29, obstáculos 35/35, autocompletar 46/46, fase 6 142/142, `probar_voz.py` 11/11 (Gemma y Whisper en la GPU) |
 
 ### Pendiente para cuando estés frente al PC (en orden)
 
 1. **Isla nueva y escucha de seguimiento:** ver la isla compacta con los tres tamaños, el cierre tras una respuesta
-   hablada y el indicador de los 8 s; decir algo en esos 8 s sin "Cacao"; con música sonando, que no se abra.
-   Pasar `probar_voz.py` (necesita la GPU: con Cacao cerrado).
+   hablada y el indicador de los 8 s; decir algo en esos 8 s sin "Cacao"; con música sonando, que no se abra. Con el Panel de control abierto en el
+   Explorador, que Cacao no haga clic ni escriba ahí.
 2. **autocompletar_login:** activa Windows Hello en Chrome (punto 13) y prueba a mano que Chrome lo pide; luego
    `autocompletar_login.activa: true`, añade 2-3 frases al set y vuelve a pasar las 65 frases; prueba en un sitio
    con cuenta guardada: con Hello rellena y no envía; si cancelas Hello no rellena; con otra ventana al frente da
