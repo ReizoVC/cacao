@@ -109,6 +109,14 @@ def pruebas_tabla():
         g = obstaculos.resolver(real2, False)
         ok("tabla (secuencia real 2): los clics sin efecto se saltan -> 'Archivo > Guardar como'",
            g == [("notepad.exe", "ctrl+s", "Archivo > Guardar como", "controles")], g)
+        real3 = [{"app": "notepad.exe", "accion": "ctrl+s", "tipo": "atajo", "efecto": False},
+                 {"app": "notepad.exe", "accion": "Archivo", "tipo": "control", "efecto": True},
+                 {"app": "notepad.exe", "accion": "Guardar", "tipo": "control", "efecto": False},
+                 {"app": "notepad.exe", "accion": "ctrl+g", "tipo": "atajo", "efecto": True},
+                 {"app": "notepad.exe", "accion": "esc", "tipo": "tecla", "efecto": True}]
+        g = obstaculos.resolver(real3, False)
+        ok("tabla (secuencia real 3): menú sin efecto y luego Ctrl+G -> 'Ctrl+G', no 'Archivo'",
+           g == [("notepad.exe", "ctrl+s", "ctrl+g", "atajo")], g)
         obstaculos.olvidar("notepad.exe", "ctrl+s")
         ok("tabla: olvidar deja la fila sin alternativa", obstaculos.consultar("notepad.exe", "ctrl+s") is None
            and any(f[0] == "notepad.exe" and f[1] == "ctrl+s" for f in obstaculos.listar()))
@@ -186,6 +194,8 @@ def pruebas_ejecutor():
         r = ns["ejecutar"]("teclado", {"accion": "atajo", "teclas": ["ctrl", "shift", "s"]})
         ok("ejecutor: si lo que funciona es el menú, no envía nada y le indica el camino al modelo",
            not enviados and "Archivo > Guardar como" in r["error"] and not r.get("bloqueado"), r)
+        ok("ejecutor: y se lo dice a Reizo al terminar", "fui directo por el menú Archivo > Guardar como"
+           in ns["cerrar_obstaculos"](True))
         # sin solución
         ns["_tarea"].update(intentos=[], avisos=[])
         ns["IMPLEMENTACIONES"]["teclado"] = lambda **k: {"ok": True, "efecto_visible": False, "app": "notepad.exe"}

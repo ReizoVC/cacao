@@ -521,6 +521,8 @@ def camino_conocido(nombre, args):
                                 f"{nombre_app(app)} es el que funciona.")
         _tarea["sustituidos"][conocido["alternativa"]] = accion
         return {**args, "teclas": obstaculos.teclas_de(conocido["alternativa"])}, None
+    _tarea["avisos"].append(f"{legible(accion)} no funciona en {nombre_app(app)}: fui directo por el menú "
+                            f"{conocido['alternativa']}.")
     return args, {"ok": False, "error": f"En {nombre_app(app)}, {legible(accion)} no tiene efecto (ya comprobado). "
                                         f"Lo que funcionó antes: el menú {conocido['alternativa']}. Hazlo así, con "
                                         "listar_controles y mouse."}

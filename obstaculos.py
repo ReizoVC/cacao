@@ -111,9 +111,10 @@ def listar():
 def resolver(intentos, externo):
     """Al terminar una tarea con éxito. intentos: [{'app', 'accion', 'tipo' ('atajo'|'tecla'|'control'), 'efecto'}]
     en orden. Para cada atajo sin efecto mira lo que vino JUSTO después en la misma app:
-      - si lo siguiente con efecto es otro atajo -> alternativa 'atajo';
-      - si son clics en controles -> la secuencia de los que tuvieron efecto, hasta la primera acción que no sea un
-        clic -> 'controles' (p. ej. "Archivo > Guardar"; el Esc con que luego se cierra el diálogo no cuenta).
+      - se mira el tramo hasta la primera tecla suelta (el Esc con que se cierra el diálogo no cuenta) y la ÚLTIMA
+        acción con efecto de ese tramo es la que funcionó;
+      - si es un atajo -> alternativa 'atajo' (p. ej. Ctrl+G);
+      - si es un clic -> la ruta de clics con efecto que llevó a él -> 'controles' (p. ej. "Archivo > Guardar").
     Las teclas sueltas (Esc, Enter...) nunca son alternativa. Devuelve [(app, accion, alternativa, tipo)] guardadas.
     Con contenido externo en la tarea no guarda nada."""
     if externo:
@@ -122,22 +123,27 @@ def resolver(intentos, externo):
     for i, fallo in enumerate(intentos):
         if fallo["efecto"] or fallo["tipo"] != "atajo":
             continue
-        siguientes = [x for x in intentos[i + 1:] if x["app"] == fallo["app"]]
-        primero = next((x for x in siguientes if x["efecto"]), None)
-        if primero is None:
+        # lo que vino después en la misma app, hasta la primera tecla suelta (el Esc que cierra el diálogo)
+        tramo = []
+        for x in intentos[i + 1:]:
+            if x["app"] != fallo["app"]:
+                continue
+            if x["tipo"] == "tecla":
+                break
+            tramo.append(x)
+        efectivos = [x for x in tramo if x["efecto"]]
+        if not efectivos:
             continue
-        if primero["tipo"] == "atajo" and primero["accion"] != fallo["accion"]:
-            alternativa = (primero["accion"], "atajo")
-        elif primero["tipo"] == "control":
-            clics = []
-            for x in siguientes:
-                if x["tipo"] != "control":
-                    break
-                if x["efecto"]:
-                    clics.append(limpiar(x["accion"]))
-            alternativa = (" > ".join(clics[:4]), "controles")
+        ultimo = efectivos[-1]  # lo que por fin funcionó
+        if ultimo["tipo"] == "atajo":
+            if ultimo["accion"] == fallo["accion"]:
+                continue
+            alternativa = (ultimo["accion"], "atajo")
         else:
-            continue
+            # la ruta de clics con efecto que llevó a él (desde el último atajo del tramo)
+            desde = max((k for k, x in enumerate(tramo) if x["tipo"] == "atajo"), default=-1) + 1
+            clics = [limpiar(x["accion"]) for x in tramo[desde:] if x["tipo"] == "control" and x["efecto"]]
+            alternativa = (" > ".join(clics[-4:]), "controles")
         registrar_alternativa(fallo["app"], fallo["accion"], *alternativa)
         guardadas.append((fallo["app"], fallo["accion"], *alternativa))
     return guardadas
