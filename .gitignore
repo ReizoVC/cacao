@@ -40,3 +40,6 @@ diagnostico/
 
 # Contador diario de la palabra de activación (solo números)
 contador_cacao.json
+
+# Registros de las pruebas presenciales (transcripciones de tu voz)
+*.log
