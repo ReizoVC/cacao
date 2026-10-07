@@ -151,7 +151,7 @@ def cargar_voz(transcripcion, modos, en_pausa=False, detenido=False):
             a_isla.append(m)
 
     agente = types.SimpleNamespace(
-        _modos=dict(modos), _isla=Isla(), notificar=lambda e, d="": notificaciones.append(e),
+        _modos=dict(modos), _isla=Isla(), notificar=lambda e, d="": notificaciones.append(e), notificar_reposo=lambda: notificaciones.append("reposo"),
         _modo_juego=types.SimpleNamespace(en_pausa=lambda: "Roblox" if en_pausa else None),
         emergencia=types.SimpleNamespace(detenido=lambda: detenido), cola_pedidos=pedidos.ColaPedidos(),
         normalizar=lambda t: t.lower(), FRASES_TERMINE=[], FRASES_JUGANDO=[])

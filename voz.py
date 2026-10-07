@@ -373,7 +373,7 @@ def escuchar(atajo, microfono, transcriptor, al_pulsar=lambda: None):
         if texto is not None and palabra_activacion.empieza_con_la_palabra(texto):
             texto = palabra_activacion.quitar_palabra(texto) or None  # "Cacao, ..." también vale aquí
         if texto is None:
-            a.notificar("reposo")
+            a.notificar_reposo()
         else:
             palabra_activacion.contar("seguimiento")
         return audio, datos, texto, soltado
@@ -396,7 +396,7 @@ def escuchar(atajo, microfono, transcriptor, al_pulsar=lambda: None):
         # segunda etapa: Whisper no oyó "Cacao" al principio: activación falsa. No se guarda nada.
         datos["freno"] = "sin_la_palabra"
         print("  (activación falsa: la transcripción no empieza con «Cacao»; descartada sin guardar)", flush=True)
-        a.notificar("reposo")
+        a.notificar_reposo()
         return audio, datos, None, soltado
     palabra_activacion.contar("segunda_etapa")
     if texto is not None:
@@ -404,12 +404,12 @@ def escuchar(atajo, microfono, transcriptor, al_pulsar=lambda: None):
         if not orden:
             datos["freno"] = "solo_la_palabra"
             print("  (solo dijiste «Cacao»: no hay orden)", flush=True)
-            a.notificar("reposo")
+            a.notificar_reposo()
             return audio, datos, None, soltado
         texto = orden
         palabra_activacion.contar("pedido")
     else:
-        a.notificar("reposo")
+        a.notificar_reposo()
     return audio, datos, texto, soltado
 
 

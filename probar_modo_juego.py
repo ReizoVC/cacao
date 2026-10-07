@@ -197,6 +197,52 @@ def pruebas_logica():
     ok("'estoy jugando' lo atiende el código", r.startswith("Vale") and not usado, r)
 
 
+def pruebas_isla_en_juego():
+    """Lo que ve la isla: al descargar, dormida (estado "juego"); al recargar, "Despierto…" y luego reposo; tras
+    escuchar algo en pausa, otra vez dormida (notificar_reposo), no despierta."""
+    import types
+    arbol = ast.parse((BASE / "agente_minimo.py").read_text(encoding="utf-8"))
+    nombres = {"descargar_modelos", "cargar_modelos", "notificar_reposo"}
+    nodos = [n for n in arbol.body if isinstance(n, ast.FunctionDef) and n.name in nombres]
+    estados = []
+
+    class Llm:
+        def close(self):
+            estados.append("(gemma fuera)")
+
+    class Modo:
+        pausa = "Hades"
+
+        def en_pausa(self):
+            return self.pausa
+
+        def mensaje(self):
+            return "Estoy en pausa porque Hades está abierto"
+
+    modo = Modo()
+    ns = {"vision": None, "EXTRAS_MODO_JUEGO": [], "llm": Llm(), "gc": types.SimpleNamespace(collect=lambda: None),
+          "_modo_juego": modo, "_planificador": None, "CONFIG": {},
+          "crear_llm": lambda *a, **k: estados.append("(gemma dentro)") or types.SimpleNamespace(),
+          "emergencia": types.SimpleNamespace(comprobar=lambda: None),
+          "notificar": lambda e, d="": estados.append(e if not d else f"{e}: {d}")}
+    exec(compile(ast.Module(body=nodos, type_ignores=[]), "agente_minimo.py", "exec"), ns)
+    ns["descargar_modelos"]()
+    ok("al entrar en modo juego la isla queda dormida", estados == ["(gemma fuera)",
+                                                                  "juego: Estoy en pausa porque Hades está abierto"],
+       estados)
+    estados.clear()
+    ns["notificar_reposo"]()
+    ok("tras escuchar algo en pausa, vuelve a dormida", estados == ["juego: Estoy en pausa porque Hades está abierto"])
+    estados.clear()
+    modo.pausa = None
+    ns["cargar_modelos"]()
+    ok("al salir: «Despierto…» mientras recarga y luego reposo", estados[0].startswith("pensando: Despierto")
+       and estados[-1] == "reposo" and "(gemma dentro)" in estados, estados)
+    estados.clear()
+    ns["notificar_reposo"]()
+    ok("fuera del modo juego, reposo", estados == ["reposo"])
+
+
 def vram_mb():
     try:
         salida = subprocess.run(["nvidia-smi", "--query-gpu=memory.used", "--format=csv,noheader,nounits"],
@@ -310,5 +356,6 @@ if __name__ == "__main__":
     else:
         pruebas_logica()
         pruebas_filtrar_en_pausa()
+        pruebas_isla_en_juego()
         fallos = [x for x in resultados if not x[1]]
         print(f"\n{len(resultados) - len(fallos)}/{len(resultados)} OK")

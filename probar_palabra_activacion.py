@@ -157,7 +157,7 @@ def cargar_voz_sin_modelo(transcripcion_pausa, transcripcion, en_pausa):
         return "".join(c for c in t if not unicodedata.combining(c)).lower()
 
     agente = types.SimpleNamespace(_modo_juego=Modo(), normalizar=normalizar, FRASES_TERMINE=["ya termine"],
-                                   FRASES_JUGANDO=["estoy jugando"], notificar=lambda e, d="": notificaciones.append(e),
+                                   FRASES_JUGANDO=["estoy jugando"], notificar=lambda e, d="": notificaciones.append(e), notificar_reposo=lambda: notificaciones.append("reposo"),
                                    cola_pedidos=__import__("pedidos").ColaPedidos())
 
     class Transcriptor:
