@@ -421,31 +421,36 @@ la tercera, la del script actual, con tonos desplazados y frases de corrido, no 
 | Regresión | palabra de activación 27/27, modo directo 73/73, autocompletar 46/46, confirmación por voz 33/33, fase 7 A 26/26 |
 | `cargo check --offline`, `tsc` y `tauri build --no-bundle` sin red | Sin errores; `asistente-ui.exe` recompilado |
 
+### Pruebas presenciales (2026-10-06, contigo frente al PC)
+
+| Prueba | Resultado |
+|---|---|
+| "Cacao" con tu voz: 57 tomas guiadas (`grabar_cacao.py`): 41 sola, 6 de corrido, 10 palabras parecidas | Detector anterior (umbral 0,9): 38/47; falla siempre "rápido" (0/4) |
+| Detector reentrenado con 2/3 de tus tomas (`entrenar_cacao.py --reales`), medido con el tercio que no vio | Nuevo 15/17 frente a 13/17 del anterior; voces sintéticas sola 46/54 (antes 37/54), de corrido 81/108 (antes 77/108); activaciones falsas en el audio general de openWakeWord 16,7/h (antes 10,8/h), filtradas por la segunda etapa. **Instalado: `cacao_v4` con umbral 0,9** (copia del anterior en `modelos/cacao/cacao_anterior_v2.npz`) |
+| Tu música (3 min) y videos que dicen "cacao" (4 min), por los altavoces | Primera etapa: 1 y 2 activaciones (antes 0 y 3). Pasaba la segunda etapa "Entonces el cacao se produce…": **corregido**, ahora "Cacao" tiene que ir al principio o tras "oye/hola"; "caca" tampoco pasa |
+| **Fallo encontrado en vivo**: tras la primera detección Cacao dejaba de escuchar | El G435 entrega bloques de 416 muestras y la grabación medía tramas de 480 por bloque: nunca terminaba. **Corregido** (prueba con bloques de 416, 160 y 1000) |
+| Contador diario (`contador_cacao.json`, solo números) | Primera etapa, segunda etapa y pedidos por día. En la prueba 4: 6 / 3 / 3 |
+| Regresión de las 65 frases × 3 semillas (`SIN_REALES=1`) | 195/195 (100 %), JSON 100 %, frase 58 3/3, 3,71 s de media |
+| Isla con tu clic (`prueba_presencial_isla.py`, servidor de prueba) | Interruptores de la isla y de la bandeja: físicos; indicadores a la vista. Campo: Enter y Esc devuelven el foco al Bloc de notas, el clic fuera lo deja en la ventana del clic, el clic en la isla vuelve al Bloc de notas, los botones no quitan el foco; se ve bien. 13/13 |
+| "Confirmo la instrucción" con tu voz (Cacao real, modo voz) | Ctrl+Espacio + frase: vale (abrió la Calculadora). "Cacao, confirmo la instrucción" sin teclas: vale (abrió el Bloc de notas). "Sí" solo: no vale; Esc: no se abrió nada |
+
 ### Pendiente para cuando estés frente al PC (en orden)
 
-1. **Regresión del prompt** (sin ti, pero con el PC libre y sin juegos): `SIN_REALES=1 evaluar_pruebas.py` con las
-   65 frases × 3 semillas. El prompt cambió con el nombre "Cacao" y `deshacer_movimiento` y no se ha vuelto a medir.
-2. **Interruptores con tu clic:** `ESPERAR_FISICO_S=60 probar_fase7.py C` (escucha y modo sin confirmación, en la isla
-   y en la bandeja); mira el indicador ámbar y el estado "escuchando".
-3. **"Cacao" con tu voz:** sola y de corrido ("Cacao, sube el volumen"), con música de fondo, y con un video que diga
-   "cacao" (no debería pasar la segunda etapa). Apunta las activaciones falsas que notes.
-4. **"Confirmo la instrucción" con tu voz:** tras una pregunta, con Ctrl+Espacio y con "Cacao"; y que "sí" solo no valga.
-5. **Modo sin confirmación en real:** volumen y abrir una app directos; escribir en el Bloc de notas con texto de tu
+1. **Modo sin confirmación en real:** volumen y abrir una app directos; escribir en el Bloc de notas con texto de tu
    pedido; mover 2 archivos de prueba y "deshaz lo último"; el atajo de emergencia lo apaga.
-6. **autocompletar_login:** activa Windows Hello en Chrome (punto 13) y prueba a mano que Chrome lo pide; luego
-   `autocompletar_login.activa: true`, añade 2-3 frases al set y repite el punto 1; prueba en un sitio con cuenta
-   guardada: con Hello rellena y no envía; si cancelas Hello no rellena; con otra ventana al frente da error.
-7. **Arranque automático:** doble clic en `Cacao.lnk`; si arranca bien (isla, "Cacao", Ctrl+Espacio), actívalo con
+2. **autocompletar_login:** activa Windows Hello en Chrome (punto 13) y prueba a mano que Chrome lo pide; luego
+   `autocompletar_login.activa: true`, añade 2-3 frases al set y vuelve a pasar las 65 frases; prueba en un sitio
+   con cuenta guardada: con Hello rellena y no envía; si cancelas Hello no rellena; con otra ventana al frente da
+   error.
+3. **Arranque automático:** doble clic en `Cacao.lnk`; si arranca bien (isla, "Cacao", Ctrl+Espacio), actívalo con
    `crear_acceso_directo.ps1 -Inicio`, cierra sesión y vuelve a entrar. Prueba también a iniciar sesión con un juego
    que se abra solo: Cacao debe esperar.
-8. **Campo de texto de la isla (prueba visual):** con el Bloc de notas al frente, haz clic en "Escribe a Cacao…",
-   escribe "sube el volumen" y Enter: se cumple y el Bloc de notas vuelve a tener el foco (escribe una letra para
-   comprobarlo). Repite con Esc. Escribiendo en el campo, haz clic en otra ventana (por ejemplo, el Explorador): el
-   foco debe quedarse en ella. Pulsa Permitir/Denegar o un interruptor: el Bloc de notas no pierde el foco. Mira que el campo se vea bien en la columna derecha y en la vista de pregunta.
-9. **Grabar la isla** con "Permitir capturas".
-10. **Mando:** detección de actividad (no había uno a mano).
-11. **Datos reales:** Obsidian, y la reflexión diaria y las sugerencias tras una semana de hábitos. `apps_banco` sigue
-    vacío (no hay apps de banco en este PC).
+4. **"Cacao" en el día a día:** mira `contador_cacao.json` tras unos días (activaciones de la primera etapa frente a
+   pedidos). "Cacao" dicho rápido aún no se detecta.
+5. **Grabar la isla** con "Permitir capturas".
+6. **Mando:** detección de actividad (no había uno a mano).
+7. **Datos reales:** Obsidian, y la reflexión diaria y las sugerencias tras una semana de hábitos. `apps_banco` sigue
+   vacío (no hay apps de banco en este PC).
 
 ---
 
