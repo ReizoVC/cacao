@@ -1,0 +1,44 @@
+{
+  "gemma_q5": {
+    "raw_sha256": "95f107e254b9ff389bdd52553f8f46232256c2133f56d41049e4a03e0717692b",
+    "prompt_sha256": "adb0e35e13d3348e2c164cc0d83f1032b19574febe51effbc84fa2d47eb2f56e",
+    "schema_sha256": "c2ea19a80dd5a4960922f21b72ed5936dbd6aa22b98f2147b672b37b0e05f425",
+    "count": 10,
+    "seed": 2026,
+    "valid_json": 10,
+    "blank": 0,
+    "completion_timestamps": [
+      1791428691,
+      1791428695,
+      1791428701,
+      1791428707,
+      1791428713,
+      1791428719,
+      1791428727,
+      1791428731,
+      1791428737,
+      1791428744
+    ]
+  },
+  "qwen_q5": {
+    "raw_sha256": "9b14eb2b8174709d74044073bedf7aec0aa038c70af27471643c1d70b7b93086",
+    "prompt_sha256": "adb0e35e13d3348e2c164cc0d83f1032b19574febe51effbc84fa2d47eb2f56e",
+    "schema_sha256": "c2ea19a80dd5a4960922f21b72ed5936dbd6aa22b98f2147b672b37b0e05f425",
+    "count": 10,
+    "seed": 2026,
+    "valid_json": 10,
+    "blank": 0,
+    "completion_timestamps": [
+      1791428817,
+      1791428820,
+      1791428824,
+      1791428827,
+      1791428831,
+      1791428834,
+      1791428839,
+      1791428842,
+      1791428846,
+      1791428849
+    ]
+  }
+}

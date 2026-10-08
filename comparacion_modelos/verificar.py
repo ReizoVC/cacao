@@ -57,6 +57,23 @@ if (HERE/'metricas_ronda2.json').exists():
     for letter in 'WXYZ':assert blind2.count(f'### Respuesta {letter}\n')==10
     assert not any(name in blind2 for name in ('Gemma','Qwen','Q5_K','UD-Q4'))
     assert '## Ronda 2 — integración común y formatos de visión' in report
+if (ROOT/'resultados_ciegas.md').exists():
+    fresh_blind=(ROOT/'resultados_ciegas.md').read_text(encoding='utf-8')
+    assert fresh_blind.count('## Pregunta ')==10
+    for letter in 'AB':assert fresh_blind.count(f'### Respuesta {letter}\n')==10
+    assert not any(name in fresh_blind.lower() for name in ('gemma','qwen','q5_k','ud-q5'))
+    evidence=json.loads((HERE/'conversacion_nueva_integridad.json').read_text(encoding='utf-8'))
+    for model,summary in evidence.items():
+        raw_path=HERE/'datos/conversacion_nueva/ronda2'/f'{model}.json'
+        assert sha(raw_path)==summary['raw_sha256']
+        current=json.loads(raw_path.read_text(encoding='utf-8'))
+        previous=json.loads((HERE/'datos/ronda2'/f'{model}.json').read_text(encoding='utf-8'))
+        assert current['complete'] and len(current['conversation'])==10 and not current['cases']
+        assert current['prompt_sha256']==previous['prompt_sha256']
+        assert current['integration']['schema_sha256']==previous['integration']['schema_sha256']
+        for new,old in zip(current['conversation'],previous['conversation']):
+            assert new['question']==old['question'] and new['json_schema_ok'] and not new['error'] and new['respuesta'].strip()
+            assert new['outputs'][-1]['created']>old['outputs'][-1]['created']
 engine=[]
 production=ROOT/'.venv/Lib/site-packages/llama_cpp'
 testing=ROOT/'.venv-pruebas/Lib/site-packages/llama_cpp'

@@ -7,3 +7,4 @@
 /comparacion_modelos/vision.json text eol=lf
 # Blind answers preserve the generated text verbatim, including spaces.
 /respuestas_integracion_ciegas.md whitespace=-blank-at-eol
+/resultados_ciegas.md whitespace=-blank-at-eol text eol=lf

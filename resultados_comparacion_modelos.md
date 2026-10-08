@@ -356,3 +356,12 @@ Esta ronda actualiza la recomendación histórica de arriba. Gemma conserva mayo
 - Motor CUDA llama-cpp-python 0.3.36 en .venv-pruebas. Se vuelve a probar el respaldo después de top_k=1 en cada tanda; no se instaló otra versión.
 - Pruebas originales y criterios congelados: comparacion_modelos/ronda2_congelado.json. No se modificaron las frases ni herramientas.json de producción.
 - Secuencia: ejecutar ronda2.py tras los diagnósticos y luego resumir_ronda2.py. Datos crudos locales excluidos; evidencia sanitizada en comparacion_modelos/metricas_ronda2.json y auditoria_qwen_ronda2.json. Configuración y motor verificados con verificar.py.
+## Complemento — conversación nueva y revisión semántica
+
+Se ejecutó nuevamente la inferencia de las diez preguntas con cada Q5, usando la misma integración corregida, semilla 2026 y parámetros. Veinte respuestas no vacías, con JSON validado. No se copiaron respuestas anteriores; con la misma semilla pueden coincidir. La puntuación humana sigue pendiente.
+
+[Nueva evaluación a ciegas](resultados_ciegas.md), [clave separada: abrir después](clave_resultados_ciegas.md). A/B se sortean por pregunta; no identifican siempre al mismo modelo.
+
+[Clasificación semántica de los siete fallos de Qwen](clasificacion_fallos_qwen.md): dos alternativas funcionales (#10 s22 y #56 s22), una aclaración segura pendiente (#13 s11) y cuatro fallos operativos (#14 s11, #43 s22, #59 s22 y #59 s33). #14 añadió acciones no pedidas. #59 s22 escribió texto literal e intentó guardar por PowerShell en una ruta inventada: la escritura fue bloqueada. No se ejecutó ninguna acción real. La puntuación congelada permanece 188/195.
+
+Huellas y fechas de estas inferencias: comparacion_modelos/conversacion_nueva_integridad.json. Producción intacta.

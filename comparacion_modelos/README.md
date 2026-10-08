@@ -89,3 +89,29 @@ Datos crudos en `datos/ronda2` (excluidos de Git). El diagnóstico omite tandas
 ya completas y la secuencia permite conservar las tandas terminadas al reanudar. Las
 respuestas a ciegas de esta ronda mezclan las versiones anteriores y ajustadas;
 su clave es independiente de la primera. La aprobación humana sigue pendiente.
+
+## Conversación regenerada antes de la evaluación humana
+
+`conversacion_nueva.py` reutiliza en memoria el ejecutor congelado de la ronda 2:
+solo omite el bucle de 195 tareas y ajusta el marcador de finalización a diez
+conversaciones y cero tareas. No altera el archivo congelado, la integración,
+las preguntas, el contexto, la temperatura ni la semilla 2026. La inferencia se
+ejecuta otra vez; no copia respuestas anteriores. Con los mismos parámetros,
+algunas respuestas pueden coincidir con las anteriores.
+
+```powershell
+.\.venv-pruebas\Scripts\python.exe -B comparacion_modelos\conversacion_nueva.py gemma_q5 --round2
+.\.venv-pruebas\Scripts\python.exe -B comparacion_modelos\conversacion_nueva.py qwen_q5 --round2
+.\.venv-pruebas\Scripts\python.exe -B comparacion_modelos\resumir_conversacion_nueva.py
+.\.venv-pruebas\Scripts\python.exe -B comparacion_modelos\verificar.py
+```
+
+Ejecutar secuencialmente, sin otro modelo en GPU. Salidas crudas nuevas en
+`datos/conversacion_nueva/ronda2`, excluidas de Git; nunca sobrescriben la ronda 2.
+`resultados_ciegas.md` mezcla A/B de nuevo en cada pregunta, con clave independiente
+en `clave_resultados_ciegas.md`. Una regeneración del documento conserva esa clave.
+Para repetir la inferencia después de evaluar, archivar primero esta tanda y su
+clave, pues el ejecutor sustituye la salida de su modelo. Los veinte textos se
+guardan sin editar; `conversacion_nueva_integridad.json` conserva huellas y fechas
+de generación. La revisión semántica de los siete fallos se entrega por separado
+en `clasificacion_fallos_qwen.md`, sin cambiar el marcador 188/195.
