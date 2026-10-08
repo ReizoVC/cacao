@@ -62,8 +62,8 @@ class GPU:
         self.stop.set()
         self.thread.join(5)
 
-def prepare(model):
-    runtime = ROOT / '.comparacion-runtime' / model
+def prepare(model, round2=False):
+    runtime = ROOT / '.comparacion-runtime' / (model+'_ronda2' if round2 else model)
     runtime.mkdir(parents=True, exist_ok=True)
     # Copies only code/configuration, never personal databases or the production vault.
     for source in ROOT.glob('*.py'):
@@ -150,16 +150,23 @@ def isolated_tools(b):
     return effects, reset
 
 def main():
+    global OUT
+    sys.stdout.reconfigure(encoding='utf-8')
+    sys.stderr.reconfigure(encoding='utf-8')
     parser = argparse.ArgumentParser()
     parser.add_argument('model', choices=MODELS)
     parser.add_argument('--smoke', action='store_true')
     parser.add_argument('--vision-only', action='store_true')
     parser.add_argument('--vision-normalized', action='store_true')
+    parser.add_argument('--round2', action='store_true')
+    parser.add_argument('--diagnostic', choices=('baseline','prompt','schema','combined'))
     args = parser.parse_args()
     if args.vision_normalized:
         args.vision_only = True
+    if args.round2 or args.diagnostic:
+        OUT = OUT / 'ronda2'
     OUT.mkdir(parents=True, exist_ok=True)
-    runtime = prepare(args.model)
+    runtime = prepare(args.model, args.round2 or bool(args.diagnostic))
     os.environ.update(SIN_REALES='1', CONFIRMAR='s', PYTHONDONTWRITEBYTECODE='1')
     sys.path.insert(0, str(runtime))
     from guardia_juego import exigir_gpu_libre, juego_abierto
@@ -180,6 +187,17 @@ def main():
     import jsonschema
     loaded = gpu.read()
     effects, reset = isolated_tools(b)
+    integration=None
+    if args.round2 or args.diagnostic:
+        from integracion import adjust
+        integration=adjust(b.ns,args.diagnostic or 'combined')
+        def valid_json(text):
+            try:
+                jsonschema.validate(json.loads(text),b.ns['ESQUEMA_ACCION'])
+                return True
+            except (ValueError,jsonschema.ValidationError):
+                return False
+        b.json_valido=valid_json
     # Native template for each model; Qwen non-thinking for the structured Cacao protocol.
     if args.model.startswith('qwen'):
         from llama_cpp.llama_chat_format import Jinja2ChatFormatter
@@ -189,11 +207,16 @@ def main():
             bos_token=b.llm.detokenize([b.llm.token_bos()], special=True).decode(),
             stop_token_ids=[b.llm.token_eos()])
         b.llm.chat_handler = formatter.to_chat_handler()
+        rendered=formatter(messages=[{'role':'user','content':'Hola'}]).prompt
+        assert rendered.endswith('<|im_start|>assistant\n<think>\n\n</think>\n\n'),'Pensamiento no desactivado'
+        template_probe={'generation_suffix':rendered[-60:], 'template_sha256':hashlib.sha256(template.encode()).hexdigest()}
     report = {'model': args.model, 'model_path': str(MODELS[args.model]), 'version': llama_cpp.__version__,
               'loaded_s': time.perf_counter()-start, 'gpu_baseline': gpu.samples[0], 'gpu_loaded': loaded,
               'config': json.loads((runtime/'config.json').read_text(encoding='utf-8')),
               'prompt_sha256': hashlib.sha256(b.ns['prompt_sistema']().encode()).hexdigest(),
               'architecture': b.llm.metadata.get('general.architecture'), 'cases': [], 'conversation': []}
+    report['integration']=integration
+    report['template_probe']=template_probe if args.model.startswith('qwen') else {'native_handler':True}
     raw_call = b.llm.create_chat_completion
     outputs = []
     first = []
@@ -253,6 +276,21 @@ def main():
         response_format={'type':'json_object','schema':schema}, temperature=.3, top_k=1, max_tokens=80)
     jsonschema.validate(json.loads(fallback['choices'][0]['message']['content']), schema)
     report['grammar_probe'] = {'response': fallback, 'fallbacks': b.llm.ultimo_muestreador.respaldos}
+    if args.diagnostic:
+        from criterios import complete
+        selected=[(14,22),(21,22),(29,11),(30,11),(35,22),(38,11),(40,11),(44,11),(56,22),(57,22),(58,11),(59,33)]
+        cases={p['id']:p for p in json.loads((ROOT/'pruebas.json').read_text(encoding='utf-8'))['pruebas']}
+        for i,seed in selected:
+            r=run(cases[i]['frase'],seed)
+            r['id']=i
+            r['task_checked']=complete(r)
+            report['cases'].append(r)
+            print('DIAGNOSTICO',args.diagnostic,i,r['task_checked'],flush=True)
+        report['complete']=True
+        gpu.close()
+        dump(OUT/f'{args.model}_diagnostic_{args.diagnostic}.json',report)
+        b.llm.close()
+        return
     if args.vision_only:
         from vision import ManejadorVision
         projector = ROOT / ('modelos/comparacion/mmproj-F16.gguf' if args.model.startswith('qwen') else 'modelos/mmproj/mmproj-F16.gguf')
@@ -274,15 +312,21 @@ def main():
                  'No devuelvas coordenadas en píxeles.' if args.vision_normalized else
                  'Devuelve SOLO un JSON con x e y del centro del botón, en píxeles de la imagen original. '
                  'Origen (0,0) arriba a la izquierda. No uses coordenadas normalizadas.'))
+            vision_schema={'type':'object','properties':{'x':{'type':'integer'},'y':{'type':'integer'}},'required':['x','y']}
+            if args.round2:
+                from integracion import vision_contract,pixel_point
+                prompt,vision_schema=vision_contract(args.model,task['objetivo'])
             result = {'id':task['id'],'task':task,'width':width,'height':height}
             try:
                 r = handler(llama=b.llm, messages=[{'role':'user','content':[
                     {'type':'image_url','image_url':{'url':'data:image/png;base64,'+base64.b64encode(data).decode()}},
                     {'type':'text','text':prompt}]}], temperature=.3, top_k=64, top_p=.95, max_tokens=128,
-                    response_format={'type':'json_object','schema':{'type':'object','properties':{
-                        'x':{'type':'integer'},'y':{'type':'integer'}},'required':['x','y']}})
+                    response_format={'type':'json_object','schema':vision_schema})
                 xy = json.loads(r['choices'][0]['message']['content'])
-                if args.vision_normalized:
+                if args.round2:
+                    jsonschema.validate(xy,vision_schema)
+                    xy=pixel_point(args.model,xy,width,height)
+                elif args.vision_normalized:
                     xy = {'x': xy['x']*width/1000, 'y': xy['y']*height/1000}
                 x0,y0,x1,y1 = task['rect']
                 result.update(response=r,pixel_point=xy,normalized=args.vision_normalized,

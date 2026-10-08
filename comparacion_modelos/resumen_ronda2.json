@@ -1,0 +1,81 @@
+{
+  "gemma_q5": {
+    "stats": {
+      "tasks": 195,
+      "blank": 0,
+      "blank_conversation": 0,
+      "json": 195,
+      "first": 192,
+      "median": 3.4939875999989454,
+      "p95": 4.2104421999974875,
+      "task_mean": 6.634747771795119,
+      "tps": 32.747767845687925
+    },
+    "gpu_baseline": {
+      "t": 1791424154.835598,
+      "total": 16311,
+      "used": 1199,
+      "free": 14852,
+      "util": 8
+    },
+    "gpu_loaded": {
+      "t": 1791424166.0667017,
+      "total": 16311,
+      "used": 12706,
+      "free": 3345,
+      "util": 40
+    },
+    "gpu_peak_mib": 12748,
+    "gpu_min_free_mib": 3303,
+    "vision_peak_mib": 13245,
+    "vision_min_free_mib": 2806,
+    "template_probe": {
+      "native_handler": true
+    },
+    "grammar_fallbacks": 7,
+    "json_control_characters_excluded": true,
+    "strict_char_rule": "[^\"\\\\\\x7F\\x00-\\x1F] | \"\\\\\" ([\"\\\\/bfnrt] | \"u\" [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F])",
+    "prompt_sha256": "adb0e35e13d3348e2c164cc0d83f1032b19574febe51effbc84fa2d47eb2f56e",
+    "schema_sha256": "c2ea19a80dd5a4960922f21b72ed5936dbd6aa22b98f2147b672b37b0e05f425"
+  },
+  "qwen_q5": {
+    "stats": {
+      "tasks": 188,
+      "blank": 0,
+      "blank_conversation": 0,
+      "json": 195,
+      "first": 182,
+      "median": 2.411169200000586,
+      "p95": 3.017797399996198,
+      "task_mean": 6.904179442563924,
+      "tps": 47.57531677129647
+    },
+    "gpu_baseline": {
+      "t": 1791425532.0931287,
+      "total": 16311,
+      "used": 1188,
+      "free": 14863,
+      "util": 7
+    },
+    "gpu_loaded": {
+      "t": 1791425539.469589,
+      "total": 16311,
+      "used": 7884,
+      "free": 8167,
+      "util": 7
+    },
+    "gpu_peak_mib": 8028,
+    "gpu_min_free_mib": 8023,
+    "vision_peak_mib": 9298,
+    "vision_min_free_mib": 6753,
+    "template_probe": {
+      "generation_suffix": "ser\nHola<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+      "template_sha256": "420821d52f14192a9952cc1459f57435017e3e3c3fcc8bd24f8b575e6a77bd8c"
+    },
+    "grammar_fallbacks": 8,
+    "json_control_characters_excluded": true,
+    "strict_char_rule": "[^\"\\\\\\x7F\\x00-\\x1F] | \"\\\\\" ([\"\\\\/bfnrt] | \"u\" [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F])",
+    "prompt_sha256": "adb0e35e13d3348e2c164cc0d83f1032b19574febe51effbc84fa2d47eb2f56e",
+    "schema_sha256": "c2ea19a80dd5a4960922f21b72ed5936dbd6aa22b98f2147b672b37b0e05f425"
+  }
+}

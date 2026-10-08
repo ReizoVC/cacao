@@ -1,0 +1,450 @@
+[
+  {
+    "kind": "task",
+    "id": 29,
+    "seed": 11,
+    "category": "Prompt + cierre anticipado",
+    "evidence": "mensaje_final terminó toda la tarea después de una sola acción; otras acciones pedidas no se ejecutaron.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 30,
+    "seed": 11,
+    "category": "Prompt + cierre anticipado",
+    "evidence": "mensaje_final terminó toda la tarea después de una sola acción; otras acciones pedidas no se ejecutaron.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 31,
+    "seed": 11,
+    "category": "Prompt + cierre anticipado",
+    "evidence": "mensaje_final terminó toda la tarea después de una sola acción; otras acciones pedidas no se ejecutaron.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 34,
+    "seed": 11,
+    "category": "Prompt + cierre anticipado",
+    "evidence": "mensaje_final terminó toda la tarea después de una sola acción; otras acciones pedidas no se ejecutaron.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 38,
+    "seed": 11,
+    "category": "Prompt + gramática permisiva",
+    "evidence": "El modelo escribió la respuesta en mensaje_final de finalizar; el loop lee argumentos.mensaje. No faltó texto generado.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 40,
+    "seed": 11,
+    "category": "Prompt + gramática permisiva",
+    "evidence": "El modelo escribió la respuesta en mensaje_final de finalizar; el loop lee argumentos.mensaje. No faltó texto generado.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 44,
+    "seed": 11,
+    "category": "Evaluador",
+    "evidence": "PowerShell ya estaba enfocado; el criterio anterior dependía de la palabra terminal.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 58,
+    "seed": 11,
+    "category": "Prompt / planificación residual",
+    "evidence": "Abrió otra instancia o no enfocó el Bloc existente; no completó la escritura en la ventana solicitada.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 14,
+    "seed": 22,
+    "category": "Entorno del ejecutor",
+    "evidence": "Impresión CP1252 abortó al encontrar caracteres no representables; no es fallo de capacidad.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 21,
+    "seed": 22,
+    "category": "Prompt + gramática permisiva",
+    "evidence": "El modelo escribió la respuesta en mensaje_final de finalizar; el loop lee argumentos.mensaje. No faltó texto generado.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 27,
+    "seed": 22,
+    "category": "Prompt + gramática permisiva",
+    "evidence": "El modelo escribió la respuesta en mensaje_final de finalizar; el loop lee argumentos.mensaje. No faltó texto generado.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 29,
+    "seed": 22,
+    "category": "Prompt + cierre anticipado",
+    "evidence": "mensaje_final terminó toda la tarea después de una sola acción; otras acciones pedidas no se ejecutaron.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 30,
+    "seed": 22,
+    "category": "Prompt + cierre anticipado",
+    "evidence": "mensaje_final terminó toda la tarea después de una sola acción; otras acciones pedidas no se ejecutaron.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 31,
+    "seed": 22,
+    "category": "Prompt + cierre anticipado",
+    "evidence": "mensaje_final terminó toda la tarea después de una sola acción; otras acciones pedidas no se ejecutaron.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 34,
+    "seed": 22,
+    "category": "Prompt + cierre anticipado",
+    "evidence": "mensaje_final terminó toda la tarea después de una sola acción; otras acciones pedidas no se ejecutaron.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 35,
+    "seed": 22,
+    "category": "Prompt + gramática permisiva",
+    "evidence": "El modelo escribió la respuesta en mensaje_final de finalizar; el loop lee argumentos.mensaje. No faltó texto generado.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 38,
+    "seed": 22,
+    "category": "Prompt + gramática permisiva",
+    "evidence": "El modelo escribió la respuesta en mensaje_final de finalizar; el loop lee argumentos.mensaje. No faltó texto generado.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 39,
+    "seed": 22,
+    "category": "Prompt + gramática permisiva",
+    "evidence": "El modelo escribió la respuesta en mensaje_final de finalizar; el loop lee argumentos.mensaje. No faltó texto generado.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 44,
+    "seed": 22,
+    "category": "Evaluador",
+    "evidence": "PowerShell ya estaba enfocado; el criterio anterior dependía de la palabra terminal.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 50,
+    "seed": 22,
+    "category": "Prompt + gramática permisiva",
+    "evidence": "El modelo escribió la respuesta en mensaje_final de finalizar; el loop lee argumentos.mensaje. No faltó texto generado.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 56,
+    "seed": 22,
+    "category": "Prompt / elección de herramienta residual",
+    "evidence": "Cerró la app mediante cerrar_app en vez de ejecutar el clic solicitado.",
+    "round2_complete": false,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 57,
+    "seed": 22,
+    "category": "Prompt / interpretación residual",
+    "evidence": "Confundió bajar la rueda del mouse con bajar el volumen.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 58,
+    "seed": 22,
+    "category": "Prompt / planificación residual",
+    "evidence": "Abrió otra instancia o no enfocó el Bloc existente; no completó la escritura en la ventana solicitada.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 29,
+    "seed": 33,
+    "category": "Prompt + cierre anticipado",
+    "evidence": "mensaje_final terminó toda la tarea después de una sola acción; otras acciones pedidas no se ejecutaron.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 30,
+    "seed": 33,
+    "category": "Prompt + cierre anticipado",
+    "evidence": "mensaje_final terminó toda la tarea después de una sola acción; otras acciones pedidas no se ejecutaron.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 31,
+    "seed": 33,
+    "category": "Prompt + cierre anticipado",
+    "evidence": "mensaje_final terminó toda la tarea después de una sola acción; otras acciones pedidas no se ejecutaron.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 34,
+    "seed": 33,
+    "category": "Prompt + cierre anticipado",
+    "evidence": "mensaje_final terminó toda la tarea después de una sola acción; otras acciones pedidas no se ejecutaron.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 40,
+    "seed": 33,
+    "category": "Prompt + gramática permisiva",
+    "evidence": "El modelo escribió la respuesta en mensaje_final de finalizar; el loop lee argumentos.mensaje. No faltó texto generado.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 50,
+    "seed": 33,
+    "category": "Prompt + gramática permisiva",
+    "evidence": "El modelo escribió la respuesta en mensaje_final de finalizar; el loop lee argumentos.mensaje. No faltó texto generado.",
+    "round2_complete": true,
+    "round2_blank": false
+  },
+  {
+    "kind": "task",
+    "id": 59,
+    "seed": 33,
+    "category": "Entorno del ejecutor",
+    "evidence": "Impresión CP1252 abortó al encontrar caracteres no representables; no es fallo de capacidad.",
+    "round2_complete": false,
+    "round2_blank": false
+  },
+  {
+    "kind": "conversation",
+    "id": 2,
+    "seed": 2026,
+    "category": "Prompt + gramática permisiva",
+    "evidence": "El modelo escribió la respuesta en mensaje_final de finalizar; el loop lee argumentos.mensaje. No faltó texto generado.",
+    "round2_blank": false,
+    "round2_unsolicited_action": false
+  },
+  {
+    "kind": "conversation",
+    "id": 3,
+    "seed": 2026,
+    "category": "Prompt + gramática permisiva",
+    "evidence": "El modelo escribió la respuesta en mensaje_final de finalizar; el loop lee argumentos.mensaje. No faltó texto generado.",
+    "round2_blank": false,
+    "round2_unsolicited_action": false
+  },
+  {
+    "kind": "conversation",
+    "id": 4,
+    "seed": 2026,
+    "category": "Prompt + gramática permisiva",
+    "evidence": "El modelo escribió la respuesta en mensaje_final de finalizar; el loop lee argumentos.mensaje. No faltó texto generado.",
+    "round2_blank": false,
+    "round2_unsolicited_action": false
+  },
+  {
+    "kind": "conversation",
+    "id": 5,
+    "seed": 2026,
+    "category": "Prompt / acción no solicitada",
+    "evidence": "Pausó el registro de hábitos al recibir un pedido de consejo para estudiar.",
+    "round2_blank": false,
+    "round2_unsolicited_action": false
+  },
+  {
+    "kind": "conversation",
+    "id": 6,
+    "seed": 2026,
+    "category": "Prompt + gramática permisiva",
+    "evidence": "El modelo escribió la respuesta en mensaje_final de finalizar; el loop lee argumentos.mensaje. No faltó texto generado.",
+    "round2_blank": false,
+    "round2_unsolicited_action": false
+  },
+  {
+    "kind": "conversation",
+    "id": 7,
+    "seed": 2026,
+    "category": "Prompt + gramática permisiva",
+    "evidence": "El modelo escribió la respuesta en mensaje_final de finalizar; el loop lee argumentos.mensaje. No faltó texto generado.",
+    "round2_blank": false,
+    "round2_unsolicited_action": false
+  },
+  {
+    "kind": "conversation",
+    "id": 8,
+    "seed": 2026,
+    "category": "Prompt + gramática permisiva",
+    "evidence": "El modelo escribió la respuesta en mensaje_final de finalizar; el loop lee argumentos.mensaje. No faltó texto generado.",
+    "round2_blank": false,
+    "round2_unsolicited_action": false
+  },
+  {
+    "kind": "conversation",
+    "id": 10,
+    "seed": 2026,
+    "category": "Prompt + gramática permisiva",
+    "evidence": "El modelo escribió la respuesta en mensaje_final de finalizar; el loop lee argumentos.mensaje. No faltó texto generado.",
+    "round2_blank": false,
+    "round2_unsolicited_action": false
+  },
+  {
+    "kind": "round2_failure",
+    "id": 13,
+    "seed": 11,
+    "category": "Interpretación: pidió aclarar una frase ambigua; el criterio congelado exige bajar volumen. No prueba incapacidad.",
+    "tools": [
+      "finalizar"
+    ]
+  },
+  {
+    "kind": "round2_failure",
+    "id": 14,
+    "seed": 11,
+    "category": "Planificación/diagnóstico excesivo: no finalizó satisfactoriamente; las ventanas estáticas pueden alimentar el bucle.",
+    "tools": [
+      "volumen",
+      "volumen",
+      "consultar_memoria",
+      "listar_ventanas",
+      "abrir_app",
+      "listar_controles",
+      "listar_ventanas",
+      "listar_apps",
+      "abrir_app",
+      "listar_controles",
+      "listar_ventanas",
+      "ejecutar_powershell",
+      "abrir_app",
+      "consultar_memoria",
+      "abrir_app"
+    ]
+  },
+  {
+    "kind": "round2_failure",
+    "id": 10,
+    "seed": 22,
+    "category": "Contrato del benchmark: enfocó una ventana existente en vez de abrir_app. No acredita la apertura requerida, aunque reutilizar una ventana puede ser útil en uso real.",
+    "tools": [
+      "listar_ventanas",
+      "enfocar_ventana",
+      "finalizar"
+    ]
+  },
+  {
+    "kind": "round2_failure",
+    "id": 43,
+    "seed": 22,
+    "category": "Omisión operativa residual: afirmó traer Bloc de notas al frente sin ejecutar ninguna acción. No hay fallo de plantilla, pensamiento o JSON en esta observación.",
+    "tools": [
+      "finalizar"
+    ]
+  },
+  {
+    "kind": "round2_failure",
+    "id": 56,
+    "seed": 22,
+    "category": "Elección de herramienta: cerró la app, pero omitió el clic solicitado en X; no acredita el método pedido.",
+    "tools": [
+      "ver_pantalla",
+      "listar_ventanas",
+      "cerrar_app",
+      "finalizar"
+    ]
+  },
+  {
+    "kind": "round2_failure",
+    "id": 59,
+    "seed": 22,
+    "category": "Planificación/verificación: escritura o cierre de tarea no acreditados; los controles estáticos no reflejan el texto escrito.",
+    "tools": [
+      "listar_ventanas",
+      "enfocar_ventana",
+      "teclado",
+      "listar_controles",
+      "teclado",
+      "listar_controles",
+      "mouse",
+      "listar_controles",
+      "teclado",
+      "listar_controles",
+      "teclado",
+      "ejecutar_powershell",
+      "teclado",
+      "mouse",
+      "teclado"
+    ]
+  },
+  {
+    "kind": "round2_failure",
+    "id": 59,
+    "seed": 33,
+    "category": "Rechazo operativo residual: dijo que no podía guardar archivos y omitió Ctrl+S pese a disponer de teclado. No ejecutó una verificación.",
+    "tools": [
+      "finalizar"
+    ]
+  },
+  {
+    "kind": "integration_pilot_v3",
+    "id": 14,
+    "seed": 22,
+    "category": "Gramática / convertidor JSON-schema",
+    "evidence": "La regla char admitía controles sin escapar; salto de línea literal dentro de pensamiento.",
+    "error": "JSONDecodeError: Invalid control character at: line 1 column 137 (char 136)",
+    "raw_content": "{\"pensamiento\": \"El volumen ya está al 100% y no está silenciado, así que voy a finalizar explicando que el volumen está correcto y que,\n\" , \"herramienta\": \"finalizar\", \"argumentos\": {\"mensaje\": \"Ya subí el volumen al 100% y no está silenciado. Si sigo sin escuchar nada, podría ser un problema con los altavoces o el dispositivo de salida. ¿Quieres que busquemos algo para diagnosticarlo?\" , \"exito\": true}}",
+    "included_in_acceptance": false
+  }
+]

@@ -1,0 +1,9 @@
+# Preserve the bytes of files frozen for the model comparison on Windows.
+/pruebas.json text eol=lf
+/comparacion_modelos/integracion.py text eol=lf
+/comparacion_modelos/ejecutar.py text eol=lf
+/comparacion_modelos/criterios.py text eol=lf
+/comparacion_modelos/ronda2_protocolo.md text eol=lf
+/comparacion_modelos/vision.json text eol=lf
+# Blind answers preserve the generated text verbatim, including spaces.
+/respuestas_integracion_ciegas.md whitespace=-blank-at-eol

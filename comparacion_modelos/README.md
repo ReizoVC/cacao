@@ -50,7 +50,9 @@ nombres pueden aparecer en los registros crudos locales, por eso se excluyen.
 
 La primera tanda de visión pide píxeles; el seguimiento pide 0–1000. Las dos
 capturas limpias son ventanas reales de Calculadora y Bloc de notas vacío.
-Los rectángulos en `vision.json` se fijaron antes de las inferencias.
+Los rectángulos se fijaron antes de las inferencias. La ronda 2 documenta y corrige
+una errata del rectángulo del número 7 en `ronda2_vision_errata.md`, conservando
+las respuestas originales y recalculando ambas referencias.
 
 ## Evidencia y límites
 
@@ -64,3 +66,26 @@ la comprobación automática y sus límites figuran en el informe; no representa
 La VRAM es de toda la GPU y el margen tras cargar voz es estimado. La comparación
 usa el protocolo JSON y las plantillas descritas en el informe, no un servidor
 independiente con prompts optimizados para cada familia.
+
+## Ronda 2 de integración
+
+Protocolo y umbral predefinidos en `ronda2_protocolo.md`, huellas en
+`ronda2_congelado.json`. Ajustes en `integracion.py` aplicados solo por el ejecutor
+con `--round2`; no son cambios del agente de producción. La referencia original
+se conserva. No ejecutar `resumir.py` después de anexar la ronda 2 sin volver a
+ejecutar también `resumir_ronda2.py`, pues el primer resumen solo conoce la ronda 1.
+
+Secuencia (sin otro proceso de inferencia activo):
+
+```powershell
+.\.venv-pruebas\Scripts\python.exe -B comparacion_modelos\diagnosticar.py
+.\.venv-pruebas\Scripts\python.exe -B comparacion_modelos\ronda2.py
+.\.venv-pruebas\Scripts\python.exe -B comparacion_modelos\probar_integracion.py
+.\.venv-pruebas\Scripts\python.exe -B comparacion_modelos\resumir_ronda2.py
+.\.venv-pruebas\Scripts\python.exe -B comparacion_modelos\verificar.py
+```
+
+Datos crudos en `datos/ronda2` (excluidos de Git). El diagnóstico omite tandas
+ya completas y la secuencia permite conservar las tandas terminadas al reanudar. Las
+respuestas a ciegas de esta ronda mezclan las versiones anteriores y ajustadas;
+su clave es independiente de la primera. La aprobación humana sigue pendiente.

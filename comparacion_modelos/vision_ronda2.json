@@ -1,0 +1,242 @@
+[
+  {
+    "model": "gemma_q5",
+    "id": 1,
+    "task": {
+      "id": 1,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón del número 7",
+      "rect": [
+        69,
+        379,
+        127,
+        415
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"box_2d\": [719, 208, 836, 405]}",
+    "pixel_point": {
+      "x": 98.693,
+      "y": 415.185
+    },
+    "hit": false,
+    "seconds": 2.2133448000022327
+  },
+  {
+    "model": "gemma_q5",
+    "id": 2,
+    "task": {
+      "id": 2,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón más (+), para sumar",
+      "rect": [
+        259,
+        456,
+        317,
+        491
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"box_2d\": [879, 786, 1000, 975]}",
+    "pixel_point": {
+      "x": 283.521,
+      "y": 501.693
+    },
+    "hit": false,
+    "seconds": 1.6023612999997567
+  },
+  {
+    "model": "gemma_q5",
+    "id": 3,
+    "task": {
+      "id": 3,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón igual (=)",
+      "rect": [
+        259,
+        494,
+        317,
+        529
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"box_2d\": [813, 790, 965, 984]}",
+    "pixel_point": {
+      "x": 285.614,
+      "y": 474.726
+    },
+    "hit": false,
+    "seconds": 1.584133500000462
+  },
+  {
+    "model": "gemma_q5",
+    "id": 4,
+    "task": {
+      "id": 4,
+      "imagen": "bloc_notas.png",
+      "objetivo": "el menú Archivo",
+      "rect": [
+        8,
+        45,
+        68,
+        72
+      ]
+    },
+    "width": 986,
+    "height": 748,
+    "response": "{\"box_2d\": [156, 14, 217, 68]}",
+    "pixel_point": {
+      "x": 40.426,
+      "y": 139.502
+    },
+    "hit": false,
+    "seconds": 1.593729300002451
+  },
+  {
+    "model": "gemma_q5",
+    "id": 5,
+    "task": {
+      "id": 5,
+      "imagen": "bloc_notas.png",
+      "objetivo": "el botón + para crear una pestaña nueva",
+      "rect": [
+        293,
+        10,
+        326,
+        42
+      ]
+    },
+    "width": 986,
+    "height": 748,
+    "response": "{\"box_2d\": [56, 301, 124, 328]}",
+    "pixel_point": {
+      "x": 310.097,
+      "y": 67.32
+    },
+    "hit": false,
+    "seconds": 1.5720465999984299
+  },
+  {
+    "model": "qwen_q5",
+    "id": 1,
+    "task": {
+      "id": 1,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón del número 7",
+      "rect": [
+        69,
+        379,
+        127,
+        415
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"point_2d\": [305, 741]}",
+    "pixel_point": {
+      "x": 98.21,
+      "y": 395.694
+    },
+    "hit": true,
+    "seconds": 4.688884600000165
+  },
+  {
+    "model": "qwen_q5",
+    "id": 2,
+    "task": {
+      "id": 2,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón más (+), para sumar",
+      "rect": [
+        259,
+        456,
+        317,
+        491
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"point_2d\": [891, 875]}",
+    "pixel_point": {
+      "x": 286.902,
+      "y": 467.25
+    },
+    "hit": true,
+    "seconds": 1.4371303000007174
+  },
+  {
+    "model": "qwen_q5",
+    "id": 3,
+    "task": {
+      "id": 3,
+      "imagen": "calculadora.png",
+      "objetivo": "el botón igual (=)",
+      "rect": [
+        259,
+        494,
+        317,
+        529
+      ]
+    },
+    "width": 322,
+    "height": 534,
+    "response": "{\"point_2d\": [890, 947]}",
+    "pixel_point": {
+      "x": 286.58,
+      "y": 505.698
+    },
+    "hit": true,
+    "seconds": 1.4265966999955708
+  },
+  {
+    "model": "qwen_q5",
+    "id": 4,
+    "task": {
+      "id": 4,
+      "imagen": "bloc_notas.png",
+      "objetivo": "el menú Archivo",
+      "rect": [
+        8,
+        45,
+        68,
+        72
+      ]
+    },
+    "width": 986,
+    "height": 748,
+    "response": "{\"point_2d\": [39, 81]}",
+    "pixel_point": {
+      "x": 38.454,
+      "y": 60.588
+    },
+    "hit": true,
+    "seconds": 1.4418413999956101
+  },
+  {
+    "model": "qwen_q5",
+    "id": 5,
+    "task": {
+      "id": 5,
+      "imagen": "bloc_notas.png",
+      "objetivo": "el botón + para crear una pestaña nueva",
+      "rect": [
+        293,
+        10,
+        326,
+        42
+      ]
+    },
+    "width": 986,
+    "height": 748,
+    "response": "{\"point_2d\": [315, 40]}",
+    "pixel_point": {
+      "x": 310.59,
+      "y": 29.92
+    },
+    "hit": true,
+    "seconds": 1.463930599995365
+  }
+]

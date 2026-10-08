@@ -1,0 +1,7218 @@
+[
+ {
+  "model": "gemma_q5",
+  "id": 1,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.4626786000007996,
+  "wall_s": 5.08295590000489,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 97,
+  "t_decode": 0.14718310000171186,
+  "t_sample": 2.825460000000021
+ },
+ {
+  "model": "gemma_q5",
+  "id": 2,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.545194199999969,
+  "wall_s": 5.35721690000355,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 107,
+  "t_decode": 0.14618509997671936,
+  "t_sample": 3.1007621999597177
+ },
+ {
+  "model": "gemma_q5",
+  "id": 3,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.638702000003832,
+  "wall_s": 5.36909839999862,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 107,
+  "t_decode": 0.14523810004175175,
+  "t_sample": 3.1110438999603502
+ },
+ {
+  "model": "gemma_q5",
+  "id": 4,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.2802665999988676,
+  "wall_s": 4.733935600001132,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 86,
+  "t_decode": 0.11885989998700097,
+  "t_sample": 2.509384500015585
+ },
+ {
+  "model": "gemma_q5",
+  "id": 5,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.3549328000008245,
+  "wall_s": 5.133666699999594,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 100,
+  "t_decode": 0.1357660999710788,
+  "t_sample": 2.8983495000502444
+ },
+ {
+  "model": "gemma_q5",
+  "id": 6,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.1996169999983977,
+  "wall_s": 5.148450100001355,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 100,
+  "t_decode": 0.13450469997769687,
+  "t_sample": 2.9144437000504695
+ },
+ {
+  "model": "gemma_q5",
+  "id": 7,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.7015507000032812,
+  "wall_s": 5.366306000003533,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 107,
+  "t_decode": 0.1529653000034159,
+  "t_sample": 3.0997685000038473
+ },
+ {
+  "model": "gemma_q5",
+  "id": 8,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.3991167999993195,
+  "wall_s": 5.0529243999990285,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 97,
+  "t_decode": 0.12779850004881155,
+  "t_sample": 2.815381700027501
+ },
+ {
+  "model": "gemma_q5",
+  "id": 9,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.171210600004997,
+  "wall_s": 4.724031900004775,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 85,
+  "t_decode": 0.12218990000110352,
+  "t_sample": 2.493519100054982
+ },
+ {
+  "model": "gemma_q5",
+  "id": 10,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.5209295000022394,
+  "wall_s": 5.248280100000557,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 103,
+  "t_decode": 0.13777529997605598,
+  "t_sample": 2.998530699966068
+ },
+ {
+  "model": "gemma_q5",
+  "id": 11,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.2582671999989543,
+  "wall_s": 4.750769499994931,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 86,
+  "t_decode": 0.12370219999138499,
+  "t_sample": 2.5189755999308545
+ },
+ {
+  "model": "gemma_q5",
+  "id": 12,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.2834369000047445,
+  "wall_s": 4.946738800004823,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 93,
+  "t_decode": 0.1289671999766142,
+  "t_sample": 2.702182799956063
+ },
+ {
+  "model": "gemma_q5",
+  "id": 13,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.719746299997496,
+  "wall_s": 5.793812399999297,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 122,
+  "t_decode": 0.1603546000114875,
+  "t_sample": 3.517092300011427
+ },
+ {
+  "model": "gemma_q5",
+  "id": 14,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.5720350999981747,
+  "wall_s": 8.273375400000077,
+  "tools": [
+   "volumen",
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 204,
+  "t_decode": 0.26390740001079394,
+  "t_sample": 5.827698900095129
+ },
+ {
+  "model": "gemma_q5",
+  "id": 15,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.7438266000026488,
+  "wall_s": 5.410776200005785,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 109,
+  "t_decode": 0.1422822000022279,
+  "t_sample": 3.1660454000448226
+ },
+ {
+  "model": "gemma_q5",
+  "id": 16,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.228761200000008,
+  "wall_s": 5.633333999998285,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 115,
+  "t_decode": 0.15946739998616977,
+  "t_sample": 3.354231799959962
+ },
+ {
+  "model": "gemma_q5",
+  "id": 17,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.4939875999989454,
+  "wall_s": 6.751835099996242,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 150,
+  "t_decode": 0.21878430002107052,
+  "t_sample": 4.33120139996754
+ },
+ {
+  "model": "gemma_q5",
+  "id": 18,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "first_action_s": 3.931786800007103,
+  "wall_s": 9.339134600006219,
+  "tools": [
+   "consultar_memoria",
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 209,
+  "t_decode": 0.28684990001056576,
+  "t_sample": 6.146214600004896
+ },
+ {
+  "model": "gemma_q5",
+  "id": 19,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.7314104000033694,
+  "wall_s": 7.280475300001854,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 161,
+  "t_decode": 0.23038049993192544,
+  "t_sample": 4.810060699986934
+ },
+ {
+  "model": "gemma_q5",
+  "id": 20,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.4301998000009917,
+  "wall_s": 6.697525799994764,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 138,
+  "t_decode": 0.1810150000237627,
+  "t_sample": 4.053087100088305
+ },
+ {
+  "model": "gemma_q5",
+  "id": 21,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.4548767000014777,
+  "wall_s": 5.929815800001961,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 125,
+  "t_decode": 0.17355400002998067,
+  "t_sample": 3.6154088999901433
+ },
+ {
+  "model": "gemma_q5",
+  "id": 22,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.63150680000399,
+  "wall_s": 10.9282039000027,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 282,
+  "t_decode": 0.3210730998471263,
+  "t_sample": 8.10869860000821
+ },
+ {
+  "model": "gemma_q5",
+  "id": 23,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.5478080000029877,
+  "wall_s": 5.819862899996224,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 121,
+  "t_decode": 0.17294349998701364,
+  "t_sample": 3.5194551999520627
+ },
+ {
+  "model": "gemma_q5",
+  "id": 24,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.485329899995122,
+  "wall_s": 5.966418799995154,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 126,
+  "t_decode": 0.16344729999400442,
+  "t_sample": 3.6796123000385705
+ },
+ {
+  "model": "gemma_q5",
+  "id": 25,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.3427296000008937,
+  "wall_s": 5.812157300002582,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 120,
+  "t_decode": 0.16915380003774771,
+  "t_sample": 3.495638400017924
+ },
+ {
+  "model": "gemma_q5",
+  "id": 26,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.54502230000071,
+  "wall_s": 7.2919470999986515,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 168,
+  "t_decode": 0.22233949992369162,
+  "t_sample": 4.871554000004835
+ },
+ {
+  "model": "gemma_q5",
+  "id": 27,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.5953632000018843,
+  "wall_s": 7.241680999999517,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 144,
+  "t_decode": 0.1746464000098058,
+  "t_sample": 4.250699699958204
+ },
+ {
+  "model": "gemma_q5",
+  "id": 28,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.374812699999893,
+  "wall_s": 5.206560899998294,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 101,
+  "t_decode": 0.1409274000179721,
+  "t_sample": 2.9567990999566973
+ },
+ {
+  "model": "gemma_q5",
+  "id": 29,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.492623599995568,
+  "wall_s": 6.423435400000017,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 140,
+  "t_decode": 0.21176040000864305,
+  "t_sample": 4.040835800027708
+ },
+ {
+  "model": "gemma_q5",
+  "id": 30,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.25790660000348,
+  "wall_s": 6.737321500004327,
+  "tools": [
+   "abrir_app",
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 151,
+  "t_decode": 0.2151493999408558,
+  "t_sample": 4.334776799936662
+ },
+ {
+  "model": "gemma_q5",
+  "id": 31,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.2962105000042357,
+  "wall_s": 6.5406471000023885,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 144,
+  "t_decode": 0.22025509996456094,
+  "t_sample": 4.147615500012762
+ },
+ {
+  "model": "gemma_q5",
+  "id": 32,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.517553300000145,
+  "wall_s": 7.237833099999989,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 166,
+  "t_decode": 0.23800409993418725,
+  "t_sample": 4.803083899932972
+ },
+ {
+  "model": "gemma_q5",
+  "id": 33,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.3823982999965665,
+  "wall_s": 6.022791499999585,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 124,
+  "t_decode": 0.18845299998065457,
+  "t_sample": 3.6244896000062
+ },
+ {
+  "model": "gemma_q5",
+  "id": 34,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.6397331999978633,
+  "wall_s": 6.685121000002255,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 149,
+  "t_decode": 0.22301129999686964,
+  "t_sample": 4.290506999983336
+ },
+ {
+  "model": "gemma_q5",
+  "id": 35,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 4.19869540000218,
+  "wall_s": 4.203529599995818,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 69,
+  "t_decode": 0.08893249994434882,
+  "t_sample": 2.0580925000394927
+ },
+ {
+  "model": "gemma_q5",
+  "id": 36,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 6.428125299993553,
+  "wall_s": 6.432615699995949,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 136,
+  "t_decode": 0.18002760009403573,
+  "t_sample": 4.080069200019352
+ },
+ {
+  "model": "gemma_q5",
+  "id": 37,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 4.021899100000155,
+  "wall_s": 4.026598700002069,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 64,
+  "t_decode": 0.0851215999937267,
+  "t_sample": 1.8967364999698475
+ },
+ {
+  "model": "gemma_q5",
+  "id": 38,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 4.448134300000675,
+  "wall_s": 4.452377100002195,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 79,
+  "t_decode": 0.09617779996187892,
+  "t_sample": 2.296185899998818
+ },
+ {
+  "model": "gemma_q5",
+  "id": 39,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 5.295781500004523,
+  "wall_s": 5.299826100002974,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 109,
+  "t_decode": 0.1243458999961149,
+  "t_sample": 3.127843899994332
+ },
+ {
+  "model": "gemma_q5",
+  "id": 40,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.738010500004748,
+  "wall_s": 3.742396000001463,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 55,
+  "t_decode": 0.06908749998547137,
+  "t_sample": 1.6274426000309177
+ },
+ {
+  "model": "gemma_q5",
+  "id": 41,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.2282861999992747,
+  "wall_s": 5.627737000002526,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "tokens": 111,
+  "t_decode": 0.14192560000083176,
+  "t_sample": 3.306929400023364
+ },
+ {
+  "model": "gemma_q5",
+  "id": 42,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.315380700005335,
+  "wall_s": 4.932105200001388,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "tokens": 87,
+  "t_decode": 0.1241351999778999,
+  "t_sample": 2.6380285999839543
+ },
+ {
+  "model": "gemma_q5",
+  "id": 43,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.1950374000007287,
+  "wall_s": 6.829095900000539,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "tokens": 149,
+  "t_decode": 0.21085229999152943,
+  "t_sample": 4.378145299990138
+ },
+ {
+  "model": "gemma_q5",
+  "id": 44,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.162529799999902,
+  "wall_s": 6.677705800000695,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "tokens": 144,
+  "t_decode": 0.20458080001117196,
+  "t_sample": 4.22948039999028
+ },
+ {
+  "model": "gemma_q5",
+  "id": 45,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.502922400002717,
+  "wall_s": 6.163727600003767,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 129,
+  "t_decode": 0.17544590004399652,
+  "t_sample": 3.8000836000283016
+ },
+ {
+  "model": "gemma_q5",
+  "id": 46,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.41375379999954,
+  "wall_s": 5.764029300000402,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 118,
+  "t_decode": 0.1559434999653604,
+  "t_sample": 3.4679955000028713
+ },
+ {
+  "model": "gemma_q5",
+  "id": 47,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.5724986999994144,
+  "wall_s": 5.826916899997741,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 121,
+  "t_decode": 0.1700207999747363,
+  "t_sample": 3.5121763999850373
+ },
+ {
+  "model": "gemma_q5",
+  "id": 48,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.7199921999999788,
+  "wall_s": 8.36687510000047,
+  "tools": [
+   "listar_carpeta",
+   "leer_archivo",
+   "finalizar"
+  ],
+  "tokens": 204,
+  "t_decode": 0.27409949998400407,
+  "t_sample": 5.872711299947696
+ },
+ {
+  "model": "gemma_q5",
+  "id": 49,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.8918756999992183,
+  "wall_s": 6.235617500002263,
+  "tools": [
+   "buscar_web",
+   "finalizar"
+  ],
+  "tokens": 136,
+  "t_decode": 0.17979989999730606,
+  "t_sample": 3.9317087000308675
+ },
+ {
+  "model": "gemma_q5",
+  "id": 50,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 5.025985300002503,
+  "wall_s": 5.030236300000979,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 98,
+  "t_decode": 0.11331519999657758,
+  "t_sample": 2.864697300057742
+ },
+ {
+  "model": "gemma_q5",
+  "id": 51,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.3162063999989186,
+  "wall_s": 6.713132199998654,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "tokens": 144,
+  "t_decode": 0.21410480000486132,
+  "t_sample": 4.243192000023555
+ },
+ {
+  "model": "gemma_q5",
+  "id": 52,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.285104299997329,
+  "wall_s": 7.316924200000358,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "tokens": 165,
+  "t_decode": 0.2104087000407162,
+  "t_sample": 4.8460586000437615
+ },
+ {
+  "model": "gemma_q5",
+  "id": 53,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.6964615999968373,
+  "wall_s": 7.5497163999971235,
+  "tools": [
+   "listar_carpeta",
+   "mover_archivo",
+   "finalizar"
+  ],
+  "tokens": 178,
+  "t_decode": 0.23160940001980634,
+  "t_sample": 5.13817329997255
+ },
+ {
+  "model": "gemma_q5",
+  "id": 54,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.6865887999956612,
+  "wall_s": 7.46866069999669,
+  "tools": [
+   "listar_carpeta",
+   "mover_archivo",
+   "finalizar"
+  ],
+  "tokens": 175,
+  "t_decode": 0.22545890000037616,
+  "t_sample": 5.047895499985316
+ },
+ {
+  "model": "gemma_q5",
+  "id": 55,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.770676200001617,
+  "wall_s": 8.130088000005344,
+  "tools": [
+   "listar_carpeta",
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 194,
+  "t_decode": 0.2623801999579882,
+  "t_sample": 5.623634899973695
+ },
+ {
+  "model": "gemma_q5",
+  "id": 56,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.3151530000031926,
+  "wall_s": 19.204013399998075,
+  "tools": [
+   "listar_ventanas",
+   "listar_controles",
+   "mouse",
+   "listar_controles",
+   "mouse",
+   "teclado",
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "tokens": 535,
+  "t_decode": 0.7038650000904454,
+  "t_sample": 15.693497600019327
+ },
+ {
+  "model": "gemma_q5",
+  "id": 57,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.499029500002507,
+  "wall_s": 5.0976319999972475,
+  "tools": [
+   "mouse",
+   "finalizar"
+  ],
+  "tokens": 98,
+  "t_decode": 0.133230499959609,
+  "t_sample": 2.8532774999694084
+ },
+ {
+  "model": "gemma_q5",
+  "id": 58,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.1372214000002714,
+  "wall_s": 8.345767999999225,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "teclado",
+   "finalizar"
+  ],
+  "tokens": 198,
+  "t_decode": 0.28017589994124137,
+  "t_sample": 5.781416299992998
+ },
+ {
+  "model": "gemma_q5",
+  "id": 59,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.2490849000023445,
+  "wall_s": 25.463241099998413,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "teclado",
+   "listar_controles",
+   "teclado",
+   "teclado",
+   "listar_controles",
+   "mouse",
+   "listar_controles",
+   "teclado",
+   "finalizar"
+  ],
+  "tokens": 717,
+  "t_decode": 0.9482270999506,
+  "t_sample": 21.39163149999513
+ },
+ {
+  "model": "gemma_q5",
+  "id": 60,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.519350899994606,
+  "wall_s": 7.229959699994652,
+  "tools": [
+   "teclado",
+   "listar_controles",
+   "finalizar"
+  ],
+  "tokens": 161,
+  "t_decode": 0.20980329995654756,
+  "t_sample": 4.818888399960997
+ },
+ {
+  "model": "gemma_q5",
+  "id": 61,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.918156799998542,
+  "wall_s": 6.326885599999514,
+  "tools": [
+   "consultar_memoria",
+   "finalizar"
+  ],
+  "tokens": 141,
+  "t_decode": 0.17271330000949092,
+  "t_sample": 4.0441853999727755
+ },
+ {
+  "model": "gemma_q5",
+  "id": 62,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.28024600000208,
+  "wall_s": 5.063754300004803,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "tokens": 97,
+  "t_decode": 0.13036660005309386,
+  "t_sample": 2.8246066000137944
+ },
+ {
+  "model": "gemma_q5",
+  "id": 63,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.6753724999944097,
+  "wall_s": 5.138821499996993,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "tokens": 98,
+  "t_decode": 0.13304180002887733,
+  "t_sample": 2.896636599965859
+ },
+ {
+  "model": "gemma_q5",
+  "id": 64,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.80802529999346,
+  "wall_s": 9.51138109999738,
+  "tools": [
+   "sugerencias",
+   "sugerencias",
+   "sugerencias",
+   "finalizar"
+  ],
+  "tokens": 240,
+  "t_decode": 0.3247996999343741,
+  "t_sample": 6.933913199944072
+ },
+ {
+  "model": "gemma_q5",
+  "id": 65,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.485853099999076,
+  "wall_s": 5.197991799999727,
+  "tools": [
+   "registro_habitos",
+   "finalizar"
+  ],
+  "tokens": 102,
+  "t_decode": 0.13012650000746362,
+  "t_sample": 2.95997740002349
+ },
+ {
+  "model": "gemma_q5",
+  "id": 1,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.4324675999960164,
+  "wall_s": 5.122309099999256,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 99,
+  "t_decode": 0.13399140004912624,
+  "t_sample": 2.873483400013356
+ },
+ {
+  "model": "gemma_q5",
+  "id": 2,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.544833399995696,
+  "wall_s": 5.381189199993969,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 108,
+  "t_decode": 0.13800750000518747,
+  "t_sample": 3.134829699942202
+ },
+ {
+  "model": "gemma_q5",
+  "id": 3,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.6390283000000636,
+  "wall_s": 5.365427899996575,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 107,
+  "t_decode": 0.14719720003631664,
+  "t_sample": 3.1061055999816745
+ },
+ {
+  "model": "gemma_q5",
+  "id": 4,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.255267600005027,
+  "wall_s": 4.879408100001456,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 91,
+  "t_decode": 0.11900760003481992,
+  "t_sample": 2.653257499972824
+ },
+ {
+  "model": "gemma_q5",
+  "id": 5,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.369722000003094,
+  "wall_s": 5.029642200002854,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 96,
+  "t_decode": 0.13014779998047743,
+  "t_sample": 2.7867731000078493
+ },
+ {
+  "model": "gemma_q5",
+  "id": 6,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.2913389000023017,
+  "wall_s": 5.2587026999972295,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 104,
+  "t_decode": 0.13638219999847934,
+  "t_sample": 3.006538300032844
+ },
+ {
+  "model": "gemma_q5",
+  "id": 7,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.685221300002013,
+  "wall_s": 5.488832900002308,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 112,
+  "t_decode": 0.14087839996500406,
+  "t_sample": 3.2492951000167523
+ },
+ {
+  "model": "gemma_q5",
+  "id": 8,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.2533837000009953,
+  "wall_s": 4.742389099999855,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 86,
+  "t_decode": 0.1153560000093421,
+  "t_sample": 2.522404099952837
+ },
+ {
+  "model": "gemma_q5",
+  "id": 9,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.1955878000007942,
+  "wall_s": 4.649805100001686,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 83,
+  "t_decode": 0.11698880002222722,
+  "t_sample": 2.4298139000238734
+ },
+ {
+  "model": "gemma_q5",
+  "id": 10,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.5627855000057025,
+  "wall_s": 5.177671900004498,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 100,
+  "t_decode": 0.14566899996134453,
+  "t_sample": 2.92921700001898
+ },
+ {
+  "model": "gemma_q5",
+  "id": 11,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.261303500003123,
+  "wall_s": 4.753206000001228,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 86,
+  "t_decode": 0.1205825999204535,
+  "t_sample": 2.528035399969667
+ },
+ {
+  "model": "gemma_q5",
+  "id": 12,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.260895800005528,
+  "wall_s": 4.746383500001684,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 86,
+  "t_decode": 0.1233754000350018,
+  "t_sample": 2.516024999997171
+ },
+ {
+  "model": "gemma_q5",
+  "id": 13,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.716734699999506,
+  "wall_s": 5.614886499999557,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 116,
+  "t_decode": 0.15005959998234175,
+  "t_sample": 3.356282600056147
+ },
+ {
+  "model": "gemma_q5",
+  "id": 14,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.458693200002017,
+  "wall_s": 8.205205899997964,
+  "tools": [
+   "volumen",
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 201,
+  "t_decode": 0.2688429999980144,
+  "t_sample": 5.751253799964616
+ },
+ {
+  "model": "gemma_q5",
+  "id": 15,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.629339200000686,
+  "wall_s": 5.405250000003434,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 109,
+  "t_decode": 0.13813360002677655,
+  "t_sample": 3.1453526000550482
+ },
+ {
+  "model": "gemma_q5",
+  "id": 16,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.429453899996588,
+  "wall_s": 5.636163499999384,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 115,
+  "t_decode": 0.16763979996176204,
+  "t_sample": 3.3426683999423403
+ },
+ {
+  "model": "gemma_q5",
+  "id": 17,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.485539500004961,
+  "wall_s": 6.596269699999539,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 145,
+  "t_decode": 0.2137628000054974,
+  "t_sample": 4.200683099938033
+ },
+ {
+  "model": "gemma_q5",
+  "id": 18,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "first_action_s": 3.9221451000048546,
+  "wall_s": 7.846468100004131,
+  "tools": [
+   "consultar_memoria",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 184,
+  "t_decode": 0.24956429995654617,
+  "t_sample": 5.400046999915503
+ },
+ {
+  "model": "gemma_q5",
+  "id": 19,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.7312651999964146,
+  "wall_s": 7.215830399996776,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 158,
+  "t_decode": 0.2316209999989951,
+  "t_sample": 4.7415944000313175
+ },
+ {
+  "model": "gemma_q5",
+  "id": 20,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.4309165999948164,
+  "wall_s": 6.837318400001095,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 143,
+  "t_decode": 0.1780761000190978,
+  "t_sample": 4.185306100000162
+ },
+ {
+  "model": "gemma_q5",
+  "id": 21,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.457899600005476,
+  "wall_s": 5.962540900000022,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 126,
+  "t_decode": 0.17410170002403902,
+  "t_sample": 3.6520223000479746
+ },
+ {
+  "model": "gemma_q5",
+  "id": 22,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.556115999999747,
+  "wall_s": 10.183796000004804,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 256,
+  "t_decode": 0.301950399967609,
+  "t_sample": 7.382759200045257
+ },
+ {
+  "model": "gemma_q5",
+  "id": 23,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.5462360000019544,
+  "wall_s": 5.853073300000688,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 122,
+  "t_decode": 0.17906020000373246,
+  "t_sample": 3.5334993000433315
+ },
+ {
+  "model": "gemma_q5",
+  "id": 24,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.578725100000156,
+  "wall_s": 5.868343499998446,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 124,
+  "t_decode": 0.15747300002840348,
+  "t_sample": 3.586847300059162
+ },
+ {
+  "model": "gemma_q5",
+  "id": 25,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.255138699998497,
+  "wall_s": 5.650644300003478,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 115,
+  "t_decode": 0.16053310003917431,
+  "t_sample": 3.3497727000212763
+ },
+ {
+  "model": "gemma_q5",
+  "id": 26,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.5499288999999408,
+  "wall_s": 7.307154300004186,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 168,
+  "t_decode": 0.22115659995324677,
+  "t_sample": 4.890077999989444
+ },
+ {
+  "model": "gemma_q5",
+  "id": 27,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.6019824000031804,
+  "wall_s": 7.451168799998413,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 151,
+  "t_decode": 0.18131909999647178,
+  "t_sample": 4.462559299987333
+ },
+ {
+  "model": "gemma_q5",
+  "id": 28,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.3702668999976595,
+  "wall_s": 5.17683930000203,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 101,
+  "t_decode": 0.13243739999597892,
+  "t_sample": 2.9415107999448082
+ },
+ {
+  "model": "gemma_q5",
+  "id": 29,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.461457400000654,
+  "wall_s": 6.199325599998701,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 132,
+  "t_decode": 0.2066827000453486,
+  "t_sample": 3.8165066999572446
+ },
+ {
+  "model": "gemma_q5",
+  "id": 30,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.368637999999919,
+  "wall_s": 7.110594199999468,
+  "tools": [
+   "abrir_app",
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 164,
+  "t_decode": 0.22553909995622234,
+  "t_sample": 4.694635200059565
+ },
+ {
+  "model": "gemma_q5",
+  "id": 31,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.3138429000027827,
+  "wall_s": 6.552882199997839,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 145,
+  "t_decode": 0.21346319997974206,
+  "t_sample": 4.167646899943065
+ },
+ {
+  "model": "gemma_q5",
+  "id": 32,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.5129863000038313,
+  "wall_s": 7.197236599997268,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 165,
+  "t_decode": 0.23354900003323564,
+  "t_sample": 4.760589300087304
+ },
+ {
+  "model": "gemma_q5",
+  "id": 33,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.3564996999994037,
+  "wall_s": 6.157688999999664,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 128,
+  "t_decode": 0.1989541999719222,
+  "t_sample": 3.75952060000418
+ },
+ {
+  "model": "gemma_q5",
+  "id": 34,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.6092990999968606,
+  "wall_s": 6.678401400000439,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 149,
+  "t_decode": 0.21932430000015302,
+  "t_sample": 4.283589500002563
+ },
+ {
+  "model": "gemma_q5",
+  "id": 35,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 4.2104421999974875,
+  "wall_s": 4.214466799996444,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 71,
+  "t_decode": 0.08564310000656405,
+  "t_sample": 2.0837447000158136
+ },
+ {
+  "model": "gemma_q5",
+  "id": 36,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 5.829812700001639,
+  "wall_s": 5.83395770000061,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 127,
+  "t_decode": 0.140073000031407,
+  "t_sample": 3.6285142000197084
+ },
+ {
+  "model": "gemma_q5",
+  "id": 37,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 4.00677369999903,
+  "wall_s": 4.010784399994009,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 64,
+  "t_decode": 0.08169519997318275,
+  "t_sample": 1.877569999989646
+ },
+ {
+  "model": "gemma_q5",
+  "id": 38,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 4.1200981000001775,
+  "wall_s": 4.124131600001419,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 68,
+  "t_decode": 0.08325510005670367,
+  "t_sample": 1.9911007000118843
+ },
+ {
+  "model": "gemma_q5",
+  "id": 39,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 5.448060199996689,
+  "wall_s": 5.452090799997677,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 114,
+  "t_decode": 0.12655350000568433,
+  "t_sample": 3.2669095000019297
+ },
+ {
+  "model": "gemma_q5",
+  "id": 40,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.66205710000213,
+  "wall_s": 3.666099900001427,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 52,
+  "t_decode": 0.07284850002906751,
+  "t_sample": 1.5397749999901862
+ },
+ {
+  "model": "gemma_q5",
+  "id": 41,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.2223382000011043,
+  "wall_s": 5.6216815000007045,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "tokens": 111,
+  "t_decode": 0.13967910000792472,
+  "t_sample": 3.31299650001165
+ },
+ {
+  "model": "gemma_q5",
+  "id": 42,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.311876100000518,
+  "wall_s": 5.0129653999974835,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "tokens": 90,
+  "t_decode": 0.11761090001527919,
+  "t_sample": 2.716395100054797
+ },
+ {
+  "model": "gemma_q5",
+  "id": 43,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.3382815000004484,
+  "wall_s": 6.99909490000573,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "tokens": 155,
+  "t_decode": 0.21482569997169776,
+  "t_sample": 4.546901199952117
+ },
+ {
+  "model": "gemma_q5",
+  "id": 44,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.1673949000032735,
+  "wall_s": 6.569729300004838,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "tokens": 140,
+  "t_decode": 0.20013679999829037,
+  "t_sample": 4.13094329998421
+ },
+ {
+  "model": "gemma_q5",
+  "id": 45,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.480743700005405,
+  "wall_s": 6.048435500000778,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 126,
+  "t_decode": 0.16427809999731835,
+  "t_sample": 3.7076228999721934
+ },
+ {
+  "model": "gemma_q5",
+  "id": 46,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.485744599995087,
+  "wall_s": 5.7880197999984375,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 119,
+  "t_decode": 0.16354129997489508,
+  "t_sample": 3.481296400008432
+ },
+ {
+  "model": "gemma_q5",
+  "id": 47,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.7629048000017065,
+  "wall_s": 5.929045400000177,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 124,
+  "t_decode": 0.18081629999505822,
+  "t_sample": 3.6109634999520495
+ },
+ {
+  "model": "gemma_q5",
+  "id": 48,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.719428300006257,
+  "wall_s": 8.204943400000047,
+  "tools": [
+   "listar_carpeta",
+   "leer_archivo",
+   "finalizar"
+  ],
+  "tokens": 199,
+  "t_decode": 0.2646816999404109,
+  "t_sample": 5.729694499896141
+ },
+ {
+  "model": "gemma_q5",
+  "id": 49,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.931511499999033,
+  "wall_s": 6.165220599999884,
+  "tools": [
+   "buscar_web",
+   "finalizar"
+  ],
+  "tokens": 133,
+  "t_decode": 0.1876983000038308,
+  "t_sample": 3.838853899986134
+ },
+ {
+  "model": "gemma_q5",
+  "id": 50,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 5.0952447000017855,
+  "wall_s": 5.099312300000747,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 100,
+  "t_decode": 0.1247787000174867,
+  "t_sample": 2.9119166000236874
+ },
+ {
+  "model": "gemma_q5",
+  "id": 51,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.316803900001105,
+  "wall_s": 6.858260399996652,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "tokens": 149,
+  "t_decode": 0.21426859989151126,
+  "t_sample": 4.391944499941019
+ },
+ {
+  "model": "gemma_q5",
+  "id": 52,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.453101400002197,
+  "wall_s": 7.399148600001354,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "tokens": 168,
+  "t_decode": 0.2128714999416843,
+  "t_sample": 4.950858799951675
+ },
+ {
+  "model": "gemma_q5",
+  "id": 53,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.6986746999973548,
+  "wall_s": 7.551377399999183,
+  "tools": [
+   "listar_carpeta",
+   "mover_archivo",
+   "finalizar"
+  ],
+  "tokens": 178,
+  "t_decode": 0.2287687999632908,
+  "t_sample": 5.131469199957792
+ },
+ {
+  "model": "gemma_q5",
+  "id": 54,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.6843397000047844,
+  "wall_s": 7.792635000005248,
+  "tools": [
+   "listar_carpeta",
+   "mover_archivo",
+   "finalizar"
+  ],
+  "tokens": 186,
+  "t_decode": 0.25654440000653267,
+  "t_sample": 5.335724600059621
+ },
+ {
+  "model": "gemma_q5",
+  "id": 55,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.7779983000000357,
+  "wall_s": 8.376185000000987,
+  "tools": [
+   "listar_carpeta",
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 201,
+  "t_decode": 0.27281619999121176,
+  "t_sample": 5.854120700023486
+ },
+ {
+  "model": "gemma_q5",
+  "id": 56,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.342223200001172,
+  "wall_s": 20.482891600004223,
+  "tools": [
+   "listar_ventanas",
+   "listar_controles",
+   "mouse",
+   "listar_ventanas",
+   "teclado",
+   "cerrar_app",
+   "finalizar",
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "tokens": 569,
+  "t_decode": 0.7888606000124128,
+  "t_sample": 16.747815599948808
+ },
+ {
+  "model": "gemma_q5",
+  "id": 57,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.486526499997126,
+  "wall_s": 5.026376000001619,
+  "tools": [
+   "mouse",
+   "finalizar"
+  ],
+  "tokens": 96,
+  "t_decode": 0.1258654999983264,
+  "t_sample": 2.7987079999948037
+ },
+ {
+  "model": "gemma_q5",
+  "id": 58,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.404176500000176,
+  "wall_s": 8.670654000001377,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "teclado",
+   "finalizar"
+  ],
+  "tokens": 209,
+  "t_decode": 0.2936141999234678,
+  "t_sample": 6.073123400004988
+ },
+ {
+  "model": "gemma_q5",
+  "id": 59,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.254093900002772,
+  "wall_s": 27.09971410000435,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "teclado",
+   "listar_controles",
+   "teclado",
+   "mouse",
+   "listar_controles",
+   "listar_controles",
+   "mouse",
+   "teclado",
+   "teclado",
+   "finalizar"
+  ],
+  "tokens": 771,
+  "t_decode": 1.048310600061086,
+  "t_sample": 22.918552999828535
+ },
+ {
+  "model": "gemma_q5",
+  "id": 60,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.486544600003981,
+  "wall_s": 13.454781700005697,
+  "tools": [
+   "teclado",
+   "finalizar",
+   "listar_ventanas",
+   "ver_pantalla",
+   "listar_controles",
+   "finalizar"
+  ],
+  "tokens": 357,
+  "t_decode": 0.47906760003388627,
+  "t_sample": 10.497271600041131
+ },
+ {
+  "model": "gemma_q5",
+  "id": 61,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.9206935000038357,
+  "wall_s": 5.847927300004812,
+  "tools": [
+   "consultar_memoria",
+   "finalizar"
+  ],
+  "tokens": 124,
+  "t_decode": 0.164576399991347,
+  "t_sample": 3.573289100015245
+ },
+ {
+  "model": "gemma_q5",
+  "id": 62,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.285554800000682,
+  "wall_s": 4.8525197000053595,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "tokens": 90,
+  "t_decode": 0.12000269997952273,
+  "t_sample": 2.614457300027425
+ },
+ {
+  "model": "gemma_q5",
+  "id": 63,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.6868220000033034,
+  "wall_s": 5.201401199999964,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "tokens": 100,
+  "t_decode": 0.13863720002700575,
+  "t_sample": 2.948501100036083
+ },
+ {
+  "model": "gemma_q5",
+  "id": 64,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.805758700000297,
+  "wall_s": 9.462320400001772,
+  "tools": [
+   "sugerencias",
+   "sugerencias",
+   "sugerencias",
+   "finalizar"
+  ],
+  "tokens": 240,
+  "t_decode": 0.3209428999834927,
+  "t_sample": 6.909239199958392
+ },
+ {
+  "model": "gemma_q5",
+  "id": 65,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.4836882000017795,
+  "wall_s": 5.173634099999617,
+  "tools": [
+   "registro_habitos",
+   "finalizar"
+  ],
+  "tokens": 101,
+  "t_decode": 0.134876299991447,
+  "t_sample": 2.9387206000392325
+ },
+ {
+  "model": "gemma_q5",
+  "id": 1,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.4656969999996363,
+  "wall_s": 5.010621800000081,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 95,
+  "t_decode": 0.13399280000885483,
+  "t_sample": 2.7760154000061448
+ },
+ {
+  "model": "gemma_q5",
+  "id": 2,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.546094700002868,
+  "wall_s": 5.330818800000998,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 106,
+  "t_decode": 0.13723180002853042,
+  "t_sample": 3.078429299988784
+ },
+ {
+  "model": "gemma_q5",
+  "id": 3,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.637423400003172,
+  "wall_s": 5.366044900001725,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 107,
+  "t_decode": 0.14537710000149673,
+  "t_sample": 3.1058063999807928
+ },
+ {
+  "model": "gemma_q5",
+  "id": 4,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.2775725000028615,
+  "wall_s": 4.907281200001307,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 92,
+  "t_decode": 0.11961729996255599,
+  "t_sample": 2.6923284999502357
+ },
+ {
+  "model": "gemma_q5",
+  "id": 5,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.3403850000031525,
+  "wall_s": 4.790625100002217,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 88,
+  "t_decode": 0.12466029997449368,
+  "t_sample": 2.5648097999728634
+ },
+ {
+  "model": "gemma_q5",
+  "id": 6,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.1964345000014873,
+  "wall_s": 5.088919300003909,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 98,
+  "t_decode": 0.1286157000286039,
+  "t_sample": 2.852053699993121
+ },
+ {
+  "model": "gemma_q5",
+  "id": 7,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.6601647999996203,
+  "wall_s": 5.322396399998979,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 106,
+  "t_decode": 0.139828600025794,
+  "t_sample": 3.0730777000062517
+ },
+ {
+  "model": "gemma_q5",
+  "id": 8,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.400121799997578,
+  "wall_s": 5.060597799994866,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 97,
+  "t_decode": 0.130719200031308,
+  "t_sample": 2.8155154999985825
+ },
+ {
+  "model": "gemma_q5",
+  "id": 9,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.2039678000001004,
+  "wall_s": 4.756110800000897,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 84,
+  "t_decode": 0.12830100001156097,
+  "t_sample": 2.465083799979766
+ },
+ {
+  "model": "gemma_q5",
+  "id": 10,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.5139631000056397,
+  "wall_s": 5.246414100001857,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 103,
+  "t_decode": 0.1404613000122481,
+  "t_sample": 2.995393899967894
+ },
+ {
+  "model": "gemma_q5",
+  "id": 11,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.290657999998075,
+  "wall_s": 4.867565100001229,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 90,
+  "t_decode": 0.12757880001299782,
+  "t_sample": 2.6193887000044924
+ },
+ {
+  "model": "gemma_q5",
+  "id": 12,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.25276550000126,
+  "wall_s": 4.907986099999107,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 92,
+  "t_decode": 0.12461959997017402,
+  "t_sample": 2.664949299993168
+ },
+ {
+  "model": "gemma_q5",
+  "id": 13,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.6358470000050147,
+  "wall_s": 5.528501100001449,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 113,
+  "t_decode": 0.1476223999998183,
+  "t_sample": 3.2630610000051092
+ },
+ {
+  "model": "gemma_q5",
+  "id": 14,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.423021399998106,
+  "wall_s": 7.1425849000006565,
+  "tools": [
+   "volumen",
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 165,
+  "t_decode": 0.23034470008133212,
+  "t_sample": 4.734371700003976
+ },
+ {
+  "model": "gemma_q5",
+  "id": 15,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.6338341999944532,
+  "wall_s": 5.24521839999943,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 103,
+  "t_decode": 0.13922629997250624,
+  "t_sample": 3.0072822000292945
+ },
+ {
+  "model": "gemma_q5",
+  "id": 16,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.1934101000006194,
+  "wall_s": 5.545800499996403,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 113,
+  "t_decode": 0.15418469996075146,
+  "t_sample": 3.2636634000155027
+ },
+ {
+  "model": "gemma_q5",
+  "id": 17,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.492936800001189,
+  "wall_s": 5.860045399997034,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 124,
+  "t_decode": 0.15548860002309084,
+  "t_sample": 3.5808893999274005
+ },
+ {
+  "model": "gemma_q5",
+  "id": 18,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "first_action_s": 3.9822165000005043,
+  "wall_s": 8.18068520000088,
+  "tools": [
+   "consultar_memoria",
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 196,
+  "t_decode": 0.2656661000000895,
+  "t_sample": 5.679798000004666
+ },
+ {
+  "model": "gemma_q5",
+  "id": 19,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.7156927999967593,
+  "wall_s": 7.044668599999568,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 155,
+  "t_decode": 0.22165699996548938,
+  "t_sample": 4.572149199957494
+ },
+ {
+  "model": "gemma_q5",
+  "id": 20,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.4191030000001774,
+  "wall_s": 6.824038899998413,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 143,
+  "t_decode": 0.17725540000537876,
+  "t_sample": 4.172321900055977
+ },
+ {
+  "model": "gemma_q5",
+  "id": 21,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.465520400000969,
+  "wall_s": 5.940634900005534,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 125,
+  "t_decode": 0.1799196999927517,
+  "t_sample": 3.614499400006025
+ },
+ {
+  "model": "gemma_q5",
+  "id": 22,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.637428300004103,
+  "wall_s": 11.223814199998742,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 292,
+  "t_decode": 0.3270641000053729,
+  "t_sample": 8.386746900010621
+ },
+ {
+  "model": "gemma_q5",
+  "id": 23,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.547284000000218,
+  "wall_s": 5.673365700000431,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 116,
+  "t_decode": 0.1695828999945661,
+  "t_sample": 3.3778759999913746
+ },
+ {
+  "model": "gemma_q5",
+  "id": 24,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.4000811999940197,
+  "wall_s": 5.366058100000373,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 107,
+  "t_decode": 0.13619539998762775,
+  "t_sample": 3.113067599995702
+ },
+ {
+  "model": "gemma_q5",
+  "id": 25,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.3496108000035747,
+  "wall_s": 5.803579400002491,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 120,
+  "t_decode": 0.17480889995931648,
+  "t_sample": 3.4977310999529436
+ },
+ {
+  "model": "gemma_q5",
+  "id": 26,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.4844502999985707,
+  "wall_s": 7.296819199997117,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 168,
+  "t_decode": 0.21902389998285798,
+  "t_sample": 4.886672700034978
+ },
+ {
+  "model": "gemma_q5",
+  "id": 27,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.5490518000005977,
+  "wall_s": 7.16033189999871,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 141,
+  "t_decode": 0.17438839998067124,
+  "t_sample": 4.1738208000024315
+ },
+ {
+  "model": "gemma_q5",
+  "id": 28,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.394320500003232,
+  "wall_s": 5.208502299996326,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 102,
+  "t_decode": 0.1321118000196293,
+  "t_sample": 2.9645490999973845
+ },
+ {
+  "model": "gemma_q5",
+  "id": 29,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.4815463999984786,
+  "wall_s": 6.413464400000521,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 140,
+  "t_decode": 0.1999958000233164,
+  "t_sample": 4.04970019999746
+ },
+ {
+  "model": "gemma_q5",
+  "id": 30,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.3771601999978884,
+  "wall_s": 6.986493899996276,
+  "tools": [
+   "abrir_app",
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 160,
+  "t_decode": 0.2210671999346232,
+  "t_sample": 4.589977400006319
+ },
+ {
+  "model": "gemma_q5",
+  "id": 31,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.286104200000409,
+  "wall_s": 6.534700700001849,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 144,
+  "t_decode": 0.2172806000089622,
+  "t_sample": 4.152690399969288
+ },
+ {
+  "model": "gemma_q5",
+  "id": 32,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.529592599996249,
+  "wall_s": 7.248064699997485,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 166,
+  "t_decode": 0.23706500005937414,
+  "t_sample": 4.806923499927507
+ },
+ {
+  "model": "gemma_q5",
+  "id": 33,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.2600184999973862,
+  "wall_s": 5.928137700000661,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 121,
+  "t_decode": 0.1822429999956512,
+  "t_sample": 3.5292107999921427
+ },
+ {
+  "model": "gemma_q5",
+  "id": 34,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.613576199997624,
+  "wall_s": 6.660477799996443,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 148,
+  "t_decode": 0.2237147999330773,
+  "t_sample": 4.260981399973389
+ },
+ {
+  "model": "gemma_q5",
+  "id": 35,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 4.152281499998935,
+  "wall_s": 4.156351099998574,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 69,
+  "t_decode": 0.08330460001161555,
+  "t_sample": 2.019846100018185
+ },
+ {
+  "model": "gemma_q5",
+  "id": 36,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 5.025220999996236,
+  "wall_s": 5.029283800002304,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 99,
+  "t_decode": 0.1212719999748515,
+  "t_sample": 2.859118700005638
+ },
+ {
+  "model": "gemma_q5",
+  "id": 37,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 4.002392200003669,
+  "wall_s": 4.006679999998596,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 64,
+  "t_decode": 0.07743489998392761,
+  "t_sample": 1.8788512999890372
+ },
+ {
+  "model": "gemma_q5",
+  "id": 38,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 4.126477199999499,
+  "wall_s": 4.130886999999348,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 68,
+  "t_decode": 0.08858160001545912,
+  "t_sample": 1.9854524999827845
+ },
+ {
+  "model": "gemma_q5",
+  "id": 39,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 5.502321400002984,
+  "wall_s": 5.506378100006259,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 116,
+  "t_decode": 0.13015629995061317,
+  "t_sample": 3.3196430000534747
+ },
+ {
+  "model": "gemma_q5",
+  "id": 40,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.749821699995664,
+  "wall_s": 3.754005099995993,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 55,
+  "t_decode": 0.07354040001519024,
+  "t_sample": 1.6308317000220995
+ },
+ {
+  "model": "gemma_q5",
+  "id": 41,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.2273768999948516,
+  "wall_s": 5.7431739999956335,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "tokens": 110,
+  "t_decode": 0.15504600000713253,
+  "t_sample": 3.406687300033809
+ },
+ {
+  "model": "gemma_q5",
+  "id": 42,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.4399701000002096,
+  "wall_s": 5.137242600001628,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "tokens": 85,
+  "t_decode": 0.13646190002327785,
+  "t_sample": 2.7157792000070913
+ },
+ {
+  "model": "gemma_q5",
+  "id": 43,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.1991822000054526,
+  "wall_s": 6.845510300001479,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "tokens": 149,
+  "t_decode": 0.21373609997681342,
+  "t_sample": 4.393721600034041
+ },
+ {
+  "model": "gemma_q5",
+  "id": 44,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.2927895999964676,
+  "wall_s": 6.653496999999334,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "tokens": 142,
+  "t_decode": 0.2202656000154093,
+  "t_sample": 4.195830899989232
+ },
+ {
+  "model": "gemma_q5",
+  "id": 45,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.4087452000021585,
+  "wall_s": 6.039698200002022,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 125,
+  "t_decode": 0.16815039998618886,
+  "t_sample": 3.6828390000155196
+ },
+ {
+  "model": "gemma_q5",
+  "id": 46,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.3972935999991023,
+  "wall_s": 5.660908899997594,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 115,
+  "t_decode": 0.15043419998983154,
+  "t_sample": 3.370400800042262
+ },
+ {
+  "model": "gemma_q5",
+  "id": 47,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.748742099996889,
+  "wall_s": 5.945641699996486,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 125,
+  "t_decode": 0.1720204000303056,
+  "t_sample": 3.6426394999725744
+ },
+ {
+  "model": "gemma_q5",
+  "id": 48,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.7244384000005084,
+  "wall_s": 8.336027099998319,
+  "tools": [
+   "listar_carpeta",
+   "leer_archivo",
+   "finalizar"
+  ],
+  "tokens": 203,
+  "t_decode": 0.2708770000099321,
+  "t_sample": 5.835729600075865
+ },
+ {
+  "model": "gemma_q5",
+  "id": 49,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.893841400000383,
+  "wall_s": 6.2703884999937145,
+  "tools": [
+   "buscar_web",
+   "finalizar"
+  ],
+  "tokens": 137,
+  "t_decode": 0.1890529000229435,
+  "t_sample": 3.9655245000030845
+ },
+ {
+  "model": "gemma_q5",
+  "id": 50,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 5.0984938999972655,
+  "wall_s": 5.102542699998594,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 100,
+  "t_decode": 0.1242768999945838,
+  "t_sample": 2.9150435000119614
+ },
+ {
+  "model": "gemma_q5",
+  "id": 51,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.3181563000034657,
+  "wall_s": 6.831179900000279,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "tokens": 148,
+  "t_decode": 0.2138764000555966,
+  "t_sample": 4.369480199980899
+ },
+ {
+  "model": "gemma_q5",
+  "id": 52,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.259212800003297,
+  "wall_s": 7.287048800004413,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "tokens": 164,
+  "t_decode": 0.2106790000179899,
+  "t_sample": 4.818928599939682
+ },
+ {
+  "model": "gemma_q5",
+  "id": 53,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.7521032999939052,
+  "wall_s": 7.57295979999617,
+  "tools": [
+   "listar_carpeta",
+   "mover_archivo",
+   "finalizar"
+  ],
+  "tokens": 179,
+  "t_decode": 0.22357680003915448,
+  "t_sample": 5.149057100024947
+ },
+ {
+  "model": "gemma_q5",
+  "id": 54,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.7436853000035626,
+  "wall_s": 7.931371899998339,
+  "tools": [
+   "listar_carpeta",
+   "mover_archivo",
+   "finalizar"
+  ],
+  "tokens": 190,
+  "t_decode": 0.2759431000231416,
+  "t_sample": 5.458645299964701
+ },
+ {
+  "model": "gemma_q5",
+  "id": 55,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.7801863999993657,
+  "wall_s": 8.276867499997024,
+  "tools": [
+   "listar_carpeta",
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 199,
+  "t_decode": 0.268008400038525,
+  "t_sample": 5.761646600018139
+ },
+ {
+  "model": "gemma_q5",
+  "id": 56,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.3243798999974388,
+  "wall_s": 12.44369700000243,
+  "tools": [
+   "listar_ventanas",
+   "listar_controles",
+   "mouse",
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "tokens": 322,
+  "t_decode": 0.43096339990006527,
+  "t_sample": 9.4529236000526
+ },
+ {
+  "model": "gemma_q5",
+  "id": 57,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.7173750000001746,
+  "wall_s": 5.3183828000037465,
+  "tools": [
+   "mouse",
+   "finalizar"
+  ],
+  "tokens": 106,
+  "t_decode": 0.1376611999949091,
+  "t_sample": 3.073758800041105
+ },
+ {
+  "model": "gemma_q5",
+  "id": 58,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.4081897999931243,
+  "wall_s": 8.644122999998217,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "teclado",
+   "finalizar"
+  ],
+  "tokens": 208,
+  "t_decode": 0.2936798000300769,
+  "t_sample": 6.059460900003614
+ },
+ {
+  "model": "gemma_q5",
+  "id": 59,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.367499600004521,
+  "wall_s": 27.455410300004587,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "teclado",
+   "listar_controles",
+   "teclado",
+   "ver_pantalla",
+   "listar_ventanas",
+   "listar_controles",
+   "mouse",
+   "listar_controles",
+   "teclado",
+   "finalizar"
+  ],
+  "tokens": 781,
+  "t_decode": 1.0201580998764257,
+  "t_sample": 23.305625999921176
+ },
+ {
+  "model": "gemma_q5",
+  "id": 60,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.509448100005102,
+  "wall_s": 6.570416400005342,
+  "tools": [
+   "teclado",
+   "listar_controles",
+   "finalizar"
+  ],
+  "tokens": 143,
+  "t_decode": 0.19490080000832677,
+  "t_sample": 4.172109100036323
+ },
+ {
+  "model": "gemma_q5",
+  "id": 61,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.8953881000052206,
+  "wall_s": 5.896417399999336,
+  "tools": [
+   "consultar_memoria",
+   "finalizar"
+  ],
+  "tokens": 125,
+  "t_decode": 0.16540259995963424,
+  "t_sample": 3.611874899987015
+ },
+ {
+  "model": "gemma_q5",
+  "id": 62,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.2791465999980574,
+  "wall_s": 5.057344900000317,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "tokens": 97,
+  "t_decode": 0.13151639996794984,
+  "t_sample": 2.810148599979584
+ },
+ {
+  "model": "gemma_q5",
+  "id": 63,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.663678600001731,
+  "wall_s": 5.179412400000729,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "tokens": 100,
+  "t_decode": 0.1301936999807367,
+  "t_sample": 2.9471093999309232
+ },
+ {
+  "model": "gemma_q5",
+  "id": 64,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.81733610000083,
+  "wall_s": 7.408665299997665,
+  "tools": [
+   "sugerencias",
+   "sugerencias",
+   "finalizar"
+  ],
+  "tokens": 174,
+  "t_decode": 0.24409050001122523,
+  "t_sample": 4.991983700034325
+ },
+ {
+  "model": "gemma_q5",
+  "id": 65,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.7993080000014743,
+  "wall_s": 5.513277099998959,
+  "tools": [
+   "registro_habitos",
+   "finalizar"
+  ],
+  "tokens": 113,
+  "t_decode": 0.14065839994873386,
+  "t_sample": 3.2617591000089305
+ },
+ {
+  "model": "qwen_q5",
+  "id": 1,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3898617000013473,
+  "wall_s": 4.985928499998408,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 97,
+  "t_decode": 0.07971089999045944,
+  "t_sample": 2.026322199992137
+ },
+ {
+  "model": "qwen_q5",
+  "id": 2,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.5105951000005007,
+  "wall_s": 5.266112699995574,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 111,
+  "t_decode": 0.08753119995526504,
+  "t_sample": 2.281553900007566
+ },
+ {
+  "model": "qwen_q5",
+  "id": 3,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.5583171999969636,
+  "wall_s": 5.2122732999996515,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 108,
+  "t_decode": 0.08202059998438926,
+  "t_sample": 2.2283204000414116
+ },
+ {
+  "model": "qwen_q5",
+  "id": 4,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.2964872999946238,
+  "wall_s": 4.731334699994477,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 83,
+  "t_decode": 0.06883929999457905,
+  "t_sample": 1.7581171000565519
+ },
+ {
+  "model": "qwen_q5",
+  "id": 5,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.4681103999973857,
+  "wall_s": 5.286520300003758,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 112,
+  "t_decode": 0.08296990001690574,
+  "t_sample": 2.289530799993372
+ },
+ {
+  "model": "qwen_q5",
+  "id": 6,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.284303299995372,
+  "wall_s": 4.773754699999699,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 85,
+  "t_decode": 0.0660969999662484,
+  "t_sample": 1.7972132999784662
+ },
+ {
+  "model": "qwen_q5",
+  "id": 7,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.585994099994423,
+  "wall_s": 5.338930799996888,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 114,
+  "t_decode": 0.0822161000178312,
+  "t_sample": 2.353484000021126
+ },
+ {
+  "model": "qwen_q5",
+  "id": 8,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.386710899998434,
+  "wall_s": 5.031571300001815,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 98,
+  "t_decode": 0.08573579999210779,
+  "t_sample": 2.0239908000075957
+ },
+ {
+  "model": "qwen_q5",
+  "id": 9,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.4370727999994415,
+  "wall_s": 5.0222671999945305,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 97,
+  "t_decode": 0.0854967999694054,
+  "t_sample": 2.034815200015146
+ },
+ {
+  "model": "qwen_q5",
+  "id": 10,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.468206499994267,
+  "wall_s": 5.327254799994989,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 114,
+  "t_decode": 0.08606099997996353,
+  "t_sample": 2.3329741999696125
+ },
+ {
+  "model": "qwen_q5",
+  "id": 11,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.506738600000972,
+  "wall_s": 4.981458000002021,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 96,
+  "t_decode": 0.07393219997902634,
+  "t_sample": 2.003763800006709
+ },
+ {
+  "model": "qwen_q5",
+  "id": 12,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3697667000014917,
+  "wall_s": 4.941885599997477,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 94,
+  "t_decode": 0.07244469996658154,
+  "t_sample": 1.9572245000454132
+ },
+ {
+  "model": "qwen_q5",
+  "id": 13,
+  "seed": 11,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "first_action_s": 3.02991430000111,
+  "wall_s": 3.0340270000015153,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 77,
+  "t_decode": 0.05448840004828526,
+  "t_sample": 1.5292159000309766
+ },
+ {
+  "model": "qwen_q5",
+  "id": 14,
+  "seed": 11,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.693540899999789,
+  "wall_s": 46.23090310000407,
+  "tools": [
+   "volumen",
+   "volumen",
+   "consultar_memoria",
+   "listar_ventanas",
+   "abrir_app",
+   "listar_controles",
+   "listar_ventanas",
+   "listar_apps",
+   "abrir_app",
+   "listar_controles",
+   "listar_ventanas",
+   "ejecutar_powershell",
+   "abrir_app",
+   "consultar_memoria",
+   "abrir_app"
+  ],
+  "tokens": 839,
+  "t_decode": 0.6734324000281049,
+  "t_sample": 17.02385479999066
+ },
+ {
+  "model": "qwen_q5",
+  "id": 15,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3969884000034654,
+  "wall_s": 5.060743800000637,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 100,
+  "t_decode": 0.07836530003260123,
+  "t_sample": 2.0755302000325173
+ },
+ {
+  "model": "qwen_q5",
+  "id": 16,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "first_action_s": 2.5291488000002573,
+  "wall_s": 8.353468000001158,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "tokens": 175,
+  "t_decode": 0.1525617999577662,
+  "t_sample": 3.475925200014899
+ },
+ {
+  "model": "qwen_q5",
+  "id": 17,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.4312057999995886,
+  "wall_s": 7.412540199999057,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 136,
+  "t_decode": 0.11422530003619613,
+  "t_sample": 2.778110600011132
+ },
+ {
+  "model": "qwen_q5",
+  "id": 18,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "first_action_s": 2.873133900000539,
+  "wall_s": 14.745129599999927,
+  "tools": [
+   "consultar_memoria",
+   "listar_apps",
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 276,
+  "t_decode": 0.23361379992275033,
+  "t_sample": 5.657048099958047
+ },
+ {
+  "model": "qwen_q5",
+  "id": 19,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.339353300005314,
+  "wall_s": 13.073843400001351,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "tokens": 230,
+  "t_decode": 0.18772360004368238,
+  "t_sample": 4.520906000121613
+ },
+ {
+  "model": "qwen_q5",
+  "id": 20,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3171871999948053,
+  "wall_s": 6.118662099994253,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 141,
+  "t_decode": 0.10108830004173797,
+  "t_sample": 2.7335098999901675
+ },
+ {
+  "model": "qwen_q5",
+  "id": 21,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.281870400001935,
+  "wall_s": 5.373989100000472,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 115,
+  "t_decode": 0.09300459997029975,
+  "t_sample": 2.3640403000172228
+ },
+ {
+  "model": "qwen_q5",
+  "id": 22,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.544532599997183,
+  "wall_s": 6.686826899996959,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 171,
+  "t_decode": 0.11632549997011665,
+  "t_sample": 3.2863342000637203
+ },
+ {
+  "model": "qwen_q5",
+  "id": 23,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3321782000057283,
+  "wall_s": 5.028687099998933,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 97,
+  "t_decode": 0.08435100000497187,
+  "t_sample": 2.0289153000194347
+ },
+ {
+  "model": "qwen_q5",
+  "id": 24,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.4477639000033378,
+  "wall_s": 5.848067400002037,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 140,
+  "t_decode": 0.10960340000019642,
+  "t_sample": 2.8201254999803496
+ },
+ {
+  "model": "qwen_q5",
+  "id": 25,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3432439000025624,
+  "wall_s": 5.6758531000014045,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 129,
+  "t_decode": 0.09393589998217067,
+  "t_sample": 2.5022202000327525
+ },
+ {
+  "model": "qwen_q5",
+  "id": 26,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.372412099997746,
+  "wall_s": 6.389213000002201,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 163,
+  "t_decode": 0.12489179999829503,
+  "t_sample": 3.164239100049599
+ },
+ {
+  "model": "qwen_q5",
+  "id": 27,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.2800270000007004,
+  "wall_s": 6.141736600002332,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 130,
+  "t_decode": 0.10350089996063616,
+  "t_sample": 2.5477376999988337
+ },
+ {
+  "model": "qwen_q5",
+  "id": 28,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3020586999991792,
+  "wall_s": 4.945585899993603,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 94,
+  "t_decode": 0.07718289996410022,
+  "t_sample": 1.9660607000187156
+ },
+ {
+  "model": "qwen_q5",
+  "id": 29,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.319798999997147,
+  "wall_s": 7.249844400001166,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 129,
+  "t_decode": 0.12757950001832796,
+  "t_sample": 2.75644420000026
+ },
+ {
+  "model": "qwen_q5",
+  "id": 30,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.510121100000106,
+  "wall_s": 7.795523200002208,
+  "tools": [
+   "abrir_app",
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 157,
+  "t_decode": 0.11930789997131797,
+  "t_sample": 3.1568588000009186
+ },
+ {
+  "model": "qwen_q5",
+  "id": 31,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.441622300000745,
+  "wall_s": 7.5273225999990245,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 142,
+  "t_decode": 0.11441910006396938,
+  "t_sample": 2.8801287999740453
+ },
+ {
+  "model": "qwen_q5",
+  "id": 32,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.373289899995143,
+  "wall_s": 8.388788899996143,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 183,
+  "t_decode": 0.1500669000452035,
+  "t_sample": 3.683501300009084
+ },
+ {
+  "model": "qwen_q5",
+  "id": 33,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.336063999995531,
+  "wall_s": 7.208802999994077,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 123,
+  "t_decode": 0.09794680004415568,
+  "t_sample": 2.4254459000076167
+ },
+ {
+  "model": "qwen_q5",
+  "id": 34,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.546882500006177,
+  "wall_s": 7.608972000001813,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 146,
+  "t_decode": 0.11317119996238034,
+  "t_sample": 2.9450339999821153
+ },
+ {
+  "model": "qwen_q5",
+  "id": 35,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.720149399996444,
+  "wall_s": 2.7243438999939826,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 61,
+  "t_decode": 0.044253299973206595,
+  "t_sample": 1.2275191000080667
+ },
+ {
+  "model": "qwen_q5",
+  "id": 36,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.7687762000059593,
+  "wall_s": 3.7728034000028856,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 116,
+  "t_decode": 0.07368560002214508,
+  "t_sample": 2.247763700012001
+ },
+ {
+  "model": "qwen_q5",
+  "id": 37,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.814513799996348,
+  "wall_s": 2.818530799995642,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 66,
+  "t_decode": 0.04628910000610631,
+  "t_sample": 1.3294420000020182
+ },
+ {
+  "model": "qwen_q5",
+  "id": 38,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.5406851999941864,
+  "wall_s": 3.544730299996445,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 104,
+  "t_decode": 0.07357370002864627,
+  "t_sample": 2.015842399945541
+ },
+ {
+  "model": "qwen_q5",
+  "id": 39,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.2040972000031616,
+  "wall_s": 3.2081108999991557,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 86,
+  "t_decode": 0.06263519999629352,
+  "t_sample": 1.688409100024728
+ },
+ {
+  "model": "qwen_q5",
+  "id": 40,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.603826400001708,
+  "wall_s": 2.6078211999993073,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 55,
+  "t_decode": 0.04027470002620248,
+  "t_sample": 1.126112500023737
+ },
+ {
+  "model": "qwen_q5",
+  "id": 41,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.363294399998267,
+  "wall_s": 5.767469999998866,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "tokens": 129,
+  "t_decode": 0.12279609997494845,
+  "t_sample": 2.5580360000385554
+ },
+ {
+  "model": "qwen_q5",
+  "id": 42,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.2437993999992614,
+  "wall_s": 4.9237017999985255,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "tokens": 87,
+  "t_decode": 0.07320439995237393,
+  "t_sample": 1.7702375000080792
+ },
+ {
+  "model": "qwen_q5",
+  "id": 43,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.30440919999819,
+  "wall_s": 7.861574100003054,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "tokens": 150,
+  "t_decode": 0.11825990002398612,
+  "t_sample": 3.00798199998826
+ },
+ {
+  "model": "qwen_q5",
+  "id": 44,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.278006100001221,
+  "wall_s": 5.109893599998031,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "tokens": 97,
+  "t_decode": 0.07526830001006601,
+  "t_sample": 1.9582074999561883
+ },
+ {
+  "model": "qwen_q5",
+  "id": 45,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3574883000037516,
+  "wall_s": 5.446882500000356,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 115,
+  "t_decode": 0.08799800000269897,
+  "t_sample": 2.2794321999899694
+ },
+ {
+  "model": "qwen_q5",
+  "id": 46,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.414827600005083,
+  "wall_s": 5.386960399999225,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 114,
+  "t_decode": 0.08504410004388774,
+  "t_sample": 2.236462500055495
+ },
+ {
+  "model": "qwen_q5",
+  "id": 47,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.6070107000050484,
+  "wall_s": 5.70717280000099,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 131,
+  "t_decode": 0.09335010000359034,
+  "t_sample": 2.550134700082708
+ },
+ {
+  "model": "qwen_q5",
+  "id": 48,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.6635748999979114,
+  "wall_s": 6.174113500004751,
+  "tools": [
+   "leer_archivo",
+   "finalizar"
+  ],
+  "tokens": 154,
+  "t_decode": 0.12479499998880783,
+  "t_sample": 3.1254101999948034
+ },
+ {
+  "model": "qwen_q5",
+  "id": 49,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.5061774000059813,
+  "wall_s": 5.8400519999995595,
+  "tools": [
+   "buscar_web",
+   "finalizar"
+  ],
+  "tokens": 140,
+  "t_decode": 0.10787489996437216,
+  "t_sample": 2.8227385000209324
+ },
+ {
+  "model": "qwen_q5",
+  "id": 50,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.017797399996198,
+  "wall_s": 3.0218114999952377,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 77,
+  "t_decode": 0.05419970002549235,
+  "t_sample": 1.5141872000021976
+ },
+ {
+  "model": "qwen_q5",
+  "id": 51,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.4302690000040457,
+  "wall_s": 5.008330000004207,
+  "tools": [
+   "cerrar_app",
+   "finalizar"
+  ],
+  "tokens": 97,
+  "t_decode": 0.07367819998034975,
+  "t_sample": 2.024787300004391
+ },
+ {
+  "model": "qwen_q5",
+  "id": 52,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.357056699998793,
+  "wall_s": 7.99729970000044,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "tokens": 156,
+  "t_decode": 0.1307584000242059,
+  "t_sample": 3.1285673000020324
+ },
+ {
+  "model": "qwen_q5",
+  "id": 53,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.690918899999815,
+  "wall_s": 5.381216599998879,
+  "tools": [
+   "mover_archivo",
+   "finalizar"
+  ],
+  "tokens": 115,
+  "t_decode": 0.09927320000133477,
+  "t_sample": 2.3596973000239814
+ },
+ {
+  "model": "qwen_q5",
+  "id": 54,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.8784909000023617,
+  "wall_s": 5.821250200002396,
+  "tools": [
+   "mover_archivo",
+   "finalizar"
+  ],
+  "tokens": 138,
+  "t_decode": 0.10920950004219776,
+  "t_sample": 2.7873153000182356
+ },
+ {
+  "model": "qwen_q5",
+  "id": 55,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.8536702999990666,
+  "wall_s": 2.8579467000017758,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 68,
+  "t_decode": 0.04844129998673452,
+  "t_sample": 1.359750800031179
+ },
+ {
+  "model": "qwen_q5",
+  "id": 56,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.219244499996421,
+  "wall_s": 16.296222099997976,
+  "tools": [
+   "listar_ventanas",
+   "listar_controles",
+   "mouse",
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "tokens": 289,
+  "t_decode": 0.23315660008665873,
+  "t_sample": 5.938604499919165
+ },
+ {
+  "model": "qwen_q5",
+  "id": 57,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.7676957000003313,
+  "wall_s": 5.562378700000409,
+  "tools": [
+   "mouse",
+   "finalizar"
+  ],
+  "tokens": 124,
+  "t_decode": 0.09039379997557262,
+  "t_sample": 2.5563574000116205
+ },
+ {
+  "model": "qwen_q5",
+  "id": 58,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "first_action_s": 2.418179499996768,
+  "wall_s": 39.5578927999959,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "teclado",
+   "ver_pantalla",
+   "enfocar_ventana",
+   "ver_pantalla",
+   "teclado",
+   "ver_pantalla",
+   "cerrar_app",
+   "ver_pantalla",
+   "finalizar"
+  ],
+  "tokens": 753,
+  "t_decode": 0.6094767001050059,
+  "t_sample": 15.123172300031001
+ },
+ {
+  "model": "qwen_q5",
+  "id": 59,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "first_action_s": 3.1563913999998476,
+  "wall_s": 12.446667900003376,
+  "tools": [
+   "ver_pantalla",
+   "teclado",
+   "listar_controles",
+   "finalizar"
+  ],
+  "tokens": 291,
+  "t_decode": 0.23686600007931702,
+  "t_sample": 5.8342855000300915
+ },
+ {
+  "model": "qwen_q5",
+  "id": 60,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.4581097999980557,
+  "wall_s": 11.112798899994232,
+  "tools": [
+   "teclado",
+   "ver_pantalla",
+   "listar_controles",
+   "finalizar"
+  ],
+  "tokens": 232,
+  "t_decode": 0.2089710000436753,
+  "t_sample": 4.73341420005454
+ },
+ {
+  "model": "qwen_q5",
+  "id": 61,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.6261630000008154,
+  "wall_s": 5.525816999994277,
+  "tools": [
+   "consultar_memoria",
+   "finalizar"
+  ],
+  "tokens": 124,
+  "t_decode": 0.09743329993943917,
+  "t_sample": 2.5319124999878113
+ },
+ {
+  "model": "qwen_q5",
+  "id": 62,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3428759000016726,
+  "wall_s": 4.907879899998079,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "tokens": 92,
+  "t_decode": 0.0771632000032696,
+  "t_sample": 1.9266203999723075
+ },
+ {
+  "model": "qwen_q5",
+  "id": 63,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.337776699998358,
+  "wall_s": 4.85299049999594,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "tokens": 89,
+  "t_decode": 0.07481160001043463,
+  "t_sample": 1.8894289999443572
+ },
+ {
+  "model": "qwen_q5",
+  "id": 64,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.5962771000049543,
+  "wall_s": 5.919830500002718,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "tokens": 143,
+  "t_decode": 0.120770299959986,
+  "t_sample": 2.885466899992025
+ },
+ {
+  "model": "qwen_q5",
+  "id": 65,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.376134100006311,
+  "wall_s": 4.899249800000689,
+  "tools": [
+   "registro_habitos",
+   "finalizar"
+  ],
+  "tokens": 91,
+  "t_decode": 0.08372729999973672,
+  "t_sample": 1.9159769999969285
+ },
+ {
+  "model": "qwen_q5",
+  "id": 1,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.2851252000036766,
+  "wall_s": 4.896172100001422,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 91,
+  "t_decode": 0.07832999990932876,
+  "t_sample": 1.9170507000162615
+ },
+ {
+  "model": "qwen_q5",
+  "id": 2,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.1666085999968345,
+  "wall_s": 4.801409699997748,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 86,
+  "t_decode": 0.08038819995272206,
+  "t_sample": 1.8204947999984142
+ },
+ {
+  "model": "qwen_q5",
+  "id": 3,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.480296100002306,
+  "wall_s": 5.292850500001805,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 110,
+  "t_decode": 0.10268310000537895,
+  "t_sample": 2.270386299947859
+ },
+ {
+  "model": "qwen_q5",
+  "id": 4,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.119092900000396,
+  "wall_s": 4.6662257999996655,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 78,
+  "t_decode": 0.0857763000021805,
+  "t_sample": 1.6733889999668463
+ },
+ {
+  "model": "qwen_q5",
+  "id": 5,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.2269157000046107,
+  "wall_s": 4.974251899999217,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 95,
+  "t_decode": 0.08135849997051992,
+  "t_sample": 1.981888499998604
+ },
+ {
+  "model": "qwen_q5",
+  "id": 6,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.091318600003433,
+  "wall_s": 4.573536199997761,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 74,
+  "t_decode": 0.07007670003804378,
+  "t_sample": 1.6018499999772757
+ },
+ {
+  "model": "qwen_q5",
+  "id": 7,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3614956000019447,
+  "wall_s": 5.02145179999934,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 97,
+  "t_decode": 0.08297089998814045,
+  "t_sample": 2.0259885000341455
+ },
+ {
+  "model": "qwen_q5",
+  "id": 8,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3025864999945043,
+  "wall_s": 4.898386499997287,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 91,
+  "t_decode": 0.0803495999716688,
+  "t_sample": 1.9049370999709936
+ },
+ {
+  "model": "qwen_q5",
+  "id": 9,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.2104484000010416,
+  "wall_s": 4.803287200003979,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 86,
+  "t_decode": 0.07664930003375048,
+  "t_sample": 1.817572799991467
+ },
+ {
+  "model": "qwen_q5",
+  "id": 10,
+  "seed": 22,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "first_action_s": 2.361064200005785,
+  "wall_s": 8.089473400003044,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "tokens": 161,
+  "t_decode": 0.13974019996385323,
+  "t_sample": 3.242493499950797
+ },
+ {
+  "model": "qwen_q5",
+  "id": 11,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.301166799996281,
+  "wall_s": 4.945190099999309,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 93,
+  "t_decode": 0.08015189996513072,
+  "t_sample": 1.958371900007478
+ },
+ {
+  "model": "qwen_q5",
+  "id": 12,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "first_action_s": 2.319183100000373,
+  "wall_s": 7.413041100000555,
+  "tools": [
+   "listar_ventanas",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 126,
+  "t_decode": 0.10860579996369779,
+  "t_sample": 2.5732620999551727
+ },
+ {
+  "model": "qwen_q5",
+  "id": 13,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.421244299999671,
+  "wall_s": 5.23607720000291,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 107,
+  "t_decode": 0.10142390002147295,
+  "t_sample": 2.2159325999600696
+ },
+ {
+  "model": "qwen_q5",
+  "id": 14,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.28674879999744,
+  "wall_s": 12.053023300002678,
+  "tools": [
+   "volumen",
+   "volumen",
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 286,
+  "t_decode": 0.22675090001575882,
+  "t_sample": 5.657742499934102
+ },
+ {
+  "model": "qwen_q5",
+  "id": 15,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.185812399999122,
+  "wall_s": 4.910351099999389,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 92,
+  "t_decode": 0.07675340001878794,
+  "t_sample": 1.9214776999870082
+ },
+ {
+  "model": "qwen_q5",
+  "id": 16,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3218343000044115,
+  "wall_s": 5.472936400001345,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 120,
+  "t_decode": 0.10072499995294493,
+  "t_sample": 2.463664600007178
+ },
+ {
+  "model": "qwen_q5",
+  "id": 17,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.545547900001111,
+  "wall_s": 8.130735799997638,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 167,
+  "t_decode": 0.1385367000111728,
+  "t_sample": 3.460609800014936
+ },
+ {
+  "model": "qwen_q5",
+  "id": 18,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "first_action_s": 2.429110999997647,
+  "wall_s": 5.811444699997082,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "tokens": 131,
+  "t_decode": 0.10773670002527069,
+  "t_sample": 2.6094085999575327
+ },
+ {
+  "model": "qwen_q5",
+  "id": 19,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.223929500003578,
+  "wall_s": 7.558263099999749,
+  "tools": [
+   "abrir_app",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "tokens": 145,
+  "t_decode": 0.1203119000638253,
+  "t_sample": 2.9176351999340113
+ },
+ {
+  "model": "qwen_q5",
+  "id": 20,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.145144699999946,
+  "wall_s": 6.142975100003241,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 143,
+  "t_decode": 0.09954000000288943,
+  "t_sample": 2.7720394999996643
+ },
+ {
+  "model": "qwen_q5",
+  "id": 21,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.1066455999971367,
+  "wall_s": 5.2003821000034804,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 106,
+  "t_decode": 0.07893860002513975,
+  "t_sample": 2.1989105999819003
+ },
+ {
+  "model": "qwen_q5",
+  "id": 22,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.202704699993774,
+  "wall_s": 6.0069524999998976,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 135,
+  "t_decode": 0.10642500001267763,
+  "t_sample": 2.6271160999749554
+ },
+ {
+  "model": "qwen_q5",
+  "id": 23,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.2114281999965897,
+  "wall_s": 5.212774699997681,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 106,
+  "t_decode": 0.09359289997519227,
+  "t_sample": 2.20675289992505
+ },
+ {
+  "model": "qwen_q5",
+  "id": 24,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.2029438999961712,
+  "wall_s": 5.393666899995878,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 116,
+  "t_decode": 0.10027710001304513,
+  "t_sample": 2.3817482999438653
+ },
+ {
+  "model": "qwen_q5",
+  "id": 25,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.086280600000464,
+  "wall_s": 6.254000499997346,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 160,
+  "t_decode": 0.10725109992927173,
+  "t_sample": 3.0805259000408114
+ },
+ {
+  "model": "qwen_q5",
+  "id": 26,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.207522400000016,
+  "wall_s": 6.121417100002873,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 148,
+  "t_decode": 0.12160669997683726,
+  "t_sample": 2.894191299958038
+ },
+ {
+  "model": "qwen_q5",
+  "id": 27,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.339478000001691,
+  "wall_s": 6.447208300000057,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 146,
+  "t_decode": 0.10798650000651833,
+  "t_sample": 2.8402111000323202
+ },
+ {
+  "model": "qwen_q5",
+  "id": 28,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.1067136999990907,
+  "wall_s": 4.838411799995811,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 88,
+  "t_decode": 0.07218959998135688,
+  "t_sample": 1.8573343000025488
+ },
+ {
+  "model": "qwen_q5",
+  "id": 29,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.223764200003643,
+  "wall_s": 7.271276799998304,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 126,
+  "t_decode": 0.12375140006042784,
+  "t_sample": 2.7665719999858993
+ },
+ {
+  "model": "qwen_q5",
+  "id": 30,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.51361519999773,
+  "wall_s": 10.421109100003378,
+  "tools": [
+   "abrir_app",
+   "abrir_app",
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 190,
+  "t_decode": 0.16711059997032862,
+  "t_sample": 3.914254700044694
+ },
+ {
+  "model": "qwen_q5",
+  "id": 31,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.187575799995102,
+  "wall_s": 7.288404499995522,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 131,
+  "t_decode": 0.10443829999712761,
+  "t_sample": 2.672673000015493
+ },
+ {
+  "model": "qwen_q5",
+  "id": 32,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.1656303999989177,
+  "wall_s": 7.462184000003617,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 137,
+  "t_decode": 0.12188599994988181,
+  "t_sample": 2.8084978999759187
+ },
+ {
+  "model": "qwen_q5",
+  "id": 33,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.1261270999966655,
+  "wall_s": 6.984651399994618,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 111,
+  "t_decode": 0.09282209999219049,
+  "t_sample": 2.199693400027172
+ },
+ {
+  "model": "qwen_q5",
+  "id": 34,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3936236999943503,
+  "wall_s": 7.404280299997481,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 136,
+  "t_decode": 0.10688320003100671,
+  "t_sample": 2.778655499991146
+ },
+ {
+  "model": "qwen_q5",
+  "id": 35,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.4480603999982122,
+  "wall_s": 2.4521266000010655,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 47,
+  "t_decode": 0.03486749996227445,
+  "t_sample": 0.9651926000151434
+ },
+ {
+  "model": "qwen_q5",
+  "id": 36,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.3916119999994407,
+  "wall_s": 3.3957147000037367,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 96,
+  "t_decode": 0.06431640008668182,
+  "t_sample": 1.8830570000209264
+ },
+ {
+  "model": "qwen_q5",
+  "id": 37,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.686493100001826,
+  "wall_s": 2.6906458000012208,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 59,
+  "t_decode": 0.047849500020674895,
+  "t_sample": 1.1854639000448515
+ },
+ {
+  "model": "qwen_q5",
+  "id": 38,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.8877333999989787,
+  "wall_s": 2.892243700000108,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 70,
+  "t_decode": 0.04827520000981167,
+  "t_sample": 1.403003399973386
+ },
+ {
+  "model": "qwen_q5",
+  "id": 39,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.9655624000006355,
+  "wall_s": 2.9695888999995077,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 74,
+  "t_decode": 0.053703100013080984,
+  "t_sample": 1.4731131999578793
+ },
+ {
+  "model": "qwen_q5",
+  "id": 40,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.463452000003599,
+  "wall_s": 2.4683646999983466,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 47,
+  "t_decode": 0.043941600000835024,
+  "t_sample": 0.9752475999557646
+ },
+ {
+  "model": "qwen_q5",
+  "id": 41,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.1606667999949423,
+  "wall_s": 5.790039199993771,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "tokens": 128,
+  "t_decode": 0.10370270003477344,
+  "t_sample": 2.597975899996527
+ },
+ {
+  "model": "qwen_q5",
+  "id": 42,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.223823500004073,
+  "wall_s": 4.9455202000026475,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "tokens": 88,
+  "t_decode": 0.07218759999523172,
+  "t_sample": 1.7874517000018386
+ },
+ {
+  "model": "qwen_q5",
+  "id": 43,
+  "seed": 22,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "first_action_s": 2.394579200001317,
+  "wall_s": 2.398681500002567,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 44,
+  "t_decode": 0.03417329996591434,
+  "t_sample": 0.9104377000185195
+ },
+ {
+  "model": "qwen_q5",
+  "id": 44,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.266728200003854,
+  "wall_s": 5.223067900005844,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "tokens": 102,
+  "t_decode": 0.0896892000164371,
+  "t_sample": 2.048791799948958
+ },
+ {
+  "model": "qwen_q5",
+  "id": 45,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.321454500000982,
+  "wall_s": 5.478756700002123,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 117,
+  "t_decode": 0.08263619998615468,
+  "t_sample": 2.311686599983659
+ },
+ {
+  "model": "qwen_q5",
+  "id": 46,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.316989500002819,
+  "wall_s": 5.581651500004227,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 124,
+  "t_decode": 0.09069360000285087,
+  "t_sample": 2.4136168000259204
+ },
+ {
+  "model": "qwen_q5",
+  "id": 47,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3444669999953476,
+  "wall_s": 5.4009176999970805,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 115,
+  "t_decode": 0.08988239993777825,
+  "t_sample": 2.2429623999923933
+ },
+ {
+  "model": "qwen_q5",
+  "id": 48,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.322919100006402,
+  "wall_s": 5.483550100005232,
+  "tools": [
+   "leer_archivo",
+   "finalizar"
+  ],
+  "tokens": 121,
+  "t_decode": 0.09703640003863256,
+  "t_sample": 2.471361000025354
+ },
+ {
+  "model": "qwen_q5",
+  "id": 49,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.301780800000415,
+  "wall_s": 5.279942599998321,
+  "tools": [
+   "buscar_web",
+   "finalizar"
+  ],
+  "tokens": 110,
+  "t_decode": 0.09558430003380636,
+  "t_sample": 2.273559799970826
+ },
+ {
+  "model": "qwen_q5",
+  "id": 50,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.7572761999981594,
+  "wall_s": 2.761324799997965,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 63,
+  "t_decode": 0.04429750003328081,
+  "t_sample": 1.2617085999809206
+ },
+ {
+  "model": "qwen_q5",
+  "id": 51,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.2208530999996583,
+  "wall_s": 4.68974480000179,
+  "tools": [
+   "cerrar_app",
+   "finalizar"
+  ],
+  "tokens": 80,
+  "t_decode": 0.0644862999979523,
+  "t_sample": 1.7180829999924754
+ },
+ {
+  "model": "qwen_q5",
+  "id": 52,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.22179710000637,
+  "wall_s": 7.865417500004696,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "tokens": 149,
+  "t_decode": 0.12647070003731642,
+  "t_sample": 3.001406399962434
+ },
+ {
+  "model": "qwen_q5",
+  "id": 53,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.4553307999958633,
+  "wall_s": 5.094686299999012,
+  "tools": [
+   "mover_archivo",
+   "finalizar"
+  ],
+  "tokens": 101,
+  "t_decode": 0.07768730001407675,
+  "t_sample": 2.107630100035749
+ },
+ {
+  "model": "qwen_q5",
+  "id": 54,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.662033299995528,
+  "wall_s": 5.5577839999969,
+  "tools": [
+   "mover_archivo",
+   "finalizar"
+  ],
+  "tokens": 125,
+  "t_decode": 0.10310889999527717,
+  "t_sample": 2.550727299974824
+ },
+ {
+  "model": "qwen_q5",
+  "id": 55,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.6657556999998633,
+  "wall_s": 2.6697878999984823,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 58,
+  "t_decode": 0.04381070001545595,
+  "t_sample": 1.1713588000202435
+ },
+ {
+  "model": "qwen_q5",
+  "id": 56,
+  "seed": 22,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.591305200003262,
+  "wall_s": 10.532630800000334,
+  "tools": [
+   "ver_pantalla",
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "tokens": 198,
+  "t_decode": 0.17669879999448312,
+  "t_sample": 4.145079600020836
+ },
+ {
+  "model": "qwen_q5",
+  "id": 57,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.2852263000022504,
+  "wall_s": 5.061987599998247,
+  "tools": [
+   "mouse",
+   "finalizar"
+  ],
+  "tokens": 100,
+  "t_decode": 0.07618929997988744,
+  "t_sample": 2.071540700009791
+ },
+ {
+  "model": "qwen_q5",
+  "id": 58,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "first_action_s": 2.209046900003159,
+  "wall_s": 42.872327099998074,
+  "tools": [
+   "abrir_app",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "teclado",
+   "teclado",
+   "listar_ventanas",
+   "teclado",
+   "teclado",
+   "listar_carpeta",
+   "listar_carpeta",
+   "teclado",
+   "teclado",
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 790,
+  "t_decode": 0.6247492998445523,
+  "t_sample": 15.809611900047457
+ },
+ {
+  "model": "qwen_q5",
+  "id": 59,
+  "seed": 22,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.2346471000055317,
+  "wall_s": 49.22199450000335,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "teclado",
+   "listar_controles",
+   "teclado",
+   "listar_controles",
+   "mouse",
+   "listar_controles",
+   "teclado",
+   "listar_controles",
+   "teclado",
+   "ejecutar_powershell",
+   "teclado",
+   "mouse",
+   "teclado"
+  ],
+  "tokens": 873,
+  "t_decode": 0.6955165998951998,
+  "t_sample": 17.46163390003494
+ },
+ {
+  "model": "qwen_q5",
+  "id": 60,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.2584430999995675,
+  "wall_s": 7.693117800001346,
+  "tools": [
+   "teclado",
+   "listar_controles",
+   "finalizar"
+  ],
+  "tokens": 150,
+  "t_decode": 0.11714469998696586,
+  "t_sample": 3.0408098999614595
+ },
+ {
+  "model": "qwen_q5",
+  "id": 61,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.5069459000005736,
+  "wall_s": 5.412312500004191,
+  "tools": [
+   "consultar_memoria",
+   "finalizar"
+  ],
+  "tokens": 119,
+  "t_decode": 0.08513389997096965,
+  "t_sample": 2.4205100999679416
+ },
+ {
+  "model": "qwen_q5",
+  "id": 62,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.2248393000045326,
+  "wall_s": 4.830789999999979,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "tokens": 88,
+  "t_decode": 0.06818690001091454,
+  "t_sample": 1.8523115999851143
+ },
+ {
+  "model": "qwen_q5",
+  "id": 63,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.147269699999015,
+  "wall_s": 4.680307099995844,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "tokens": 80,
+  "t_decode": 0.06806070003221976,
+  "t_sample": 1.7032799000226078
+ },
+ {
+  "model": "qwen_q5",
+  "id": 64,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.453187099999923,
+  "wall_s": 5.556348500002059,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "tokens": 125,
+  "t_decode": 0.10165039993444225,
+  "t_sample": 2.5508865999800037
+ },
+ {
+  "model": "qwen_q5",
+  "id": 65,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.4572724000026938,
+  "wall_s": 5.105256599999848,
+  "tools": [
+   "registro_habitos",
+   "finalizar"
+  ],
+  "tokens": 102,
+  "t_decode": 0.08270769997761818,
+  "t_sample": 2.125039399994421
+ },
+ {
+  "model": "qwen_q5",
+  "id": 1,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3609589999978198,
+  "wall_s": 5.043220599996857,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 99,
+  "t_decode": 0.08029660004103789,
+  "t_sample": 2.0576902000102564
+ },
+ {
+  "model": "qwen_q5",
+  "id": 2,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.444594500004314,
+  "wall_s": 5.12198580000404,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 103,
+  "t_decode": 0.08267190002516145,
+  "t_sample": 2.136114200016891
+ },
+ {
+  "model": "qwen_q5",
+  "id": 3,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.5632422999988194,
+  "wall_s": 5.256406299995433,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 110,
+  "t_decode": 0.07947720005176961,
+  "t_sample": 2.272835700016003
+ },
+ {
+  "model": "qwen_q5",
+  "id": 4,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3457991999966907,
+  "wall_s": 4.8192634000006365,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 87,
+  "t_decode": 0.07715900001494447,
+  "t_sample": 1.8414525000043795
+ },
+ {
+  "model": "qwen_q5",
+  "id": 5,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3176410000014585,
+  "wall_s": 4.982368000004499,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 95,
+  "t_decode": 0.07616879999113735,
+  "t_sample": 1.9877965000487166
+ },
+ {
+  "model": "qwen_q5",
+  "id": 6,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.290642399995704,
+  "wall_s": 4.875340299993695,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 90,
+  "t_decode": 0.07535629994526971,
+  "t_sample": 1.8999503000304685
+ },
+ {
+  "model": "qwen_q5",
+  "id": 7,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.565036699998018,
+  "wall_s": 5.088581899995916,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 101,
+  "t_decode": 0.07761029997345759,
+  "t_sample": 2.1125615000273683
+ },
+ {
+  "model": "qwen_q5",
+  "id": 8,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3430202000017744,
+  "wall_s": 4.878361600000062,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 90,
+  "t_decode": 0.07854910000605742,
+  "t_sample": 1.8926155000008293
+ },
+ {
+  "model": "qwen_q5",
+  "id": 9,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.432835999999952,
+  "wall_s": 5.041149600001518,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 99,
+  "t_decode": 0.07451550004043384,
+  "t_sample": 2.052241600009438
+ },
+ {
+  "model": "qwen_q5",
+  "id": 10,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.515434799999639,
+  "wall_s": 10.897001699995599,
+  "tools": [
+   "abrir_app",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "tokens": 222,
+  "t_decode": 0.1752420000048005,
+  "t_sample": 4.52618510001048
+ },
+ {
+  "model": "qwen_q5",
+  "id": 11,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3793038000003435,
+  "wall_s": 4.836285400000634,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 88,
+  "t_decode": 0.07103959999949438,
+  "t_sample": 1.854744199961715
+ },
+ {
+  "model": "qwen_q5",
+  "id": 12,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3911417000053916,
+  "wall_s": 4.845949600006861,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 89,
+  "t_decode": 0.07026399997266708,
+  "t_sample": 1.8705866999880527
+ },
+ {
+  "model": "qwen_q5",
+  "id": 13,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.688239100003557,
+  "wall_s": 5.5384936000045855,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 124,
+  "t_decode": 0.103491900015797,
+  "t_sample": 2.5323108000011416
+ },
+ {
+  "model": "qwen_q5",
+  "id": 14,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.638682400000107,
+  "wall_s": 14.71671790000255,
+  "tools": [
+   "volumen",
+   "volumen",
+   "volumen",
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 338,
+  "t_decode": 0.26421119990118314,
+  "t_sample": 6.654001399969275
+ },
+ {
+  "model": "qwen_q5",
+  "id": 15,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.42868429999362,
+  "wall_s": 5.196699299995089,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 107,
+  "t_decode": 0.08601790001557674,
+  "t_sample": 2.214116599956469
+ },
+ {
+  "model": "qwen_q5",
+  "id": 16,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3946441000007326,
+  "wall_s": 5.528874699994049,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 123,
+  "t_decode": 0.10005749999254476,
+  "t_sample": 2.5074221000249963
+ },
+ {
+  "model": "qwen_q5",
+  "id": 17,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.694362499998533,
+  "wall_s": 6.144225100004405,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 155,
+  "t_decode": 0.1254925999310217,
+  "t_sample": 3.0996169000063674
+ },
+ {
+  "model": "qwen_q5",
+  "id": 18,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.5239656000048853,
+  "wall_s": 5.893909600003099,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 142,
+  "t_decode": 0.1177011000472703,
+  "t_sample": 2.8608990998982335
+ },
+ {
+  "model": "qwen_q5",
+  "id": 19,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "first_action_s": 2.3735532999999123,
+  "wall_s": 7.989058200000727,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "tokens": 157,
+  "t_decode": 0.1175944999922649,
+  "t_sample": 3.146764599943708
+ },
+ {
+  "model": "qwen_q5",
+  "id": 20,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.396140999997442,
+  "wall_s": 6.09030519999942,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 140,
+  "t_decode": 0.09910600005241577,
+  "t_sample": 2.707985699933488
+ },
+ {
+  "model": "qwen_q5",
+  "id": 21,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.5860537000044133,
+  "wall_s": 5.872281000003568,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 140,
+  "t_decode": 0.09746550003183074,
+  "t_sample": 2.702565500003402
+ },
+ {
+  "model": "qwen_q5",
+  "id": 22,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.4003730999975232,
+  "wall_s": 6.321595299996261,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 152,
+  "t_decode": 0.10812679999071406,
+  "t_sample": 2.9425025999516947
+ },
+ {
+  "model": "qwen_q5",
+  "id": 23,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.525995600000897,
+  "wall_s": 5.606100599994534,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 127,
+  "t_decode": 0.1073824000050081,
+  "t_sample": 2.5823196999554057
+ },
+ {
+  "model": "qwen_q5",
+  "id": 24,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3385933000026853,
+  "wall_s": 5.633835000000545,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 129,
+  "t_decode": 0.10224959999322891,
+  "t_sample": 2.599461599980714
+ },
+ {
+  "model": "qwen_q5",
+  "id": 25,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3369814999969094,
+  "wall_s": 6.556113499995263,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 175,
+  "t_decode": 0.11575430006632814,
+  "t_sample": 3.368343200017989
+ },
+ {
+  "model": "qwen_q5",
+  "id": 26,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.4692948999945656,
+  "wall_s": 6.64084069999808,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 176,
+  "t_decode": 0.1280655999071314,
+  "t_sample": 3.4138060999757727
+ },
+ {
+  "model": "qwen_q5",
+  "id": 27,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.6406980000028852,
+  "wall_s": 6.728623000002699,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 161,
+  "t_decode": 0.11077379997004755,
+  "t_sample": 3.1222078999853693
+ },
+ {
+  "model": "qwen_q5",
+  "id": 28,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.4545370999985607,
+  "wall_s": 5.3143702000015764,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "tokens": 111,
+  "t_decode": 0.10054970007331576,
+  "t_sample": 2.304696699990018
+ },
+ {
+  "model": "qwen_q5",
+  "id": 29,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3153368000057526,
+  "wall_s": 7.227586400003929,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 129,
+  "t_decode": 0.11761609998939093,
+  "t_sample": 2.7419532999483636
+ },
+ {
+  "model": "qwen_q5",
+  "id": 30,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.4355804000006174,
+  "wall_s": 7.828066600006423,
+  "tools": [
+   "abrir_app",
+   "volumen",
+   "finalizar"
+  ],
+  "tokens": 159,
+  "t_decode": 0.11868770000728546,
+  "t_sample": 3.180052700059605
+ },
+ {
+  "model": "qwen_q5",
+  "id": 31,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3702647000027355,
+  "wall_s": 7.420693200001551,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 138,
+  "t_decode": 0.10838440001680283,
+  "t_sample": 2.7942649999822606
+ },
+ {
+  "model": "qwen_q5",
+  "id": 32,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.5282205999974394,
+  "wall_s": 8.322117399999115,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 180,
+  "t_decode": 0.12081089997809613,
+  "t_sample": 3.5020954000065103
+ },
+ {
+  "model": "qwen_q5",
+  "id": 33,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3388455000022077,
+  "wall_s": 7.192232400004286,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 122,
+  "t_decode": 0.09873470001184614,
+  "t_sample": 2.4152430999820353
+ },
+ {
+  "model": "qwen_q5",
+  "id": 34,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.56684690000111,
+  "wall_s": 7.805638899997575,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "tokens": 157,
+  "t_decode": 0.12415559999499237,
+  "t_sample": 3.160461499923258
+ },
+ {
+  "model": "qwen_q5",
+  "id": 35,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.641380900000513,
+  "wall_s": 2.645354500004032,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 57,
+  "t_decode": 0.04153649999352638,
+  "t_sample": 1.1615797000049497
+ },
+ {
+  "model": "qwen_q5",
+  "id": 36,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.7656153999996604,
+  "wall_s": 3.770198199999868,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 116,
+  "t_decode": 0.07174350000423146,
+  "t_sample": 2.243592400031048
+ },
+ {
+  "model": "qwen_q5",
+  "id": 37,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.6833218000028864,
+  "wall_s": 2.6874989999996615,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 59,
+  "t_decode": 0.047014200034027454,
+  "t_sample": 1.1951168000159669
+ },
+ {
+  "model": "qwen_q5",
+  "id": 38,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.0209783999962383,
+  "wall_s": 3.0255073999942397,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 77,
+  "t_decode": 0.05276759999105707,
+  "t_sample": 1.5194684999805759
+ },
+ {
+  "model": "qwen_q5",
+  "id": 39,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.393983699999808,
+  "wall_s": 3.3980506000007153,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 96,
+  "t_decode": 0.06506589998753043,
+  "t_sample": 1.884869700021227
+ },
+ {
+  "model": "qwen_q5",
+  "id": 40,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.6165347000060137,
+  "wall_s": 2.620630400000664,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 55,
+  "t_decode": 0.04996710000705207,
+  "t_sample": 1.122977900042315
+ },
+ {
+  "model": "qwen_q5",
+  "id": 41,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.1919252000006963,
+  "wall_s": 5.462326000000758,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "tokens": 114,
+  "t_decode": 0.11280460000853054,
+  "t_sample": 2.267203800016432
+ },
+ {
+  "model": "qwen_q5",
+  "id": 42,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.2214240999965114,
+  "wall_s": 4.936600000000908,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "tokens": 88,
+  "t_decode": 0.0704522999949404,
+  "t_sample": 1.7750442000178737
+ },
+ {
+  "model": "qwen_q5",
+  "id": 43,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.4069894999993267,
+  "wall_s": 10.530345899998792,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "tokens": 192,
+  "t_decode": 0.15957190001790877,
+  "t_sample": 3.829802500011283
+ },
+ {
+  "model": "qwen_q5",
+  "id": 44,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.22106370000256,
+  "wall_s": 4.900334899997688,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "tokens": 86,
+  "t_decode": 0.07055870001931908,
+  "t_sample": 1.7379218000060064
+ },
+ {
+  "model": "qwen_q5",
+  "id": 45,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.432304900001327,
+  "wall_s": 5.409080199999153,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 113,
+  "t_decode": 0.08636019998812117,
+  "t_sample": 2.2389428000315093
+ },
+ {
+  "model": "qwen_q5",
+  "id": 46,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.4531083999972907,
+  "wall_s": 5.675657699997828,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 129,
+  "t_decode": 0.09276450002653291,
+  "t_sample": 2.508668399968883
+ },
+ {
+  "model": "qwen_q5",
+  "id": 47,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.4715444999965257,
+  "wall_s": 5.264165599997796,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "tokens": 108,
+  "t_decode": 0.08582720001868438,
+  "t_sample": 2.1115472000237787
+ },
+ {
+  "model": "qwen_q5",
+  "id": 48,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.6123202000017045,
+  "wall_s": 6.143682100002479,
+  "tools": [
+   "leer_archivo",
+   "finalizar"
+  ],
+  "tokens": 153,
+  "t_decode": 0.11596549998648698,
+  "t_sample": 3.1071690000244416
+ },
+ {
+  "model": "qwen_q5",
+  "id": 49,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.466930800001137,
+  "wall_s": 5.460923700004059,
+  "tools": [
+   "buscar_web",
+   "finalizar"
+  ],
+  "tokens": 120,
+  "t_decode": 0.09944209995592246,
+  "t_sample": 2.448458900049445
+ },
+ {
+  "model": "qwen_q5",
+  "id": 50,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.902434000003268,
+  "wall_s": 2.913778699999966,
+  "tools": [
+   "leer_archivo"
+  ],
+  "tokens": 65,
+  "t_decode": 0.04627139998046914,
+  "t_sample": 1.4108564000125625
+ },
+ {
+  "model": "qwen_q5",
+  "id": 51,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.525566099997377,
+  "wall_s": 5.111133099999279,
+  "tools": [
+   "cerrar_app",
+   "finalizar"
+  ],
+  "tokens": 102,
+  "t_decode": 0.08345050003117649,
+  "t_sample": 2.1291193999932148
+ },
+ {
+  "model": "qwen_q5",
+  "id": 52,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3185889000014868,
+  "wall_s": 7.793071200001577,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "tokens": 146,
+  "t_decode": 0.11339850001968443,
+  "t_sample": 2.9541819999867585
+ },
+ {
+  "model": "qwen_q5",
+  "id": 53,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.6950016999981017,
+  "wall_s": 5.400466899998719,
+  "tools": [
+   "mover_archivo",
+   "finalizar"
+  ],
+  "tokens": 116,
+  "t_decode": 0.10104440007125959,
+  "t_sample": 2.3785634999730974
+ },
+ {
+  "model": "qwen_q5",
+  "id": 54,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.88846470000135,
+  "wall_s": 5.736989600001834,
+  "tools": [
+   "mover_archivo",
+   "finalizar"
+  ],
+  "tokens": 133,
+  "t_decode": 0.11211579998052912,
+  "t_sample": 2.7029787999927066
+ },
+ {
+  "model": "qwen_q5",
+  "id": 55,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 3.2547606000007363,
+  "wall_s": 3.2588294000015594,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 89,
+  "t_decode": 0.062488399977155495,
+  "t_sample": 1.7446972000179812
+ },
+ {
+  "model": "qwen_q5",
+  "id": 56,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.8371729999998934,
+  "wall_s": 22.671225400001276,
+  "tools": [
+   "ver_pantalla",
+   "listar_controles",
+   "listar_ventanas",
+   "listar_controles",
+   "mouse",
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "tokens": 423,
+  "t_decode": 0.34900520015798975,
+  "t_sample": 8.358068800014735
+ },
+ {
+  "model": "qwen_q5",
+  "id": 57,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.75036249999539,
+  "wall_s": 7.8884336999981315,
+  "tools": [
+   "ver_pantalla",
+   "mouse",
+   "finalizar"
+  ],
+  "tokens": 160,
+  "t_decode": 0.1382269000459928,
+  "t_sample": 3.2222063999943202
+ },
+ {
+  "model": "qwen_q5",
+  "id": 58,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "first_action_s": 2.411169200000586,
+  "wall_s": 46.71470789999876,
+  "tools": [
+   "abrir_app",
+   "teclado",
+   "teclado",
+   "ver_pantalla",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "ver_pantalla",
+   "cerrar_app",
+   "enfocar_ventana",
+   "ver_pantalla",
+   "cerrar_app",
+   "enfocar_ventana",
+   "ver_pantalla",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "tokens": 932,
+  "t_decode": 0.7123324000131106,
+  "t_sample": 18.545157500135247
+ },
+ {
+  "model": "qwen_q5",
+  "id": 59,
+  "seed": 33,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "first_action_s": 2.9296783999961917,
+  "wall_s": 2.933902800003125,
+  "tools": [
+   "finalizar"
+  ],
+  "tokens": 72,
+  "t_decode": 0.05148439999902621,
+  "t_sample": 1.4331262999767205
+ },
+ {
+  "model": "qwen_q5",
+  "id": 60,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.501119699998526,
+  "wall_s": 7.844600500000524,
+  "tools": [
+   "teclado",
+   "ver_pantalla",
+   "finalizar"
+  ],
+  "tokens": 158,
+  "t_decode": 0.13360900000407128,
+  "t_sample": 3.1825041999763926
+ },
+ {
+  "model": "qwen_q5",
+  "id": 61,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.5243270999999368,
+  "wall_s": 5.316946999999345,
+  "tools": [
+   "consultar_memoria",
+   "finalizar"
+  ],
+  "tokens": 114,
+  "t_decode": 0.08332850005535875,
+  "t_sample": 2.3346343000084744
+ },
+ {
+  "model": "qwen_q5",
+  "id": 62,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3740036000017426,
+  "wall_s": 4.9613604999976815,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "tokens": 95,
+  "t_decode": 0.07783000001654727,
+  "t_sample": 1.9815885999923921
+ },
+ {
+  "model": "qwen_q5",
+  "id": 63,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.374407599992992,
+  "wall_s": 4.8996163999981945,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "tokens": 92,
+  "t_decode": 0.07083579999743961,
+  "t_sample": 1.916477400016447
+ },
+ {
+  "model": "qwen_q5",
+  "id": 64,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.5663007000039215,
+  "wall_s": 5.827326500002528,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "tokens": 139,
+  "t_decode": 0.11443720007810043,
+  "t_sample": 2.7935852000227896
+ },
+ {
+  "model": "qwen_q5",
+  "id": 65,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "first_action_s": 2.3938961000021663,
+  "wall_s": 4.941954599999008,
+  "tools": [
+   "registro_habitos",
+   "finalizar"
+  ],
+  "tokens": 94,
+  "t_decode": 0.07269629996153526,
+  "t_sample": 1.9591803999792319
+ }
+]

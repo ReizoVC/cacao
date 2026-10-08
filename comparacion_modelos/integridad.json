@@ -205,5 +205,14 @@
     "calculadora.png": "f1cb24491ec96026a9887a1d8744c6ebfd673bbaabc5191129744d2c02dc0e14"
   },
   "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
-  "status": "195 casos por candidato, 40 conversaciones, 40 localizaciones; motor idéntico al de producción"
+  "status": "195 casos por candidato, 40 conversaciones, 40 localizaciones; motor idéntico al de producción",
+  "round2": {
+    "cases": 390,
+    "new_conversations": 20,
+    "blind_answers_including_references": 40,
+    "vision_localizations": 10,
+    "frozen_sha256": "f30526418b8c69258a7549ee85f7258fa2ada7c48aa6b58a4f1c7956d29aef1b",
+    "metrics_sha256": "adbfe4003162109b17ac06dd622533c196249cbecbe411f61db5f13d8b4278cd",
+    "human_spanish_evaluation": "pendiente"
+  }
 }

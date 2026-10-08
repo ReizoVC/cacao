@@ -35,6 +35,28 @@ report=(ROOT/'resultados_comparacion_modelos.md').read_text(encoding='utf-8')
 assert 'PENDIENTE' not in report
 vision=json.loads((HERE/'evidencia_vision.json').read_text(encoding='utf-8'))
 assert len(vision)==40
+if (HERE/'metricas_ronda2.json').exists():
+    subprocess.run([sys.executable,'-B',str(HERE/'probar_integracion.py')],check=True)
+    integrated=json.loads((HERE/'metricas_ronda2.json').read_text(encoding='utf-8'))
+    assert len(integrated)==390
+    for model in ('gemma_q5','qwen_q5'):
+        cases=[r for r in integrated if r['model']==model]
+        assert {(r['id'],r['seed']) for r in cases}=={(i,s) for i in range(1,66) for s in (11,22,33)}
+    frozen=json.loads((HERE/'ronda2_congelado.json').read_text(encoding='utf-8'))
+    for name,digest in frozen.items():assert sha(ROOT/name if name=='pruebas.json' else HERE/name)==digest
+    vision_frozen=json.loads((HERE/'ronda2_vision_congelada.json').read_text(encoding='utf-8'))
+    for name,digest in vision_frozen.items():assert sha(HERE/name)==digest
+    vision2=json.loads((HERE/'vision_ronda2.json').read_text(encoding='utf-8'))
+    assert {(r['model'],r['id']) for r in vision2}=={(m,i) for m in ('gemma_q5','qwen_q5') for i in range(1,6)}
+    final_data=[json.loads((HERE/'datos/ronda2'/f'{m}.json').read_text(encoding='utf-8')) for m in ('gemma_q5','qwen_q5')]
+    assert all(d['complete'] and len(d['conversation'])==10 for d in final_data)
+    assert len({d['prompt_sha256'] for d in final_data})==1
+    assert len({d['integration']['schema_sha256'] for d in final_data})==1
+    blind2=(ROOT/'respuestas_integracion_ciegas.md').read_text(encoding='utf-8')
+    assert blind2.count('## Pregunta ')==10
+    for letter in 'WXYZ':assert blind2.count(f'### Respuesta {letter}\n')==10
+    assert not any(name in blind2 for name in ('Gemma','Qwen','Q5_K','UD-Q4'))
+    assert '## Ronda 2 — integración común y formatos de visión' in report
 engine=[]
 production=ROOT/'.venv/Lib/site-packages/llama_cpp'
 testing=ROOT/'.venv-pruebas/Lib/site-packages/llama_cpp'
@@ -49,5 +71,9 @@ manifest={'date':'2026-10-07','cacao_commit':'3e9a735','llama_cpp_python':'0.3.3
     'fixtures_sha256':{name:sha(ROOT/name) for name in ('pruebas.json','herramientas.json','apps_categorias.json')},
     'screenshots_sha256':{p.name:sha(p) for p in sorted((HERE/'capturas').glob('*.png'))},
     'python':sys.version,'status':'195 casos por candidato, 40 conversaciones, 40 localizaciones; motor idéntico al de producción'}
+if (HERE/'metricas_ronda2.json').exists():
+    manifest['round2']={'cases':len(integrated),'new_conversations':20,'blind_answers_including_references':40,
+        'vision_localizations':10,'frozen_sha256':sha(HERE/'ronda2_congelado.json'),
+        'metrics_sha256':sha(HERE/'metricas_ronda2.json'),'human_spanish_evaluation':'pendiente'}
 (HERE/'integridad.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf-8')
-print('Verificación completa: configuración original, motor idéntico, 780 casos y documentos completos.')
+print('Verificación completa: configuración original, motor idéntico, referencias y nueva ronda completas.')

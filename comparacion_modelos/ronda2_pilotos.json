@@ -1,0 +1,162 @@
+[
+  {
+    "pilot": "piloto_ronda2_v1",
+    "file": "gemma_q5.json",
+    "model": "gemma_q5",
+    "cases": 35,
+    "credited": 35,
+    "conversation_count": 0,
+    "prompt_sha256": "9615557e950c691757912b7cdb11eb139c3bb6546796e37e46223b1b73eb5401",
+    "included_in_acceptance": false
+  },
+  {
+    "pilot": "piloto_ronda2_v1",
+    "file": "qwen_q5_diagnostic_baseline.json",
+    "model": "qwen_q5",
+    "cases": 12,
+    "credited": 3,
+    "conversation_count": 0,
+    "prompt_sha256": "0855ade1123729cab1adeb33a1aa1dc90c73ff99db5228f928f68d894a8e8ef4",
+    "included_in_acceptance": false
+  },
+  {
+    "pilot": "piloto_ronda2_v1",
+    "file": "qwen_q5_diagnostic_combined.json",
+    "model": "qwen_q5",
+    "cases": 12,
+    "credited": 9,
+    "conversation_count": 0,
+    "prompt_sha256": "9615557e950c691757912b7cdb11eb139c3bb6546796e37e46223b1b73eb5401",
+    "included_in_acceptance": false
+  },
+  {
+    "pilot": "piloto_ronda2_v1",
+    "file": "qwen_q5_diagnostic_prompt.json",
+    "model": "qwen_q5",
+    "cases": 12,
+    "credited": 9,
+    "conversation_count": 0,
+    "prompt_sha256": "9615557e950c691757912b7cdb11eb139c3bb6546796e37e46223b1b73eb5401",
+    "included_in_acceptance": false
+  },
+  {
+    "pilot": "piloto_ronda2_v1",
+    "file": "qwen_q5_diagnostic_schema.json",
+    "model": "qwen_q5",
+    "cases": 12,
+    "credited": 7,
+    "conversation_count": 0,
+    "prompt_sha256": "0855ade1123729cab1adeb33a1aa1dc90c73ff99db5228f928f68d894a8e8ef4",
+    "included_in_acceptance": false
+  },
+  {
+    "pilot": "piloto_ronda2_v2",
+    "file": "gemma_q5.json",
+    "model": "gemma_q5",
+    "cases": 195,
+    "credited": 188,
+    "conversation_count": 8,
+    "prompt_sha256": "7fa740cbd013470259055f07c5ecc2b7bc4fc0f419623a2963575a4b16cf3b73",
+    "included_in_acceptance": false
+  },
+  {
+    "pilot": "piloto_ronda2_v2",
+    "file": "qwen_q5_diagnostic_baseline.json",
+    "model": "qwen_q5",
+    "cases": 12,
+    "credited": 3,
+    "conversation_count": 0,
+    "prompt_sha256": "0855ade1123729cab1adeb33a1aa1dc90c73ff99db5228f928f68d894a8e8ef4",
+    "included_in_acceptance": false
+  },
+  {
+    "pilot": "piloto_ronda2_v2",
+    "file": "qwen_q5_diagnostic_combined.json",
+    "model": "qwen_q5",
+    "cases": 12,
+    "credited": 9,
+    "conversation_count": 0,
+    "prompt_sha256": "7fa740cbd013470259055f07c5ecc2b7bc4fc0f419623a2963575a4b16cf3b73",
+    "included_in_acceptance": false
+  },
+  {
+    "pilot": "piloto_ronda2_v2",
+    "file": "qwen_q5_diagnostic_prompt.json",
+    "model": "qwen_q5",
+    "cases": 12,
+    "credited": 8,
+    "conversation_count": 0,
+    "prompt_sha256": "7fa740cbd013470259055f07c5ecc2b7bc4fc0f419623a2963575a4b16cf3b73",
+    "included_in_acceptance": false
+  },
+  {
+    "pilot": "piloto_ronda2_v2",
+    "file": "qwen_q5_diagnostic_schema.json",
+    "model": "qwen_q5",
+    "cases": 12,
+    "credited": 9,
+    "conversation_count": 0,
+    "prompt_sha256": "0855ade1123729cab1adeb33a1aa1dc90c73ff99db5228f928f68d894a8e8ef4",
+    "included_in_acceptance": false
+  },
+  {
+    "pilot": "piloto_ronda2_v3",
+    "file": "gemma_q5.json",
+    "model": "gemma_q5",
+    "cases": 195,
+    "credited": 195,
+    "conversation_count": 10,
+    "prompt_sha256": "adb0e35e13d3348e2c164cc0d83f1032b19574febe51effbc84fa2d47eb2f56e",
+    "included_in_acceptance": false
+  },
+  {
+    "pilot": "piloto_ronda2_v3",
+    "file": "qwen_q5.json",
+    "model": "qwen_q5",
+    "cases": 94,
+    "credited": 90,
+    "conversation_count": 0,
+    "prompt_sha256": "adb0e35e13d3348e2c164cc0d83f1032b19574febe51effbc84fa2d47eb2f56e",
+    "included_in_acceptance": false
+  },
+  {
+    "pilot": "piloto_ronda2_v3",
+    "file": "qwen_q5_diagnostic_baseline.json",
+    "model": "qwen_q5",
+    "cases": 12,
+    "credited": 3,
+    "conversation_count": 0,
+    "prompt_sha256": "0855ade1123729cab1adeb33a1aa1dc90c73ff99db5228f928f68d894a8e8ef4",
+    "included_in_acceptance": false
+  },
+  {
+    "pilot": "piloto_ronda2_v3",
+    "file": "qwen_q5_diagnostic_combined.json",
+    "model": "qwen_q5",
+    "cases": 12,
+    "credited": 9,
+    "conversation_count": 0,
+    "prompt_sha256": "adb0e35e13d3348e2c164cc0d83f1032b19574febe51effbc84fa2d47eb2f56e",
+    "included_in_acceptance": false
+  },
+  {
+    "pilot": "piloto_ronda2_v3",
+    "file": "qwen_q5_diagnostic_prompt.json",
+    "model": "qwen_q5",
+    "cases": 12,
+    "credited": 8,
+    "conversation_count": 0,
+    "prompt_sha256": "7fa740cbd013470259055f07c5ecc2b7bc4fc0f419623a2963575a4b16cf3b73",
+    "included_in_acceptance": false
+  },
+  {
+    "pilot": "piloto_ronda2_v3",
+    "file": "qwen_q5_diagnostic_schema.json",
+    "model": "qwen_q5",
+    "cases": 12,
+    "credited": 9,
+    "conversation_count": 0,
+    "prompt_sha256": "0855ade1123729cab1adeb33a1aa1dc90c73ff99db5228f928f68d894a8e8ef4",
+    "included_in_acceptance": false
+  }
+]

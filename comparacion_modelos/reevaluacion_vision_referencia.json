@@ -1,0 +1,682 @@
+[
+  {
+    "model": "gemma_q5",
+    "normalized": false,
+    "id": 1,
+    "pixel_point": {
+      "x": 315,
+      "y": 786
+    },
+    "rect": [
+      69,
+      379,
+      127,
+      415
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "gemma_q5",
+    "normalized": false,
+    "id": 2,
+    "pixel_point": {
+      "x": 896,
+      "y": 973
+    },
+    "rect": [
+      259,
+      456,
+      317,
+      491
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "gemma_q5",
+    "normalized": false,
+    "id": 3,
+    "pixel_point": {
+      "x": 871,
+      "y": 895
+    },
+    "rect": [
+      259,
+      494,
+      317,
+      529
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "gemma_q5",
+    "normalized": false,
+    "id": 4,
+    "pixel_point": {
+      "x": 38,
+      "y": 185
+    },
+    "rect": [
+      8,
+      45,
+      68,
+      72
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "gemma_q5",
+    "normalized": false,
+    "id": 5,
+    "pixel_point": {
+      "x": 312,
+      "y": 89
+    },
+    "rect": [
+      293,
+      10,
+      326,
+      42
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "gemma_q5",
+    "normalized": true,
+    "id": 1,
+    "pixel_point": {
+      "x": 100.464,
+      "y": 418.656
+    },
+    "rect": [
+      69,
+      379,
+      127,
+      415
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "gemma_q5",
+    "normalized": true,
+    "id": 2,
+    "pixel_point": {
+      "x": 287.546,
+      "y": 518.514
+    },
+    "rect": [
+      259,
+      456,
+      317,
+      491
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "gemma_q5",
+    "normalized": true,
+    "id": 3,
+    "pixel_point": {
+      "x": 281.75,
+      "y": 483.804
+    },
+    "rect": [
+      259,
+      494,
+      317,
+      529
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "gemma_q5",
+    "normalized": true,
+    "id": 4,
+    "pixel_point": {
+      "x": 38.454,
+      "y": 137.632
+    },
+    "rect": [
+      8,
+      45,
+      68,
+      72
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "gemma_q5",
+    "normalized": true,
+    "id": 5,
+    "pixel_point": {
+      "x": 307.632,
+      "y": 66.572
+    },
+    "rect": [
+      293,
+      10,
+      326,
+      42
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "gemma_q4",
+    "normalized": false,
+    "id": 1,
+    "pixel_point": {
+      "x": 314,
+      "y": 795
+    },
+    "rect": [
+      69,
+      379,
+      127,
+      415
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "gemma_q4",
+    "normalized": false,
+    "id": 2,
+    "pixel_point": {
+      "x": 849,
+      "y": 961
+    },
+    "rect": [
+      259,
+      456,
+      317,
+      491
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "gemma_q4",
+    "normalized": false,
+    "id": 3,
+    "pixel_point": {
+      "x": 875,
+      "y": 946
+    },
+    "rect": [
+      259,
+      494,
+      317,
+      529
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "gemma_q4",
+    "normalized": false,
+    "id": 4,
+    "pixel_point": {
+      "x": 38,
+      "y": 185
+    },
+    "rect": [
+      8,
+      45,
+      68,
+      72
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "gemma_q4",
+    "normalized": false,
+    "id": 5,
+    "pixel_point": {
+      "x": 312,
+      "y": 94
+    },
+    "rect": [
+      293,
+      10,
+      326,
+      42
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "gemma_q4",
+    "normalized": true,
+    "id": 1,
+    "pixel_point": {
+      "x": 101.108,
+      "y": 424.53
+    },
+    "rect": [
+      69,
+      379,
+      127,
+      415
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "gemma_q4",
+    "normalized": true,
+    "id": 2,
+    "pixel_point": {
+      "x": 288.834,
+      "y": 514.242
+    },
+    "rect": [
+      259,
+      456,
+      317,
+      491
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "gemma_q4",
+    "normalized": true,
+    "id": 3,
+    "pixel_point": {
+      "x": 282.072,
+      "y": 502.494
+    },
+    "rect": [
+      259,
+      494,
+      317,
+      529
+    ],
+    "hit_original": true,
+    "hit_corrected": true
+  },
+  {
+    "model": "gemma_q4",
+    "normalized": true,
+    "id": 4,
+    "pixel_point": {
+      "x": 37.468,
+      "y": 137.632
+    },
+    "rect": [
+      8,
+      45,
+      68,
+      72
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "gemma_q4",
+    "normalized": true,
+    "id": 5,
+    "pixel_point": {
+      "x": 307.632,
+      "y": 70.312
+    },
+    "rect": [
+      293,
+      10,
+      326,
+      42
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "qwen_q4",
+    "normalized": false,
+    "id": 1,
+    "pixel_point": {
+      "x": 297,
+      "y": 740
+    },
+    "rect": [
+      69,
+      379,
+      127,
+      415
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "qwen_q4",
+    "normalized": false,
+    "id": 2,
+    "pixel_point": {
+      "x": 892,
+      "y": 874
+    },
+    "rect": [
+      259,
+      456,
+      317,
+      491
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "qwen_q4",
+    "normalized": false,
+    "id": 3,
+    "pixel_point": {
+      "x": 891,
+      "y": 947
+    },
+    "rect": [
+      259,
+      494,
+      317,
+      529
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "qwen_q4",
+    "normalized": false,
+    "id": 4,
+    "pixel_point": {
+      "x": 38,
+      "y": 79
+    },
+    "rect": [
+      8,
+      45,
+      68,
+      72
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "qwen_q4",
+    "normalized": false,
+    "id": 5,
+    "pixel_point": {
+      "x": 316,
+      "y": 40
+    },
+    "rect": [
+      293,
+      10,
+      326,
+      42
+    ],
+    "hit_original": true,
+    "hit_corrected": true
+  },
+  {
+    "model": "qwen_q4",
+    "normalized": true,
+    "id": 1,
+    "pixel_point": {
+      "x": 101.108,
+      "y": 401.568
+    },
+    "rect": [
+      69,
+      379,
+      127,
+      415
+    ],
+    "hit_original": false,
+    "hit_corrected": true
+  },
+  {
+    "model": "qwen_q4",
+    "normalized": true,
+    "id": 2,
+    "pixel_point": {
+      "x": 287.546,
+      "y": 466.716
+    },
+    "rect": [
+      259,
+      456,
+      317,
+      491
+    ],
+    "hit_original": true,
+    "hit_corrected": true
+  },
+  {
+    "model": "qwen_q4",
+    "normalized": true,
+    "id": 3,
+    "pixel_point": {
+      "x": 286.902,
+      "y": 505.698
+    },
+    "rect": [
+      259,
+      494,
+      317,
+      529
+    ],
+    "hit_original": true,
+    "hit_corrected": true
+  },
+  {
+    "model": "qwen_q4",
+    "normalized": true,
+    "id": 4,
+    "pixel_point": {
+      "x": 35.496,
+      "y": 60.588
+    },
+    "rect": [
+      8,
+      45,
+      68,
+      72
+    ],
+    "hit_original": true,
+    "hit_corrected": true
+  },
+  {
+    "model": "qwen_q4",
+    "normalized": true,
+    "id": 5,
+    "pixel_point": {
+      "x": 309.604,
+      "y": 29.92
+    },
+    "rect": [
+      293,
+      10,
+      326,
+      42
+    ],
+    "hit_original": true,
+    "hit_corrected": true
+  },
+  {
+    "model": "qwen_q5",
+    "normalized": false,
+    "id": 1,
+    "pixel_point": {
+      "x": 298,
+      "y": 740
+    },
+    "rect": [
+      69,
+      379,
+      127,
+      415
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "qwen_q5",
+    "normalized": false,
+    "id": 2,
+    "pixel_point": {
+      "x": 893,
+      "y": 875
+    },
+    "rect": [
+      259,
+      456,
+      317,
+      491
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "qwen_q5",
+    "normalized": false,
+    "id": 3,
+    "pixel_point": {
+      "x": 889,
+      "y": 947
+    },
+    "rect": [
+      259,
+      494,
+      317,
+      529
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "qwen_q5",
+    "normalized": false,
+    "id": 4,
+    "pixel_point": {
+      "x": 42,
+      "y": 81
+    },
+    "rect": [
+      8,
+      45,
+      68,
+      72
+    ],
+    "hit_original": false,
+    "hit_corrected": false
+  },
+  {
+    "model": "qwen_q5",
+    "normalized": false,
+    "id": 5,
+    "pixel_point": {
+      "x": 314,
+      "y": 40
+    },
+    "rect": [
+      293,
+      10,
+      326,
+      42
+    ],
+    "hit_original": true,
+    "hit_corrected": true
+  },
+  {
+    "model": "qwen_q5",
+    "normalized": true,
+    "id": 1,
+    "pixel_point": {
+      "x": 95.312,
+      "y": 394.092
+    },
+    "rect": [
+      69,
+      379,
+      127,
+      415
+    ],
+    "hit_original": false,
+    "hit_corrected": true
+  },
+  {
+    "model": "qwen_q5",
+    "normalized": true,
+    "id": 2,
+    "pixel_point": {
+      "x": 287.868,
+      "y": 467.784
+    },
+    "rect": [
+      259,
+      456,
+      317,
+      491
+    ],
+    "hit_original": true,
+    "hit_corrected": true
+  },
+  {
+    "model": "qwen_q5",
+    "normalized": true,
+    "id": 3,
+    "pixel_point": {
+      "x": 286.58,
+      "y": 505.698
+    },
+    "rect": [
+      259,
+      494,
+      317,
+      529
+    ],
+    "hit_original": true,
+    "hit_corrected": true
+  },
+  {
+    "model": "qwen_q5",
+    "normalized": true,
+    "id": 4,
+    "pixel_point": {
+      "x": 37.468,
+      "y": 60.588
+    },
+    "rect": [
+      8,
+      45,
+      68,
+      72
+    ],
+    "hit_original": true,
+    "hit_corrected": true
+  },
+  {
+    "model": "qwen_q5",
+    "normalized": true,
+    "id": 5,
+    "pixel_point": {
+      "x": 312.562,
+      "y": 29.92
+    },
+    "rect": [
+      293,
+      10,
+      326,
+      42
+    ],
+    "hit_original": true,
+    "hit_corrected": true
+  }
+]
