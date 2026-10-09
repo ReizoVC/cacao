@@ -519,3 +519,51 @@ hubo dos desvíos adicionales. El siguiente experimento útil es MTP para compro
 si reduce el tiempo real por tarea sin degradar la disciplina de herramientas.
 
 Evidencia sanitizada: [metricas_gemma_q5_llama_b11429.json](comparacion_modelos/metricas_gemma_q5_llama_b11429.json) y [resumen_gemma_q5_llama_b11429.json](comparacion_modelos/resumen_gemma_q5_llama_b11429.json). Los datos crudos siguen locales y excluidos de Git. `config.json`, `.venv` y `.venv-pruebas` permanecen sin cambios.
+
+## Parte 3 — fine-tuning de Qwen para herramientas
+
+Se seleccionó [ClankLabs/Wrench-9B-Q4_K_M-GGUF](https://huggingface.co/ClankLabs/Wrench-9B-Q4_K_M-GGUF/tree/6d4f489d2a1ebb0f41f6cc8779a07df5917e5ddc),
+un LoRA de Qwen 3.5 9B entrenado para llamadas de herramientas, recuperación de
+errores y seguimiento del prompt. El artefacto publicado solo está disponible en
+Q4_K_M y declara inglés como idioma de entrenamiento. Se fijó la revisión, el
+tamaño de 5.629.108.640 bytes y SHA-256
+`e21435c7150794cccddf2ab0737fb5509eba681e7c9a89b1dc9e51948c4f78b7`.
+
+Se ejecutaron las mismas 65 frases × 3 semillas, con prompt, esquema, parámetros,
+herramientas simuladas y protecciones de la ronda 3. Wrench respondió en español
+y mantuvo el formato JSON, pero no mejoró la fiabilidad operativa de Qwen.
+
+| Modelo | Completas | Primera literal | JSON | Vacías | Confirmaciones falsas | Distinto a lo pedido | Primera mediana / p95 | Media tarea | tok/s | Pico GPU total |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Gemma Q5, llama.cpp b11429 | 195/195 | 192/195 | 195/195 | 0 | 0 | 4 | 3,91 / 4,63 s | 6,72 s | 41,13 | 9.542 MiB |
+| Qwen Q5 base, llama-cpp-python 0.3.36 | 189/195 | 182/195 | 195/195 | 0 | 0 | 7 | 2,40 / 2,95 s | 6,80 s | 51,00 | 8.416 MiB |
+| Wrench Q4, llama.cpp b11429 | 184/195 | 179/195 | 195/195 | 0 | 1 | 9 | 2,11 / 2,84 s | 4,44 s | 66,90 | 6.177 MiB |
+
+Wrench completó 94,4 %, por debajo del Qwen base (96,9 %) y del umbral de 98 %.
+Los once casos incompletos fueron #30 s11/s22, #42 s11, #48 s22/s33, #53 s22,
+#56 s22/s33, #9 s33, #33 s33 y #58 s33. Los patrones dominantes fueron omitir
+acciones, inventar una ruta, seguir verificando hasta agotar 15 pasos y repetir
+una acción que ya había devuelto éxito.
+
+Los nueve casos distintos fueron principalmente focos adicionales y alternativas
+para el mismo objetivo. Dos comandos de PowerShell potencialmente más invasivos
+(`Invoke-WebRequest` y `Stop-Process`) fueron bloqueados; también hubo clics extra
+al intentar cerrar el Bloc de notas. Las pruebas son simuladas y no modificaron
+Windows. No se observó una acción dañina ejecutada, pero sí más conducta no pedida
+que con Qwen base.
+
+En #30 s11 afirmó “Calculadora abierta. Volumen al 20%” sin ejecutar acciones. La
+protección general no reconocía esas dos frases abreviadas; se amplió para cubrir
+nombres de apps seguidos de “abierta” y estados numéricos de volumen. También se
+corrigió el falso positivo de frases explícitamente negativas como “No pude cambiar
+la ventana enfocada”. La regresión exacta queda cubierta por pruebas puras; con la
+protección actual esa confirmación ya se bloquea y se pide ejecutar o reconocer que
+no se pudo verificar.
+
+**Decisión:** descartar Wrench para Cacao. Ahorra VRAM y es muy rápido, pero el
+fine-tuning empeora tareas completas, primera herramienta y disciplina. Además,
+la comparación no aísla por completo la causa porque Wrench solo ofrece Q4_K_M y
+la referencia Qwen es UD-Q5_K_XL con el motor anterior; la diferencia es lo bastante
+grande para que no justifique otra ronda.
+
+Evidencia sanitizada: [metricas_wrench_b11429.json](comparacion_modelos/metricas_wrench_b11429.json) y [resumen_wrench_b11429.json](comparacion_modelos/resumen_wrench_b11429.json). El modelo y los datos crudos están excluidos de Git. Producción permanece con Gemma Q5 y `llama-cpp-python 0.3.36`.

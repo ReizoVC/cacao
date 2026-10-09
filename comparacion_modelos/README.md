@@ -173,3 +173,20 @@ y borra el slot antes de la siguiente. Por eso el servidor debe iniciarse con
 `resumen_gemma_q5_llama_b11429.json`. El resumen también comprueba que las
 huellas del prompt y del esquema coincidan con la referencia de
 llama-cpp-python 0.3.36.
+
+## Fine-tuning Wrench 9B
+
+Wrench es un LoRA de Qwen 3.5 9B orientado a herramientas. Su GGUF Q4_K_M
+queda aislado en `modelos/comparacion` y se obtiene desde una revisión fija:
+
+```powershell
+.\comparacion_modelos\descargar_wrench.ps1
+.\comparacion_modelos\probar_wrench.ps1
+.\.venv-pruebas\Scripts\python.exe -B comparacion_modelos\resumir_wrench_b11429.py
+```
+
+`probar_wrench.ps1` conserva el servidor dentro de una sola operación: ejecuta
+una prueba corta, continúa con las 195 tareas solo si pasa y siempre detiene el
+motor al terminar. Los datos crudos quedan en
+`datos/wrench_b11429/ronda3`; las salidas sanitizadas son
+`metricas_wrench_b11429.json` y `resumen_wrench_b11429.json`.

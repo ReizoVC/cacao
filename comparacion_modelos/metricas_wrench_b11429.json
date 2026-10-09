@@ -1,0 +1,4774 @@
+[
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 1,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 0.6777032999998482,
+  "wall_s": 1.7160981999998057,
+  "tokens": 93
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 2,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.361011200000121,
+  "wall_s": 3.3067126000000826,
+  "tokens": 108
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 3,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.4782930999999735,
+  "wall_s": 3.4287374000000455,
+  "tokens": 116
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 4,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9706779999999071,
+  "wall_s": 2.735486999999921,
+  "tokens": 68
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 5,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.421875,
+  "wall_s": 3.4567348999999012,
+  "tokens": 117
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 6,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9360907000000225,
+  "wall_s": 2.9647571999998945,
+  "tokens": 84
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 7,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.4642685000001165,
+  "wall_s": 3.3795623000000887,
+  "tokens": 112
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 8,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9779151000000184,
+  "wall_s": 2.8285278000000744,
+  "tokens": 75
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 9,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.0242840999999316,
+  "wall_s": 2.850646500000039,
+  "tokens": 77
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 10,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9970327000000907,
+  "wall_s": 5.450272900000073,
+  "tokens": 210
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 11,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.036347199999909,
+  "wall_s": 2.8705932000000303,
+  "tokens": 78
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 12,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [
+    "enfocar_ventana:{\"id_ventana\": 3}"
+   ],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9879339999999956,
+  "wall_s": 3.884848199999851,
+  "tokens": 138
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 13,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.979442199999994,
+  "wall_s": 2.884374500000149,
+  "tokens": 80
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 14,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "ver_pantalla",
+   "listar_apps",
+   "ver_pantalla",
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.371106900000086,
+  "wall_s": 8.989623500000107,
+  "tokens": 398
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 15,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.0377330999999685,
+  "wall_s": 2.8713870999999926,
+  "tokens": 78
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 16,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.171844299999975,
+  "wall_s": 3.6802394999999706,
+  "tokens": 121
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 17,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "listar_ventanas",
+   "ver_pantalla",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9336839000000055,
+  "wall_s": 6.186409700000013,
+  "tokens": 262
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 18,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.110334299999977,
+  "wall_s": 3.528035799999998,
+  "tokens": 119
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 19,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.980285300000105,
+  "wall_s": 3.2668264000001273,
+  "tokens": 101
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 20,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.005882500000098,
+  "wall_s": 3.50568300000009,
+  "tokens": 106
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 21,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9724610999999186,
+  "wall_s": 3.319299499999943,
+  "tokens": 104
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 22,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9364473999999063,
+  "wall_s": 3.4724065999998857,
+  "tokens": 106
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 23,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9641574999998284,
+  "wall_s": 3.1715813999999227,
+  "tokens": 95
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 24,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9516945999998825,
+  "wall_s": 3.2299874000000273,
+  "tokens": 99
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 25,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.904909699999962,
+  "wall_s": 3.348309900000004,
+  "tokens": 105
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 26,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9791023000000223,
+  "wall_s": 3.9257693000001836,
+  "tokens": 140
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 27,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9938027000000602,
+  "wall_s": 3.9013087999999243,
+  "tokens": 120
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 28,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.020596800000021,
+  "wall_s": 3.044663700000001,
+  "tokens": 86
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 29,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.08283530000017,
+  "wall_s": 3.6653383000000304,
+  "tokens": 123
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 30,
+  "seed": 11,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.286031299999877,
+  "wall_s": 2.2901869999998326,
+  "tokens": 48
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 31,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "listar_controles",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "enfocar_ventana",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.0531846999999743,
+  "wall_s": 6.549864899999875,
+  "tokens": 277
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 32,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.0392269999999826,
+  "wall_s": 4.029119999999921,
+  "tokens": 143
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 33,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "listar_ventanas",
+   "abrir_app",
+   "listar_ventanas",
+   "abrir_app",
+   "ver_pantalla",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.004556999999977,
+  "wall_s": 8.65623340000002,
+  "tokens": 389
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 34,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.1273025999998936,
+  "wall_s": 3.7451448999997865,
+  "tokens": 128
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 35,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.475492900000063,
+  "wall_s": 2.4797095999999783,
+  "tokens": 63
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 36,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.918273999999883,
+  "wall_s": 2.922462199999927,
+  "tokens": 92
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 37,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.716827700000067,
+  "wall_s": 2.7210645000000113,
+  "tokens": 78
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 38,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.837006800000154,
+  "wall_s": 2.841219899999942,
+  "tokens": 86
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 39,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.198815100000047,
+  "wall_s": 3.2030758000000787,
+  "tokens": 108
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 40,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.2508935000000747,
+  "wall_s": 2.2551593000000594,
+  "tokens": 46
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 41,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "finalizar",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 1
+  },
+  "first_action_s": 2.010430000000042,
+  "wall_s": 5.7593091999999615,
+  "tokens": 230
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 42,
+  "seed": 11,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "ver_pantalla",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.12711790000003,
+  "wall_s": 2.9021832999999333,
+  "tokens": 80
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 43,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "ver_pantalla",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9497615000000224,
+  "wall_s": 4.56337950000011,
+  "tokens": 166
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 44,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "enfocar_ventana",
+   "listar_ventanas",
+   "finalizar",
+   "listar_controles",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [
+    "enfocar_ventana:{\"id_ventana\": 12345}"
+   ],
+   "correcciones": 2
+  },
+  "first_action_s": 2.1573691999999483,
+  "wall_s": 5.935139700000036,
+  "tokens": 251
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 45,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9194706999999198,
+  "wall_s": 3.057575299999826,
+  "tokens": 87
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 46,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.022989800000005,
+  "wall_s": 3.43888179999999,
+  "tokens": 115
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 47,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.0995276999999533,
+  "wall_s": 3.087473399999908,
+  "tokens": 92
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 48,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "leer_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.189093899999989,
+  "wall_s": 3.4045188000000053,
+  "tokens": 113
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 49,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "buscar_web",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.0398362999999335,
+  "wall_s": 3.5812843999999586,
+  "tokens": 126
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 50,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.100959299999886,
+  "wall_s": 3.1052589999999327,
+  "tokens": 101
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 51,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "listar_ventanas",
+   "ver_pantalla",
+   "cerrar_app",
+   "listar_ventanas",
+   "cerrar_app",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.089604200000167,
+  "wall_s": 11.472113400000126,
+  "tokens": 531
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 52,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "listar_ventanas",
+   "ver_pantalla",
+   "mouse",
+   "mouse",
+   "listar_controles",
+   "mouse",
+   "listar_ventanas",
+   "cerrar_app",
+   "listar_ventanas",
+   "mouse"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar",
+    "mouse"
+   ],
+   "fallos": [
+    "mouse:{\"accion\": \"clic_derecho\", \"id_ventana\": 9002}",
+    "mouse:{\"accion\": \"clic_doble\", \"id_ventana\": 9002, \"x\": 160, \"y\": 10}"
+   ],
+   "correcciones": 0
+  },
+  "first_action_s": 2.0681656000001567,
+  "wall_s": 15.81913469999995,
+  "tokens": 759
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 53,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "mover_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "mover_archivo"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.229075899999998,
+  "wall_s": 3.145826599999964,
+  "tokens": 97
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 54,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "mover_archivo",
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "mover_archivo"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3307812000000467,
+  "wall_s": 4.985470100000157,
+  "tokens": 204
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 55,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "listar_carpeta",
+   "listar_carpeta",
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3136531999998624,
+  "wall_s": 6.524689599999874,
+  "tokens": 292
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 56,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "ver_pantalla",
+   "listar_controles",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "listar_controles",
+   "mouse",
+   "listar_ventanas",
+   "mouse",
+   "teclado",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana",
+    "mouse",
+    "teclado"
+   ],
+   "fallos": [
+    "listar_controles:{\"id_ventana\": 12345}"
+   ],
+   "correcciones": 0
+  },
+  "first_action_s": 2.4258648999998513,
+  "wall_s": 12.672891899999968,
+  "tokens": 610
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 57,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "mouse",
+   "ver_pantalla",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.114013600000135,
+  "wall_s": 4.105089600000156,
+  "tokens": 151
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 58,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "listar_controles",
+   "mouse",
+   "teclado",
+   "listar_controles",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana",
+    "mouse",
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.156615899999906,
+  "wall_s": 8.547953900000039,
+  "tokens": 387
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 59,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "teclado",
+   "listar_controles",
+   "ver_pantalla",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.111442699999998,
+  "wall_s": 5.52970890000006,
+  "tokens": 235
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 60,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "teclado",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.0377320000000054,
+  "wall_s": 3.8348808999999164,
+  "tokens": 127
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 61,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "consultar_memoria",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.0815333999998984,
+  "wall_s": 3.181216799999902,
+  "tokens": 97
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 62,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3580936999999267,
+  "wall_s": 3.3047170999998343,
+  "tokens": 108
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 63,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.0801298000001225,
+  "wall_s": 2.9418434000001525,
+  "tokens": 83
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 64,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.125903499999822,
+  "wall_s": 4.321589599999925,
+  "tokens": 167
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 65,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "registro_habitos",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "registro_habitos"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9926633999998558,
+  "wall_s": 2.8299063999997998,
+  "tokens": 76
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 1,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.0085873000000447,
+  "wall_s": 3.1290369000000737,
+  "tokens": 95
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 2,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3346412000000782,
+  "wall_s": 3.3387380000001485,
+  "tokens": 110
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 3,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.184217600000011,
+  "wall_s": 3.288413799999944,
+  "tokens": 106
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 4,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.2671225999999933,
+  "wall_s": 3.025385500000084,
+  "tokens": 89
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 5,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.495060100000046,
+  "wall_s": 3.5457214000000477,
+  "tokens": 124
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 6,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.4167999999999665,
+  "wall_s": 3.5101280999999744,
+  "tokens": 121
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 7,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6825977999999395,
+  "wall_s": 3.72352920000003,
+  "tokens": 132
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 8,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.303861999999981,
+  "wall_s": 3.1477881000000707,
+  "tokens": 97
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 9,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "enfocar_ventana",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "ver_pantalla",
+   "enfocar_ventana",
+   "listar_controles",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "enfocar_ventana"
+   ],
+   "fallos": [
+    "enfocar_ventana:{\"id_ventana\": 12345}"
+   ],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9359649000000445,
+  "wall_s": 8.068608999999924,
+  "tokens": 364
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 10,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.2602832000000035,
+  "wall_s": 6.30740250000008,
+  "tokens": 265
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 11,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "enfocar_ventana",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "enfocar_ventana"
+   ],
+   "fallos": [
+    "enfocar_ventana:{\"id_ventana\": 3}"
+   ],
+   "correcciones": 0
+  },
+  "first_action_s": 1.920246700000007,
+  "wall_s": 5.857335899999953,
+  "tokens": 230
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 12,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9067113999999492,
+  "wall_s": 2.6686222999999245,
+  "tokens": 65
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 13,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9793371000000661,
+  "wall_s": 2.937613699999929,
+  "tokens": 83
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 14,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.2063834999999017,
+  "wall_s": 3.2038001999999324,
+  "tokens": 98
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 15,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.4033957999999984,
+  "wall_s": 3.3494298000000526,
+  "tokens": 107
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 16,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.2221861000000445,
+  "wall_s": 3.4224603000000116,
+  "tokens": 110
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 17,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "listar_ventanas",
+   "abrir_app",
+   "listar_ventanas",
+   "abrir_app",
+   "ver_pantalla",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9983793999999762,
+  "wall_s": 9.559689899999967,
+  "tokens": 443
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 18,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.142857000000049,
+  "wall_s": 3.9055691999999453,
+  "tokens": 134
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 19,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "consultar_memoria",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.1135411000000204,
+  "wall_s": 3.1773724999998194,
+  "tokens": 100
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 20,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.011677899999995,
+  "wall_s": 4.312567899999976,
+  "tokens": 161
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 21,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9643120000000636,
+  "wall_s": 3.295486799999935,
+  "tokens": 103
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 22,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9361659999999574,
+  "wall_s": 3.338858000000073,
+  "tokens": 97
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 23,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9634393000001182,
+  "wall_s": 3.1001396000001478,
+  "tokens": 90
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 24,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.973910700000033,
+  "wall_s": 3.477901999999858,
+  "tokens": 114
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 25,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9915002000000186,
+  "wall_s": 4.235149500000034,
+  "tokens": 153
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 26,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9667154999999639,
+  "wall_s": 3.969394699999839,
+  "tokens": 142
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 27,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9572991000000002,
+  "wall_s": 3.9893111999999746,
+  "tokens": 126
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 28,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9341094999999768,
+  "wall_s": 2.9726018000001204,
+  "tokens": 82
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 29,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "listar_apps",
+   "abrir_app",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3038077999999587,
+  "wall_s": 5.175062000000025,
+  "tokens": 200
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 30,
+  "seed": 22,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "finalizar",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 2
+  },
+  "first_action_s": 2.4224841000000197,
+  "wall_s": 3.4731561000000966,
+  "tokens": 118
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 31,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.1058889000000818,
+  "wall_s": 4.584423100000095,
+  "tokens": 164
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 32,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.0846950000000106,
+  "wall_s": 4.279459300000099,
+  "tokens": 156
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 33,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.011696400000119,
+  "wall_s": 3.527977200000123,
+  "tokens": 112
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 34,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.1269671000000017,
+  "wall_s": 4.607908699999825,
+  "tokens": 172
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 35,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.525213800000074,
+  "wall_s": 2.5295344000001023,
+  "tokens": 64
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 36,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.817758099999992,
+  "wall_s": 2.8219621000000643,
+  "tokens": 85
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 37,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.4618070999999873,
+  "wall_s": 2.465999899999815,
+  "tokens": 63
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 38,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.7615597999999864,
+  "wall_s": 2.7658314000000246,
+  "tokens": 81
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 39,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.2267389000001003,
+  "wall_s": 3.2309907000001203,
+  "tokens": 115
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 40,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.159675800000059,
+  "wall_s": 2.1642572000000655,
+  "tokens": 40
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 41,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "finalizar",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 2
+  },
+  "first_action_s": 1.9222778000000744,
+  "wall_s": 5.026788800000077,
+  "tokens": 189
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 42,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "ver_pantalla",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.1296061000000464,
+  "wall_s": 4.127003000000059,
+  "tokens": 147
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 43,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9965366000001268,
+  "wall_s": 4.622402299999976,
+  "tokens": 164
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 44,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "enfocar_ventana",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana"
+   ],
+   "fallos": [
+    "enfocar_ventana:{\"id_ventana\": 2}"
+   ],
+   "correcciones": 0
+  },
+  "first_action_s": 2.097939700000097,
+  "wall_s": 4.561654800000042,
+  "tokens": 168
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 45,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.068049199999905,
+  "wall_s": 3.413469899999882,
+  "tokens": 111
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 46,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.153965900000003,
+  "wall_s": 3.7815149999998994,
+  "tokens": 132
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 47,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.1589974000000893,
+  "wall_s": 3.5194920000001275,
+  "tokens": 111
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 48,
+  "seed": 22,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "leer_archivo"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.1932129000001623,
+  "wall_s": 2.2025325000001885,
+  "tokens": 41
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 49,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "buscar_web",
+   "ver_pantalla",
+   "ver_pantalla",
+   "ver_pantalla",
+   "ejecutar_powershell"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.1413153000000875,
+  "wall_s": 7.139149000000089,
+  "tokens": 335
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 50,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.2342983999999433,
+  "wall_s": 3.2384861999998975,
+  "tokens": 107
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 51,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "listar_ventanas",
+   "cerrar_app",
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3346445999998195,
+  "wall_s": 8.725666799999999,
+  "tokens": 395
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 52,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "cerrar_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.2208396999999422,
+  "wall_s": 3.2631984999998167,
+  "tokens": 103
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 53,
+  "seed": 22,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "mover_archivo",
+   "listar_carpeta",
+   "listar_carpeta",
+   "mover_archivo",
+   "listar_carpeta",
+   "mover_archivo",
+   "listar_carpeta",
+   "mover_archivo",
+   "listar_carpeta",
+   "mover_archivo",
+   "listar_carpeta",
+   "mover_archivo",
+   "mover_archivo",
+   "mover_archivo",
+   "mover_archivo"
+  ],
+  "protection": {
+   "verificadas": [
+    "mover_archivo"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.2329500000000735,
+  "wall_s": 16.11994360000017,
+  "tokens": 836
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 54,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "mover_archivo",
+   "listar_carpeta",
+   "listar_carpeta",
+   "mover_archivo",
+   "listar_carpeta",
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "mover_archivo"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3583178000001226,
+  "wall_s": 8.849585100000013,
+  "tokens": 417
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 55,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.1125564999999824,
+  "wall_s": 3.1166871000000356,
+  "tokens": 99
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 56,
+  "seed": 22,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "ver_pantalla",
+   "listar_controles",
+   "listar_ventanas",
+   "listar_controles",
+   "mouse",
+   "listar_ventanas",
+   "mouse",
+   "listar_controles",
+   "mouse",
+   "cerrar_app",
+   "listar_ventanas",
+   "cerrar_app",
+   "listar_ventanas",
+   "cerrar_app",
+   "listar_ventanas"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar",
+    "mouse"
+   ],
+   "fallos": [
+    "listar_controles:{\"id_ventana\": 3}"
+   ],
+   "correcciones": 0
+  },
+  "first_action_s": 2.72068830000012,
+  "wall_s": 16.493036100000154,
+  "tokens": 817
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 57,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "mouse",
+   "ver_pantalla",
+   "listar_controles",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [
+    "listar_controles:{\"id_ventana\": 12345}"
+   ],
+   "correcciones": 0
+  },
+  "first_action_s": 2.1132775999999467,
+  "wall_s": 5.777017399999977,
+  "tokens": 238
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 58,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "listar_controles",
+   "teclado",
+   "ver_pantalla",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana",
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.1859144000000015,
+  "wall_s": 7.6975892999998905,
+  "tokens": 333
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 59,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "teclado",
+   "listar_controles",
+   "ver_pantalla",
+   "teclado",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3167496999999457,
+  "wall_s": 7.319746599999917,
+  "tokens": 331
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 60,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "listar_ventanas",
+   "teclado",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.2487398000000667,
+  "wall_s": 4.591909500000156,
+  "tokens": 173
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 61,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "consultar_memoria",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.0756678000000193,
+  "wall_s": 3.135464799999909,
+  "tokens": 92
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 62,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3767921999999544,
+  "wall_s": 3.3496086999998624,
+  "tokens": 110
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 63,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9649332999999842,
+  "wall_s": 2.7917124000000513,
+  "tokens": 73
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 64,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.125575499999968,
+  "wall_s": 3.2723358000000644,
+  "tokens": 104
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 65,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "registro_habitos",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "registro_habitos"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.088561600000048,
+  "wall_s": 3.0843821000000844,
+  "tokens": 87
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 1,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.1851976000000377,
+  "wall_s": 3.221184199999925,
+  "tokens": 100
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 2,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.257366900000079,
+  "wall_s": 3.2907794999998714,
+  "tokens": 106
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 3,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.2006185000000187,
+  "wall_s": 3.1834762999999384,
+  "tokens": 98
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 4,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.320232299999816,
+  "wall_s": 3.182701199999883,
+  "tokens": 99
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 5,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3014513999999053,
+  "wall_s": 3.146638800000119,
+  "tokens": 97
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 6,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.936262200000101,
+  "wall_s": 2.8552609000000757,
+  "tokens": 78
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 7,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5113214999998945,
+  "wall_s": 3.4791093999999703,
+  "tokens": 118
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 8,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.2861231999997926,
+  "wall_s": 3.119887399999925,
+  "tokens": 96
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 9,
+  "seed": 33,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "enfocar_ventana",
+   "abrir_app",
+   "ver_pantalla",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "ver_pantalla",
+   "listar_controles",
+   "listar_ventanas",
+   "ver_pantalla",
+   "listar_controles",
+   "listar_ventanas",
+   "ver_pantalla",
+   "listar_controles",
+   "listar_ventanas"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "enfocar_ventana"
+   ],
+   "fallos": [
+    "enfocar_ventana:{\"id_ventana\": 12345}"
+   ],
+   "correcciones": 0
+  },
+  "first_action_s": 1.936106799999834,
+  "wall_s": 15.94172720000006,
+  "tokens": 792
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 10,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.261366999999609,
+  "wall_s": 4.040185799999563,
+  "tokens": 147
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 11,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [
+    "enfocar_ventana:{\"id_ventana\": 1}"
+   ],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9159312000001592,
+  "wall_s": 3.5167802999999367,
+  "tokens": 112
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 12,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9206367000001592,
+  "wall_s": 2.6826899000002413,
+  "tokens": 66
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 13,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9802549999999428,
+  "wall_s": 2.9620786999998927,
+  "tokens": 84
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 14,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.2275439000000006,
+  "wall_s": 3.8143984999996974,
+  "tokens": 142
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 15,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3695010000001275,
+  "wall_s": 3.2112201999998433,
+  "tokens": 101
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 16,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "ver_pantalla",
+   "enfocar_ventana",
+   "listar_controles",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.891385999999784,
+  "wall_s": 6.853162800000064,
+  "tokens": 292
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 17,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9953494000001228,
+  "wall_s": 3.6057937000000493,
+  "tokens": 118
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 18,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "consultar_memoria",
+   "listar_apps",
+   "listar_ventanas",
+   "abrir_app",
+   "listar_ventanas",
+   "abrir_app",
+   "listar_ventanas",
+   "abrir_app",
+   "listar_ventanas",
+   "abrir_app",
+   "listar_ventanas",
+   "ejecutar_powershell"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.964515399999982,
+  "wall_s": 11.022646999999779,
+  "tokens": 471
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 19,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "consultar_memoria",
+   "listar_apps",
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.1577244999998584,
+  "wall_s": 5.777857500000209,
+  "tokens": 223
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 20,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9793907999996918,
+  "wall_s": 3.723134299999856,
+  "tokens": 123
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 21,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9643467999999302,
+  "wall_s": 3.314949599999636,
+  "tokens": 104
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 22,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9365742999998474,
+  "wall_s": 3.4707252999996854,
+  "tokens": 105
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 23,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9654798000001392,
+  "wall_s": 3.141649200000302,
+  "tokens": 93
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 24,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.012454700000035,
+  "wall_s": 3.3506084999999075,
+  "tokens": 110
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 25,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9097610999997414,
+  "wall_s": 3.009736200000134,
+  "tokens": 81
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 26,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9801609000001008,
+  "wall_s": 4.0050154999998995,
+  "tokens": 149
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 27,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9509094000000005,
+  "wall_s": 4.0167374999996355,
+  "tokens": 128
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 28,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.011199199999737,
+  "wall_s": 3.052953200000047,
+  "tokens": 87
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 29,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.4333707000000686,
+  "wall_s": 4.80285240000012,
+  "tokens": 188
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 30,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.127638400000251,
+  "wall_s": 3.785731400000259,
+  "tokens": 130
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 31,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "listar_controles",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "enfocar_ventana",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.0742715999999746,
+  "wall_s": 6.499443299999712,
+  "tokens": 270
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 32,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.042388900000333,
+  "wall_s": 4.048391100000117,
+  "tokens": 144
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 33,
+  "seed": 33,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "listar_ventanas",
+   "ver_pantalla",
+   "abrir_app",
+   "listar_ventanas",
+   "ver_pantalla",
+   "abrir_app",
+   "listar_ventanas",
+   "ver_pantalla",
+   "abrir_app",
+   "listar_ventanas",
+   "abrir_app",
+   "listar_ventanas",
+   "abrir_app"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.962767999999869,
+  "wall_s": 14.182632099999864,
+  "tokens": 664
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 34,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.1139702999998917,
+  "wall_s": 3.7510542999998506,
+  "tokens": 124
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 35,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5706417999999758,
+  "wall_s": 2.5748194000002513,
+  "tokens": 67
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 36,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.9064331999998103,
+  "wall_s": 2.9107426999999007,
+  "tokens": 91
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 37,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.7005188000002818,
+  "wall_s": 2.7046870000003764,
+  "tokens": 79
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 38,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5394634999997834,
+  "wall_s": 2.5437745999997787,
+  "tokens": 66
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 39,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar",
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 1
+  },
+  "first_action_s": 3.2115438000000722,
+  "wall_s": 5.283090999999786,
+  "tokens": 226
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 40,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.247408600000199,
+  "wall_s": 2.251585100000284,
+  "tokens": 46
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 41,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "finalizar",
+   "ver_pantalla",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 2
+  },
+  "first_action_s": 2.025090999999975,
+  "wall_s": 5.83092280000028,
+  "tokens": 242
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 42,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.942037999999684,
+  "wall_s": 3.1536659999997028,
+  "tokens": 91
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 43,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "finalizar",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 1
+  },
+  "first_action_s": 2.451454399999875,
+  "wall_s": 6.359885800000029,
+  "tokens": 272
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 44,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "enfocar_ventana",
+   "listar_ventanas",
+   "finalizar",
+   "listar_controles",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [
+    "enfocar_ventana:{\"id_ventana\": 2}"
+   ],
+   "correcciones": 2
+  },
+  "first_action_s": 2.1517993000002207,
+  "wall_s": 6.362204099999872,
+  "tokens": 274
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 45,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.06782370000019,
+  "wall_s": 3.365980000000036,
+  "tokens": 107
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 46,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9501779000001989,
+  "wall_s": 3.048846500000309,
+  "tokens": 88
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 47,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.14294689999997,
+  "wall_s": 3.2050242999998773,
+  "tokens": 97
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 48,
+  "seed": 33,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "leer_archivo"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.1939941000000545,
+  "wall_s": 2.2028838000001087,
+  "tokens": 41
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 49,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "buscar_web",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.1437015999999858,
+  "wall_s": 3.552722999999787,
+  "tokens": 124
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 50,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.2333192999999483,
+  "wall_s": 3.2375449000001026,
+  "tokens": 105
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 51,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.1656416999999237,
+  "wall_s": 4.049154599999838,
+  "tokens": 141
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 52,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "listar_ventanas",
+   "cerrar_app",
+   "listar_ventanas",
+   "ejecutar_powershell"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.0848022999998648,
+  "wall_s": 7.443042999999761,
+  "tokens": 327
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 53,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "mover_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "mover_archivo"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.2331451999998535,
+  "wall_s": 3.130598700000064,
+  "tokens": 95
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 54,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "mover_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "mover_archivo"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3470299000000523,
+  "wall_s": 3.3578443000001243,
+  "tokens": 111
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 55,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.251371199999994,
+  "wall_s": 3.2555233999996744,
+  "tokens": 100
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 56,
+  "seed": 33,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "ver_pantalla",
+   "listar_controles",
+   "listar_ventanas",
+   "cerrar_app",
+   "listar_ventanas",
+   "cerrar_app",
+   "listar_ventanas",
+   "ver_pantalla",
+   "cerrar_app",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar"
+   ],
+   "fallos": [
+    "listar_controles:{\"id_ventana\": 42}"
+   ],
+   "correcciones": 0
+  },
+  "first_action_s": 2.227782500000103,
+  "wall_s": 12.505021999999826,
+  "tokens": 581
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 57,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "mouse",
+   "ver_pantalla",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.1567685999998503,
+  "wall_s": 3.9738210999998955,
+  "tokens": 142
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 58,
+  "seed": 33,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "abrir_app",
+   "teclado",
+   "ver_pantalla",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "listar_controles",
+   "teclado",
+   "ver_pantalla",
+   "listar_ventanas",
+   "listar_controles",
+   "teclado",
+   "ver_pantalla",
+   "listar_ventanas",
+   "listar_controles",
+   "teclado"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "enfocar_ventana",
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.026345400000082,
+  "wall_s": 14.695467699999881,
+  "tokens": 702
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 59,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "teclado",
+   "listar_ventanas",
+   "ver_pantalla",
+   "listar_controles",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.113912700000128,
+  "wall_s": 7.30999890000021,
+  "tokens": 335
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 60,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "teclado",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.0474755999998706,
+  "wall_s": 3.7791362000002664,
+  "tokens": 120
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 61,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "consultar_memoria",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.070818899999722,
+  "wall_s": 3.1224591000000146,
+  "tokens": 94
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 62,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.4162516000001233,
+  "wall_s": 3.384399200000189,
+  "tokens": 110
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 63,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9637925000001815,
+  "wall_s": 2.802225299999918,
+  "tokens": 73
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 64,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.131735800000115,
+  "wall_s": 4.124259799999891,
+  "tokens": 151
+ },
+ {
+  "model": "qwen_wrench_q4",
+  "engine": "llama.cpp b11429",
+  "id": 65,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "registro_habitos",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "registro_habitos"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.9977380999998786,
+  "wall_s": 2.856386399999792,
+  "tokens": 78
+ }
+]

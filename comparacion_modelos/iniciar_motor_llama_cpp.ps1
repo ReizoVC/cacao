@@ -1,5 +1,5 @@
 param(
-    [ValidateSet("gemma_q4", "gemma_q5", "qwen_q5")]
+    [ValidateSet("gemma_q4", "gemma_q5", "qwen_q5", "qwen_wrench_q4")]
     [string]$Modelo = "gemma_q4",
     [switch]$Vision,
     [int]$Puerto = 18081
@@ -14,14 +14,22 @@ $modelos = @{
     gemma_q4 = Join-Path $raiz "modelos\comparacion\gemma-4-12b-it-UD-Q4_K_XL.gguf"
     gemma_q5 = Join-Path $raiz "modelos\gemma-4-12b-it-Q5_K_M.gguf"
     qwen_q5 = Join-Path $raiz "modelos\comparacion\Qwen3.5-9B-UD-Q5_K_XL.gguf"
+    qwen_wrench_q4 = Join-Path $raiz "modelos\comparacion\Wrench-9B-Q4_K_M.gguf"
 }
 $rutaModelo = $modelos[$Modelo]
 if (-not (Test-Path -LiteralPath $exe)) { throw "Falta el motor de pruebas: ejecuta actualizar_motor_llama_cpp.ps1." }
 if (-not (Test-Path -LiteralPath $rutaModelo)) { throw "Falta el modelo $Modelo." }
 
 # Respeta las mismas guardias de las rondas anteriores: no compite con Cacao ni con un juego.
-$cacao = Get-CimInstance Win32_Process | Where-Object {
-    $_.Name -in @("python.exe", "pythonw.exe") -and $_.CommandLine -match '\bvoz\.py\b'
+$cacao = @()
+try {
+    $cacao = Get-CimInstance Win32_Process -ErrorAction Stop | Where-Object {
+        $_.Name -in @("python.exe", "pythonw.exe") -and $_.CommandLine -match '\bvoz\.py\b'
+    }
+} catch {
+    # Algunas sesiones remotas no permiten consultar CIM. Sin la línea de
+    # comandos, cualquier Python activo se trata como posible Cacao.
+    $cacao = Get-Process python, pythonw -ErrorAction SilentlyContinue
 }
 if ($cacao) { throw "Cacao sigue abierto; ciérralo antes de cargar el motor de pruebas." }
 if (Test-Path -LiteralPath $pythonPruebas) {
@@ -29,7 +37,8 @@ if (Test-Path -LiteralPath $pythonPruebas) {
     if ($LASTEXITCODE -ne 0) { throw "La guardia de juegos no permitió iniciar la prueba." }
 }
 $gpuLibre = [int]((nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits).Trim())
-if ($gpuLibre -lt 12000) { throw "La GPU tiene solo $gpuLibre MiB libres; no se carga el modelo." }
+$minimoLibre = if ($Modelo -eq "qwen_wrench_q4") { 8500 } else { 12000 }
+if ($gpuLibre -lt $minimoLibre) { throw "La GPU tiene solo $gpuLibre MiB libres; no se carga el modelo." }
 
 $pidFile = Join-Path $runtime "server.pid"
 if (Test-Path -LiteralPath $pidFile) {

@@ -10,10 +10,11 @@ _KEY = r"(?:[a-z0-9]|f(?:1[0-2]|[1-9])|enter|intro|tab|esc|escape|supr|delete|ba
 _SHORTCUT = re.compile(rf"^\s*{_MOD}(?:\s*\+\s*|\s+)(?:{_MOD}(?:\s*\+\s*|\s+))*{_KEY}\s*$", re.I)
 _VOLUME_ACTION = r"(?:ajust[eé]|ajustad[oa]|cambi[eé]|cambiad[oa]|sub[ií]|subid[oa]|baj[eé]|bajad[oa]|puse|puesto|silenci[eé]|silenciad[oa]|activ[eé]|activad[oa]|desactiv[eé]|desactivad[oa])"
 _CLAIMS = {
-    "volumen": re.compile(rf"(?:\b{_VOLUME_ACTION}\b.{{0,35}}\b(?:volumen|sonido)\b|\b(?:volumen|sonido)\b.{{0,20}}\b(?:est[aá]|qued[oó])\b)", re.I),
+    "volumen": re.compile(rf"(?:\b{_VOLUME_ACTION}\b.{{0,35}}\b(?:volumen|sonido)\b|\b(?:volumen|sonido)\b.{{0,20}}(?:\b(?:est[aá]|qued[oó])\b|\b(?:al?|en)\s*\d{{1,3}}\s*%))", re.I),
     "abrir_app": re.compile(r"(?:\b(?:abr[ií]|inici[eé]|lanc[eé])\b|\bhe abierto\b|"
                              r"\b(?:aplicaci[oó]n|app|programa|spotify|calculadora|bloc|chrome|discord)\b.{0,35}"
                              r"\b(?:se (?:ha )?abri[oó]|se ha abierto|est[aá] abiert[oa])\b|"
+                             r"\b(?:spotify|calculadora|bloc de notas|chrome|discord)\b.{0,20}\babiert[oa]\b|"
                              r"\babiert[oa]\b.{0,20}\bcorrectamente\b)", re.I),
     "enfocar_ventana": re.compile(r"(?:\b(?:traje|puse)\b.{0,30}\bal frente\b|\bhe tra[ií]do\b.{0,30}\bal frente\b|"
                                   r"\b(?:enfoqu[eé]|enfocad[oa])\b|\b(?:ventana|bloc|aplicaci[oó]n|app|programa|terminal)\b.{0,30}\bal frente\b)", re.I),
@@ -26,6 +27,9 @@ _CLAIMS = {
                         r"\bclic\b.{0,12}\b(?:hecho|realizado)\b|\b(?:desplac[eé]|desplazad[oa])\b)", re.I),
     "registro_habitos": re.compile(r"\b(registro|h[aá]bitos).*(paus|reanuda)", re.I),
 }
+_NEGATED_CLAIM = re.compile(
+    r"\b(?:no|nunca)\b.{0,55}\b(?:pude|logr[eé]|consegu[ií]|fue posible|"
+    r"se (?:pudo|abri[oó]|cerr[oó]|guard[oó])|est[aá]|qued[oó]|funcion[oó])\b", re.I)
 
 def parece_atajo(texto):
     return isinstance(texto, str) and bool(_SHORTCUT.fullmatch(texto))
@@ -63,7 +67,14 @@ def registrar_resultado(estado, nombre, args, resultado):
 
 def afirmaciones_sin_evidencia(mensaje, verificadas):
     texto = unicodedata.normalize("NFC", str(mensaje or ""))
-    afirmadas = {cat for cat, patron in _CLAIMS.items() if patron.search(texto)}
+    afirmadas = set()
+    for cat, patron in _CLAIMS.items():
+        for coincidencia in patron.finditer(texto):
+            inicio = max(texto.rfind(signo, 0, coincidencia.start()) for signo in (".", ";", "\n")) + 1
+            clausula = texto[inicio:coincidencia.end()]
+            if not _NEGATED_CLAIM.search(clausula):
+                afirmadas.add(cat)
+                break
     return sorted(afirmadas - set(verificadas))
 
 def validar_finalizacion(estado, mensaje, exito):

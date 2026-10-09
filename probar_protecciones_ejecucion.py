@@ -49,6 +49,14 @@ ok("preguntar por un documento abierto no afirma abrir una app",
    not afirmaciones_sin_evidencia("¿Qué documento tienes abierto?",set()))
 ok("afirmar que se abrió una app sí exige evidencia",
    afirmaciones_sin_evidencia("La aplicación se abrió correctamente.",set()) == ["abrir_app"])
+ok("nombre de app seguido de abierta exige evidencia",
+   afirmaciones_sin_evidencia("Calculadora abierta.",set()) == ["abrir_app"])
+ok("volumen numérico exige evidencia",
+   afirmaciones_sin_evidencia("Volumen al 20%.",set()) == ["volumen"])
+ok("confirmación compuesta sin acciones detecta ambos efectos",
+   afirmaciones_sin_evidencia("Calculadora abierta. Volumen al 20%.",set()) == ["abrir_app", "volumen"])
+ok("un fallo explícito no se interpreta como confirmación",
+   not afirmaciones_sin_evidencia("No pude cambiar la ventana enfocada: seguía siendo PowerShell.",set()))
 
 estado=nueva_proteccion()
 primero=registrar_resultado(estado,"teclado",{"accion":"atajo","teclas":["ctrl","g"]},

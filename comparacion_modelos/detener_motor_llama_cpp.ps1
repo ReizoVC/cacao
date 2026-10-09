@@ -15,7 +15,7 @@ if ($null -ne $proceso) {
         throw "El PID $serverPid ya no pertenece al motor aislado; no se detuvo."
     }
     Stop-Process -Id $serverPid
-    $proceso.WaitForExit(15000)
+    [void]$proceso.WaitForExit(15000)
 }
 Remove-Item -LiteralPath $pidFile -Force
 Write-Output "Motor de pruebas detenido."

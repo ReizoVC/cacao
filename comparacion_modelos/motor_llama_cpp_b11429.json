@@ -67,6 +67,20 @@
       "media_tokens_s": 51.74,
       "vram_total_mib": 7164
     },
+    "qwen_wrench_q4": {
+      "carga": true,
+      "tareas": "184/195",
+      "primera_herramienta": "179/195",
+      "json_valido": "195/195",
+      "respuestas_vacias": 0,
+      "confirmaciones_falsas_en_tanda": 1,
+      "acciones_distintas": 9,
+      "mediana_primera_accion_s": 2.114,
+      "media_tarea_s": 4.445,
+      "media_tokens_s": 66.9,
+      "pico_vram_total_mib": 6177,
+      "vram_libre_minima_mib": 9874
+    },
     "cancelacion_stream": true,
     "salud_tras_cancelar": true,
     "vram_base_final_mib": 796,
@@ -82,5 +96,5 @@
     "venv_produccion_modificado": false,
     "venv_pruebas_modificado": false
   },
-  "alcance": "Compatibilidad breve de tres modelos y ronda completa de 65 frases por 3 semillas para Gemma Q5."
+  "alcance": "Compatibilidad breve de tres modelos y rondas completas de 65 frases por 3 semillas para Gemma Q5 y Wrench 9B."
 }
