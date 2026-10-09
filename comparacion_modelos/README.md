@@ -4,6 +4,29 @@ Resultados: `../resultados_comparacion_modelos.md`. Respuestas humanas en
 `../respuestas_comparacion_ciegas.md`; clave en `../clave_comparacion_modelos.md`.
 La puntuación humana queda pendiente. No abrir la clave antes de puntuar.
 
+## Motor llama.cpp independiente
+
+El motor moderno de pruebas está fijado en llama.cpp `b11429` (`0.6.0-dev`,
+CUDA 13.4) y vive en `.comparacion-runtime/llama.cpp-b11429`. No reemplaza
+`llama-cpp-python 0.3.36` en `.venv` ni en `.venv-pruebas`.
+
+```powershell
+.\comparacion_modelos\actualizar_motor_llama_cpp.ps1
+.\comparacion_modelos\iniciar_motor_llama_cpp.ps1 -Modelo gemma_q4 -Vision
+.\.venv-pruebas\Scripts\python.exe -B .\comparacion_modelos\probar_motor_llama_cpp.py --vision
+.\comparacion_modelos\detener_motor_llama_cpp.ps1
+```
+
+El inicio comprueba que Cacao esté cerrado, espera si la guardia detecta un
+juego y exige al menos 12 GiB libres de VRAM. El servidor solo escucha en
+`127.0.0.1`, sin interfaz ni herramientas propias. El cliente fuerza
+`reasoning_format=deepseek` y `reasoning_budget=0`: con Gemma 4, dejar el
+formato en `none` conserva marcadores de canal antes del JSON.
+
+Huellas y resultados de humo: `motor_llama_cpp_b11429.json`. Son pruebas de
+compatibilidad; la comparación de 65 frases por tres semillas sigue siendo una
+ronda separada.
+
 ## Preparación utilizada
 
 Windows, RTX 5060 Ti 16 GB, 16 GB de RAM. Código de Cacao: commit `3e9a735`.

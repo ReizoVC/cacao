@@ -1,0 +1,72 @@
+{
+  "fecha": "2026-10-09",
+  "motor": {
+    "version": "0.6.0-dev",
+    "build": 11429,
+    "commit": "d81235049384534c167caea52b85a694f6103d14",
+    "plataforma": "Windows x64 CUDA 13.4",
+    "origen": "https://github.com/ggml-org/llama.cpp/releases/tag/b11429",
+    "archivos": {
+      "llama-b11429-bin-win-cuda-13.4-x64.zip": "76ddc6eff2389570789ed608881efc6977751a722015d8e8c94f302224ff1a3a",
+      "cudart-llama-bin-win-cuda-13.4-x64.zip": "738f8c251ac22b70c3ae6f83a10cf222725df0395246a2cf58f32bdb85fbe668"
+    },
+    "bytes_descargas": 576625220,
+    "bytes_extraidos": 745559661
+  },
+  "configuracion": {
+    "contexto": 16384,
+    "capas_gpu": "all",
+    "flash_attention": true,
+    "cache_k": "q8_0",
+    "cache_v": "q8_0",
+    "mmap": false,
+    "parallel": 1,
+    "razonamiento": "off",
+    "reasoning_format": "deepseek",
+    "reasoning_budget": 0
+  },
+  "compatibilidad": {
+    "gemma_q4": {
+      "carga": true,
+      "herramientas_correctas": "5/5",
+      "json_valido": "5/5",
+      "mediana_s": 1.798,
+      "media_tokens_s": 41.79,
+      "vram_total_texto_mib": 8482,
+      "vision_json_valido": "5/5",
+      "vision_aciertos": "2/5",
+      "vram_total_vision_mib": 8956
+    },
+    "gemma_q5": {
+      "carga": true,
+      "herramientas_correctas": "5/5",
+      "json_valido": "5/5",
+      "mediana_s": 1.798,
+      "media_tokens_s": 38.31,
+      "vram_total_mib": 9489
+    },
+    "qwen_q5": {
+      "carga_hibrida": true,
+      "herramientas_correctas": "5/5",
+      "json_valido": "5/5",
+      "mediana_s": 1.356,
+      "media_tokens_s": 51.74,
+      "vram_total_mib": 7164
+    },
+    "cancelacion_stream": true,
+    "salud_tras_cancelar": true,
+    "vram_base_final_mib": 796,
+    "mtp_disponible_en_cli": true,
+    "mtp_probado": false
+  },
+  "aislamiento": {
+    "ruta": ".comparacion-runtime/llama.cpp-b11429",
+    "config_produccion_sha256": "fb10d3ec38a7ae49ce3c51cfeca6740d7cefe19aa5d1ede08eee078fe74c884e",
+    "llama_cpp_python_produccion": "0.3.36",
+    "llama_cpp_python_pruebas": "0.3.36",
+    "config_produccion_modificada": false,
+    "venv_produccion_modificado": false,
+    "venv_pruebas_modificado": false
+  },
+  "alcance": "Prueba de compatibilidad; todavía no reemplaza la ronda de 65 frases por 3 semillas."
+}

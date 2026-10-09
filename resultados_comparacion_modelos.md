@@ -457,3 +457,29 @@ Q4 completó las 195 tareas, no dejó respuestas vacías y no entregó confirmac
 **Recomendación actual:** Gemma UD-Q4_K_XL es una alternativa viable si se prioriza dejar margen para Qwen3-TTS: conserva 195/195, gana 691 MiB de VRAM, ahorra 0,98 GiB de disco y es algo más rápida. Gemma Q5 sigue siendo ligeramente más disciplinada por el desvío de Q4 en navegación web. Antes de cambiar producción conviene medir Gemma Q4 y Qwen3-TTS cargados simultáneamente; estos 691 MiB adicionales ayudan, pero esta tanda no demuestra que basten para la voz.
 
 Evidencia sanitizada: [metricas_gemma_q4_ronda3.json](comparacion_modelos/metricas_gemma_q4_ronda3.json) y [resumen_gemma_q4_ronda3.json](comparacion_modelos/resumen_gemma_q4_ronda3.json). Se mantuvieron `config.json`, `.venv` y `.venv-pruebas` sin cambios.
+
+## Motor moderno aislado — llama.cpp b11429
+
+Se instaló el binario oficial para Windows x64 y CUDA 13.4 en
+`.comparacion-runtime/llama.cpp-b11429`, fuera de producción. Usa contexto
+16.384, todas las capas en GPU, flash attention, caché K/V q8_0, sin mmap y un
+solo slot. `config.json`, `.venv` y `.venv-pruebas` conservaron su configuración
+y `llama-cpp-python 0.3.36`.
+
+| Modelo | Carga | Selección breve | JSON | Generación media | VRAM total observada |
+|---|---:|---:|---:|---:|---:|
+| Gemma 4 12B UD-Q4_K_XL | Sí | 5/5 | 5/5 | 41,79 tok/s | 8.482 MiB texto; 8.956 MiB con visión |
+| Gemma 4 12B Q5_K_M | Sí | 5/5 | 5/5 | 38,31 tok/s | 9.489 MiB |
+| Qwen 3.5 9B UD-Q5_K_XL | Sí | 5/5 | 5/5 | 51,74 tok/s | 7.164 MiB |
+
+La cancelación de una respuesta en streaming funcionó con los tres modelos y el
+servidor respondió sano inmediatamente después. Al detenerlo, el uso total de
+VRAM volvió de 9.489 a 796 MiB. Gemma Q4 produjo coordenadas JSON válidas en las
+cinco capturas y acertó 2/5 con `box_2d` normalizado; confirma compatibilidad de
+visión, no una precisión suficiente todavía.
+
+Gemma 4 requiere retirar sus marcadores internos de canal para que el contenido
+sea JSON puro. El adaptador fija `reasoning_format=deepseek` y presupuesto de
+razonamiento cero. El ejecutable expone MTP, pero no se probó porque el modelo
+borrador aún no está instalado. Esta fue una prueba de integración corta; no
+reemplaza la ronda completa de 195 casos.
