@@ -45,12 +45,14 @@ def pruebas_efecto():
 
 def pruebas_herramientas():
     enviados = []
-    guardado = (g4._enviar, g4.instantanea, g4.esperar_efecto, g4.estado_despues, g4.isla_al_frente, g4.proceso_de)
+    guardado = (g4._enviar, g4.instantanea, g4.esperar_efecto, g4.estado_despues, g4.isla_al_frente,
+                g4.proceso_de, g4.MODO_ESCRIBIR)
     g4._enviar = lambda *a, **k: enviados.append(a or k)
     g4.instantanea = lambda: dict(FOTO)
     g4.estado_despues = lambda: {}
     g4.isla_al_frente = lambda: False
     g4.proceso_de = lambda h: "notepad.exe"
+    g4.MODO_ESCRIBIR = "teclear"
     try:
         g4.esperar_efecto = lambda antes, **k: False
         r = g4.teclado("atajo", teclas=["ctrl", "s"])
@@ -60,10 +62,10 @@ def pruebas_herramientas():
         r = g4.teclado("atajo", teclas=["ctrl", "g"])
         ok("teclado: atajo con efecto -> efecto_visible True", r["efecto_visible"] is True)
         r = g4.teclado("escribir", texto="hola")
-        ok("teclado: escribir no se mide (el texto no cambia ventanas)", "efecto_visible" not in r)
+        ok("teclado: escribir también exige efecto visible", r["efecto_visible"] is True)
     finally:
         (g4._enviar, g4.instantanea, g4.esperar_efecto, g4.estado_despues, g4.isla_al_frente,
-         g4.proceso_de) = guardado
+         g4.proceso_de, g4.MODO_ESCRIBIR) = guardado
 
 
 def con_base_temporal(funcion):

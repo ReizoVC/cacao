@@ -1,0 +1,546 @@
+[
+  {
+    "model": "gemma_q5",
+    "id": 18,
+    "seed": 22,
+    "complete": true,
+    "response": "No estoy seguro de a qué editor te refieres. ¿Podrías decirme el nombre exacto de la aplicación?",
+    "tools": [
+      "consultar_memoria",
+      "abrir_app",
+      "finalizar"
+    ],
+    "verified": [],
+    "failed_alternatives": [
+      "abrir_app:{\"nombre\": \"el editor de código\"}"
+    ],
+    "corrections": 0,
+    "false_confirmation": [],
+    "distinct_actions": []
+  },
+  {
+    "model": "gemma_q5",
+    "id": 56,
+    "seed": 22,
+    "complete": true,
+    "response": "He intentado cerrar la ventana de PowerShell usando el botón de cerrar, el atajo Alt+F4 y forzando el cierre del proceso, pero la ventana sigue apareciendo activa. Parece haber un problema persistente con esa instancia.",
+    "tools": [
+      "listar_ventanas",
+      "listar_controles",
+      "mouse",
+      "listar_ventanas",
+      "teclado",
+      "cerrar_app",
+      "listar_ventanas",
+      "finalizar"
+    ],
+    "verified": [
+      "cerrar",
+      "mouse",
+      "teclado"
+    ],
+    "failed_alternatives": [],
+    "corrections": 0,
+    "false_confirmation": [],
+    "distinct_actions": [
+      "teclado"
+    ]
+  },
+  {
+    "model": "gemma_q5",
+    "id": 49,
+    "seed": 33,
+    "complete": true,
+    "response": "Parece que hubo un malentendido, ya que en este paso solo estaba consultando el clima en la web y no abriendo ninguna aplicación. Si necesitas que abra algo específico, dime cuál.",
+    "tools": [
+      "buscar_web",
+      "finalizar",
+      "finalizar"
+    ],
+    "verified": [],
+    "failed_alternatives": [],
+    "corrections": 1,
+    "false_confirmation": [],
+    "distinct_actions": []
+  },
+  {
+    "model": "gemma_q5",
+    "id": 56,
+    "seed": 33,
+    "complete": true,
+    "response": "He intentado cerrar la ventana de PowerShell usando el botón, el atajo Alt+F4 y el comando de cierre forzado, pero la ventana persiste en el sistema. No he podido completar la acción.",
+    "tools": [
+      "listar_ventanas",
+      "listar_controles",
+      "mouse",
+      "listar_ventanas",
+      "teclado",
+      "cerrar_app",
+      "listar_ventanas",
+      "cerrar_app",
+      "listar_ventanas",
+      "finalizar"
+    ],
+    "verified": [
+      "cerrar",
+      "mouse",
+      "teclado"
+    ],
+    "failed_alternatives": [],
+    "corrections": 0,
+    "false_confirmation": [],
+    "distinct_actions": [
+      "teclado"
+    ]
+  },
+  {
+    "model": "qwen_q5",
+    "id": 10,
+    "seed": 11,
+    "complete": true,
+    "response": "Aquí tienes el Bloc de notas abierto y listo para escribir.",
+    "tools": [
+      "abrir_app",
+      "enfocar_ventana",
+      "listar_ventanas",
+      "enfocar_ventana",
+      "finalizar"
+    ],
+    "verified": [
+      "abrir_app",
+      "enfocar_ventana"
+    ],
+    "failed_alternatives": [
+      "enfocar_ventana:{\"id_ventana\": 1}"
+    ],
+    "corrections": 0,
+    "false_confirmation": [],
+    "distinct_actions": []
+  },
+  {
+    "model": "qwen_q5",
+    "id": 19,
+    "seed": 11,
+    "complete": true,
+    "response": "He abierto Bloc de notas y lo he puesto al frente. ¡Empieza a escribir!",
+    "tools": [
+      "listar_apps",
+      "abrir_app",
+      "listar_ventanas",
+      "enfocar_ventana",
+      "finalizar"
+    ],
+    "verified": [
+      "abrir_app",
+      "enfocar_ventana"
+    ],
+    "failed_alternatives": [],
+    "corrections": 0,
+    "false_confirmation": [],
+    "distinct_actions": [
+      "enfocar_ventana"
+    ]
+  },
+  {
+    "model": "qwen_q5",
+    "id": 44,
+    "seed": 11,
+    "complete": false,
+    "response": "Probé dos alternativas y ninguna funcionó. Me detuve para no hacer más cambios: ¿cómo quieres que continúe?",
+    "tools": [
+      "enfocar_ventana",
+      "abrir_app",
+      "enfocar_ventana"
+    ],
+    "verified": [
+      "abrir_app"
+    ],
+    "failed_alternatives": [
+      "enfocar_ventana:{\"id_ventana\": 1001}",
+      "enfocar_ventana:{\"id_ventana\": 1002}"
+    ],
+    "corrections": 0,
+    "false_confirmation": [],
+    "distinct_actions": [
+      "abrir_app"
+    ]
+  },
+  {
+    "model": "qwen_q5",
+    "id": 49,
+    "seed": 11,
+    "complete": true,
+    "response": "No puedo confirmar que esté hecho: el código no verificó el efecto de abrir_app. Ejecuta y verifica la acción, o explica que no pudiste comprobarla. ¿Cómo quieres que continúe?",
+    "tools": [
+      "buscar_web",
+      "finalizar",
+      "listar_ventanas",
+      "finalizar"
+    ],
+    "verified": [],
+    "failed_alternatives": [],
+    "corrections": 2,
+    "false_confirmation": [],
+    "distinct_actions": []
+  },
+  {
+    "model": "qwen_q5",
+    "id": 52,
+    "seed": 11,
+    "complete": true,
+    "response": "Intenté cerrar el Bloc de notas a la fuerza dos veces, pero el proceso sigue activo. Parece que no puedo detenerlo con las herramientas disponibles. ¿Quieres que intentemos algo más o prefieres que lo deje así?",
+    "tools": [
+      "listar_ventanas",
+      "cerrar_app",
+      "finalizar",
+      "listar_ventanas",
+      "cerrar_app",
+      "listar_ventanas",
+      "finalizar"
+    ],
+    "verified": [
+      "cerrar"
+    ],
+    "failed_alternatives": [],
+    "corrections": 1,
+    "false_confirmation": [],
+    "distinct_actions": []
+  },
+  {
+    "model": "qwen_q5",
+    "id": 57,
+    "seed": 11,
+    "complete": false,
+    "response": "He bajado el volumen al 40%.",
+    "tools": [
+      "volumen",
+      "finalizar"
+    ],
+    "verified": [
+      "volumen"
+    ],
+    "failed_alternatives": [],
+    "corrections": 0,
+    "false_confirmation": [],
+    "distinct_actions": [
+      "volumen"
+    ]
+  },
+  {
+    "model": "qwen_q5",
+    "id": 59,
+    "seed": 11,
+    "complete": false,
+    "response": "Hola Reizo, para guardar el archivo necesito saber qué documento tienes abierto o cuál es su nombre. ¿Podrías decírmelo?",
+    "tools": [
+      "finalizar"
+    ],
+    "verified": [],
+    "failed_alternatives": [],
+    "corrections": 0,
+    "false_confirmation": [],
+    "distinct_actions": []
+  },
+  {
+    "model": "qwen_q5",
+    "id": 19,
+    "seed": 22,
+    "complete": true,
+    "response": "Aquí tienes el Bloc de notas listo para que escribas.",
+    "tools": [
+      "abrir_app",
+      "enfocar_ventana",
+      "listar_ventanas",
+      "enfocar_ventana",
+      "finalizar"
+    ],
+    "verified": [
+      "abrir_app",
+      "enfocar_ventana"
+    ],
+    "failed_alternatives": [
+      "enfocar_ventana:{\"id_ventana\": 1}"
+    ],
+    "corrections": 0,
+    "false_confirmation": [],
+    "distinct_actions": [
+      "enfocar_ventana"
+    ]
+  },
+  {
+    "model": "qwen_q5",
+    "id": 30,
+    "seed": 22,
+    "complete": true,
+    "response": "He abierto la Calculadora y he ajustado el volumen al 20%.",
+    "tools": [
+      "finalizar",
+      "abrir_app",
+      "volumen",
+      "listar_ventanas",
+      "finalizar"
+    ],
+    "verified": [
+      "abrir_app",
+      "volumen"
+    ],
+    "failed_alternatives": [],
+    "corrections": 1,
+    "false_confirmation": [],
+    "distinct_actions": []
+  },
+  {
+    "model": "qwen_q5",
+    "id": 56,
+    "seed": 22,
+    "complete": true,
+    "response": "Intenté cerrar la ventana de PowerShell varias veces (haciendo clic en la X, cerrando el proceso y forzando el cierre), pero la ventana sigue apareciendo en la lista. Parece que hay un bloqueo que impide cerrarla correctamente. No puedo continuar intentando otros caminos.",
+    "tools": [
+      "ver_pantalla",
+      "listar_controles",
+      "listar_ventanas",
+      "listar_controles",
+      "mouse",
+      "listar_ventanas",
+      "cerrar_app",
+      "listar_ventanas",
+      "cerrar_app",
+      "listar_ventanas",
+      "cerrar_app",
+      "cerrar_app",
+      "listar_ventanas",
+      "finalizar"
+    ],
+    "verified": [
+      "cerrar",
+      "mouse"
+    ],
+    "failed_alternatives": [
+      "listar_controles:{\"id_ventana\": null}"
+    ],
+    "corrections": 0,
+    "false_confirmation": [],
+    "distinct_actions": []
+  },
+  {
+    "model": "qwen_q5",
+    "id": 58,
+    "seed": 22,
+    "complete": true,
+    "response": "¡Listo! He escrito 'hola mundo' en el Bloc de notas y lo he guardado.",
+    "tools": [
+      "abrir_app",
+      "enfocar_ventana",
+      "listar_ventanas",
+      "enfocar_ventana",
+      "teclado",
+      "teclado",
+      "finalizar"
+    ],
+    "verified": [
+      "abrir_app",
+      "enfocar_ventana",
+      "teclado"
+    ],
+    "failed_alternatives": [
+      "enfocar_ventana:{\"id_ventana\": 1}"
+    ],
+    "corrections": 0,
+    "false_confirmation": [],
+    "distinct_actions": []
+  },
+  {
+    "model": "qwen_q5",
+    "id": 59,
+    "seed": 22,
+    "complete": true,
+    "response": "Probé dos alternativas y ninguna funcionó. Me detuve para no hacer más cambios: ¿cómo quieres que continúe?",
+    "tools": [
+      "listar_ventanas",
+      "enfocar_ventana",
+      "teclado",
+      "listar_controles",
+      "mouse",
+      "mouse",
+      "ver_pantalla",
+      "enfocar_ventana",
+      "mouse"
+    ],
+    "verified": [
+      "enfocar_ventana",
+      "mouse",
+      "teclado"
+    ],
+    "failed_alternatives": [
+      "mouse:{\"accion\": \"clic\", \"control\": \"Guardar como...\", \"id_ventana\": 9002}",
+      "mouse:{\"accion\": \"clic\", \"control\": \"Guardar\", \"id_ventana\": 9002}"
+    ],
+    "corrections": 0,
+    "false_confirmation": [],
+    "distinct_actions": []
+  },
+  {
+    "model": "qwen_q5",
+    "id": 16,
+    "seed": 33,
+    "complete": true,
+    "response": "Hay varias opciones de navegador instaladas: Firefox Developer Edition, Google Chrome, Microsoft Edge y Navegación privada de Firefox Developer Edition. ¿Cuál quieres abrir?",
+    "tools": [
+      "abrir_app",
+      "finalizar"
+    ],
+    "verified": [],
+    "failed_alternatives": [
+      "abrir_app:{\"nombre\": \"navegador\"}"
+    ],
+    "corrections": 0,
+    "false_confirmation": [],
+    "distinct_actions": []
+  },
+  {
+    "model": "qwen_q5",
+    "id": 41,
+    "seed": 33,
+    "complete": false,
+    "response": "Aquí tienes las ventanas que tienes abiertas ahora mismo:",
+    "tools": [
+      "finalizar"
+    ],
+    "verified": [],
+    "failed_alternatives": [],
+    "corrections": 0,
+    "false_confirmation": [],
+    "distinct_actions": []
+  },
+  {
+    "model": "qwen_q5",
+    "id": 43,
+    "seed": 33,
+    "complete": true,
+    "response": "He traído el Bloc de notas al frente. Ahora es la ventana activa.",
+    "tools": [
+      "finalizar",
+      "listar_ventanas",
+      "enfocar_ventana",
+      "listar_ventanas",
+      "finalizar"
+    ],
+    "verified": [
+      "enfocar_ventana"
+    ],
+    "failed_alternatives": [],
+    "corrections": 1,
+    "false_confirmation": [],
+    "distinct_actions": []
+  },
+  {
+    "model": "qwen_q5",
+    "id": 49,
+    "seed": 33,
+    "complete": true,
+    "response": "No puedo confirmar que esté hecho: el código no verificó el efecto de abrir_app. Ejecuta y verifica la acción, o explica que no pudiste comprobarla. ¿Cómo quieres que continúe?",
+    "tools": [
+      "buscar_web",
+      "finalizar",
+      "listar_ventanas",
+      "enfocar_ventana",
+      "listar_ventanas",
+      "finalizar"
+    ],
+    "verified": [
+      "enfocar_ventana"
+    ],
+    "failed_alternatives": [],
+    "corrections": 2,
+    "false_confirmation": [],
+    "distinct_actions": [
+      "enfocar_ventana"
+    ]
+  },
+  {
+    "model": "qwen_q5",
+    "id": 52,
+    "seed": 33,
+    "complete": true,
+    "response": "No lo hice: El comando usa «Stop-Process», que está bloqueado por seguridad.",
+    "tools": [
+      "listar_ventanas",
+      "cerrar_app",
+      "listar_ventanas",
+      "cerrar_app",
+      "listar_ventanas",
+      "ejecutar_powershell"
+    ],
+    "verified": [
+      "cerrar"
+    ],
+    "failed_alternatives": [],
+    "corrections": 0,
+    "false_confirmation": [],
+    "distinct_actions": [
+      "ejecutar_powershell"
+    ]
+  },
+  {
+    "model": "qwen_q5",
+    "id": 56,
+    "seed": 33,
+    "complete": true,
+    "response": "He cerrado la ventana de PowerShell. ¿Hay algo más en lo que pueda ayudarte?",
+    "tools": [
+      "ver_pantalla",
+      "listar_controles",
+      "listar_ventanas",
+      "listar_controles",
+      "mouse",
+      "listar_ventanas",
+      "cerrar_app",
+      "finalizar"
+    ],
+    "verified": [
+      "cerrar",
+      "mouse"
+    ],
+    "failed_alternatives": [
+      "listar_controles:{\"id_ventana\": 1}"
+    ],
+    "corrections": 0,
+    "false_confirmation": [],
+    "distinct_actions": []
+  },
+  {
+    "model": "qwen_q5",
+    "id": 57,
+    "seed": 33,
+    "complete": false,
+    "response": "He bajado el volumen del sistema, pero ten en cuenta que la rueda del mouse no controla el volumen en Windows; para eso debes usar el icono de altavoz en la barra de tareas.",
+    "tools": [
+      "volumen",
+      "finalizar"
+    ],
+    "verified": [
+      "volumen"
+    ],
+    "failed_alternatives": [],
+    "corrections": 0,
+    "false_confirmation": [],
+    "distinct_actions": [
+      "volumen"
+    ]
+  },
+  {
+    "model": "qwen_q5",
+    "id": 59,
+    "seed": 33,
+    "complete": false,
+    "response": "Hola Reizo, para guardar el archivo necesito saber qué documento estás editando o cuál es su nombre. ¿Podrías decirme qué quieres guardar?",
+    "tools": [
+      "finalizar"
+    ],
+    "verified": [],
+    "failed_alternatives": [],
+    "corrections": 0,
+    "false_confirmation": [],
+    "distinct_actions": []
+  }
+]

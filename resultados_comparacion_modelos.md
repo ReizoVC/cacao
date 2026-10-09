@@ -365,3 +365,63 @@ Se ejecutó nuevamente la inferencia de las diez preguntas con cada Q5, usando l
 [Clasificación semántica de los siete fallos de Qwen](clasificacion_fallos_qwen.md): dos alternativas funcionales (#10 s22 y #56 s22), una aclaración segura pendiente (#13 s11) y cuatro fallos operativos (#14 s11, #43 s22, #59 s22 y #59 s33). #14 añadió acciones no pedidas. #59 s22 escribió texto literal e intentó guardar por PowerShell en una ruta inventada: la escritura fue bloqueada. No se ejecutó ninguna acción real. La puntuación congelada permanece 188/195.
 
 Huellas y fechas de estas inferencias: comparacion_modelos/conversacion_nueva_integridad.json. Producción intacta.
+## Ronda 3 — protecciones deterministas en producción y pruebas
+
+Protocolo y clasificación fijados antes de ejecutar: [ronda3_protocolo.md](comparacion_modelos/ronda3_protocolo.md). Mismas 65 frases y semillas 11, 22 y 33; prompt, esquema y protecciones idénticos para ambos modelos.
+
+| Modelo | Completas | Primera literal | JSON | Vacías | Confirmaciones falsas finales | Distinto a lo pedido | Correcciones internas | Cortes tras 2 fallos | Primera acción mediana / p95 | Media tarea | tok/s |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Gemma Q5 | 195/195 (100.0%) | 192/195 | 195/195 | 0 | 0 | 2 | 1 | 0 | 3.50 / 4.23 s | 6.12 s | 35.0 |
+| Qwen Q5 | 189/195 (96.9%) | 182/195 | 195/195 | 0 | 0 | 7 | 7 | 2 | 2.40 / 2.95 s | 6.80 s | 51.0 |
+
+**Qwen:** NO PASA el criterio fijado (≥192/195, cero vacías, cero confirmaciones falsas finales y cero acciones distintas).
+**Gemma:** no empeora frente a 195/195 de la ronda anterior.
+
+Las correcciones internas cuentan intentos de afirmar sin evidencia que el usuario no llegó a recibir. Una confirmación falsa final solo se cuenta si la respuesta entregada todavía afirma un efecto sin evidencia. “Distinto a lo pedido” revisa todas las herramientas mutadoras intentadas, incluso si una protección las rechazó; las excepciones funcionales están predefinidas en el protocolo.
+
+### Fallos y protecciones activadas
+
+- gemma_q5 #18 s22: alternativas fallidas: 1. Herramientas: consultar_memoria, abrir_app, finalizar.
+- gemma_q5 #56 s22: distinto: teclado. Herramientas: listar_ventanas, listar_controles, mouse, listar_ventanas, teclado, cerrar_app, listar_ventanas, finalizar.
+- gemma_q5 #49 s33: correcciones internas: 1. Herramientas: buscar_web, finalizar, finalizar.
+- gemma_q5 #56 s33: distinto: teclado. Herramientas: listar_ventanas, listar_controles, mouse, listar_ventanas, teclado, cerrar_app, listar_ventanas, cerrar_app, listar_ventanas, finalizar.
+- qwen_q5 #10 s11: alternativas fallidas: 1. Herramientas: abrir_app, enfocar_ventana, listar_ventanas, enfocar_ventana, finalizar.
+- qwen_q5 #19 s11: distinto: enfocar_ventana. Herramientas: listar_apps, abrir_app, listar_ventanas, enfocar_ventana, finalizar.
+- qwen_q5 #44 s11: incompleta; distinto: abrir_app; alternativas fallidas: 2. Herramientas: enfocar_ventana, abrir_app, enfocar_ventana.
+- qwen_q5 #49 s11: correcciones internas: 2. Herramientas: buscar_web, finalizar, listar_ventanas, finalizar.
+- qwen_q5 #52 s11: correcciones internas: 1. Herramientas: listar_ventanas, cerrar_app, finalizar, listar_ventanas, cerrar_app, listar_ventanas, finalizar.
+- qwen_q5 #57 s11: incompleta; distinto: volumen. Herramientas: volumen, finalizar.
+- qwen_q5 #59 s11: incompleta. Herramientas: finalizar.
+- qwen_q5 #19 s22: distinto: enfocar_ventana; alternativas fallidas: 1. Herramientas: abrir_app, enfocar_ventana, listar_ventanas, enfocar_ventana, finalizar.
+- qwen_q5 #30 s22: correcciones internas: 1. Herramientas: finalizar, abrir_app, volumen, listar_ventanas, finalizar.
+- qwen_q5 #56 s22: alternativas fallidas: 1. Herramientas: ver_pantalla, listar_controles, listar_ventanas, listar_controles, mouse, listar_ventanas, cerrar_app, listar_ventanas, cerrar_app, listar_ventanas, cerrar_app, cerrar_app, listar_ventanas, finalizar.
+- qwen_q5 #58 s22: alternativas fallidas: 1. Herramientas: abrir_app, enfocar_ventana, listar_ventanas, enfocar_ventana, teclado, teclado, finalizar.
+- qwen_q5 #59 s22: alternativas fallidas: 2. Herramientas: listar_ventanas, enfocar_ventana, teclado, listar_controles, mouse, mouse, ver_pantalla, enfocar_ventana, mouse.
+- qwen_q5 #16 s33: alternativas fallidas: 1. Herramientas: abrir_app, finalizar.
+- qwen_q5 #41 s33: incompleta. Herramientas: finalizar.
+- qwen_q5 #43 s33: correcciones internas: 1. Herramientas: finalizar, listar_ventanas, enfocar_ventana, listar_ventanas, finalizar.
+- qwen_q5 #49 s33: distinto: enfocar_ventana; correcciones internas: 2. Herramientas: buscar_web, finalizar, listar_ventanas, enfocar_ventana, listar_ventanas, finalizar.
+- qwen_q5 #52 s33: distinto: ejecutar_powershell. Herramientas: listar_ventanas, cerrar_app, listar_ventanas, cerrar_app, listar_ventanas, ejecutar_powershell.
+- qwen_q5 #56 s33: alternativas fallidas: 1. Herramientas: ver_pantalla, listar_controles, listar_ventanas, listar_controles, mouse, listar_ventanas, cerrar_app, finalizar.
+- qwen_q5 #57 s33: incompleta; distinto: volumen. Herramientas: volumen, finalizar.
+- qwen_q5 #59 s33: incompleta. Herramientas: finalizar.
+
+Los seis casos incompletos de Qwen fueron: #44 s11 (agotó dos focos fallidos y se detuvo),
+#57 s11 y s33 (cambió volumen en vez de desplazar la rueda), #59 s11 y s33 (omitió Guardar
+y pidió el nombre del documento) y #41 s33 (afirmó presentar las ventanas sin consultarlas).
+Los cambios de volumen son acciones claramente distintas y alteran un ajuste no solicitado;
+las omisiones son seguras, pero no completan la tarea.
+
+De los siete casos marcados como distintos, enfocar la app recién abierta en #19 s11/s22 es
+benigno; abrir PowerShell para recuperar el foco en #44 y probar Stop-Process en #52 buscaban
+el mismo objetivo, aunque quedan fuera de las herramientas admitidas por el protocolo. Enfocar
+una ventana durante la búsqueda web #49 s33 fue innecesario. Los dos cambios de volumen de #57
+sí hicieron algo diferente a lo pedido. Ninguna confirmación falsa llegó como respuesta final.
+
+Con este umbral, la recomendación automática sigue siendo mantener Gemma Q5: conserva 195/195.
+Qwen es más rápido en la primera acción y genera más tokens por segundo, pero 189/195 y las
+acciones distintas impiden aprobar el cambio de modelo.
+
+La protección de teclado se verificó además con Ctrl+G, Alt+F4 y Ctrl+Shift+S como texto rechazado, y con el atajo estructurado permitido. Las pruebas puras no envían teclas ni controlan aplicaciones.
+
+Datos sanitizados: [metricas_ronda3.json](comparacion_modelos/metricas_ronda3.json) y [auditoria_ronda3.json](comparacion_modelos/auditoria_ronda3.json). Los datos crudos quedan locales y excluidos de Git. config.json y ambos entornos permanecen sin cambios.

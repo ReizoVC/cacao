@@ -1,0 +1,36 @@
+{
+  "summaries": {
+    "gemma_q5": {
+      "complete": 195,
+      "blank": 0,
+      "json": 195,
+      "first": 192,
+      "false_confirmation": 0,
+      "distinct": 2,
+      "corrections": 1,
+      "two_failure_stops": 0,
+      "median_first": 3.4964768000027107,
+      "p95_first": 4.233837100000528,
+      "mean_task": 6.121952324615211,
+      "tps": 35.026063737439884
+    },
+    "qwen_q5": {
+      "complete": 189,
+      "blank": 0,
+      "json": 195,
+      "first": 182,
+      "false_confirmation": 0,
+      "distinct": 7,
+      "corrections": 7,
+      "two_failure_stops": 2,
+      "median_first": 2.4011931999993976,
+      "p95_first": 2.9469877000010456,
+      "mean_task": 6.803236828205225,
+      "tps": 50.99867183335977
+    }
+  },
+  "qwen_pass": false,
+  "gemma_no_regression": true,
+  "prompt_sha256": "0cd889b4581f4cb692773c672d5bd049cd4de0bdfd523db2512bf3a4423ecb70",
+  "schema_sha256": "c2ea19a80dd5a4960922f21b72ed5936dbd6aa22b98f2147b672b37b0e05f425"
+}

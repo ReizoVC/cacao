@@ -43,7 +43,11 @@ if (HERE/'metricas_ronda2.json').exists():
         cases=[r for r in integrated if r['model']==model]
         assert {(r['id'],r['seed']) for r in cases}=={(i,s) for i in range(1,66) for s in (11,22,33)}
     frozen=json.loads((HERE/'ronda2_congelado.json').read_text(encoding='utf-8'))
-    for name,digest in frozen.items():assert sha(ROOT/name if name=='pruebas.json' else HERE/name)==digest
+    # integración.py y ejecutar.py evolucionan en la ronda 3; el manifiesto de la
+    # ronda 2 conserva sus hashes históricos, pero ya no deben coincidir con HEAD.
+    superseded={'integracion.py','ejecutar.py'} if (HERE/'ronda3_congelado.json').exists() else set()
+    for name,digest in frozen.items():
+        if name not in superseded:assert sha(ROOT/name if name=='pruebas.json' else HERE/name)==digest
     vision_frozen=json.loads((HERE/'ronda2_vision_congelada.json').read_text(encoding='utf-8'))
     for name,digest in vision_frozen.items():assert sha(HERE/name)==digest
     vision2=json.loads((HERE/'vision_ronda2.json').read_text(encoding='utf-8'))
@@ -74,6 +78,23 @@ if (ROOT/'resultados_ciegas.md').exists():
         for new,old in zip(current['conversation'],previous['conversation']):
             assert new['question']==old['question'] and new['json_schema_ok'] and not new['error'] and new['respuesta'].strip()
             assert new['outputs'][-1]['created']>old['outputs'][-1]['created']
+round3=None
+if (HERE/'metricas_ronda3.json').exists():
+    subprocess.run([sys.executable,'-B',str(ROOT/'probar_protecciones_ejecucion.py')],check=True)
+    round3=json.loads((HERE/'metricas_ronda3.json').read_text(encoding='utf-8'))
+    assert len(round3)==390
+    for model in ('gemma_q5','qwen_q5'):
+        rows=[r for r in round3 if r['model']==model]
+        assert {(r['id'],r['seed']) for r in rows}=={(i,s) for i in range(1,66) for s in (11,22,33)}
+        assert all(set(r['protection'])=={'verificadas','fallos','correcciones'} for r in rows)
+    frozen3=json.loads((HERE/'ronda3_congelado.json').read_text(encoding='utf-8'))
+    production_names={'pruebas.json','herramientas.json','agente_minimo.py','herramientas_grupo4.py','protecciones_ejecucion.py'}
+    for name,digest in frozen3.items():assert sha(ROOT/name if name in production_names else HERE/name)==digest
+    final3=[json.loads((HERE/'datos/ronda3'/f'{m}.json').read_text(encoding='utf-8')) for m in ('gemma_q5','qwen_q5')]
+    assert all(d['complete'] and len(d['cases'])==195 and len(d['conversation'])==10 for d in final3)
+    assert len({d['prompt_sha256'] for d in final3})==1
+    assert len({d['integration']['schema_sha256'] for d in final3})==1
+    assert '## Ronda 3 — protecciones deterministas en producción y pruebas' in report
 engine=[]
 production=ROOT/'.venv/Lib/site-packages/llama_cpp'
 testing=ROOT/'.venv-pruebas/Lib/site-packages/llama_cpp'
@@ -83,7 +104,7 @@ for path in sorted(production.rglob('*')):
     digest=sha(path)
     assert digest==sha(testing/relative),f'Diferencia en motor: {relative}'
     engine.append({'path':relative.as_posix(),'bytes':path.stat().st_size,'sha256':digest})
-manifest={'date':'2026-10-07','cacao_commit':'3e9a735','llama_cpp_python':'0.3.36',
+manifest={'date':'2026-10-09','cacao_commit':'e45d7d7','llama_cpp_python':'0.3.36',
     'production_config_sha256':sha(ROOT/'config.json'),'engine_files':engine,
     'fixtures_sha256':{name:sha(ROOT/name) for name in ('pruebas.json','herramientas.json','apps_categorias.json')},
     'screenshots_sha256':{p.name:sha(p) for p in sorted((HERE/'capturas').glob('*.png'))},
@@ -92,5 +113,10 @@ if (HERE/'metricas_ronda2.json').exists():
     manifest['round2']={'cases':len(integrated),'new_conversations':20,'blind_answers_including_references':40,
         'vision_localizations':10,'frozen_sha256':sha(HERE/'ronda2_congelado.json'),
         'metrics_sha256':sha(HERE/'metricas_ronda2.json'),'human_spanish_evaluation':'pendiente'}
+if round3 is not None:
+    manifest['round3']={'cases':len(round3),'new_conversations':20,
+        'frozen_sha256':sha(HERE/'ronda3_congelado.json'),
+        'metrics_sha256':sha(HERE/'metricas_ronda3.json'),
+        'protocol_sha256':sha(HERE/'ronda3_protocolo.md')}
 (HERE/'integridad.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf-8')
 print('Verificación completa: configuración original, motor idéntico, referencias y nueva ronda completas.')

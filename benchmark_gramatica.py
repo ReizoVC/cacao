@@ -29,6 +29,7 @@ import wiki
 from emergencia import Detenido, Emergencia
 from herramientas_grupo1 import listar_carpeta, leer_archivo, url_busqueda
 from modelo import cargar_config, crear_llm
+from protecciones_ejecucion import nueva_proteccion, registrar_resultado, resultado_verificado, validar_finalizacion
 from vision import CapturaBloqueada, ManejadorVision, PRESUPUESTOS, capturar
 
 BASE = Path(__file__).parent
@@ -72,6 +73,8 @@ obstaculos_sim = SimpleNamespace(para_prompt=obstaculos.para_prompt, nombre_ataj
                                  consultar=lambda app, accion: None, contar_uso=lambda *a: None)
 from datetime import datetime
 ns = {"obstaculos": obstaculos_sim, "datetime": datetime, "json": json, "re": re, "time": time, "herramientas_grupo4": herramientas_grupo4, "modo_directo": modo_directo, "Counter": Counter, "process": process, "fuzz": fuzz, "unicodedata": unicodedata,
+      "nueva_proteccion": nueva_proteccion, "registrar_resultado": registrar_resultado,
+      "resultado_verificado": resultado_verificado, "validar_finalizacion": validar_finalizacion,
       "CATALOGO": CATALOGO, "planificar_powershell": ps.planificar_powershell, "capturar": capturar, "PRESUPUESTOS": PRESUPUESTOS, "CapturaBloqueada": CapturaBloqueada,
       "_presupuesto_imagen": 280, "_ultima_captura": None,
       "HERRAMIENTAS": {h["nombre"]: h for h in CATALOGO["herramientas"] if h["nombre"] in ACTIVAS},

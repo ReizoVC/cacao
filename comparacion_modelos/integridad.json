@@ -1,6 +1,6 @@
 {
-  "date": "2026-10-07",
-  "cacao_commit": "3e9a735",
+  "date": "2026-10-09",
+  "cacao_commit": "e45d7d7",
   "llama_cpp_python": "0.3.36",
   "production_config_sha256": "fb10d3ec38a7ae49ce3c51cfeca6740d7cefe19aa5d1ede08eee078fe74c884e",
   "engine_files": [
@@ -197,7 +197,7 @@
   ],
   "fixtures_sha256": {
     "pruebas.json": "55c8eab120a8d09e7eef4e7e57aec22c8fd33df7d4f43f2831d5eefd1e6f77b4",
-    "herramientas.json": "3fb0d200ef8c8523500dc8475d2e394c73d0dfe19af169c4e64e70a595e7549a",
+    "herramientas.json": "9aa27a53a977f385ffc20830744e4e8d8a164813ffd65b3b541fc31020a62ddc",
     "apps_categorias.json": "c5a673978d66b7670caf3dfbbde4d5bb9654162f641f1ad37ac995831fe7ec7d"
   },
   "screenshots_sha256": {
@@ -214,5 +214,12 @@
     "frozen_sha256": "f30526418b8c69258a7549ee85f7258fa2ada7c48aa6b58a4f1c7956d29aef1b",
     "metrics_sha256": "adbfe4003162109b17ac06dd622533c196249cbecbe411f61db5f13d8b4278cd",
     "human_spanish_evaluation": "pendiente"
+  },
+  "round3": {
+    "cases": 390,
+    "new_conversations": 20,
+    "frozen_sha256": "c86a4cffa2a6bc4cf3987caeb07bec5ea8c5f30378c4693ac5bf3813a18d7061",
+    "metrics_sha256": "3a0bb4e553f88efcddf118ed0a16b9797cbf80f2da93ecb5e9fc432125380374",
+    "protocol_sha256": "c36a3f25ea3b05ef870a7465ec4e2721dd928d31d6aee8e2e5f9db7dc8c4effe"
   }
 }

@@ -340,12 +340,12 @@
     {
       "nombre": "teclado",
       "permiso": "confirmar",
-      "descripcion": "Escribe texto o presiona teclas en la ventana enfocada. Nombres de teclas: ctrl, alt, shift, win, enter, tab, esc, backspace, supr, espacio, arriba, abajo, izquierda, derecha, inicio, fin, repag, avpag, f1-f12, letras y números. 'atajo' las pulsa juntas; 'tecla' una tras otra.",
+      "descripcion": "Escribe texto o presiona teclas en la ventana enfocada. Nombres de teclas: ctrl, alt, shift, win, enter, tab, esc, backspace, supr, espacio, arriba, abajo, izquierda, derecha, inicio, fin, repag, avpag, f1-f12, letras y números. 'atajo' las pulsa juntas; 'tecla' una tras otra. Nunca pases un atajo como texto: 'Ctrl+G' o 'Alt+F4' se rechazan en accion 'escribir'.",
       "parametros": {
         "type": "object",
         "properties": {
           "accion": { "type": "string", "enum": ["escribir", "atajo", "tecla"] },
-          "texto": { "type": "string", "description": "Para 'escribir'." },
+          "texto": { "type": "string", "description": "Para 'escribir' texto normal. Se rechaza si todo el contenido parece un atajo de teclado." },
           "teclas": { "type": "array", "items": { "type": "string" }, "description": "Para 'atajo' o 'tecla'. Ejemplo: ['ctrl', 's']." }
         },
         "required": ["accion"]

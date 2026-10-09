@@ -41,6 +41,7 @@ from herramientas_grupo1 import listar_ventanas, enfocar_ventana, listar_carpeta
 from herramientas_grupo4 import cerrar_app, deshacer_movimiento, listar_controles, mover_archivo, mouse, teclado
 from herramientas_powershell import ejecutar_powershell, planificar_powershell
 from memoria import recordar, consultar_memoria
+from protecciones_ejecucion import nueva_proteccion, registrar_resultado, resultado_verificado, validar_finalizacion
 from modelo import cargar_config, crear_llm
 from vision import CapturaBloqueada, ManejadorVision, PRESUPUESTOS, capturar
 
@@ -465,6 +466,11 @@ def prompt_sistema(voz=False):
         "'id_ventana'; usa ver_pantalla con cuadrícula y coordenadas solo si el control no aparece. Después de un "
         "clic o un atajo, comprueba el resultado con listar_controles, ver_pantalla o listar_ventanas antes de decir "
         "que funcionó; si no cambió lo esperado, dilo.",
+        "El ejecutor no te dejará afirmar que una acción quedó hecha sin evidencia verificada. Si corrige una "
+        "afirmación, ejecuta y comprueba la acción o di que no pudiste verificarla. Tras dos alternativas fallidas "
+        "para la tarea, se detendrá y preguntará a Reizo; no sigas buscando rodeos.",
+        "Nunca escribas un atajo como texto (por ejemplo 'Ctrl+G' o 'Alt+F4'): usa teclado con accion 'atajo' y "
+        "las teclas separadas en el arreglo 'teclas'.",
         "Si Reizo nombra una app para hacer algo dentro de ella (escribir en el Bloc de notas, guardar en Word), usa "
         "primero listar_ventanas: si ya tiene una ventana de esa app, tráela con enfocar_ventana y úsala; usa "
         "abrir_app solo si no hay ninguna. Si solo pide abrir una app ('abre Spotify'), usa abrir_app directamente.",
@@ -741,7 +747,7 @@ def atender(pedido, historial):
     leido = modo_directo.leido_en_historial(historial)
     historial.append({"role": "user", "content": con_fecha(pedido)})
     _tarea.update(contaminada=False, herramientas=[], pedido=pedido, movidos=0, intentos=[], avisos=[],
-                  sustituidos={}, leido=leido)
+                  sustituidos={}, leido=leido, proteccion=nueva_proteccion())
     herramientas_grupo4.tarea_actual = f"{time.time():.3f}"
     _decision.update(clave=None, valor=None)
     sin_verificar, recordatorios = None, 0  # último clic o atajo que el modelo aún no comprobó
@@ -765,6 +771,15 @@ def atender(pedido, historial):
                                       "Usa listar_controles, ver_pantalla o listar_ventanas antes de confirmar que "
                                       "funcionó."})
                     continue
+                valida, correccion = validar_finalizacion(_tarea["proteccion"], args.get("mensaje", ""),
+                                                          args.get("exito", True))
+                if not valida:
+                    print(f"  [evidencia] {correccion}")
+                    if _tarea["proteccion"]["correcciones"] >= 2:
+                        return terminar(historial, correccion + " ¿Cómo quieres que continúe?", False,
+                                        "El ejecutor impidió una confirmación sin evidencia")
+                    historial.append({"role": "user", "content": correccion})
+                    continue
                 return args.get("mensaje", "")
             emergencia.comprobar()
             resultado = ejecutar(nombre, args)
@@ -778,6 +793,11 @@ def atender(pedido, historial):
             historial.append({"role": "user", "content": [{"type": "text", "text": texto},
                                                           {"type": "image_url", "image_url": {"url": imagen}}]
                               if imagen else texto})
+            if registrar_resultado(_tarea["proteccion"], nombre, args, resultado):
+                print("  [alternativas] dos caminos fallaron; el ejecutor detiene la tarea")
+                return terminar(historial, "Probé dos alternativas y ninguna funcionó. Me detuve para no hacer "
+                                "más cambios: ¿cómo quieres que continúe?", False,
+                                "Dos alternativas fallidas; el ejecutor pide ayuda")
             if isinstance(resultado, dict) and resultado.get("bloqueado"):
                 # el ejecutor corta: el modelo no recibe más pasos para buscar otro camino
                 memoria.registrar_bloqueo(pedido, nombre, args, resultado.get("error", ""))
@@ -789,7 +809,7 @@ def atender(pedido, historial):
                 print("  [rechazado] Reizo dijo que no: tarea terminada por el ejecutor")
                 return terminar(historial, "No lo hice porque no lo autorizaste.", False,
                                 "Reizo rechazó la acción; el ejecutor terminó la tarea")
-            if nombre in VERIFICADORAS:
+            if resultado_verificado(nombre, args, resultado):
                 sin_verificar = None
             elif args.get("accion") in ACCIONES_A_VERIFICAR.get(nombre, ()) and isinstance(resultado, dict) \
                     and resultado.get("ok"):
@@ -797,7 +817,7 @@ def atender(pedido, historial):
             mensaje_final = accion.get("mensaje_final", "").strip()
             if imagen or sin_verificar:
                 mensaje_final = None  # tiene que mirar la captura o comprobar el clic/atajo antes de responder
-            elif isinstance(resultado, dict) and resultado.get("ok"):
+            elif resultado_verificado(nombre, args, resultado):
                 mensaje_final = rellenar_marcadores(mensaje_final, resultado)
             else:
                 mensaje_final = None

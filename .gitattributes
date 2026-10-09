@@ -5,6 +5,11 @@
 /comparacion_modelos/criterios.py text eol=lf
 /comparacion_modelos/ronda2_protocolo.md text eol=lf
 /comparacion_modelos/vision.json text eol=lf
+/agente_minimo.py text eol=lf
+/herramientas_grupo4.py text eol=lf
+/protecciones_ejecucion.py text eol=lf
+/herramientas.json text eol=lf
+/comparacion_modelos/ronda3_protocolo.md text eol=lf
 # Blind answers preserve the generated text verbatim, including spaces.
 /respuestas_integracion_ciegas.md whitespace=-blank-at-eol
 /resultados_ciegas.md whitespace=-blank-at-eol text eol=lf

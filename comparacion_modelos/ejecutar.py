@@ -62,8 +62,8 @@ class GPU:
         self.stop.set()
         self.thread.join(5)
 
-def prepare(model, round2=False):
-    runtime = ROOT / '.comparacion-runtime' / (model+'_ronda2' if round2 else model)
+def prepare(model, isolated_round=False, round_name='ronda2'):
+    runtime = ROOT / '.comparacion-runtime' / (model+'_'+round_name if isolated_round else model)
     runtime.mkdir(parents=True, exist_ok=True)
     # Copies only code/configuration, never personal databases or the production vault.
     for source in ROOT.glob('*.py'):
@@ -117,11 +117,16 @@ def isolated_tools(b):
                 return {'ok': False, 'error': 'Control no encontrado'}
         elif x is None or y is None:
             return {'ok': False, 'error': 'Faltan coordenadas o control'}
-        return {'ok': True, 'despues': b.estado_despues_sim(), 'nota': 'Comprueba el resultado.'}
+        return {'ok': True, 'efecto_visible': True, 'app': 'fixture.exe',
+                'despues': b.estado_despues_sim(), 'nota': 'Efecto visible simulado.'}
     def keyboard(accion, texto=None, teclas=None):
         if accion == 'escribir':
-            return {'ok': isinstance(texto, str) and len(texto) <= 2000}
-        return {'ok': bool(teclas), 'despues': b.estado_despues_sim(), 'nota': 'Comprueba el resultado.'}
+            # Usa el mismo planificador que producción; así un atajo pasado como texto se rechaza.
+            _plan,error=b.g4.planificar_teclado(accion,texto,teclas)
+            return error or {'ok': True, 'efecto_visible': True, 'app': 'fixture.exe',
+                             'despues': b.estado_despues_sim(), 'nota': 'Efecto visible simulado.'}
+        return {'ok': bool(teclas), 'efecto_visible': bool(teclas), 'app': 'fixture.exe',
+                'despues': b.estado_despues_sim(), 'nota': 'Efecto visible simulado.'}
     ns['IMPLEMENTACIONES'].update(enfocar_ventana=focus, cerrar_app=close, mouse=mouse, teclado=keyboard,
         sugerencias=lambda accion, **kw: {'ok': True, 'accion': accion, 'sugerencias': []},
         consultar_memoria=lambda **kw: [], recordar=lambda **kw: {'ok': True, 'id': 1},
@@ -159,14 +164,16 @@ def main():
     parser.add_argument('--vision-only', action='store_true')
     parser.add_argument('--vision-normalized', action='store_true')
     parser.add_argument('--round2', action='store_true')
+    parser.add_argument('--round3', action='store_true')
     parser.add_argument('--diagnostic', choices=('baseline','prompt','schema','combined'))
     args = parser.parse_args()
     if args.vision_normalized:
         args.vision_only = True
-    if args.round2 or args.diagnostic:
-        OUT = OUT / 'ronda2'
+    if args.round2 or args.round3 or args.diagnostic:
+        OUT = OUT / ('ronda3' if args.round3 else 'ronda2')
     OUT.mkdir(parents=True, exist_ok=True)
-    runtime = prepare(args.model, args.round2 or bool(args.diagnostic))
+    runtime = prepare(args.model, args.round2 or args.round3 or bool(args.diagnostic),
+                      'ronda3' if args.round3 else 'ronda2')
     os.environ.update(SIN_REALES='1', CONFIRMAR='s', PYTHONDONTWRITEBYTECODE='1')
     sys.path.insert(0, str(runtime))
     from guardia_juego import exigir_gpu_libre, juego_abierto
@@ -188,7 +195,7 @@ def main():
     loaded = gpu.read()
     effects, reset = isolated_tools(b)
     integration=None
-    if args.round2 or args.diagnostic:
+    if args.round2 or args.round3 or args.diagnostic:
         from integracion import adjust
         integration=adjust(b.ns,args.diagnostic or 'combined')
         def valid_json(text):
@@ -253,6 +260,10 @@ def main():
         r['first_action_s'] = first[0] if first else None
         r['effects'] = copy.deepcopy(effects)
         r['outputs'] = copy.deepcopy(outputs)
+        protection=b.ns['_tarea'].get('proteccion',{})
+        r['proteccion']={'verificadas':sorted(protection.get('verificadas',())),
+                         'fallos':sorted(protection.get('fallos',())),
+                         'correcciones':protection.get('correcciones',0)}
         valid = bool(outputs)
         for out in outputs:
             try:

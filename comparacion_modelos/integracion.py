@@ -20,8 +20,14 @@ Solo si se pide actuar dentro de una app (escribir, guardar o pulsar un control)
 sus ventanas y enfoca la existente antes de actuar.
 Para la rueda del mouse usa mouse con accion desplazar; cantidad negativa baja y positiva sube.
 No confundas ese desplazamiento con volumen del sonido.
-Si una app es ambigua, pregunta cuál usando finalizar con un mensaje no vacío.
-Si algo está bloqueado o no autorizado, finaliza explicando la limitación sin rodear el bloqueo.'''
+En pedidos elípticos sobre intensidad, silencio o audición sin otro antecedente,
+interpreta que se refieren al volumen del sistema.
+Si una app es ambigua, consulta primero listar_apps y luego pregunta cuál usando finalizar
+con un mensaje no vacío. No intentes abrir un nombre genérico o supuesto.
+Si algo está bloqueado o no autorizado, finaliza explicando la limitación sin rodear el bloqueo.
+El ejecutor impide afirmar una acción sin efecto verificado y corta después de dos alternativas fallidas.
+Si ocurre, acepta la corrección y pregunta al usuario; no sigas intentando otros caminos.
+Nunca pases combinaciones como Ctrl+G o Alt+F4 en texto de teclado: usa accion atajo y el arreglo teclas.'''
 
 def adjust(ns, mode='combined'):
     # 0.3.36's schema converter permits raw U+0000..U+001F in JSON strings.

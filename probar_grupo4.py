@@ -155,6 +155,9 @@ if __name__ == "__main__":
     print("\n-- teclado (solo planes)")
     for nombre, args, esperado in [
             ("escribir texto con tildes", dict(accion="escribir", texto="hola, ¿qué tal? ñandú"), "plan"),
+            ("rechaza Ctrl+G como texto", dict(accion="escribir", texto="Ctrl+G"), "error"),
+            ("rechaza Alt+F4 como texto", dict(accion="escribir", texto="Alt + F4"), "error"),
+            ("permite una frase que menciona Ctrl+G", dict(accion="escribir", texto="Presiona Ctrl+G para guardar"), "plan"),
             ("atajo ctrl+s", dict(accion="atajo", teclas=["ctrl", "s"]), "plan"),
             ("tecla Enter (mayúsculas)", dict(accion="tecla", teclas=["Enter"]), "plan"),
             ("atajo con 'Mayús' y 'Control'", dict(accion="atajo", teclas=["Control", "Mayús", "t"]), "plan"),

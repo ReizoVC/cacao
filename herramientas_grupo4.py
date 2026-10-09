@@ -15,6 +15,8 @@ from datetime import datetime
 from ctypes import wintypes
 from pathlib import Path
 
+from protecciones_ejecucion import parece_atajo
+
 import psutil
 import win32api
 import win32clipboard
@@ -716,6 +718,9 @@ def planificar_teclado(accion, texto=None, teclas=None):
     if accion == "escribir":
         if not texto:
             return _error("Para 'escribir' indica 'texto'.")
+        if parece_atajo(texto):
+            return _error("Ese texto parece un atajo de teclado. No lo escribiré: usa accion 'atajo' y pasa "
+                          "cada tecla en 'teclas', por ejemplo ['ctrl', 'g'].")
         if len(texto) > MAX_TEXTO:
             return _error(f"El texto supera {MAX_TEXTO} caracteres; divídelo.")
         return {"accion": accion, "texto": texto}, None
@@ -849,10 +854,10 @@ def teclado(accion: str, texto: str = None, teclas: list = None):
     if error:
         return error
     comprobar_emergencia()
-    antes = instantanea() if accion in ("atajo", "tecla") else None
+    antes = instantanea()
+    reemplazo_otro_contenido = False
     if accion == "escribir" and MODO_ESCRIBIR == "pegar":
-        if _pegar(plan["texto"]):
-            return {"ok": True, "nota": "El portapapeles tenía algo que no era texto y se reemplazó."}
+        reemplazo_otro_contenido = _pegar(plan["texto"])
     elif accion == "escribir":
         # Unicode carácter a carácter: tildes y ñ sin depender de la distribución del teclado
         for i, c in enumerate(plan["texto"]):
@@ -876,9 +881,11 @@ def teclado(accion: str, texto: str = None, teclas: list = None):
             comprobar_emergencia()
             _enviar(vk=vk)
             _enviar(vk=vk, flags=KEYEVENTF_KEYUP)
-    if accion == "escribir":
-        return {"ok": True}
     efecto = esperar_efecto(antes)
-    return {"ok": True, "efecto_visible": efecto, "app": proceso_de(antes["frente"]), "despues": estado_despues(),
-            "nota": "Comprueba con listar_controles o ver_pantalla que pasó lo que esperabas antes de confirmarlo."
-            if efecto else NOTA_SIN_EFECTO}
+    resultado = {"ok": True, "efecto_visible": efecto, "app": proceso_de(antes["frente"]),
+                 "despues": estado_despues(),
+                 "nota": "Comprueba con listar_controles o ver_pantalla que pasó lo que esperabas antes de confirmarlo."
+                 if efecto else NOTA_SIN_EFECTO}
+    if reemplazo_otro_contenido:
+        resultado["nota_portapapeles"] = "El portapapeles tenía algo que no era texto y se reemplazó."
+    return resultado
