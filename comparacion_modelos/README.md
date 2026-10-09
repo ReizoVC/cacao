@@ -115,3 +115,17 @@ clave, pues el ejecutor sustituye la salida de su modelo. Los veinte textos se
 guardan sin editar; `conversacion_nueva_integridad.json` conserva huellas y fechas
 de generación. La revisión semántica de los siete fallos se entrega por separado
 en `clasificacion_fallos_qwen.md`, sin cambiar el marcador 188/195.
+
+## Gemma UD-Q4_K_XL con las protecciones de la ronda 3
+
+La comparación directa con Gemma Q5 reutiliza sin cambios el prompt, las 65 frases,
+las semillas 11/22/33, el esquema y las protecciones de la ronda 3:
+
+```powershell
+.\.venv-pruebas\Scripts\python.exe -B -u comparacion_modelos\ejecutar.py gemma_q4 --round3
+.\.venv-pruebas\Scripts\python.exe -B comparacion_modelos\resumir_gemma_q4_ronda3.py
+.\.venv-pruebas\Scripts\python.exe -B comparacion_modelos\verificar.py
+```
+
+La salida cruda queda en `datos/ronda3/gemma_q4.json` y se excluye de Git. Las
+métricas sanitizadas y el resumen sí se conservan para auditar el informe.

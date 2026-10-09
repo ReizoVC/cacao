@@ -425,3 +425,35 @@ acciones distintas impiden aprobar el cambio de modelo.
 La protección de teclado se verificó además con Ctrl+G, Alt+F4 y Ctrl+Shift+S como texto rechazado, y con el atajo estructurado permitido. Las pruebas puras no envían teclas ni controlan aplicaciones.
 
 Datos sanitizados: [metricas_ronda3.json](comparacion_modelos/metricas_ronda3.json) y [auditoria_ronda3.json](comparacion_modelos/auditoria_ronda3.json). Los datos crudos quedan locales y excluidos de Git. config.json y ambos entornos permanecen sin cambios.
+
+## Complemento — Gemma UD-Q4_K_XL y revisión de qwen36-vs-gemma4
+
+Se revisó [qwen36-vs-gemma4](https://github.com/RicardoBertran/qwen36-vs-gemma4). Su método aporta ideas útiles: registrar la configuración exacta, usar el mismo prompt en chats nuevos, medir VRAM y repetir en orden aleatorio con calentamiento. Sus cifras no se trasladan directamente a Cacao: compara Qwen 3.6 35B-A3B IQ2_XXS con Gemma 4 26B-A4B Q4_K_M, usa contexto 8192, razonamiento activo, una sola ejecución y temperaturas/top-k diferentes según su [comparison.ini](https://github.com/RicardoBertran/qwen36-vs-gemma4/blob/main/comparison.ini). El propio [documento de metodología](https://github.com/RicardoBertran/qwen36-vs-gemma4/blob/main/methodology.md) recomienda cuantizaciones y parámetros equivalentes, varias ejecuciones y pico de VRAM.
+
+La metodología sí se puede aplicar, y esta prueba de Cacao ya cubre la parte decisiva para nuestro uso: 65 órdenes reales por tres semillas, herramientas, JSON, protecciones y contexto 16.384. Probar Qwen 3.6 en Cacao exigiría un entorno separado actualizado y volver a validar plantilla, pensamiento, gramática y llamadas de herramientas; el preset del repositorio no debe copiarse sobre `.venv` ni sobre producción.
+
+Se eliminó `Qwen3.5-9B-UD-Q4_K_XL.gguf`, que ocupaba 5,56 GiB. Al finalizar la verificación, el disco C tenía 32,65 GiB libres; esta cifra puede fluctuar por archivos temporales de Windows. El modelo eliminado estaba excluido de Git.
+
+### Gemma Q4 frente a Gemma Q5, misma ronda 3
+
+| Métrica | Gemma Q5_K_M | Gemma UD-Q4_K_XL | Diferencia de Q4 |
+|---|---:|---:|---:|
+| Archivo del modelo | 7,84 GiB | 6,86 GiB | −0,98 GiB (−12,4 %) |
+| Tareas completas | 195/195 | 195/195 | igual |
+| Primera herramienta literal | 192/195 | 193/195 | +1 |
+| JSON válido | 195/195 | 195/195 | igual |
+| Respuestas vacías | 0 | 0 | igual |
+| Confirmaciones falsas finales | 0 | 0 | igual |
+| Casos distintos a lo pedido | 2 | 3 | +1 |
+| Correcciones internas | 1 | 1 | igual |
+| Primera acción, mediana / p95 | 3,50 / 4,23 s | 3,42 / 4,29 s | mediana −2,3 %; p95 +1,2 % |
+| Tiempo medio por tarea | 6,12 s | 5,87 s | −4,2 % |
+| Generación | 35,0 tok/s | 38,0 tok/s | +8,5 % |
+| Pico de GPU | 12.756 MiB | 12.065 MiB | −691 MiB |
+| Libre en el pico | 3.295 MiB | 3.986 MiB | +691 MiB |
+
+Q4 completó las 195 tareas, no dejó respuestas vacías y no entregó confirmaciones falsas. En #49 semilla 11 la protección corrigió una afirmación sin evidencia. En #49 semilla 22 tomó un camino largo de 13 acciones para consultar el clima y terminó admitiendo que no pudo verificarlo; este es el deterioro práctico frente a Q5. Los otros dos casos distintos, #56 semillas 22 y 33, añadieron `Alt+F4` antes de `cerrar_app`; Q5 ya mostró ese mismo patrón en esas dos semillas.
+
+**Recomendación actual:** Gemma UD-Q4_K_XL es una alternativa viable si se prioriza dejar margen para Qwen3-TTS: conserva 195/195, gana 691 MiB de VRAM, ahorra 0,98 GiB de disco y es algo más rápida. Gemma Q5 sigue siendo ligeramente más disciplinada por el desvío de Q4 en navegación web. Antes de cambiar producción conviene medir Gemma Q4 y Qwen3-TTS cargados simultáneamente; estos 691 MiB adicionales ayudan, pero esta tanda no demuestra que basten para la voz.
+
+Evidencia sanitizada: [metricas_gemma_q4_ronda3.json](comparacion_modelos/metricas_gemma_q4_ronda3.json) y [resumen_gemma_q4_ronda3.json](comparacion_modelos/resumen_gemma_q4_ronda3.json). Se mantuvieron `config.json`, `.venv` y `.venv-pruebas` sin cambios.

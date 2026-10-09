@@ -221,5 +221,11 @@
     "frozen_sha256": "c86a4cffa2a6bc4cf3987caeb07bec5ea8c5f30378c4693ac5bf3813a18d7061",
     "metrics_sha256": "3a0bb4e553f88efcddf118ed0a16b9797cbf80f2da93ecb5e9fc432125380374",
     "protocol_sha256": "c36a3f25ea3b05ef870a7465ec4e2721dd928d31d6aee8e2e5f9db7dc8c4effe"
+  },
+  "round3_gemma_q4": {
+    "cases": 195,
+    "new_conversations": 10,
+    "metrics_sha256": "c5cae58aa2bf6513f1ae08200aba48cc414766f79aa03597f4b62d3d73a107b1",
+    "summary_sha256": "7226f228a837a24a1d3d9ec108aeb12a43b286d0a041aadd9db04c0d906e0907"
   }
 }

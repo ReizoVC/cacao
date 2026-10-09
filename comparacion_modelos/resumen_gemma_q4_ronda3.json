@@ -1,0 +1,106 @@
+{
+  "summary": {
+    "complete": 195,
+    "blank": 0,
+    "json": 195,
+    "first": 193,
+    "false_confirmation": 0,
+    "distinct": 3,
+    "corrections": 1,
+    "two_failure_stops": 0,
+    "median_first": 3.417661400002544,
+    "p95_first": 4.286730699997861,
+    "mean_task": 5.865122019999921,
+    "tps": 38.01200924489001
+  },
+  "gpu_peak_mib": 12065,
+  "gpu_min_free_mib": 3986,
+  "disk_bytes": 7366423360,
+  "prompt_sha256": "0cd889b4581f4cb692773c672d5bd049cd4de0bdfd523db2512bf3a4423ecb70",
+  "schema_sha256": "c2ea19a80dd5a4960922f21b72ed5936dbd6aa22b98f2147b672b37b0e05f425",
+  "audit": [
+    {
+      "id": 49,
+      "seed": 11,
+      "complete": true,
+      "distinct_actions": [],
+      "false_confirmation": [],
+      "corrections": 1,
+      "tools": [
+        "buscar_web",
+        "finalizar",
+        "finalizar"
+      ],
+      "response": "Lamento la confusión, pero en este caso utilicé una búsqueda web en lugar de abrir una aplicación, por lo que no hubo una app que verificar. El enlace con el clima de Lima ya está disponible para ti."
+    },
+    {
+      "id": 49,
+      "seed": 22,
+      "complete": true,
+      "distinct_actions": [
+        "enfocar_ventana",
+        "teclado"
+      ],
+      "false_confirmation": [],
+      "corrections": 0,
+      "tools": [
+        "buscar_web",
+        "ver_pantalla",
+        "listar_ventanas",
+        "enfocar_ventana",
+        "ver_pantalla",
+        "listar_controles",
+        "ver_pantalla",
+        "teclado",
+        "ver_pantalla",
+        "teclado",
+        "teclado",
+        "ver_pantalla",
+        "finalizar"
+      ],
+      "response": "Reizo, he intentado enfocar la ventana del navegador para ver el clima, pero por alguna razón el sistema sigue mostrando la consola de PowerShell en las capturas. No he podido verificar el clima de Lima por este medio."
+    },
+    {
+      "id": 56,
+      "seed": 22,
+      "complete": true,
+      "distinct_actions": [
+        "teclado"
+      ],
+      "false_confirmation": [],
+      "corrections": 0,
+      "tools": [
+        "listar_controles",
+        "listar_ventanas",
+        "listar_controles",
+        "mouse",
+        "listar_ventanas",
+        "teclado",
+        "cerrar_app",
+        "finalizar"
+      ],
+      "response": "He cerrado la ventana de Windows PowerShell por ti."
+    },
+    {
+      "id": 56,
+      "seed": 33,
+      "complete": true,
+      "distinct_actions": [
+        "teclado"
+      ],
+      "false_confirmation": [],
+      "corrections": 0,
+      "tools": [
+        "listar_controles",
+        "listar_ventanas",
+        "listar_controles",
+        "mouse",
+        "listar_ventanas",
+        "teclado",
+        "cerrar_app",
+        "finalizar"
+      ],
+      "response": "He cerrado la ventana de Windows PowerShell por ti."
+    }
+  ]
+}

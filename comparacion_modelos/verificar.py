@@ -95,6 +95,23 @@ if (HERE/'metricas_ronda3.json').exists():
     assert len({d['prompt_sha256'] for d in final3})==1
     assert len({d['integration']['schema_sha256'] for d in final3})==1
     assert '## Ronda 3 — protecciones deterministas en producción y pruebas' in report
+gemma_q4_round3=None
+if (HERE/'metricas_gemma_q4_ronda3.json').exists():
+    gemma_q4_round3=json.loads((HERE/'metricas_gemma_q4_ronda3.json').read_text(encoding='utf-8'))
+    gemma_q4_summary=json.loads((HERE/'resumen_gemma_q4_ronda3.json').read_text(encoding='utf-8'))
+    assert len(gemma_q4_round3)==195
+    assert {(r['id'],r['seed']) for r in gemma_q4_round3}=={(i,s) for i in range(1,66) for s in (11,22,33)}
+    assert all(r['model']=='gemma_q4' for r in gemma_q4_round3)
+    q4_raw=json.loads((HERE/'datos/ronda3/gemma_q4.json').read_text(encoding='utf-8'))
+    q5_raw=json.loads((HERE/'datos/ronda3/gemma_q5.json').read_text(encoding='utf-8'))
+    assert q4_raw['complete'] and len(q4_raw['cases'])==195 and len(q4_raw['conversation'])==10
+    assert q4_raw['prompt_sha256']==q5_raw['prompt_sha256']==gemma_q4_summary['prompt_sha256']
+    assert q4_raw['integration']['schema_sha256']==q5_raw['integration']['schema_sha256']==gemma_q4_summary['schema_sha256']
+    assert gemma_q4_summary['summary']['complete']==195
+    assert gemma_q4_summary['summary']['blank']==0
+    assert gemma_q4_summary['summary']['false_confirmation']==0
+    assert gemma_q4_summary['disk_bytes']==(ROOT/'modelos/comparacion/gemma-4-12b-it-UD-Q4_K_XL.gguf').stat().st_size
+    assert '## Complemento — Gemma UD-Q4_K_XL y revisión de qwen36-vs-gemma4' in report
 engine=[]
 production=ROOT/'.venv/Lib/site-packages/llama_cpp'
 testing=ROOT/'.venv-pruebas/Lib/site-packages/llama_cpp'
@@ -118,5 +135,9 @@ if round3 is not None:
         'frozen_sha256':sha(HERE/'ronda3_congelado.json'),
         'metrics_sha256':sha(HERE/'metricas_ronda3.json'),
         'protocol_sha256':sha(HERE/'ronda3_protocolo.md')}
+if gemma_q4_round3 is not None:
+    manifest['round3_gemma_q4']={'cases':len(gemma_q4_round3),'new_conversations':10,
+        'metrics_sha256':sha(HERE/'metricas_gemma_q4_ronda3.json'),
+        'summary_sha256':sha(HERE/'resumen_gemma_q4_ronda3.json')}
 (HERE/'integridad.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf-8')
 print('Verificación completa: configuración original, motor idéntico, referencias y nueva ronda completas.')
