@@ -520,7 +520,11 @@ si reduce el tiempo real por tarea sin degradar la disciplina de herramientas.
 
 Evidencia sanitizada: [metricas_gemma_q5_llama_b11429.json](comparacion_modelos/metricas_gemma_q5_llama_b11429.json) y [resumen_gemma_q5_llama_b11429.json](comparacion_modelos/resumen_gemma_q5_llama_b11429.json). Los datos crudos siguen locales y excluidos de Git. `config.json`, `.venv` y `.venv-pruebas` permanecen sin cambios.
 
-## Parte 3 — fine-tuning de Qwen para herramientas
+## Parte 3 — candidato auxiliar Wrench para herramientas
+
+Esta tanda no sustituye la evaluación del candidato acordado UI-Mate. Wrench se
+probó como exploración auxiliar antes de identificar correctamente el checkpoint
+especializado en interfaces gráficas.
 
 Se seleccionó [ClankLabs/Wrench-9B-Q4_K_M-GGUF](https://huggingface.co/ClankLabs/Wrench-9B-Q4_K_M-GGUF/tree/6d4f489d2a1ebb0f41f6cc8779a07df5917e5ddc),
 un LoRA de Qwen 3.5 9B entrenado para llamadas de herramientas, recuperación de
@@ -567,3 +571,73 @@ la referencia Qwen es UD-Q5_K_XL con el motor anterior; la diferencia es lo bast
 grande para que no justifique otra ronda.
 
 Evidencia sanitizada: [metricas_wrench_b11429.json](comparacion_modelos/metricas_wrench_b11429.json) y [resumen_wrench_b11429.json](comparacion_modelos/resumen_wrench_b11429.json). El modelo y los datos crudos están excluidos de Git. Producción permanece con Gemma Q5 y `llama-cpp-python 0.3.36`.
+
+## Parte 4 — UI-Mate-9B, candidato principal de interfaz
+
+Se evaluó [Tencent UI-Mate-9B](https://huggingface.co/tencent/UI-Mate-9B), el
+checkpoint especializado en uso de interfaces basado en Qwen3.5-9B. Para
+llama.cpp se usó la conversión comunitaria Q5_K_M de
+[mradermacher](https://huggingface.co/mradermacher/UI-Mate-9B-GGUF/tree/d66487fa0deb83cfbae88fc143d7d76987d3437a):
+modelo de 6.467.970.336 bytes y proyector F16 de 918.166.016 bytes, 6,88 GiB en
+total. El adaptador oficial se fijó en el commit
+`1cb9e1e44ce856e23b593992b02efbd489943fcb`. Los SHA-256 coinciden con los objetos publicados. El modelo, el proyector
+y el código oficial descargado quedan fuera de Git.
+
+La prueba se dividió en dos contratos porque UI-Mate no es un reemplazo directo
+del planificador de Cacao:
+
+- **Integración Cacao:** mismo prompt, esquema, 65 frases × 3 semillas,
+  herramientas simuladas, temperatura 0,3, contexto 16.384 y pensamiento
+  desactivado que Gemma. Así se mide si puede respetar el contrato JSON actual.
+- **Interfaz nativa:** adaptador oficial de Tencent, capturas e historial,
+  pensamiento activado, salida `computer_use` y coordenadas relativas 0–999.
+  Las cinco acciones se puntuaron sin ejecutarlas sobre Windows.
+
+| Modelo, llama.cpp b11429 | Completas | Primera literal | JSON | Vacías | Confirmaciones falsas | Distinto a lo pedido | Primera mediana / p95 | Media tarea | tok/s | Pico GPU total | Libre al pico |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Gemma Q5 | 195/195 (100 %) | 192/195 | 195/195 | 0 | 0 | 4 | 3,91 / 4,63 s | 6,72 s | 41,13 | 9.542 MiB | 6.509 MiB |
+| UI-Mate Q5 | 184/195 (94,4 %) | 188/195 | 195/195 | 0 | 1 | 11 | 2,64 / 3,11 s | 5,32 s | 58,58 | 7.990 MiB | 8.061 MiB |
+
+UI-Mate ahorra 1.552 MiB de VRAM en esta configuración con el proyector cargado,
+reduce 1,27 s la mediana de primera acción y genera 42,4 % más rápido que Gemma.
+Su problema es la disciplina: once observaciones no acreditaron la tarea. Los
+fallos incluyeron cambiar volumen en vez de desplazar la rueda (#57 s11), omitir
+el cierre forzado solicitado (#52 s11), agotar los 15 pasos en audio, renombrado,
+escritura o cierre (#14 s22, #54 s22, #55 s11, #56 s33 y #58 s11), y confirmar
+escritura sin cumplir el efecto esperado (#58 s22). En #55 s22 asumió que
+`Spark.txt` contenía las contraseñas y lo movió: es una acción distinta y
+potencialmente dañina en una ejecución real, aunque aquí todas las herramientas
+fueron simuladas. No hubo respuestas vacías. La auditoría manual detectó una
+confirmación falsa en #58 s22: después de verificar que escribió, afirmó además
+que el texto se había guardado. El detector automático no la bloqueó porque ambos
+efectos se expresaron como acciones de teclado; hace falta verificar efectos más
+específicos que el nombre general de la herramienta.
+
+En una de las diez preguntas conversacionales, la petición era dar un primer
+paso pequeño para estudiar y UI-Mate abrió Bloc de notas y escribió varias veces,
+aunque no se pidió actuar. Las respuestas quedaron registradas, pero no se
+incorporan a la evaluación ciega porque el candidato ya incumple el umbral
+operativo fijado.
+
+### Visión con el protocolo nativo de UI-Mate
+
+Con pensamiento activo, UI-Mate acertó estrictamente 2/5: el botón igual y el
+menú Archivo. Falló el número 7 por 7 píxeles en horizontal, confundió la altura
+del botón `+` de la Calculadora y señaló otro `+` en la barra del Bloc de notas.
+El formato fue válido en 5/5 y las descripciones identificaron verbalmente el
+objetivo, pero las coordenadas no fueron suficientemente precisas. Con
+pensamiento desactivado había logrado 1/5, por lo que la cifra válida para su
+integración recomendada es 2/5.
+
+**Decisión:** UI-Mate no pasa el criterio fijado de 98 % y cero acciones distintas
+a lo pedido. No conviene reemplazar Gemma como modelo general de Cacao. Sí merece
+una prueba futura como planificador visual separado, detrás del ejecutor protegido
+de Cacao y con más capturas representativas; su velocidad y margen de 8.061 MiB
+para voz son buenos, pero esta ronda no demuestra fiabilidad suficiente para
+darle control general del escritorio.
+
+Evidencia sanitizada:
+[metricas_ui_mate_b11429.json](comparacion_modelos/metricas_ui_mate_b11429.json),
+[resumen_ui_mate_b11429.json](comparacion_modelos/resumen_ui_mate_b11429.json) y
+[ui_mate_q5_vision_nativa.json](comparacion_modelos/ui_mate_q5_vision_nativa.json).
+Producción permanece con Gemma Q5; `config.json` y `.venv` no se modificaron.

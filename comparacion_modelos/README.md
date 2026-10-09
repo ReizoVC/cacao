@@ -60,6 +60,21 @@ solo proceso de inferencia a la vez, desde `C:\asistente`:
 .\.venv-pruebas\Scripts\python.exe -B comparacion_modelos\verificar.py
 ```
 
+## UI-Mate-9B Q5
+
+UI-Mate se mantiene separado de la ronda 3 congelada. `ejecutar_ui_mate.py`
+registra el modelo sin modificar `ejecutar.py`. La visión usa el adaptador oficial
+fijado en `.comparacion-runtime/ui-mate-source/Tencent-UI-Mate-1cb9e1e`, con
+pensamiento activo y coordenadas relativas. El contrato JSON de Cacao se prueba
+después con pensamiento desactivado:
+
+```powershell
+.\comparacion_modelos\probar_ui_mate.ps1
+.\.venv-pruebas\Scripts\python.exe -B comparacion_modelos\resumir_ui_mate_b11429.py
+```
+
+Las acciones nativas se analizan, pero nunca se ejecutan sobre el escritorio.
+
 `continuar.py` omite tandas marcadas completas; para medir desde cero, conservar
 los resultados anteriores en otro directorio antes de ejecutar. No lanzar el
 resumen mientras haya tandas activas. La clave existente mantiene las mismas

@@ -1,0 +1,277 @@
+{
+  "model": "tencent/UI-Mate-9B Q5_K_M GGUF",
+  "base_model": "Qwen/Qwen3.5-9B",
+  "source_revision": "d66487fa0deb83cfbae88fc143d7d76987d3437a",
+  "official_harness_revision": "1cb9e1e44ce856e23b593992b02efbd489943fcb",
+  "model_sha256": "8aaef02bce71b9056df67986b67964d10396278689dbcd807b1cd204df4959e7",
+  "model_bytes": 6467970336,
+  "mmproj_sha256": "5a8380c4637dddceed9dbc28fffcdfa8601909c0ece9fe218fbd6888ec5d2c16",
+  "mmproj_bytes": 918166016,
+  "engine": "llama.cpp b11429",
+  "summary": {
+    "complete": 184,
+    "blank": 0,
+    "json": 195,
+    "first": 188,
+    "false_confirmation": 1,
+    "automatic_false_confirmation": 0,
+    "distinct": 11,
+    "corrections": 9,
+    "median_first": 2.64311699999962,
+    "p95_first": 3.109417399999984,
+    "mean_task": 5.321236097435898,
+    "tps": 58.57827408459087,
+    "vision_native": "2/5",
+    "conversation_with_actions": 1
+  },
+  "gemma_q5_llama_b11429": {
+    "complete": 195,
+    "blank": 0,
+    "json": 195,
+    "first": 192,
+    "false_confirmation": 0,
+    "distinct": 4,
+    "corrections": 0,
+    "median_first": 3.910602700000709,
+    "p95_first": 4.6334593000001405,
+    "mean_task": 6.719515008205095,
+    "tps": 41.130095648659356,
+    "prompt_tps": 1636.0551423833826
+  },
+  "gpu_peak_mib": 7990,
+  "gpu_min_free_mib": 8061,
+  "prompt_sha256": "0cd889b4581f4cb692773c672d5bd049cd4de0bdfd523db2512bf3a4423ecb70",
+  "schema_sha256": "c2ea19a80dd5a4960922f21b72ed5936dbd6aa22b98f2147b672b37b0e05f425",
+  "incomplete": [
+    [
+      52,
+      11
+    ],
+    [
+      55,
+      11
+    ],
+    [
+      57,
+      11
+    ],
+    [
+      58,
+      11
+    ],
+    [
+      14,
+      22
+    ],
+    [
+      54,
+      22
+    ],
+    [
+      55,
+      22
+    ],
+    [
+      56,
+      22
+    ],
+    [
+      58,
+      22
+    ],
+    [
+      56,
+      33
+    ],
+    [
+      60,
+      33
+    ]
+  ],
+  "false_confirmations": [
+    [
+      58,
+      22,
+      [
+        "Afirmó que el texto se guardó; solo se verificó escribirlo."
+      ]
+    ]
+  ],
+  "distinct_actions": [
+    [
+      49,
+      11,
+      [
+        "enfocar_ventana"
+      ]
+    ],
+    [
+      55,
+      11,
+      [
+        "ejecutar_powershell",
+        "enfocar_ventana"
+      ]
+    ],
+    [
+      57,
+      11,
+      [
+        "volumen"
+      ]
+    ],
+    [
+      64,
+      11,
+      [
+        "abrir_app"
+      ]
+    ],
+    [
+      41,
+      22,
+      [
+        "enfocar_ventana"
+      ]
+    ],
+    [
+      54,
+      22,
+      [
+        "ejecutar_powershell"
+      ]
+    ],
+    [
+      61,
+      22,
+      [
+        "registro_habitos"
+      ]
+    ],
+    [
+      64,
+      22,
+      [
+        "abrir_app"
+      ]
+    ],
+    [
+      49,
+      33,
+      [
+        "enfocar_ventana"
+      ]
+    ],
+    [
+      61,
+      33,
+      [
+        "registro_habitos"
+      ]
+    ],
+    [
+      64,
+      33,
+      [
+        "abrir_app"
+      ]
+    ]
+  ],
+  "conversation_actions": [
+    {
+      "id": 5,
+      "tools": [
+        "abrir_app",
+        "teclado",
+        "listar_ventanas",
+        "enfocar_ventana",
+        "teclado",
+        "teclado",
+        "finalizar"
+      ]
+    }
+  ],
+  "vision": {
+    "modelo": "UI-Mate-9B Q5_K_M",
+    "protocolo": "Adaptador oficial Tencent UI-Mate, pensamiento activado, coordenadas relativas 0-999",
+    "tareas": [
+      {
+        "id": 1,
+        "objetivo": "el botón del número 7",
+        "acciones": [
+          "pyautogui.click(134, 375)"
+        ],
+        "puntos": [
+          [
+            134,
+            375
+          ]
+        ],
+        "acierto": false,
+        "respuesta": "<think>\nThe user wants me to locate and click once on the button with the number 7. I can see a scientific calculator application is open, and there's a button labeled \"7\" in the number pad area of the calculator. I need to click on this button once.\n</think>\n\n<action>\nClick the button labeled \"7\" on the calculator.\n</action>\n\n<tool_call>\n<function=computer_use>\n<parameter=action>\nleft_click\n</parameter>\n<parameter=coordinate>\n[417, 703]\n</parameter>\n</function>\n</tool_call>"
+      },
+      {
+        "id": 2,
+        "objetivo": "el botón más (+), para sumar",
+        "acciones": [
+          "pyautogui.click(310, 385)"
+        ],
+        "puntos": [
+          [
+            310,
+            385
+          ]
+        ],
+        "acierto": false,
+        "respuesta": "<think>\nThe user wants me to locate and click once on the plus (+) button in the calculator. Looking at the calculator interface, I can see there's a \"+\" button in the bottom right area of the calculator, just above the \"=\" button. I need to click on this button once.\n</think>\n\n<action>\nClick the plus (+) button located in the bottom-right area of the calculator, just above the equals (=) button.\n</action>\n\n<tool_call>\n<function=computer_use>\n<parameter=action>\nleft_click\n</parameter>\n<parameter=coordinate>\n[964, 722]\n</parameter>\n</function>\n</tool_call>"
+      },
+      {
+        "id": 3,
+        "objetivo": "el botón igual (=)",
+        "acciones": [
+          "pyautogui.click(309, 497)"
+        ],
+        "puntos": [
+          [
+            309,
+            497
+          ]
+        ],
+        "acierto": true,
+        "respuesta": "<think>\nThe user wants me to locate and click once on the equals (=) button. I can see the calculator is open and there's a pink/magenta button at the bottom right that appears to be the equals button. I need to click on it once.\n</think>\n\n<action>\nClick the equals (=) button at the bottom-right of the calculator.\n</action>\n\n<tool_call>\n<function=computer_use>\n<parameter=action>\nleft_click\n</parameter>\n<parameter=coordinate>\n[960, 930]\n</parameter>\n</function>\n</tool_call>"
+      },
+      {
+        "id": 4,
+        "objetivo": "el menú Archivo",
+        "acciones": [
+          "pyautogui.click(37, 59)"
+        ],
+        "puntos": [
+          [
+            37,
+            59
+          ]
+        ],
+        "acierto": true,
+        "respuesta": "<think>\nEl usuario quiere que localice y haga clic en el menú \"Archivo\". En la interfaz de LibreOffice Writer que se muestra, el menú \"Archivo\" está claramente visible en la parte superior izquierda de la ventana, como la primera opción del menú principal. Debo hacer clic en él para cumplir con la solicitud.\n</think>\n\n<action>\nHacer clic en el menú \"Archivo\" ubicado en la esquina superior izquierda de la ventana de LibreOffice Writer.\n</action>\n\n<tool_call>\n<function=computer_use>\n<parameter=action>\nleft_click\n</parameter>\n<parameter=coordinate>\n[38, 80]\n</parameter>\n</function>\n</tool_call>"
+      },
+      {
+        "id": 5,
+        "objetivo": "el botón + para crear una pestaña nueva",
+        "acciones": [
+          "pyautogui.click(250, 31)"
+        ],
+        "puntos": [
+          [
+            250,
+            31
+          ]
+        ],
+        "acierto": false,
+        "respuesta": "<think>\nThe user wants me to locate and click the + button to create a new tab. Looking at the screenshot, I can see there's a + button in the tab bar area near the top of the window, between the \"Sin título\" tab and the window controls. This appears to be the button for creating a new tab. I should click on this + button.\n</think>\n\n<action>\nClick the + button in the tab bar to create a new tab.\n</action>\n\n<tool_call>\n<function=computer_use>\n<parameter=action>\nleft_click\n</parameter>\n<parameter=coordinate>\n[254, 42]\n</parameter>\n</function>\n</tool_call>"
+      }
+    ],
+    "aciertos": 2,
+    "total": 5
+  }
+}

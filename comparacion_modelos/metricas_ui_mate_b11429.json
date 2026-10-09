@@ -1,0 +1,4725 @@
+[
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 1,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 1.2833511999997427,
+  "wall_s": 2.6035244999998213,
+  "tokens": 139
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 2,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.7599334000001363,
+  "wall_s": 4.160278600000311,
+  "tokens": 145
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 3,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6910678000003827,
+  "wall_s": 4.172642100000303,
+  "tokens": 146
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 4,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.927692400000069,
+  "wall_s": 4.393775500000174,
+  "tokens": 143
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 5,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.7539630000001125,
+  "wall_s": 4.189918099999886,
+  "tokens": 145
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 6,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.571465399999852,
+  "wall_s": 3.705631099999664,
+  "tokens": 116
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 7,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.740754999999808,
+  "wall_s": 4.190042799999901,
+  "tokens": 143
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 8,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5417285000003176,
+  "wall_s": 3.5939978000001247,
+  "tokens": 113
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 9,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6097984000002725,
+  "wall_s": 3.797562000000198,
+  "tokens": 125
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 10,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.656268600000203,
+  "wall_s": 3.7109952999999223,
+  "tokens": 120
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 11,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.673330999999962,
+  "wall_s": 3.6478197000001273,
+  "tokens": 116
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 12,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6270398999999998,
+  "wall_s": 3.8477028000002065,
+  "tokens": 125
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 13,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.7088748000001033,
+  "wall_s": 3.9585692000000563,
+  "tokens": 134
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 14,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.696848399999908,
+  "wall_s": 6.015974200000073,
+  "tokens": 226
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 15,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.706587500000296,
+  "wall_s": 3.9712398000001485,
+  "tokens": 135
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 16,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.7395158000003903,
+  "wall_s": 4.030457800000022,
+  "tokens": 133
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 17,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.542414699999881,
+  "wall_s": 5.145297500000197,
+  "tokens": 184
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 18,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "consultar_memoria",
+   "abrir_app",
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [
+    "abrir_app:{\"nombre\": \"VS Code:\"}"
+   ],
+   "correcciones": 0
+  },
+  "first_action_s": 2.8492197000000488,
+  "wall_s": 7.335422199999812,
+  "tokens": 287
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 19,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.70082820000016,
+  "wall_s": 5.198847000000114,
+  "tokens": 177
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 20,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.837539099999958,
+  "wall_s": 6.42092730000013,
+  "tokens": 267
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 21,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.573420199999873,
+  "wall_s": 4.359037199999875,
+  "tokens": 154
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 22,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.524925400000029,
+  "wall_s": 6.7038259999999354,
+  "tokens": 286
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 23,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5802795999998125,
+  "wall_s": 4.158983400000125,
+  "tokens": 144
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 24,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6115953000003174,
+  "wall_s": 6.288857900000039,
+  "tokens": 261
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 25,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3294676000000436,
+  "wall_s": 5.604264800000237,
+  "tokens": 234
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 26,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5116705999998885,
+  "wall_s": 5.58277279999993,
+  "tokens": 226
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 27,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.560535499999787,
+  "wall_s": 7.414753999999903,
+  "tokens": 317
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 28,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.362836999999672,
+  "wall_s": 3.4943247999999585,
+  "tokens": 106
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 29,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.445011400000112,
+  "wall_s": 4.716368899999907,
+  "tokens": 162
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 30,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5596074000000044,
+  "wall_s": 4.845358800000213,
+  "tokens": 178
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 31,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5430210999998053,
+  "wall_s": 4.504279400000087,
+  "tokens": 159
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 32,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.445267800000238,
+  "wall_s": 5.638884299999972,
+  "tokens": 197
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 33,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.429546699999719,
+  "wall_s": 6.481112199999643,
+  "tokens": 246
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 34,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.755967200000214,
+  "wall_s": 5.34595070000023,
+  "tokens": 200
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 35,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.9184752999999546,
+  "wall_s": 2.922651799999585,
+  "tokens": 81
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 36,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.590881900000113,
+  "wall_s": 4.595336800000041,
+  "tokens": 173
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 37,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.995158999999603,
+  "wall_s": 2.999377699999968,
+  "tokens": 85
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 38,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.7420419999998558,
+  "wall_s": 3.7463622999998734,
+  "tokens": 131
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 39,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.540770000000066,
+  "wall_s": 3.545090099999925,
+  "tokens": 119
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 40,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6094247000000905,
+  "wall_s": 2.6137125000000196,
+  "tokens": 62
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 41,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "finalizar",
+   "listar_controles",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 2
+  },
+  "first_action_s": 2.461643699999968,
+  "wall_s": 8.809581099999832,
+  "tokens": 393
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 42,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3802857000000586,
+  "wall_s": 4.407025099999828,
+  "tokens": 148
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 43,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.657860299999811,
+  "wall_s": 5.29372179999973,
+  "tokens": 192
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 44,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3641821999999593,
+  "wall_s": 4.957293100000243,
+  "tokens": 179
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 45,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5298503999997592,
+  "wall_s": 4.426683799999864,
+  "tokens": 159
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 46,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "leer_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.529480700000022,
+  "wall_s": 4.925060300000041,
+  "tokens": 181
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 47,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.776618099999723,
+  "wall_s": 4.955519099999947,
+  "tokens": 194
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 48,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "leer_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6758293000002595,
+  "wall_s": 4.469276700000137,
+  "tokens": 163
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 49,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "buscar_web",
+   "finalizar",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "ver_pantalla",
+   "enfocar_ventana",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 2
+  },
+  "first_action_s": 2.5301556999997956,
+  "wall_s": 11.809641399999691,
+  "tokens": 516
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 50,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "leer_archivo"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6116996999999174,
+  "wall_s": 2.6207196000000295,
+  "tokens": 50
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 51,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.500857800000176,
+  "wall_s": 4.835726700000123,
+  "tokens": 171
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 52,
+  "seed": 11,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "cerrar_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5443669000001137,
+  "wall_s": 3.876173299999664,
+  "tokens": 130
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 53,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "mover_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "mover_archivo"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.98200050000014,
+  "wall_s": 4.336423500000365,
+  "tokens": 154
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 54,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "mover_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "mover_archivo"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.0268928000000415,
+  "wall_s": 4.430210200000147,
+  "tokens": 161
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 55,
+  "seed": 11,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "mover_archivo",
+   "listar_carpeta",
+   "listar_carpeta",
+   "listar_carpeta",
+   "mover_archivo",
+   "listar_carpeta",
+   "ver_pantalla",
+   "leer_archivo",
+   "listar_carpeta",
+   "ejecutar_powershell",
+   "listar_carpeta",
+   "listar_carpeta",
+   "listar_ventanas",
+   "enfocar_ventana"
+  ],
+  "protection": {
+   "verificadas": [
+    "ejecutar_powershell",
+    "enfocar_ventana",
+    "mover_archivo"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.109417399999984,
+  "wall_s": 21.286116700000093,
+  "tokens": 963
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 56,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "mouse",
+   "listar_ventanas",
+   "cerrar_app",
+   "cerrar_app",
+   "cerrar_app",
+   "cerrar_app",
+   "cerrar_app",
+   "cerrar_app",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar",
+    "mouse"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.072736199999781,
+  "wall_s": 13.200098799999978,
+  "tokens": 588
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 57,
+  "seed": 11,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.856422500000008,
+  "wall_s": 4.161520399999972,
+  "tokens": 136
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 58,
+  "seed": 11,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "abrir_app",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "teclado",
+   "listar_controles",
+   "teclado",
+   "listar_carpeta",
+   "listar_carpeta",
+   "leer_archivo",
+   "listar_controles",
+   "mouse",
+   "listar_controles",
+   "listar_controles",
+   "mouse",
+   "teclado"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "enfocar_ventana",
+    "mouse",
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.601525799999763,
+  "wall_s": 20.44886489999999,
+  "tokens": 931
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 59,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "teclado",
+   "listar_controles",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana",
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6461277000003065,
+  "wall_s": 9.344354900000326,
+  "tokens": 392
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 60,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "teclado",
+   "finalizar",
+   "listar_controles",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 1
+  },
+  "first_action_s": 2.7232380999998895,
+  "wall_s": 6.919282199999998,
+  "tokens": 289
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 61,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "consultar_memoria",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.772737600000255,
+  "wall_s": 4.4655007999999725,
+  "tokens": 163
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 62,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6555277000002206,
+  "wall_s": 4.118097300000045,
+  "tokens": 145
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 63,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.592968799999653,
+  "wall_s": 3.9430162999997265,
+  "tokens": 132
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 64,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "sugerencias",
+   "consultar_memoria",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.8464475000000675,
+  "wall_s": 7.738026699999864,
+  "tokens": 301
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 65,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "registro_habitos",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "registro_habitos"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.7232677000001786,
+  "wall_s": 4.057906300000013,
+  "tokens": 141
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 1,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5960878999999295,
+  "wall_s": 3.8914472999999816,
+  "tokens": 130
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 2,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.878740099999959,
+  "wall_s": 4.297937700000148,
+  "tokens": 155
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 3,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.7723228999998355,
+  "wall_s": 4.081779799999822,
+  "tokens": 142
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 4,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.887767900000199,
+  "wall_s": 4.271759799999927,
+  "tokens": 145
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 5,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.7925725999998576,
+  "wall_s": 4.6319196999997985,
+  "tokens": 142
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 6,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.445596900000055,
+  "wall_s": 3.5117731999998796,
+  "tokens": 108
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 7,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.9036120000000665,
+  "wall_s": 4.390553100000034,
+  "tokens": 155
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 8,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.627135900000212,
+  "wall_s": 3.761445999999978,
+  "tokens": 123
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 9,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.348937400000068,
+  "wall_s": 3.4934197000002314,
+  "tokens": 98
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 10,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6275888999998642,
+  "wall_s": 3.915328699999918,
+  "tokens": 119
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 11,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.639852499999961,
+  "wall_s": 3.613136399999803,
+  "tokens": 114
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 12,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.561883299999863,
+  "wall_s": 3.5398575999997774,
+  "tokens": 109
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 13,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6891120999998748,
+  "wall_s": 3.9485082999999577,
+  "tokens": 134
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 14,
+  "seed": 22,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "volumen",
+   "volumen",
+   "volumen",
+   "volumen",
+   "volumen",
+   "volumen",
+   "volumen",
+   "volumen",
+   "volumen",
+   "volumen",
+   "volumen",
+   "volumen",
+   "volumen",
+   "volumen"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.686999999999898,
+  "wall_s": 18.868994600000406,
+  "tokens": 869
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 15,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5591525000008915,
+  "wall_s": 3.7749414000008983,
+  "tokens": 124
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 16,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5287293000001227,
+  "wall_s": 4.676061299999674,
+  "tokens": 166
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 17,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5800428000002285,
+  "wall_s": 4.684781500000099,
+  "tokens": 170
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 18,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.883986499999992,
+  "wall_s": 4.388249600000563,
+  "tokens": 151
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 19,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.8089273999994475,
+  "wall_s": 5.033033299999261,
+  "tokens": 173
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 20,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5852045000001453,
+  "wall_s": 5.2826258999994025,
+  "tokens": 188
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 21,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5394452999998975,
+  "wall_s": 4.152252699999735,
+  "tokens": 143
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 22,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.527411000000029,
+  "wall_s": 8.642083499999899,
+  "tokens": 405
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 23,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.350672399999894,
+  "wall_s": 3.841693600000326,
+  "tokens": 123
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 24,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5728486999996676,
+  "wall_s": 4.793874599999981,
+  "tokens": 165
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 25,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.329461500000434,
+  "wall_s": 5.272735100000318,
+  "tokens": 211
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 26,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6603885000004084,
+  "wall_s": 5.634702500000458,
+  "tokens": 231
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 27,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5943944999999076,
+  "wall_s": 8.59916499999963,
+  "tokens": 380
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 28,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3991814000000886,
+  "wall_s": 3.4225092000006043,
+  "tokens": 102
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 29,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.578121000000465,
+  "wall_s": 4.669479500000307,
+  "tokens": 170
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 30,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.562751400000707,
+  "wall_s": 4.859929300000658,
+  "tokens": 178
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 31,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5385921999995844,
+  "wall_s": 4.58937909999986,
+  "tokens": 161
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 32,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.1377775999999358,
+  "wall_s": 6.26659380000001,
+  "tokens": 236
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 33,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.4306698999998844,
+  "wall_s": 4.650486399999863,
+  "tokens": 165
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 34,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.663158100000146,
+  "wall_s": 4.624391000000287,
+  "tokens": 163
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 35,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.7697360000001936,
+  "wall_s": 2.7739160000000993,
+  "tokens": 72
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 36,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.145680200000243,
+  "wall_s": 4.150063699999919,
+  "tokens": 140
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 37,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.033155799999804,
+  "wall_s": 3.0376085999996576,
+  "tokens": 87
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 38,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.1476149999998597,
+  "wall_s": 3.1518523999993704,
+  "tokens": 95
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 39,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.8130526000004465,
+  "wall_s": 3.817334800000026,
+  "tokens": 122
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 40,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.4956539999993765,
+  "wall_s": 2.4998534999995172,
+  "tokens": 55
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 41,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "finalizar",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 1
+  },
+  "first_action_s": 2.363925399999971,
+  "wall_s": 8.533881800000017,
+  "tokens": 360
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 42,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.330497299999479,
+  "wall_s": 4.209200499999497,
+  "tokens": 138
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 43,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5617823000002318,
+  "wall_s": 5.463756099999955,
+  "tokens": 207
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 44,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3475478999998813,
+  "wall_s": 3.6696437000000515,
+  "tokens": 112
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 45,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.541965700000219,
+  "wall_s": 4.491978000000017,
+  "tokens": 164
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 46,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.526341200000388,
+  "wall_s": 4.316219799999999,
+  "tokens": 153
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 47,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.77376970000023,
+  "wall_s": 4.459263400000054,
+  "tokens": 161
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 48,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "leer_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6960832000004302,
+  "wall_s": 4.209432600000582,
+  "tokens": 150
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 49,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "buscar_web",
+   "finalizar",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 1
+  },
+  "first_action_s": 2.9291042999993806,
+  "wall_s": 8.168885899999623,
+  "tokens": 336
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 50,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "leer_archivo"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.7110451999997167,
+  "wall_s": 2.720047299999351,
+  "tokens": 67
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 51,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "cerrar_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5407679999998436,
+  "wall_s": 3.633263900000202,
+  "tokens": 110
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 52,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.4339061999999103,
+  "wall_s": 5.14145120000012,
+  "tokens": 190
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 53,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "mover_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "mover_archivo"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.8521611999995002,
+  "wall_s": 4.005064799999673,
+  "tokens": 135
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 54,
+  "seed": 22,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "mover_archivo",
+   "listar_carpeta",
+   "listar_carpeta",
+   "mover_archivo",
+   "listar_carpeta",
+   "leer_archivo",
+   "mover_archivo",
+   "leer_archivo",
+   "ejecutar_powershell",
+   "mover_archivo",
+   "listar_carpeta",
+   "ejecutar_powershell",
+   "listar_carpeta",
+   "listar_carpeta"
+  ],
+  "protection": {
+   "verificadas": [
+    "ejecutar_powershell",
+    "mover_archivo"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.9563963999999032,
+  "wall_s": 23.24533539999993,
+  "tokens": 1099
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 55,
+  "seed": 22,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "mover_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "mover_archivo"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.9225764000002528,
+  "wall_s": 5.670391699999527,
+  "tokens": 226
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 56,
+  "seed": 22,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "mouse",
+   "listar_controles"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [
+    "listar_controles:{\"id_ventana\": 1}",
+    "mouse:{\"accion\": \"clic\", \"control\": \"Cerrar\", \"id_ventana\": 1}"
+   ],
+   "correcciones": 0
+  },
+  "first_action_s": 2.937083700000585,
+  "wall_s": 4.010070199999973,
+  "tokens": 137
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 57,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "mouse",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.576606000000538,
+  "wall_s": 3.767464200000177,
+  "tokens": 123
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 58,
+  "seed": 22,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "abrir_app",
+   "teclado",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.7564037000001917,
+  "wall_s": 5.3797558000005665,
+  "tokens": 207
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 59,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "teclado",
+   "listar_controles",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana",
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.713934700000209,
+  "wall_s": 8.721154300000308,
+  "tokens": 346
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 60,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "teclado",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6868961000000127,
+  "wall_s": 3.9729297999992923,
+  "tokens": 137
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 61,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "consultar_memoria",
+   "registro_habitos",
+   "consultar_memoria",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "registro_habitos"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.364920600000005,
+  "wall_s": 6.900066199999856,
+  "tokens": 276
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 62,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.7250687999994625,
+  "wall_s": 4.075001999999586,
+  "tokens": 139
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 63,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.59447259999979,
+  "wall_s": 3.744932799999333,
+  "tokens": 119
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 64,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "sugerencias",
+   "consultar_memoria",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.836298500000339,
+  "wall_s": 7.57976729999973,
+  "tokens": 301
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 65,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "registro_habitos",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "registro_habitos"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.7073473000000376,
+  "wall_s": 4.058735600000546,
+  "tokens": 141
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 1,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.591628899999705,
+  "wall_s": 3.7856777999995757,
+  "tokens": 123
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 2,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.8725208000005296,
+  "wall_s": 4.408115299999736,
+  "tokens": 159
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 3,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.918128400000569,
+  "wall_s": 4.222914599999967,
+  "tokens": 147
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 4,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.9312254999995275,
+  "wall_s": 4.364251199999671,
+  "tokens": 143
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 5,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [
+    "volumen:{\"accion\": \"desb\"}"
+   ],
+   "correcciones": 0
+  },
+  "first_action_s": 2.9035788999999568,
+  "wall_s": 5.732686399999693,
+  "tokens": 199
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 6,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.550159999999778,
+  "wall_s": 3.692525000000387,
+  "tokens": 116
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 7,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.8370920999996088,
+  "wall_s": 4.287104999999428,
+  "tokens": 153
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 8,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5779419000000416,
+  "wall_s": 3.681587799999761,
+  "tokens": 116
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 9,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [
+    "abrir_app:{\"nombre\": \"calc\"}"
+   ],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3986496999996234,
+  "wall_s": 4.727842299999793,
+  "tokens": 163
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 10,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3170724999999948,
+  "wall_s": 3.5663464999997814,
+  "tokens": 106
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 11,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.8200147000006837,
+  "wall_s": 3.8076983999999356,
+  "tokens": 116
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 12,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5928917000001093,
+  "wall_s": 3.701127600000291,
+  "tokens": 116
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 13,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.754934300000059,
+  "wall_s": 4.120867999999973,
+  "tokens": 144
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 14,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "volumen",
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.7610460999994757,
+  "wall_s": 7.471657600000071,
+  "tokens": 309
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 15,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6436573000000863,
+  "wall_s": 4.019327400000293,
+  "tokens": 138
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 16,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.852479299999686,
+  "wall_s": 3.842875099999219,
+  "tokens": 119
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 17,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "listar_ventanas",
+   "ver_pantalla",
+   "abrir_app",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.646653900000274,
+  "wall_s": 10.13663919999999,
+  "tokens": 419
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 18,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "listar_apps",
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6065762999996878,
+  "wall_s": 7.1844866000001275,
+  "tokens": 283
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 19,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5909354000004896,
+  "wall_s": 5.066508600000816,
+  "tokens": 166
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 20,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.423184399999627,
+  "wall_s": 6.898682399999416,
+  "tokens": 283
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 21,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.548740100000032,
+  "wall_s": 4.20000760000039,
+  "tokens": 148
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 22,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.65833289999955,
+  "wall_s": 7.748018700000102,
+  "tokens": 351
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 23,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.119698900000003,
+  "wall_s": 3.557951100000537,
+  "tokens": 110
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 24,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.681383399999504,
+  "wall_s": 4.750450900000033,
+  "tokens": 154
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 25,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.332625900000494,
+  "wall_s": 3.5093493000003946,
+  "tokens": 106
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 26,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6143283999999767,
+  "wall_s": 6.582923400000254,
+  "tokens": 281
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 27,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6891860999994606,
+  "wall_s": 8.181615100000272,
+  "tokens": 355
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 28,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3547511000006125,
+  "wall_s": 3.526831900000616,
+  "tokens": 106
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 29,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.588170799999716,
+  "wall_s": 5.036777799999982,
+  "tokens": 176
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 30,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "abrir_app",
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [
+    "abrir_app:{\"mensaje\": \"Abriendo la calculadora...\", \"nombre\": \"Calculadora\"}"
+   ],
+   "correcciones": 0
+  },
+  "first_action_s": 2.822764399999869,
+  "wall_s": 6.265738099999908,
+  "tokens": 255
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 31,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.547524199999316,
+  "wall_s": 4.675769799999216,
+  "tokens": 170
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 32,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.102081800000633,
+  "wall_s": 5.791514100000313,
+  "tokens": 224
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 33,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.4320294999997714,
+  "wall_s": 4.496975399999428,
+  "tokens": 152
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 34,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.659135800000513,
+  "wall_s": 4.692824600000677,
+  "tokens": 169
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 35,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.747395200000028,
+  "wall_s": 2.7515542999999525,
+  "tokens": 72
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 36,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.656469999999899,
+  "wall_s": 4.661043000000063,
+  "tokens": 172
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 37,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.000548400000298,
+  "wall_s": 3.004709699999694,
+  "tokens": 86
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 38,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.1566063999998732,
+  "wall_s": 3.160966699999335,
+  "tokens": 95
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 39,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.6701741999995647,
+  "wall_s": 3.674636400000054,
+  "tokens": 120
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 40,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.59293660000003,
+  "wall_s": 2.597335500000554,
+  "tokens": 61
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 41,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3311619999994946,
+  "wall_s": 4.8441610999998375,
+  "tokens": 178
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 42,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "finalizar",
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 1
+  },
+  "first_action_s": 2.3325918000000456,
+  "wall_s": 7.875394800000322,
+  "tokens": 321
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 43,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6247518000000127,
+  "wall_s": 5.237501599999632,
+  "tokens": 194
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 44,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.364528199999768,
+  "wall_s": 5.050634000000173,
+  "tokens": 185
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 45,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5968622999998843,
+  "wall_s": 4.62411129999964,
+  "tokens": 171
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 46,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "leer_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.528471499999796,
+  "wall_s": 5.747832199999721,
+  "tokens": 230
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 47,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.64311699999962,
+  "wall_s": 4.335834900000009,
+  "tokens": 155
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 48,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "leer_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.1131482000000688,
+  "wall_s": 5.918666599999597,
+  "tokens": 235
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 49,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "buscar_web",
+   "finalizar",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 1
+  },
+  "first_action_s": 2.555749599999217,
+  "wall_s": 8.777294699999402,
+  "tokens": 365
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 50,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "leer_archivo"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.9369808999999805,
+  "wall_s": 2.9457769999999073,
+  "tokens": 81
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 51,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "cerrar_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.655540500000825,
+  "wall_s": 4.020955700000741,
+  "tokens": 135
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 52,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.4942850999996153,
+  "wall_s": 5.325213000000076,
+  "tokens": 197
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 53,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "mover_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "mover_archivo"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.840574299999389,
+  "wall_s": 4.035847199999807,
+  "tokens": 137
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 54,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "mover_archivo",
+   "listar_carpeta",
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "mover_archivo"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.8090978999998697,
+  "wall_s": 9.441574800000126,
+  "tokens": 402
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 55,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "leer_archivo",
+   "leer_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.642052500000318,
+  "wall_s": 7.806251100000736,
+  "tokens": 325
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 56,
+  "seed": 33,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "listar_ventanas",
+   "cerrar_app",
+   "listar_ventanas",
+   "cerrar_app",
+   "listar_ventanas",
+   "cerrar_app",
+   "listar_ventanas",
+   "cerrar_app",
+   "listar_ventanas",
+   "cerrar_app",
+   "listar_ventanas",
+   "cerrar_app",
+   "listar_ventanas"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.447096699999747,
+  "wall_s": 16.039276999999856,
+  "tokens": 683
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 57,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "mouse",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.964739200000622,
+  "wall_s": 4.34231120000004,
+  "tokens": 150
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 58,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "abrir_app",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "teclado",
+   "teclado",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "enfocar_ventana",
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.7074890000003506,
+  "wall_s": 9.22217079999973,
+  "tokens": 395
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 59,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "teclado",
+   "listar_controles",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana",
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.5437635000007504,
+  "wall_s": 8.273670000000493,
+  "tokens": 333
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 60,
+  "seed": 33,
+  "complete": false,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "teclado",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6948949000006905,
+  "wall_s": 3.7869479999999385,
+  "tokens": 126
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 61,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "consultar_memoria",
+   "registro_habitos",
+   "consultar_memoria",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "registro_habitos"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.3845052000006035,
+  "wall_s": 5.985054500000842,
+  "tokens": 239
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 62,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6895621000003302,
+  "wall_s": 3.9786619000005885,
+  "tokens": 136
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 63,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.6719212000007246,
+  "wall_s": 3.8843721000002915,
+  "tokens": 127
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 64,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "consultar_memoria",
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.003347799999574,
+  "wall_s": 7.371326200000112,
+  "tokens": 293
+ },
+ {
+  "model": "ui_mate_q5",
+  "engine": "llama.cpp b11429",
+  "id": 65,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "registro_habitos",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "registro_habitos"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.7228635999999824,
+  "wall_s": 4.041354900000442,
+  "tokens": 140
+ }
+]

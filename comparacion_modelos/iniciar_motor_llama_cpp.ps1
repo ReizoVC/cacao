@@ -1,7 +1,8 @@
 param(
-    [ValidateSet("gemma_q4", "gemma_q5", "qwen_q5", "qwen_wrench_q4")]
+    [ValidateSet("gemma_q4", "gemma_q5", "qwen_q5", "qwen_wrench_q4", "ui_mate_q5")]
     [string]$Modelo = "gemma_q4",
     [switch]$Vision,
+    [switch]$PensamientoNativo,
     [int]$Puerto = 18081
 )
 
@@ -15,6 +16,7 @@ $modelos = @{
     gemma_q5 = Join-Path $raiz "modelos\gemma-4-12b-it-Q5_K_M.gguf"
     qwen_q5 = Join-Path $raiz "modelos\comparacion\Qwen3.5-9B-UD-Q5_K_XL.gguf"
     qwen_wrench_q4 = Join-Path $raiz "modelos\comparacion\Wrench-9B-Q4_K_M.gguf"
+    ui_mate_q5 = Join-Path $raiz "modelos\comparacion\UI-Mate-9B.Q5_K_M.gguf"
 }
 $rutaModelo = $modelos[$Modelo]
 if (-not (Test-Path -LiteralPath $exe)) { throw "Falta el motor de pruebas: ejecuta actualizar_motor_llama_cpp.ps1." }
@@ -37,7 +39,7 @@ if (Test-Path -LiteralPath $pythonPruebas) {
     if ($LASTEXITCODE -ne 0) { throw "La guardia de juegos no permitió iniciar la prueba." }
 }
 $gpuLibre = [int]((nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits).Trim())
-$minimoLibre = if ($Modelo -eq "qwen_wrench_q4") { 8500 } else { 12000 }
+$minimoLibre = if ($Modelo -in @("qwen_wrench_q4", "ui_mate_q5")) { 8500 } else { 12000 }
 if ($gpuLibre -lt $minimoLibre) { throw "La GPU tiene solo $gpuLibre MiB libres; no se carga el modelo." }
 
 $pidFile = Join-Path $runtime "server.pid"
@@ -65,14 +67,19 @@ $argumentos = @(
     "--port", "$Puerto",
     "--alias", "cacao-test-$($Modelo.Replace('_','-'))",
     "--jinja",
-    "--reasoning", "off",
-    "--reasoning-format", "deepseek",
     "--metrics",
     "--no-ui"
 )
+if ($PensamientoNativo) {
+    $argumentos += @("--reasoning", "on", "--reasoning-format", "none")
+} else {
+    $argumentos += @("--reasoning", "off", "--reasoning-format", "deepseek")
+}
 if ($Vision) {
     if ($Modelo -like "gemma_*") {
         $mmproj = Join-Path $raiz "modelos\mmproj\mmproj-F16.gguf"
+    } elseif ($Modelo -eq "ui_mate_q5") {
+        $mmproj = Join-Path $raiz "modelos\comparacion\UI-Mate-9B.mmproj-f16.gguf"
     } else {
         $mmproj = Join-Path $raiz "modelos\comparacion\mmproj-F16.gguf"
     }
