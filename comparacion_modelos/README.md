@@ -152,3 +152,24 @@ las semillas 11/22/33, el esquema y las protecciones de la ronda 3:
 
 La salida cruda queda en `datos/ronda3/gemma_q4.json` y se excluye de Git. Las
 métricas sanitizadas y el resumen sí se conservan para auditar el informe.
+
+## Ronda completa con llama-server b11429
+
+Con el servidor aislado ya iniciado para `gemma_q5`, el mismo ejecutor de la
+ronda 3 puede usar su API local sin tocar los entornos Python:
+
+```powershell
+.\comparacion_modelos\iniciar_motor_llama_cpp.ps1 -Modelo gemma_q5
+.\.venv-pruebas\Scripts\python.exe -B -u comparacion_modelos\ejecutar.py gemma_q5 --round3 --server-url http://127.0.0.1:18081
+.\comparacion_modelos\detener_motor_llama_cpp.ps1
+.\.venv-pruebas\Scripts\python.exe -B comparacion_modelos\resumir_gemma_q5_llama_b11429.py
+```
+
+El adaptador reutiliza la caché del prompt durante los pasos de una misma tarea
+y borra el slot antes de la siguiente. Por eso el servidor debe iniciarse con
+`--slot-save-path`, como hace el script. La salida cruda queda en
+`datos/llama_cpp_b11429/ronda3`; las métricas sanitizadas se guardan en
+`metricas_gemma_q5_llama_b11429.json` y
+`resumen_gemma_q5_llama_b11429.json`. El resumen también comprueba que las
+huellas del prompt y del esquema coincidan con la referencia de
+llama-cpp-python 0.3.36.

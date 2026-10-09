@@ -39,6 +39,8 @@ if (Test-Path -LiteralPath $pidFile) {
     }
 }
 
+New-Item -ItemType Directory -Force -Path (Join-Path $runtime "slots") | Out-Null
+
 $argumentos = @(
     "--model", $rutaModelo,
     "--ctx-size", "16384",
@@ -49,6 +51,7 @@ $argumentos = @(
     "--load-mode", "none",
     "--fit", "off",
     "--parallel", "1",
+    "--slot-save-path", (Join-Path $runtime "slots"),
     "--host", "127.0.0.1",
     "--port", "$Puerto",
     "--alias", "cacao-test-$($Modelo.Replace('_','-'))",

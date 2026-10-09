@@ -166,11 +166,15 @@ def main():
     parser.add_argument('--round2', action='store_true')
     parser.add_argument('--round3', action='store_true')
     parser.add_argument('--diagnostic', choices=('baseline','prompt','schema','combined'))
+    parser.add_argument('--server-url', help='llama-server local ya iniciado; no modifica .venv')
+    parser.add_argument('--engine-tag', default='llama_cpp_b11429')
     args = parser.parse_args()
     if args.vision_normalized:
         args.vision_only = True
     if args.round2 or args.round3 or args.diagnostic:
         OUT = OUT / ('ronda3' if args.round3 else 'ronda2')
+    if args.server_url:
+        OUT = ROOT / 'comparacion_modelos' / 'datos' / args.engine_tag / ('ronda3' if args.round3 else 'base')
     OUT.mkdir(parents=True, exist_ok=True)
     runtime = prepare(args.model, args.round2 or args.round3 or bool(args.diagnostic),
                       'ronda3' if args.round3 else 'ronda2')
@@ -186,9 +190,19 @@ def main():
         raise RuntimeError(f'Cacao sigue abierto: {cacao}. No se cierra automáticamente.')
     gpu = GPU()
     gpu.start()
-    if gpu.samples[0]['free'] < 12000:
+    if not args.server_url and gpu.samples[0]['free'] < 12000:
         raise RuntimeError('GPU ocupada; no se carga el modelo.')
     start = time.perf_counter()
+    if args.server_url:
+        from llama_server_cliente import ClienteLlamaServer
+        from llama_server_backend import LlamaServerBackend
+        cliente = ClienteLlamaServer(args.server_url)
+        modelos_servidor = cliente.modelos()
+        servidor_id = modelos_servidor['data'][0]['id']
+        backend = LlamaServerBackend(args.server_url, servidor_id)
+        backend.metadata['general.architecture'] = modelos_servidor['data'][0].get('meta', {}).get('architecture', 'server')
+        import modelo as modelo_runtime
+        modelo_runtime.crear_llm = lambda *_a, **_k: backend
     import benchmark_gramatica as b
     import llama_cpp
     import jsonschema
@@ -206,7 +220,7 @@ def main():
                 return False
         b.json_valido=valid_json
     # Native template for each model; Qwen non-thinking for the structured Cacao protocol.
-    if args.model.startswith('qwen'):
+    if args.model.startswith('qwen') and not args.server_url:
         from llama_cpp.llama_chat_format import Jinja2ChatFormatter
         template = '{% set enable_thinking = false %}' + b.llm.metadata['tokenizer.chat_template']
         formatter = Jinja2ChatFormatter(template=template,
@@ -217,13 +231,16 @@ def main():
         rendered=formatter(messages=[{'role':'user','content':'Hola'}]).prompt
         assert rendered.endswith('<|im_start|>assistant\n<think>\n\n</think>\n\n'),'Pensamiento no desactivado'
         template_probe={'generation_suffix':rendered[-60:], 'template_sha256':hashlib.sha256(template.encode()).hexdigest()}
-    report = {'model': args.model, 'model_path': str(MODELS[args.model]), 'version': llama_cpp.__version__,
+    report = {'model': args.model, 'model_path': str(MODELS[args.model]),
+              'version': backend.version if args.server_url else llama_cpp.__version__,
+              'backend': 'llama-server' if args.server_url else 'llama-cpp-python',
               'loaded_s': time.perf_counter()-start, 'gpu_baseline': gpu.samples[0], 'gpu_loaded': loaded,
               'config': json.loads((runtime/'config.json').read_text(encoding='utf-8')),
               'prompt_sha256': hashlib.sha256(b.ns['prompt_sistema']().encode()).hexdigest(),
               'architecture': b.llm.metadata.get('general.architecture'), 'cases': [], 'conversation': []}
     report['integration']=integration
-    report['template_probe']=template_probe if args.model.startswith('qwen') else {'native_handler':True}
+    report['template_probe']=(template_probe if args.model.startswith('qwen') and not args.server_url else
+                              {'server_native_template': True} if args.server_url else {'native_handler':True})
     raw_call = b.llm.create_chat_completion
     outputs = []
     first = []
@@ -286,7 +303,9 @@ def main():
     fallback = raw_call(messages=[{'role':'user','content':'Responde con un color y un número.'}],
         response_format={'type':'json_object','schema':schema}, temperature=.3, top_k=1, max_tokens=80)
     jsonschema.validate(json.loads(fallback['choices'][0]['message']['content']), schema)
-    report['grammar_probe'] = {'response': fallback, 'fallbacks': b.llm.ultimo_muestreador.respaldos}
+    report['grammar_probe'] = {'response': fallback,
+        'fallbacks': None if args.server_url else b.llm.ultimo_muestreador.respaldos,
+        'server_schema_constrained': bool(args.server_url)}
     if args.diagnostic:
         from criterios import complete
         selected=[(14,22),(21,22),(29,11),(30,11),(35,22),(38,11),(40,11),(44,11),(56,22),(57,22),(58,11),(59,33)]

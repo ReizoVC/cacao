@@ -481,5 +481,41 @@ visión, no una precisión suficiente todavía.
 Gemma 4 requiere retirar sus marcadores internos de canal para que el contenido
 sea JSON puro. El adaptador fija `reasoning_format=deepseek` y presupuesto de
 razonamiento cero. El ejecutable expone MTP, pero no se probó porque el modelo
-borrador aún no está instalado. Esta fue una prueba de integración corta; no
-reemplaza la ronda completa de 195 casos.
+borrador aún no está instalado. Esta prueba corta confirmó compatibilidad inicial;
+la ronda completa que sigue mide el comportamiento real del ejecutor.
+
+## Parte 2 — Gemma Q5 completa con llama.cpp b11429
+
+Se repitieron las 65 frases con semillas 11, 22 y 33 usando Gemma 4 12B
+Q5_K_M, el mismo contexto 16.384, flash attention, caché K/V q8_0, temperatura
+0,3, las mismas herramientas simuladas y las protecciones de la ronda 3. Las
+huellas del prompt (`0cd889b4581f4cb692773c672d5bd049cd4de0bdfd523db2512bf3a4423ecb70`)
+y del esquema (`c2ea19a80dd5a4960922f21b72ed5936dbd6aa22b98f2147b672b37b0e05f425`)
+coinciden exactamente con la referencia anterior.
+
+| Motor con Gemma Q5 | Completas | Primera literal | JSON | Vacías | Confirmaciones falsas | Distinto a lo pedido | Primera mediana / p95 | Media tarea | tok/s | Pico GPU total |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| llama-cpp-python 0.3.36 | 195/195 | 192/195 | 195/195 | 0 | 0 | 2 | 3,50 / 4,23 s | 6,12 s | 35,03 | 12.756 MiB |
+| llama.cpp b11429 | 195/195 | 192/195 | 195/195 | 0 | 0 | 4 | 3,91 / 4,63 s | 6,72 s | 41,13 | 9.542 MiB |
+
+El motor nuevo conservó la tasa de tareas completas y la selección de primera
+herramienta. La generación subió 17,4 % y el pico total bajó 3.214 MiB, dejando
+al menos 6.509 MiB libres durante la tanda. Sin embargo, la mediana de primera
+acción aumentó 0,41 s y el tiempo medio por tarea 0,60 s. La ganancia de
+decodificación no compensa todavía todo el coste del procesamiento del prompt.
+
+Los cuatro casos distintos fueron #49 semilla 11 y #56 en las tres semillas.
+En #49 enfocó el navegador para intentar leer el resultado de clima y terminó
+admitiendo que no pudo verificarlo. En #56, tras fallar el clic solicitado en la
+X, probó el atajo estructurado `Alt+F4` y terminó informando que la ventana seguía
+abierta. Son alternativas orientadas al mismo objetivo, no acciones dañinas ni
+confirmaciones falsas, pero duplican los desvíos contados por el protocolo frente
+al motor anterior.
+
+**Conclusión de esta parte:** llama.cpp b11429 es compatible con Cacao y ofrece
+una mejora grande de VRAM y una mejora clara de generación. No conviene sustituir
+aún el motor de producción solo por esta ronda: la latencia completa empeoró y
+hubo dos desvíos adicionales. El siguiente experimento útil es MTP para comprobar
+si reduce el tiempo real por tarea sin degradar la disciplina de herramientas.
+
+Evidencia sanitizada: [metricas_gemma_q5_llama_b11429.json](comparacion_modelos/metricas_gemma_q5_llama_b11429.json) y [resumen_gemma_q5_llama_b11429.json](comparacion_modelos/resumen_gemma_q5_llama_b11429.json). Los datos crudos siguen locales y excluidos de Git. `config.json`, `.venv` y `.venv-pruebas` permanecen sin cambios.

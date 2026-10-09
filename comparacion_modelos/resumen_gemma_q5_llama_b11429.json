@@ -1,0 +1,74 @@
+{
+  "engine": "llama.cpp b11429",
+  "summary": {
+    "complete": 195,
+    "blank": 0,
+    "json": 195,
+    "first": 192,
+    "false_confirmation": 0,
+    "distinct": 4,
+    "corrections": 0,
+    "median_first": 3.910602700000709,
+    "p95_first": 4.6334593000001405,
+    "mean_task": 6.719515008205095,
+    "tps": 41.130095648659356,
+    "prompt_tps": 1636.0551423833826
+  },
+  "previous_llama_cpp_python_0_3_36": {
+    "complete": 195,
+    "blank": 0,
+    "json": 195,
+    "first": 192,
+    "false_confirmation": 0,
+    "distinct": 2,
+    "corrections": 1,
+    "two_failure_stops": 0,
+    "median_first": 3.4964768000027107,
+    "p95_first": 4.233837100000528,
+    "mean_task": 6.121952324615211,
+    "tps": 35.026063737439884
+  },
+  "delta": {
+    "complete": 0,
+    "first": 0,
+    "median_first_s": 0.4141258999979982,
+    "mean_task_s": 0.5975626835898833,
+    "tps": 6.104031911219472,
+    "gpu_peak_mib": -3214
+  },
+  "gpu_peak_mib": 9542,
+  "gpu_min_free_mib": 6509,
+  "prompt_sha256": "0cd889b4581f4cb692773c672d5bd049cd4de0bdfd523db2512bf3a4423ecb70",
+  "schema_sha256": "c2ea19a80dd5a4960922f21b72ed5936dbd6aa22b98f2147b672b37b0e05f425",
+  "false_confirmations": [],
+  "distinct_actions": [
+    [
+      49,
+      11,
+      [
+        "enfocar_ventana"
+      ]
+    ],
+    [
+      56,
+      11,
+      [
+        "teclado"
+      ]
+    ],
+    [
+      56,
+      22,
+      [
+        "teclado"
+      ]
+    ],
+    [
+      56,
+      33,
+      [
+        "teclado"
+      ]
+    ]
+  ]
+}

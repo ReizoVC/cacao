@@ -43,7 +43,21 @@
       "json_valido": "5/5",
       "mediana_s": 1.798,
       "media_tokens_s": 38.31,
-      "vram_total_mib": 9489
+      "vram_total_mib": 9489,
+      "ronda_completa": {
+        "tareas": "195/195",
+        "primera_herramienta": "192/195",
+        "json_valido": "195/195",
+        "respuestas_vacias": 0,
+        "confirmaciones_falsas": 0,
+        "acciones_distintas": 4,
+        "mediana_primera_accion_s": 3.911,
+        "p95_primera_accion_s": 4.633,
+        "media_tarea_s": 6.72,
+        "media_tokens_s": 41.13,
+        "pico_vram_total_mib": 9542,
+        "vram_libre_minima_mib": 6509
+      }
     },
     "qwen_q5": {
       "carga_hibrida": true,
@@ -68,5 +82,5 @@
     "venv_produccion_modificado": false,
     "venv_pruebas_modificado": false
   },
-  "alcance": "Prueba de compatibilidad; todavía no reemplaza la ronda de 65 frases por 3 semillas."
+  "alcance": "Compatibilidad breve de tres modelos y ronda completa de 65 frases por 3 semillas para Gemma Q5."
 }

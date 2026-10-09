@@ -1,0 +1,4591 @@
+[
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 1,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 2.1155104999998002,
+  "wall_s": 3.9910197999997763,
+  "tokens": 136
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 2,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.161859999999251,
+  "wall_s": 5.991372199999205,
+  "tokens": 142
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 3,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.021828800000549,
+  "wall_s": 5.837373500000467,
+  "tokens": 135
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 4,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.827872999999272,
+  "wall_s": 5.456294499999785,
+  "tokens": 120
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 5,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.812474199999997,
+  "wall_s": 5.4535836000004565,
+  "tokens": 119
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 6,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.639642900000581,
+  "wall_s": 5.643450399999892,
+  "tokens": 127
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 7,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.081398299999819,
+  "wall_s": 5.851995500000157,
+  "tokens": 135
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 8,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.687867300000107,
+  "wall_s": 5.444589300000189,
+  "tokens": 119
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 9,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.707015699999829,
+  "wall_s": 5.3427592999996705,
+  "tokens": 115
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 10,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.7789220000004207,
+  "wall_s": 5.562425600000097,
+  "tokens": 124
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 11,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.713415299999724,
+  "wall_s": 5.332505700000183,
+  "tokens": 114
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 12,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.696961500000725,
+  "wall_s": 5.444119700000556,
+  "tokens": 118
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 13,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.177257099999224,
+  "wall_s": 6.244665199999872,
+  "tokens": 152
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 14,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.001022900000862,
+  "wall_s": 8.793429000000287,
+  "tokens": 244
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 15,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.009484999999586,
+  "wall_s": 5.723070799999732,
+  "tokens": 130
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 16,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [
+    "abrir_app:{\"nombre\": \"navegador\"}"
+   ],
+   "correcciones": 0
+  },
+  "first_action_s": 3.3459695999999894,
+  "wall_s": 5.904467299999851,
+  "tokens": 137
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 17,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.662677799999983,
+  "wall_s": 6.929592800000137,
+  "tokens": 167
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 18,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "consultar_memoria",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [
+    "abrir_app:{\"nombre\": \"el editor de código\"}"
+   ],
+   "correcciones": 0
+  },
+  "first_action_s": 4.253562099999726,
+  "wall_s": 8.792105399999855,
+  "tokens": 230
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 19,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.8210220000000845,
+  "wall_s": 7.396660800000063,
+  "tokens": 173
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 20,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.834918900000048,
+  "wall_s": 7.153900700000122,
+  "tokens": 177
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 21,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.8602152000003116,
+  "wall_s": 6.239490299999488,
+  "tokens": 150
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 22,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.032344500000363,
+  "wall_s": 7.299839199999951,
+  "tokens": 182
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 23,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.939951800000017,
+  "wall_s": 6.209224600000198,
+  "tokens": 149
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 24,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.952319200000602,
+  "wall_s": 6.3130332000000635,
+  "tokens": 154
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 25,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.586323000000448,
+  "wall_s": 5.544703999999911,
+  "tokens": 121
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 26,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.9558821000000535,
+  "wall_s": 7.434991500000251,
+  "tokens": 195
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 27,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.9540201999998317,
+  "wall_s": 8.045230299999275,
+  "tokens": 201
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 28,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.8082431000002543,
+  "wall_s": 5.6917530000000625,
+  "tokens": 129
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 29,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.906136000000515,
+  "wall_s": 7.061899100000119,
+  "tokens": 173
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 30,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.8108445999996547,
+  "wall_s": 7.553408699999636,
+  "tokens": 192
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 31,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.7382072000000335,
+  "wall_s": 7.209114399999635,
+  "tokens": 178
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 32,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.910602700000709,
+  "wall_s": 7.923742300000413,
+  "tokens": 207
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 33,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.7902267999998003,
+  "wall_s": 7.198604799999885,
+  "tokens": 177
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 34,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.047683699999652,
+  "wall_s": 7.482167600000139,
+  "tokens": 190
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 35,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.6334593000001405,
+  "wall_s": 4.637638799999877,
+  "tokens": 98
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 36,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 5.972543400000177,
+  "wall_s": 5.976840999999695,
+  "tokens": 146
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 37,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.337797299999693,
+  "wall_s": 4.341928099999677,
+  "tokens": 86
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 38,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.51100839999981,
+  "wall_s": 4.515843700000005,
+  "tokens": 92
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 39,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 5.485544600000139,
+  "wall_s": 5.489811900000859,
+  "tokens": 133
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 40,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.121595200000229,
+  "wall_s": 4.1256845999996585,
+  "tokens": 77
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 41,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.524878600000193,
+  "wall_s": 6.329143799999656,
+  "tokens": 149
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 42,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.5773559999997815,
+  "wall_s": 5.313939099999516,
+  "tokens": 108
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 43,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.5649982000004456,
+  "wall_s": 7.262095900000531,
+  "tokens": 175
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 44,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.491851400000087,
+  "wall_s": 7.052327800000057,
+  "tokens": 167
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 45,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.8566021000006003,
+  "wall_s": 6.806274200000189,
+  "tokens": 171
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 46,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.902384600000005,
+  "wall_s": 6.075546000000031,
+  "tokens": 142
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 47,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.155729900000551,
+  "wall_s": 6.3678711000002295,
+  "tokens": 155
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 48,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "leer_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.080608600000232,
+  "wall_s": 8.614205500000025,
+  "tokens": 234
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 49,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "buscar_web",
+   "ver_pantalla",
+   "listar_ventanas",
+   "enfocar_ventana",
+   "ver_pantalla",
+   "listar_controles",
+   "ver_pantalla",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.18283270000029,
+  "wall_s": 19.657259000000522,
+  "tokens": 590
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 50,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 5.113779899999827,
+  "wall_s": 5.117954100000134,
+  "tokens": 116
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 51,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.569367600000078,
+  "wall_s": 7.2242684000002555,
+  "tokens": 174
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 52,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.616863000000194,
+  "wall_s": 7.89711299999999,
+  "tokens": 196
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 53,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "mover_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "mover_archivo"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.869442799999888,
+  "wall_s": 7.79329400000006,
+  "tokens": 198
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 54,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "mover_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "mover_archivo"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.953840900000614,
+  "wall_s": 8.228222200000346,
+  "tokens": 216
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 55,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.130774600000223,
+  "wall_s": 8.57885830000032,
+  "tokens": 230
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 56,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "listar_controles",
+   "mouse",
+   "listar_ventanas",
+   "teclado",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "mouse",
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.602697100000114,
+  "wall_s": 14.734955299999456,
+  "tokens": 429
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 57,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "mouse",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.011283299999377,
+  "wall_s": 5.747636199999761,
+  "tokens": 130
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 58,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "teclado",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana",
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.688683100000162,
+  "wall_s": 9.295690299999478,
+  "tokens": 245
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 59,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "teclado",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana",
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.645025099999657,
+  "wall_s": 9.637114199999814,
+  "tokens": 257
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 60,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "teclado",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.074194599999828,
+  "wall_s": 5.781708900000012,
+  "tokens": 132
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 61,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "consultar_memoria",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.3291568999993615,
+  "wall_s": 6.47016050000002,
+  "tokens": 161
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 62,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.719031900000118,
+  "wall_s": 5.501473100000112,
+  "tokens": 121
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 63,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.087277999999969,
+  "wall_s": 5.721917500000018,
+  "tokens": 127
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 64,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.145818799999688,
+  "wall_s": 5.933738699999594,
+  "tokens": 139
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 65,
+  "seed": 11,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "registro_habitos",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "registro_habitos"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.216016299999865,
+  "wall_s": 5.826576599999498,
+  "tokens": 130
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 1,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.9644782999994277,
+  "wall_s": 5.690959900000053,
+  "tokens": 129
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 2,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.17123090000041,
+  "wall_s": 5.999537699999564,
+  "tokens": 142
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 3,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.029649299999619,
+  "wall_s": 5.8301832999995895,
+  "tokens": 135
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 4,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.8294260000002396,
+  "wall_s": 5.471064800000022,
+  "tokens": 120
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 5,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.8114064999999755,
+  "wall_s": 5.645263399999749,
+  "tokens": 127
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 6,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.713170299999547,
+  "wall_s": 5.715658099999928,
+  "tokens": 130
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 7,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.078939300000457,
+  "wall_s": 5.843214000000444,
+  "tokens": 135
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 8,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.6921741999994993,
+  "wall_s": 5.445043400000031,
+  "tokens": 119
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 9,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.269177099999979,
+  "wall_s": 4.7769217999994,
+  "tokens": 92
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 10,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.8045414999996865,
+  "wall_s": 5.486060799999905,
+  "tokens": 120
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 11,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.356351899999936,
+  "wall_s": 5.02530040000056,
+  "tokens": 101
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 12,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.3263233999996373,
+  "wall_s": 4.955714699999589,
+  "tokens": 98
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 13,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.100764800000434,
+  "wall_s": 6.17705019999994,
+  "tokens": 147
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 14,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.6452449999997043,
+  "wall_s": 8.330989000000045,
+  "tokens": 224
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 15,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.010538099999394,
+  "wall_s": 5.756368699999257,
+  "tokens": 130
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 16,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [
+    "abrir_app:{\"nombre\": \"navegador\"}"
+   ],
+   "correcciones": 0
+  },
+  "first_action_s": 3.7057263999995484,
+  "wall_s": 6.5164036999995005,
+  "tokens": 160
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 17,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.3118183000005956,
+  "wall_s": 6.411468100000093,
+  "tokens": 145
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 18,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "consultar_memoria",
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.9079372000005606,
+  "wall_s": 8.594252400000187,
+  "tokens": 220
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 19,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.286530100000164,
+  "wall_s": 7.885963499999889,
+  "tokens": 189
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 20,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.67684459999964,
+  "wall_s": 6.88599239999985,
+  "tokens": 165
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 21,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.058148199999778,
+  "wall_s": 6.48176710000007,
+  "tokens": 157
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 22,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.9484104000002844,
+  "wall_s": 10.666987500000687,
+  "tokens": 318
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 23,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.966213300000163,
+  "wall_s": 6.251027700000122,
+  "tokens": 149
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 24,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.903343899999527,
+  "wall_s": 5.88348489999953,
+  "tokens": 133
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 25,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.517328400000224,
+  "wall_s": 5.477335100000346,
+  "tokens": 118
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 26,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.980134000000362,
+  "wall_s": 7.512807800000701,
+  "tokens": 198
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 27,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.990193999999974,
+  "wall_s": 8.287830300000678,
+  "tokens": 210
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 28,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.8068912999997337,
+  "wall_s": 5.6802830000006,
+  "tokens": 129
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 29,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.884875299999294,
+  "wall_s": 7.083487899999454,
+  "tokens": 173
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 30,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.7952931999998327,
+  "wall_s": 7.527484600000207,
+  "tokens": 191
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 31,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.7419986999993853,
+  "wall_s": 7.188787799999773,
+  "tokens": 177
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 32,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.9207302000004347,
+  "wall_s": 7.7389923000000636,
+  "tokens": 199
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 33,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.3985947999999553,
+  "wall_s": 6.665490099999261,
+  "tokens": 154
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 34,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.050606900000275,
+  "wall_s": 7.368806800000129,
+  "tokens": 184
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 35,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.510343199999625,
+  "wall_s": 4.514585099999749,
+  "tokens": 93
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 36,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 5.913868399999956,
+  "wall_s": 5.918457900000249,
+  "tokens": 150
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 37,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.339644499999849,
+  "wall_s": 4.344008899999608,
+  "tokens": 86
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 38,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.692585599999802,
+  "wall_s": 4.696874499999467,
+  "tokens": 100
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 39,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 5.524148499999683,
+  "wall_s": 5.528428599999643,
+  "tokens": 134
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 40,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.051042899999629,
+  "wall_s": 4.055141499999991,
+  "tokens": 74
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 41,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.5008766999999352,
+  "wall_s": 6.310040999999728,
+  "tokens": 148
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 42,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.5696658999995634,
+  "wall_s": 5.690791899999567,
+  "tokens": 124
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 43,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.321828899999673,
+  "wall_s": 6.953592999999273,
+  "tokens": 162
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 44,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.574888699999974,
+  "wall_s": 7.153107799999816,
+  "tokens": 170
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 45,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.856224000000111,
+  "wall_s": 6.431461000000127,
+  "tokens": 155
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 46,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.831313300000147,
+  "wall_s": 6.127025699999649,
+  "tokens": 145
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 47,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.14932619999945,
+  "wall_s": 6.378715699999702,
+  "tokens": 156
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 48,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "leer_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.078546100000494,
+  "wall_s": 8.7333907000002,
+  "tokens": 240
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 49,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "buscar_web",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.128908299999239,
+  "wall_s": 6.320537499999773,
+  "tokens": 154
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 50,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 5.486412899999777,
+  "wall_s": 5.490540300000248,
+  "tokens": 124
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 51,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.568671699999868,
+  "wall_s": 7.167983999999706,
+  "tokens": 171
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 52,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.708950399999594,
+  "wall_s": 8.00273609999931,
+  "tokens": 199
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 53,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "mover_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "mover_archivo"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.25975870000002,
+  "wall_s": 8.197406000000228,
+  "tokens": 217
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 54,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "mover_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "mover_archivo"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.1304589999999735,
+  "wall_s": 8.15016100000048,
+  "tokens": 216
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 55,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.148102199999812,
+  "wall_s": 8.873547000000144,
+  "tokens": 240
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 56,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "listar_controles",
+   "mouse",
+   "listar_ventanas",
+   "teclado",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "mouse",
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.600581599999714,
+  "wall_s": 15.101556700000401,
+  "tokens": 430
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 57,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "mouse",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.007289800000763,
+  "wall_s": 5.778694000000542,
+  "tokens": 132
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 58,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "teclado",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana",
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.694054700000379,
+  "wall_s": 9.687471399999595,
+  "tokens": 262
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 59,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "teclado",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana",
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.573884100000214,
+  "wall_s": 9.66916239999955,
+  "tokens": 253
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 60,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "teclado",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.11672389999967,
+  "wall_s": 5.80568779999976,
+  "tokens": 133
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 61,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "consultar_memoria",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.31692269999985,
+  "wall_s": 6.384297999999944,
+  "tokens": 157
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 62,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.7168713999999454,
+  "wall_s": 5.402620799999568,
+  "tokens": 117
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 63,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.052898300000379,
+  "wall_s": 5.688361800000166,
+  "tokens": 124
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 64,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.206432399999358,
+  "wall_s": 6.132890899999438,
+  "tokens": 146
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 65,
+  "seed": 22,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "registro_habitos",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "registro_habitos"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.351312400000097,
+  "wall_s": 6.295840100000532,
+  "tokens": 139
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 1,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.3071242999994865,
+  "wall_s": 6.092039799999839,
+  "tokens": 137
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 2,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.1530559999991965,
+  "wall_s": 5.857970000000023,
+  "tokens": 136
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 3,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.024409099999502,
+  "wall_s": 5.831023900000218,
+  "tokens": 135
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 4,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.8438443000004554,
+  "wall_s": 5.6757516000006945,
+  "tokens": 128
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 5,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.807219399999667,
+  "wall_s": 5.469475599999896,
+  "tokens": 120
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 6,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.713119000000006,
+  "wall_s": 5.708529599999565,
+  "tokens": 130
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 7,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.098699499999384,
+  "wall_s": 5.851585099999284,
+  "tokens": 136
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 8,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.6805448000004617,
+  "wall_s": 5.406740899999932,
+  "tokens": 118
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 9,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.254265800000212,
+  "wall_s": 4.917937900000652,
+  "tokens": 97
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 10,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.787842599999749,
+  "wall_s": 5.455252400000063,
+  "tokens": 119
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 11,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.3265626000002158,
+  "wall_s": 4.968753900000593,
+  "tokens": 99
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 12,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.6954026999992493,
+  "wall_s": 5.4476216999992175,
+  "tokens": 119
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 13,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.141835100000208,
+  "wall_s": 6.101206999999704,
+  "tokens": 145
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 14,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.004104300000108,
+  "wall_s": 9.053186600000117,
+  "tokens": 248
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 15,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.9850382000004174,
+  "wall_s": 5.668176199999834,
+  "tokens": 128
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 16,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [
+    "abrir_app:{\"nombre\": \"el navegador\"}"
+   ],
+   "correcciones": 0
+  },
+  "first_action_s": 3.6651183000003584,
+  "wall_s": 6.188808300000346,
+  "tokens": 149
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 17,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.308587699999407,
+  "wall_s": 6.473577199999454,
+  "tokens": 148
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 18,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": false,
+  "tools": [
+   "consultar_memoria",
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.885726800000157,
+  "wall_s": 8.158276199999818,
+  "tokens": 211
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 19,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.8223503999997774,
+  "wall_s": 7.232701500000076,
+  "tokens": 166
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 20,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.659793499999978,
+  "wall_s": 7.0013607000000775,
+  "tokens": 170
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 21,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.029198399999586,
+  "wall_s": 6.47988819999955,
+  "tokens": 160
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 22,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.904489900000044,
+  "wall_s": 10.168852900000275,
+  "tokens": 301
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 23,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.9362865000002785,
+  "wall_s": 6.207323500000712,
+  "tokens": 149
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 24,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.9612028000001374,
+  "wall_s": 6.84048040000016,
+  "tokens": 161
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 25,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.708657199999834,
+  "wall_s": 5.397456800000327,
+  "tokens": 115
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 26,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.98710200000005,
+  "wall_s": 7.518606500000715,
+  "tokens": 198
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 27,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.9844276000003447,
+  "wall_s": 7.926011500000641,
+  "tokens": 196
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 28,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.80879030000051,
+  "wall_s": 5.768847199999982,
+  "tokens": 132
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 29,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.9035485000003973,
+  "wall_s": 7.120977500000663,
+  "tokens": 175
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 30,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "abrir_app",
+   "volumen",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.791181300000062,
+  "wall_s": 7.518522399999711,
+  "tokens": 191
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 31,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.7430214000005435,
+  "wall_s": 7.19052880000072,
+  "tokens": 178
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 32,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.9108954000002996,
+  "wall_s": 7.860902700000224,
+  "tokens": 204
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 33,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_apps",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.429067799999757,
+  "wall_s": 6.64973800000007,
+  "tokens": 154
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 34,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "volumen",
+   "abrir_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "abrir_app",
+    "volumen"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.058836900000642,
+  "wall_s": 7.500176700000338,
+  "tokens": 190
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 35,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.514562000000296,
+  "wall_s": 4.518767399999888,
+  "tokens": 93
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 36,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 6.633191499999157,
+  "wall_s": 6.637583199999426,
+  "tokens": 173
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 37,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.363295199999811,
+  "wall_s": 4.367496999999275,
+  "tokens": 87
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 38,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.49926079999932,
+  "wall_s": 4.5036914999991495,
+  "tokens": 92
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 39,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 5.6210033999996085,
+  "wall_s": 5.625570700000026,
+  "tokens": 138
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 40,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.083483000000342,
+  "wall_s": 4.087712300000021,
+  "tokens": 75
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 41,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.509385399999701,
+  "wall_s": 6.379788899999767,
+  "tokens": 151
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 42,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.577352299999802,
+  "wall_s": 5.729400899999746,
+  "tokens": 125
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 43,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.3741516000000047,
+  "wall_s": 7.079456100000243,
+  "tokens": 168
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 44,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.5393636999997398,
+  "wall_s": 7.040140999999494,
+  "tokens": 167
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 45,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.8824075000002267,
+  "wall_s": 6.452115000000049,
+  "tokens": 156
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 46,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.8404264999999214,
+  "wall_s": 6.014471100000264,
+  "tokens": 140
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 47,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.153960900000129,
+  "wall_s": 6.332268699999986,
+  "tokens": 154
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 48,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "leer_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.085755600000084,
+  "wall_s": 8.641592099999798,
+  "tokens": 236
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 49,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "buscar_web",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.151838799999496,
+  "wall_s": 6.265835899999729,
+  "tokens": 152
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 50,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 5.390626399999746,
+  "wall_s": 5.394987200000287,
+  "tokens": 123
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 51,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.5691338000006,
+  "wall_s": 7.19555870000022,
+  "tokens": 173
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 52,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "cerrar_app",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "cerrar"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.6916831999997157,
+  "wall_s": 7.988602499999615,
+  "tokens": 199
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 53,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "mover_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "mover_archivo"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.127869099999771,
+  "wall_s": 7.950726500000201,
+  "tokens": 208
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 54,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "mover_archivo",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "mover_archivo"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.2987818999999945,
+  "wall_s": 8.23724189999939,
+  "tokens": 218
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 55,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_carpeta",
+   "listar_carpeta",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.161304600000221,
+  "wall_s": 9.56253519999973,
+  "tokens": 256
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 56,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "listar_controles",
+   "mouse",
+   "listar_controles",
+   "teclado",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "mouse",
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.6004071999996086,
+  "wall_s": 14.748032899999998,
+  "tokens": 430
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 57,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "mouse",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.913129499999741,
+  "wall_s": 5.60844889999953,
+  "tokens": 126
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 58,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "teclado",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana",
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.650177800000165,
+  "wall_s": 9.178049299999657,
+  "tokens": 241
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 59,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "listar_ventanas",
+   "enfocar_ventana",
+   "teclado",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "enfocar_ventana",
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.5653941999999006,
+  "wall_s": 9.543681999999535,
+  "tokens": 251
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 60,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "teclado",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "teclado"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.124659299999621,
+  "wall_s": 5.8515387999996165,
+  "tokens": 135
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 61,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "consultar_memoria",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.318904699999621,
+  "wall_s": 6.5973864999996295,
+  "tokens": 166
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 62,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 3.7439004000007117,
+  "wall_s": 5.421770300000389,
+  "tokens": 117
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 63,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.086637499999597,
+  "wall_s": 5.824632800000472,
+  "tokens": 131
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 64,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "sugerencias",
+   "sugerencias",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.465880800000377,
+  "wall_s": 8.110398600000735,
+  "tokens": 209
+ },
+ {
+  "model": "gemma_q5",
+  "engine": "llama.cpp b11429",
+  "id": 65,
+  "seed": 33,
+  "complete": true,
+  "blank": false,
+  "json": true,
+  "first": true,
+  "tools": [
+   "registro_habitos",
+   "finalizar"
+  ],
+  "protection": {
+   "verificadas": [
+    "registro_habitos"
+   ],
+   "fallos": [],
+   "correcciones": 0
+  },
+  "first_action_s": 4.151621300000443,
+  "wall_s": 5.910875300000043,
+  "tokens": 138
+ }
+]
