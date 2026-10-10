@@ -36,5 +36,16 @@
     "errores_en_registros": 0,
     "decision": "La combinacion completa funciona con Gemma Q4. El margen de 1.5 GiB exige conservar el modo juego y validar mediante un supervisor de pruebas antes de cambiar produccion."
   },
+  "comparacion_contexto": {
+    "configuracion": "Gemma Q4 con mmproj F16, flash attention, KV q8_0 y una secuencia",
+    "ctx_16384_base_mib": 870,
+    "ctx_16384_total_mib": 8910,
+    "ctx_16384_incremento_mib": 8040,
+    "ctx_8192_base_mib": 875,
+    "ctx_8192_total_mib": 8834,
+    "ctx_8192_incremento_mib": 7959,
+    "ahorro_normalizado_mib": 81,
+    "decision": "Mantener 16384 tokens: 81 MiB no compensan reducir a la mitad el historial util."
+  },
   "produccion_modificada": false
 }

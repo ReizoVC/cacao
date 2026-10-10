@@ -835,3 +835,20 @@ tres motores antes de cambiar producción.
 
 Evidencia sanitizada:
 [resumen_convivencia_completa_wsl.json](comparacion_modelos/resumen_convivencia_completa_wsl.json).
+
+### Contexto 16K frente a 8K
+
+Se cargó Gemma Q4 con visión dos veces en la misma sesión y con idéntica
+configuración, cambiando únicamente `n_ctx`. Con 16.384 tokens la GPU pasó de
+870 a 8.910 MiB, un incremento de 8.040 MiB. Con 8.192 tokens pasó de 875 a
+8.834 MiB, un incremento de 7.959 MiB. El ahorro normalizado fue solamente
+**81 MiB**; la diferencia entre las lecturas totales fue 76 MiB por una variación
+de 5 MiB en el consumo base.
+
+Este ahorro aumentaría el margen de la combinación completa de unos 1.551 a
+aproximadamente 1.632 MiB. No compensa reducir a la mitad la capacidad de Cacao
+para conservar historial, resultados de herramientas, texto web, archivos e
+imágenes durante tareas largas. Las órdenes sencillas seguirían funcionando
+igual, pero las secuencias extensas alcanzarían antes el truncamiento. Se
+mantiene la recomendación de contexto 16.384; la reserva de Qwen3-TTS y la carga
+de Whisper ofrecen oportunidades de ahorro mucho mayores.
