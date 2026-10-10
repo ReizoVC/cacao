@@ -641,3 +641,35 @@ Evidencia sanitizada:
 [resumen_ui_mate_b11429.json](comparacion_modelos/resumen_ui_mate_b11429.json) y
 [ui_mate_q5_vision_nativa.json](comparacion_modelos/ui_mate_q5_vision_nativa.json).
 Producción permanece con Gemma Q5; `config.json` y `.venv` no se modificaron.
+
+## Convivencia Gemma Q4 + Qwen3-TTS 0.6B
+
+El 10 de octubre de 2026 se cargó Gemma 4 12B UD-Q4_K_XL con `llama.cpp
+b11429`, contexto 16.384, flash attention, caché KV `q8_0` y razonamiento
+desactivado. Sin descargar Gemma se ejecutó Qwen3-TTS 0.6B Base mediante WSL,
+SDPA y TF32, usando la referencia A1 ya preparada.
+
+| Medición | Resultado |
+|---|---:|
+| Gemma Q4 estable | 8.327 MiB de VRAM |
+| Pico conjunto | 11.668 MiB de VRAM |
+| Libre en el pico | 4.643 MiB |
+| Carga de Qwen3-TTS | 25,53 s |
+| Voz sostenida, 6,16 s de audio | 23,68 s, RTF 3,84 |
+| Voz aislada equivalente | 17,50 s |
+| Penalización al compartir GPU | 35,3 % |
+| Gemma después de usar la voz | 0,42 s, respuesta correcta |
+
+No hubo falta de memoria ni caída de ninguno de los dos motores. Los dos WAV son
+mono PCM a 24 kHz, duran 6,16 s y tienen encabezados válidos. La convivencia es
+viable y conserva alrededor de 4,5 GiB de margen, pero Qwen3-TTS todavía tarda
+casi cuatro segundos de cálculo por cada segundo de audio; además, compartir la
+GPU con Gemma lo ralentiza un 35 %. Por ello, Gemma Q4 es la base más prudente
+para integrar la voz, pero la siguiente prioridad debe ser reducir la latencia
+del TTS. MTP se probará después y solo se conservará si su memoria adicional no
+reduce demasiado este margen.
+
+Evidencia sanitizada:
+[resumen_convivencia_gemma_q4_qwen3_tts.json](comparacion_modelos/resumen_convivencia_gemma_q4_qwen3_tts.json).
+`config.json`, `.venv` y el modelo configurado en producción permanecieron sin
+cambios.
