@@ -673,3 +673,35 @@ Evidencia sanitizada:
 [resumen_convivencia_gemma_q4_qwen3_tts.json](comparacion_modelos/resumen_convivencia_gemma_q4_qwen3_tts.json).
 `config.json`, `.venv` y el modelo configurado en producción permanecieron sin
 cambios.
+
+## Optimización de Qwen3-TTS
+
+Se probó mantener el TTS cargado y dividir la frase D3 en dos fragmentos mientras
+Gemma Q4 permanecía cargada. El primer audio estuvo disponible en 16,69 s frente
+a 23,68 s para la frase completa, pero la generación total subió a 29,67 s y la
+segunda parte habría introducido una pausa estimada de 9,30 s. La fragmentación
+manual queda descartada mientras el backend no entregue audio incremental real.
+
+FlashAttention 2 no estaba instalado. La versión 2.8.3.post1 no ofreció una rueda
+compatible con Python 3.12, PyTorch 2.11 y CUDA 13, por lo que intentó compilarse.
+La compilación se canceló sin dejar una instalación parcial: no justifica ocupar
+más espacio ni asumir una ruta frágil para la RTX 5060 Ti.
+
+Se evaluó vLLM-Omni 0.30.0 porque ofrece un servidor específico para Qwen3-TTS y
+streaming PCM. Un entorno completamente ubicado en D: se instaló, pero cargar
+Python desde NTFS tardaba varios minutos y no resultó operativo. Una segunda
+copia temporal en el sistema Linux de WSL se detuvo cuando C: quedó por debajo
+del margen fijado. Ambos entornos temporales se eliminaron y D: recuperó su
+espacio. El VHDX de WSL quedó expandido; Linux marcó los bloques como libres,
+pero Windows requiere una compactación administrativa para devolver físicamente
+ese espacio a C:.
+
+**Decisión:** conservar SDPA y la frase completa en el prototipo actual. Para
+obtener voz con baja latencia, el siguiente experimento válido es mover Ubuntu
+WSL a D: o crear allí un VHDX Linux, instalar vLLM-Omni en ese sistema de archivos
+y medir su streaming real. No conviene integrar fragmentación manual,
+FlashAttention compilado localmente ni vLLM sobre NTFS.
+
+Evidencia sanitizada:
+[resumen_optimizacion_qwen3_tts.json](comparacion_modelos/resumen_optimizacion_qwen3_tts.json).
+Producción, `config.json` y `.venv` permanecieron sin cambios.

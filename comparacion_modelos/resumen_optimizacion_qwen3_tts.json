@@ -1,0 +1,42 @@
+{
+  "fecha": "2026-10-10",
+  "configuracion": {
+    "modelo_principal": "Gemma 4 12B UD-Q4_K_XL",
+    "voz": "Qwen3-TTS-12Hz-0.6B-Base",
+    "gpu": "NVIDIA GeForce RTX 5060 Ti 16 GB",
+    "backend_voz": "WSL, PyTorch 2.11.0+cu130, SDPA, TF32"
+  },
+  "frase_completa_con_gemma": {
+    "generacion_segundos": 23.677,
+    "audio_segundos": 6.16,
+    "rtf": 3.844
+  },
+  "fragmentacion_manual": {
+    "fragmentos": 2,
+    "primer_audio_segundos": 16.687,
+    "generacion_total_segundos": 29.666,
+    "audio_total_segundos": 7.0,
+    "pausa_estimada_segundos": 9.299,
+    "vram_observada_mib": 11568,
+    "decision": "Descartada: adelanta el primer audio, pero aumenta el tiempo total y produce una pausa larga."
+  },
+  "flash_attention_2": {
+    "version_evaluada": "2.8.3.post1",
+    "rueda_compatible_disponible": false,
+    "resultado": "El instalador intento compilar; se cancelo sin dejar instalacion parcial por coste y riesgo en el espacio disponible."
+  },
+  "vllm_omni": {
+    "version_evaluada": "0.30.0",
+    "soporte_oficial_qwen3_tts_streaming": true,
+    "resultado": "No ejecutado: el entorno sobre D/NTFS tuvo tiempos de importacion impracticables y la copia Linux redujo C por debajo del margen aceptado.",
+    "siguiente_requisito": "Mover la distribucion WSL a D o crear un VHDX Linux en D antes de repetir."
+  },
+  "estado_final": {
+    "produccion_modificada": false,
+    "entorno_voz_funcional": true,
+    "gpu_usada_mib": 755,
+    "c_libre_gib": 10.56,
+    "d_libre_gib": 355.3,
+    "nota_espacio_c": "El VHDX de WSL quedo expandido. Los bloques se recortaron, pero Windows requiere compactacion administrativa para devolver el espacio fisico."
+  }
+}
