@@ -694,12 +694,17 @@ copia temporal en el sistema Linux de WSL se detuvo cuando C: quedó por debajo
 del margen fijado. Ambos entornos temporales se eliminaron y D: recuperó su
 espacio. El VHDX de WSL quedó expandido; Linux marcó los bloques como libres,
 pero Windows requiere una compactación administrativa para devolver físicamente
-ese espacio a C:.
+ese espacio a C:. El intento de compactación estándar terminó correctamente pero
+no redujo el archivo porque el VHDX no estaba configurado como disperso. No se
+forzó el modo inseguro. En su lugar se trasladó la distribución completa mediante
+`wsl --manage Ubuntu-24.04 --move D:\\WSL\\Ubuntu-24.04`. Después del traslado,
+C: pasó de 10,28 a 33,27 GiB libres; Ubuntu, CUDA y el entorno funcional de
+Qwen3-TTS se validaron correctamente. D: quedó con 332,28 GiB libres.
 
-**Decisión:** conservar SDPA y la frase completa en el prototipo actual. Para
-obtener voz con baja latencia, el siguiente experimento válido es mover Ubuntu
-WSL a D: o crear allí un VHDX Linux, instalar vLLM-Omni en ese sistema de archivos
-y medir su streaming real. No conviene integrar fragmentación manual,
+**Decisión:** conservar SDPA y la frase completa en el prototipo actual. Ubuntu
+WSL ya reside en D:, por lo que el siguiente experimento válido es instalar
+vLLM-Omni dentro de ese sistema de archivos Linux y medir su streaming real. No
+conviene integrar fragmentación manual,
 FlashAttention compilado localmente ni vLLM sobre NTFS.
 
 Evidencia sanitizada:

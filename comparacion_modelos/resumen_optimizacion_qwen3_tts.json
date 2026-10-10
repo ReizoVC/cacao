@@ -29,14 +29,14 @@
     "version_evaluada": "0.30.0",
     "soporte_oficial_qwen3_tts_streaming": true,
     "resultado": "No ejecutado: el entorno sobre D/NTFS tuvo tiempos de importacion impracticables y la copia Linux redujo C por debajo del margen aceptado.",
-    "siguiente_requisito": "Mover la distribucion WSL a D o crear un VHDX Linux en D antes de repetir."
+    "siguiente_requisito": "Cumplido: Ubuntu WSL fue movido a D:\\WSL\\Ubuntu-24.04 antes de repetir."
   },
   "estado_final": {
     "produccion_modificada": false,
     "entorno_voz_funcional": true,
     "gpu_usada_mib": 755,
-    "c_libre_gib": 10.56,
-    "d_libre_gib": 355.3,
-    "nota_espacio_c": "El VHDX de WSL quedo expandido. Los bloques se recortaron, pero Windows requiere compactacion administrativa para devolver el espacio fisico."
+    "c_libre_gib": 33.27,
+    "d_libre_gib": 332.28,
+    "nota_espacio_c": "Resuelto moviendo oficialmente Ubuntu-24.04 a D:\\WSL\\Ubuntu-24.04; el entorno de voz y CUDA se validaron despues de la migracion."
   }
 }
