@@ -1,0 +1,34 @@
+{
+  "fecha": "2026-10-10",
+  "entorno": {
+    "sistema": "Ubuntu-24.04 bajo WSL2, ubicado en D:\\WSL\\Ubuntu-24.04",
+    "gpu": "NVIDIA GeForce RTX 5060 Ti 16 GB",
+    "gemma": "Gemma 4 12B UD-Q4_K_XL",
+    "motor_gemma": "llama.cpp b11429 Linux CUDA 13.4",
+    "configuracion_gemma": "ctx 16384, gpu-layers all, flash attention, KV q8_0, parallel 1, load-mode none, razonamiento off",
+    "voz": "Qwen3-TTS-12Hz-0.6B-Base",
+    "motor_voz": "vLLM-Omni 0.30.0, perfil Cacao 0.16/0.08"
+  },
+  "resultado": {
+    "gemma_respuestas_ok": 12,
+    "gemma_respuestas_total": 12,
+    "tts_audios_ok": 6,
+    "tts_audios_total": 6,
+    "gemma_despues_de_voz_ok": 5,
+    "gemma_despues_de_voz_total": 5,
+    "gemma_primer_token_caliente_promedio_s": 0.123,
+    "gemma_total_caliente_promedio_s": 0.798,
+    "tts_frio_primer_audio_s": 9.302,
+    "tts_frio_total_s": 10.153,
+    "tts_caliente_primer_audio_promedio_s": 0.553,
+    "tts_caliente_total_promedio_s": 1.002,
+    "tts_caliente_rtf_promedio": 0.238,
+    "vram_reposo_conjunto_mib": 12735,
+    "vram_pico_conjunto_mib": 13162,
+    "vram_libre_en_pico_mib": 3149,
+    "vram_tras_descarga_mib": 898,
+    "errores_en_registros": 0,
+    "decision": "La convivencia queda acreditada cuando ambos motores comparten WSL. Falta medir Whisper y vision simultaneos antes de modificar produccion."
+  },
+  "produccion_modificada": false
+}

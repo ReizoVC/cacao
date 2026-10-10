@@ -63,6 +63,23 @@
       "primer_audio_servidor_s": 0.152,
       "rtf": 0.241,
       "gemma_post_voz": "No acreditado: el endpoint Windows dejo de aceptar conexiones tras iniciar CUDA en WSL."
+    },
+    "con_gemma_q4_unico_wsl": {
+      "llama_cpp": "b11429 Linux CUDA 13.4",
+      "gemma_respuestas_ok": "12/12",
+      "tts_audios_ok": "6/6",
+      "gemma_despues_de_voz_ok": "5/5",
+      "gemma_primer_token_caliente_promedio_s": 0.123,
+      "gemma_total_caliente_promedio_s": 0.798,
+      "tts_frio_primer_audio_s": 9.302,
+      "tts_frio_total_s": 10.153,
+      "tts_caliente_primer_audio_promedio_s": 0.553,
+      "tts_caliente_total_promedio_s": 1.002,
+      "tts_caliente_rtf_promedio": 0.238,
+      "reposo_conjunto_mib": 12735,
+      "pico_conjunto_mib": 13162,
+      "libre_pico_mib": 3149,
+      "resultado": "Acreditado: ambos endpoints siguieron operativos al alternar 12 respuestas de Gemma y 6 audios dentro del mismo WSL."
     }
   },
   "estado_final": {

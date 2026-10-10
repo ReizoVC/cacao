@@ -746,3 +746,47 @@ sobre NTFS.
 Evidencia sanitizada:
 [resumen_optimizacion_qwen3_tts.json](comparacion_modelos/resumen_optimizacion_qwen3_tts.json).
 Producción, `config.json` y `.venv` permanecieron sin cambios.
+
+### Comprobación conjunta en un único WSL
+
+Se repitió la convivencia ejecutando tanto `llama.cpp b11429` como vLLM-Omni
+dentro de Ubuntu/WSL. Gemma Q4 conservó la configuración comparable: contexto
+16.384, todas las capas en GPU, flash attention, caché KV `q8_0`, una secuencia,
+razonamiento desactivado y carga sin `mmap`. Se alternaron doce consultas a
+Gemma con seis generaciones de voz; cinco voces corresponden a la medición
+caliente y una al calentamiento inicial.
+
+| Medición conjunta en WSL | Resultado |
+|---|---:|
+| Respuestas de Gemma no vacías | 12/12 |
+| Audios válidos | 6/6 |
+| Gemma después de cada voz | 5/5 |
+| Primer token de Gemma, promedio caliente | 0,123 s |
+| Respuesta de Gemma, promedio caliente | 0,798 s |
+| Primera voz tras arrancar | 9,302 s al primer audio; 10,153 s total |
+| Voz caliente, promedio de 5 | 0,553 s al primer audio; 1,002 s total |
+| RTF caliente promedio | 0,238 |
+| VRAM conjunta en reposo | 12.735 MiB |
+| Pico conjunto | 13.162 MiB |
+| Libre en el pico | 3.149 MiB |
+
+No hubo respuestas vacías, caída de endpoints, falta de memoria ni errores en
+los registros. Al finalizar, ambos procesos se descargaron y la GPU volvió a
+898 MiB usados. Esto resuelve el fallo observado al mezclar el servidor de
+Gemma en Windows con CUDA en WSL: los dos motores sí son estables cuando
+comparten el mismo entorno CUDA dentro de WSL.
+
+WSL tenía 7,7 GiB de RAM asignados y 2 GiB de intercambio. La carga inicial fue
+lenta y llegó a dejar poca RAM disponible mientras vLLM cargaba sus dos etapas,
+pero la ejecución sostenida fue correcta. Antes de integrar conviene mover el
+GGUF de Gemma a un sistema de archivos Linux en D: y preparar un único servicio
+de arranque, salud y apagado. La integración debe conservar el calentamiento de
+la voz al iniciar o aceptar que el primer audio tarda unos diez segundos.
+
+**Decisión actualizada:** la arquitectura Gemma Q4 + Qwen3-TTS mediante un único
+WSL queda acreditada para una integración de pruebas. El margen de 3,1 GiB es
+suficiente para esta combinación, pero todavía falta medirla con Whisper y
+visión simultáneos antes de sustituir el arranque de producción.
+
+Evidencia sanitizada:
+[resumen_convivencia_wsl.json](comparacion_modelos/resumen_convivencia_wsl.json).
