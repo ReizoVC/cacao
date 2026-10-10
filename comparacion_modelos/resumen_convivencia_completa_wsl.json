@@ -1,0 +1,40 @@
+{
+  "fecha": "2026-10-10",
+  "entorno": {
+    "sistema": "Ubuntu-24.04 bajo WSL2, ubicado en D:\\WSL\\Ubuntu-24.04",
+    "gpu": "NVIDIA GeForce RTX 5060 Ti 16 GB",
+    "gemma": "Gemma 4 12B UD-Q4_K_XL con mmproj F16",
+    "motor_gemma": "llama.cpp b11429 Linux CUDA 13.4",
+    "voz": "Qwen3-TTS-12Hz-0.6B-Base con vLLM-Omni 0.30.0",
+    "transcripcion": "faster-whisper 1.2.1, large-v3-turbo, int8_float16, CTranslate2 4.8.2",
+    "cuda_whisper": "bibliotecas CUDA 12 aisladas en /opt/whisper-test"
+  },
+  "protocolo": {
+    "ciclos": 3,
+    "secuencia": "vision de Calculadora de prueba, TTS A1, transcripcion del audio y consulta posterior a Gemma",
+    "capturas_personales": false
+  },
+  "resultado": {
+    "vision_ok": "3/3",
+    "tts_ok": "3/3",
+    "whisper_ok": "3/3",
+    "gemma_post_ciclo_ok": "3/3",
+    "whisper_carga_s": 13.987,
+    "whisper_primera_transcripcion_s": 5.181,
+    "whisper_caliente_promedio_s": 0.323,
+    "tts_frio_primer_audio_s": 15.715,
+    "tts_frio_total_s": 16.363,
+    "tts_caliente_primer_audio_promedio_s": 0.574,
+    "tts_caliente_total_promedio_s": 1.103,
+    "vision_primera_s": 7.7,
+    "vision_promedio_s": 3.368,
+    "vram_antes_whisper_mib": 13027,
+    "vram_despues_whisper_mib": 14152,
+    "vram_pico_mib": 14760,
+    "vram_libre_en_pico_mib": 1551,
+    "vram_tras_descarga_mib": 848,
+    "errores_en_registros": 0,
+    "decision": "La combinacion completa funciona con Gemma Q4. El margen de 1.5 GiB exige conservar el modo juego y validar mediante un supervisor de pruebas antes de cambiar produccion."
+  },
+  "produccion_modificada": false
+}

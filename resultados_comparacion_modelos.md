@@ -790,3 +790,48 @@ visión simultáneos antes de sustituir el arranque de producción.
 
 Evidencia sanitizada:
 [resumen_convivencia_wsl.json](comparacion_modelos/resumen_convivencia_wsl.json).
+
+### Prueba completa: visión, TTS y Whisper en WSL
+
+Se añadió el proyector visual de Gemma y se mantuvieron residentes Gemma Q4,
+Qwen3-TTS 0.6B Base y faster-whisper `large-v3-turbo` `int8_float16` dentro del
+mismo WSL. CTranslate2 necesitó sus bibliotecas CUDA 12 aisladas, mientras
+llama.cpp y vLLM continuaron usando CUDA 13; ambas versiones convivieron sin
+cambiar el driver ni los entornos de producción.
+
+La secuencia hizo un calentamiento y después tres ciclos completos: analizar una
+captura de la Calculadora de prueba, generar una frase con la voz A1,
+transcribir ese audio y volver a consultar Gemma. La prueba no utilizó capturas
+personales.
+
+| Medición completa | Resultado |
+|---|---:|
+| Visión correcta | 3/3 |
+| Audios válidos | 3/3 |
+| Transcripciones no vacías y coherentes | 3/3 |
+| Gemma operativa después de cada ciclo | 3/3 |
+| Carga de Whisper | 13,987 s |
+| VRAM antes / después de cargar Whisper | 13.027 / 14.152 MiB |
+| Primera transcripción / promedio caliente | 5,181 / 0,323 s |
+| Primera voz tras arrancar | 15,715 s al primer audio; 16,363 s total |
+| Voz caliente, promedio de 3 | 0,574 s al primer audio; 1,103 s total |
+| Visión, primera / promedio de 3 | 7,700 / 3,368 s |
+| Pico conjunto | 14.760 MiB |
+| Libre en el pico | 1.551 MiB |
+
+Los tres resultados visuales identificaron la Calculadora y el botón igual. Las
+transcripciones conservaron el contenido de las frases; una añadió una
+interrogación inicial, sin cambiar el sentido. No se encontraron errores ni
+falta de memoria en los registros. Después de descargar todos los procesos, la
+GPU volvió a 848 MiB usados.
+
+**Decisión:** la combinación completa funciona con Gemma Q4. El margen baja a
+1,5 GiB, por lo que Gemma Q5 ya no es la opción prudente para mantener visión,
+TTS y Whisper residentes al mismo tiempo. Conviene integrar primero en modo de
+pruebas, conservar la descarga automática cuando haya un juego y calentar voz y
+Whisper durante el arranque. El siguiente trabajo técnico es mover el GGUF al
+sistema Linux de D: para acelerar la carga y crear un supervisor único de los
+tres motores antes de cambiar producción.
+
+Evidencia sanitizada:
+[resumen_convivencia_completa_wsl.json](comparacion_modelos/resumen_convivencia_completa_wsl.json).
