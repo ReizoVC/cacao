@@ -4,7 +4,7 @@
     "modelo_principal": "Gemma 4 12B UD-Q4_K_XL",
     "voz": "Qwen3-TTS-12Hz-0.6B-Base",
     "gpu": "NVIDIA GeForce RTX 5060 Ti 16 GB",
-    "backend_voz": "WSL, PyTorch 2.11.0+cu130, SDPA, TF32"
+    "backend_voz": "vLLM-Omni 0.30.0, vLLM 0.30.0, PyTorch 2.13.0+cu132, FlashAttention 2, muestreador PyTorch"
   },
   "frase_completa_con_gemma": {
     "generacion_segundos": 23.677,
@@ -28,15 +28,49 @@
   "vllm_omni": {
     "version_evaluada": "0.30.0",
     "soporte_oficial_qwen3_tts_streaming": true,
-    "resultado": "No ejecutado: el entorno sobre D/NTFS tuvo tiempos de importacion impracticables y la copia Linux redujo C por debajo del margen aceptado.",
-    "siguiente_requisito": "Cumplido: Ubuntu WSL fue movido a D:\\WSL\\Ubuntu-24.04 antes de repetir."
+    "resultado": "Ejecutado: streaming PCM real funciona. Perfil Cacao caliente: primer bloque cliente 0.604 s, total 1.433 s para 5.76 s de audio, RTF 0.249 y pico 5250 MiB.",
+    "siguiente_requisito": "Unificar el dominio CUDA: Gemma en WSL o ambos motores en el mismo sistema, y repetir verificacion bidireccional.",
+    "perfil_oficial": {
+      "reposo_mib": 7493,
+      "total_s": 1.347,
+      "pico_mib": 7783,
+      "rtf": 0.237,
+      "audio_s": 5.68,
+      "primer_audio_cliente_s": 0.568,
+      "primer_audio_servidor_s": 0.127
+    },
+    "perfil_cacao": {
+      "gpu_memory_utilization_talker": 0.16,
+      "audio_s": 5.76,
+      "rtf": 0.249,
+      "total_s": 1.433,
+      "gpu_memory_utilization_code2wav": 0.08,
+      "pico_mib": 5250,
+      "primer_audio_cliente_s": 0.604,
+      "max_model_len_talker": 2048,
+      "reposo_mib": 4956,
+      "max_num_batched_tokens_talker": 256,
+      "primer_audio_servidor_s": 0.134,
+      "max_num_seqs": 1
+    },
+    "con_gemma_q4": {
+      "pico_conjunto_mib": 13019,
+      "libre_pico_mib": 3032,
+      "total_s": 1.386,
+      "reposo_conjunto_mib": 12730,
+      "primer_audio_cliente_s": 0.584,
+      "audio_s": 5.76,
+      "primer_audio_servidor_s": 0.152,
+      "rtf": 0.241,
+      "gemma_post_voz": "No acreditado: el endpoint Windows dejo de aceptar conexiones tras iniciar CUDA en WSL."
+    }
   },
   "estado_final": {
     "produccion_modificada": false,
     "entorno_voz_funcional": true,
-    "gpu_usada_mib": 755,
-    "c_libre_gib": 33.27,
-    "d_libre_gib": 332.28,
+    "gpu_usada_mib": 865,
+    "c_libre_gib": 31.11,
+    "d_libre_gib": 317.88,
     "nota_espacio_c": "Resuelto moviendo oficialmente Ubuntu-24.04 a D:\\WSL\\Ubuntu-24.04; el entorno de voz y CUDA se validaron despues de la migracion."
   }
 }

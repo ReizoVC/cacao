@@ -701,11 +701,47 @@ forzó el modo inseguro. En su lugar se trasladó la distribución completa medi
 C: pasó de 10,28 a 33,27 GiB libres; Ubuntu, CUDA y el entorno funcional de
 Qwen3-TTS se validaron correctamente. D: quedó con 332,28 GiB libres.
 
-**Decisión:** conservar SDPA y la frase completa en el prototipo actual. Ubuntu
-WSL ya reside en D:, por lo que el siguiente experimento válido es instalar
-vLLM-Omni dentro de ese sistema de archivos Linux y medir su streaming real. No
-conviene integrar fragmentación manual,
-FlashAttention compilado localmente ni vLLM sobre NTFS.
+### Streaming real con vLLM-Omni 0.30.0
+
+Después de mover Ubuntu a D: se instaló `vLLM-Omni 0.30.0` con `vLLM 0.30.0`,
+PyTorch 2.13.0 y CUDA 13.2 en `/opt/vllm-omni-test`. El primer arranque falló
+porque FlashInfer intentó compilar sin encontrar `curand.h`; se conservó
+FlashAttention 2 para la atención y se cambió únicamente el muestreador a la
+implementación estándar de PyTorch (`VLLM_USE_FLASHINFER_SAMPLER=0`).
+
+El perfil oficial estaba preparado para 64 solicitudes y ocupó 7.493 MiB en
+reposo. Se creó un perfil aislado para una conversación: una secuencia, contexto
+del talker de 2.048, lote de 256 y reservas de GPU de 0,16/0,08 para las dos
+etapas. No se modificó ningún archivo de producción.
+
+| Medición D3, voz A1 | Perfil oficial, caliente | Perfil Cacao, caliente | Perfil Cacao + Gemma Q4 |
+|---|---:|---:|---:|
+| Primer bloque recibido por el cliente | 0,568 s | 0,604 s | 0,584 s |
+| Primer bloque informado por el servidor | 0,127 s | 0,134 s | 0,152 s |
+| Generación total | 1,347 s | 1,433 s | 1,386 s |
+| Audio generado | 5,68 s | 5,76 s | 5,76 s |
+| RTF | 0,237 | 0,249 | 0,241 |
+| VRAM en reposo | 7.493 MiB | 4.956 MiB | 12.730 MiB conjunta |
+| Pico VRAM | 7.783 MiB | 5.250 MiB | 13.019 MiB conjunta |
+| Libre en el pico conjunto | — | — | 3.032 MiB |
+
+La primera petición de cada arranque todavía compila kernels y tardó entre 6,75
+y 11,22 s en entregar audio. La segunda petición es la medida caliente relevante
+para una aplicación que mantenga el servidor cargado. El WAV fue PCM mono a 24
+kHz y la duración fue coherente.
+
+La voz y Gemma Q4 caben físicamente y el TTS no perdió velocidad al compartir la
+GPU. Sin embargo, el servidor Windows de Gemma dejó de aceptar conexiones después
+de iniciar el segundo contexto CUDA dentro de WSL; por ello no se pudo acreditar
+que ambos motores siguieran operativos simultáneamente. Al detenerlos, la GPU
+volvió a 865 MiB, sin memoria retenida.
+
+**Decisión:** vLLM-Omni resuelve la latencia del TTS y su perfil reducido cumple
+los objetivos de primer audio y RTF. Todavía no debe integrarse en Cacao con el
+servidor Windows actual. El siguiente paso es ejecutar también Gemma bajo WSL o
+usar un único dominio CUDA y repetir la comprobación bidireccional. Se mantienen
+descartadas la fragmentación manual, FlashAttention compilado localmente y vLLM
+sobre NTFS.
 
 Evidencia sanitizada:
 [resumen_optimizacion_qwen3_tts.json](comparacion_modelos/resumen_optimizacion_qwen3_tts.json).
