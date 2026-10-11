@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'comparacion_modelos' / 'datos'
 MODELS = {
     'gemma_q5': ROOT / 'modelos/gemma-4-12b-it-Q5_K_M.gguf',
-    'gemma_q4': ROOT / 'modelos/comparacion/gemma-4-12b-it-UD-Q4_K_XL.gguf',
+    'gemma_q4': Path(r'D:\Cacao\ModelosComparacion\gemma-4-12b-it-UD-Q4_K_XL.gguf'),
     'qwen_q4': ROOT / 'modelos/comparacion/Qwen3.5-9B-UD-Q4_K_XL.gguf',
     'qwen_q5': ROOT / 'modelos/comparacion/Qwen3.5-9B-UD-Q5_K_XL.gguf',
     'qwen_wrench_q4': ROOT / 'modelos/comparacion/Wrench-9B-Q4_K_M.gguf',
@@ -63,7 +63,7 @@ class GPU:
         self.stop.set()
         self.thread.join(5)
 
-def prepare(model, isolated_round=False, round_name='ronda2'):
+def prepare(model, isolated_round=False, round_name='ronda2', swa_full=None):
     runtime = ROOT / '.comparacion-runtime' / (model+'_'+round_name if isolated_round else model)
     runtime.mkdir(parents=True, exist_ok=True)
     # Copies only code/configuration, never personal databases or the production vault.
@@ -74,12 +74,21 @@ def prepare(model, isolated_round=False, round_name='ronda2'):
     config = json.loads((ROOT / 'config.json').read_text(encoding='utf-8'))
     config.update(modelo=str(MODELS[model]), mmproj=None, n_ctx=16384, flash_attn=True,
                   type_k='q8_0', type_v='q8_0', use_mmap=False, modo_gramatica='topk')
+    if swa_full is not None:
+        config['swa_full'] = swa_full
     dump(runtime / 'config.json', config)
     dump(runtime / 'datos_locales.json', {})
     # No hotkey conflict with Cacao; cancellation is checked by the runner each token.
     src = (runtime / 'benchmark_gramatica.py').read_text(encoding='utf-8')
     src = src.replace('emergencia.iniciar()', '# isolated benchmark: no global hotkey')
     (runtime / 'benchmark_gramatica.py').write_text(src, encoding='utf-8')
+    if swa_full is not None:
+        model_src = (runtime / 'modelo.py').read_text(encoding='utf-8')
+        needle = 'use_mmap=config.get("use_mmap", True), verbose=False,'
+        replacement = 'use_mmap=config.get("use_mmap", True), swa_full=config.get("swa_full"), verbose=False,'
+        if needle not in model_src:
+            raise RuntimeError('No pude inyectar swa_full en el runtime aislado.')
+        (runtime / 'modelo.py').write_text(model_src.replace(needle, replacement), encoding='utf-8')
     return runtime
 
 def isolated_tools(b):
@@ -169,6 +178,8 @@ def main():
     parser.add_argument('--diagnostic', choices=('baseline','prompt','schema','combined'))
     parser.add_argument('--server-url', help='llama-server local ya iniciado; no modifica .venv')
     parser.add_argument('--engine-tag', default='llama_cpp_b11429')
+    parser.add_argument('--swa-full', choices=('true','false'))
+    parser.add_argument('--test-set', type=Path, help='JSON alternativo de pruebas; siempre se ejecuta en simulación')
     args = parser.parse_args()
     if args.vision_normalized:
         args.vision_only = True
@@ -177,8 +188,9 @@ def main():
     if args.server_url:
         OUT = ROOT / 'comparacion_modelos' / 'datos' / args.engine_tag / ('ronda3' if args.round3 else 'base')
     OUT.mkdir(parents=True, exist_ok=True)
+    swa_full = None if args.swa_full is None else args.swa_full == 'true'
     runtime = prepare(args.model, args.round2 or args.round3 or bool(args.diagnostic),
-                      'ronda3' if args.round3 else 'ronda2')
+                      'ronda3' if args.round3 else 'ronda2', swa_full=swa_full)
     os.environ.update(SIN_REALES='1', CONFIRMAR='s', PYTHONDONTWRITEBYTECODE='1')
     sys.path.insert(0, str(runtime))
     from guardia_juego import exigir_gpu_libre, juego_abierto
@@ -239,6 +251,7 @@ def main():
               'config': json.loads((runtime/'config.json').read_text(encoding='utf-8')),
               'prompt_sha256': hashlib.sha256(b.ns['prompt_sistema']().encode()).hexdigest(),
               'architecture': b.llm.metadata.get('general.architecture'), 'cases': [], 'conversation': []}
+    report['swa_full'] = swa_full
     report['integration']=integration
     report['template_probe']=(template_probe if args.model.startswith('qwen') and not args.server_url else
                               {'server_native_template': True} if args.server_url else {'native_handler':True})
@@ -376,8 +389,15 @@ def main():
                  isinstance(n, ast.Assign) and any(getattr(t,'id',None)=='VERIFICACION' for t in n.targets)]
         scoring = {}
         exec(compile(ast.Module(body=nodes,type_ignores=[]),'scoring','exec'),scoring)
-        cases = json.loads((ROOT/'pruebas.json').read_text(encoding='utf-8'))['pruebas']
-        for seed in (11,22,33):
+        test_path = args.test_set.resolve() if args.test_set else ROOT/'pruebas.json'
+        test_data = json.loads(test_path.read_text(encoding='utf-8'))
+        cases = test_data['pruebas']
+        seeds = test_data.get('semillas', [11,22,33])
+        report['test_set'] = str(test_path)
+        report['test_set_sha256'] = hashlib.sha256(test_path.read_bytes()).hexdigest()
+        live_suffix = ('_swa_false' if swa_full is False else '') + ('_nuevas30' if args.test_set else '')
+        live_path = OUT / f'{args.model}{live_suffix}.json'
+        for seed in seeds:
             for p in cases:
                 r = run(p['frase'], seed)
                 expected = p['esperado'] if isinstance(p['esperado'],list) else [p['esperado']]
@@ -390,19 +410,24 @@ def main():
                 completed = bool(r['respuesta']) and 'Me pasé del límite' not in r['respuesta']
                 r['task_checked'] = r['task_legacy'] and r['json_schema_ok'] and completed and (not failures or p['id'] in (50,55))
                 report['cases'].append(r)
-                dump(OUT/f'{args.model}.json',report)
-                print(f"{args.model} {len(report['cases'])}/195 #{p['id']} seed={seed} first={r['first_strict']} task={r['task_checked']} {r['wall_s']:.2f}s",flush=True)
+                dump(live_path, report)
+                print(f"{args.model} {len(report['cases'])}/{len(cases)*len(seeds)} #{p['id']} seed={seed} first={r['first_strict']} task={r['task_checked']} {r['wall_s']:.2f}s",flush=True)
         for i, question in enumerate(QUESTIONS,1):
             r = run(question, 2026)
             report['conversation'].append({'id':i,'question':question, **r})
-            dump(OUT/f'{args.model}.json',report)
+            dump(live_path, report)
     gpu.close()
     report['gpu_samples'] = gpu.samples
     report['gpu_peak_mib'] = max(s['used'] for s in gpu.samples)
     report['gpu_min_free_mib'] = min(s['free'] for s in gpu.samples)
+    expected_cases = (len(cases) * len(seeds)) if not args.vision_only and not args.smoke and not args.diagnostic else None
     report['complete'] = (len(report.get('vision',[])) == 5 if args.vision_only else
-                          not args.smoke and len(report['cases']) == 195 and len(report['conversation']) == 10)
-    dump(OUT/f'{args.model}{"_vision_normalized" if args.vision_normalized else "_vision" if args.vision_only else "_smoke" if args.smoke else ""}.json', report)
+                          not args.smoke and len(report['cases']) == expected_cases and len(report['conversation']) == 10)
+    suffix = ("_vision_normalized" if args.vision_normalized else "_vision" if args.vision_only else
+              "_smoke" if args.smoke else "_swa_false" if swa_full is False else "")
+    if args.test_set:
+        suffix += '_nuevas30'
+    dump(OUT/f'{args.model}{suffix}.json', report)
     print('FIN',args.model,flush=True)
     b.llm.close()
 
