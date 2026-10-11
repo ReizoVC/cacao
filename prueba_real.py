@@ -141,6 +141,7 @@ def correr(frases, historial=None):
 
 if __name__ == "__main__":
     actual["prueba"] = prueba = sys.argv[1]
+    a.cargar_modelo()
     if prueba == "1":
         correr(["abre la calculadora",
                 "cuando digo el editor me refiero a VS Code",

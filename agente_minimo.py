@@ -414,15 +414,27 @@ _sugerencia = {"pendiente": None}  # la última mostrada, para saber si Reizo la
 
 # parámetros y avisos de versión en modelo.py y config.json (LlamaRapida sobrescribe un método interno
 # de llama-cpp-python 0.3.36). La visión usa el handler multimodal solo cuando el historial tiene una imagen.
-llm = crear_llm(CONFIG, esperar_juego=True)  # con un juego abierto espera a que se cierre
+# El modelo se carga con cargar_modelo() (modo texto, voz.py, prueba_real.py, medir_ram.py): importar este módulo
+# no toca la GPU, así las pruebas sin modelo pueden importarlo.
+llm = None
 vision = ManejadorVision(CONFIG["mmproj"]) if CONFIG.get("mmproj") else None
 _presupuesto_imagen = 560
 emergencia = Emergencia(CATALOGO["limites"]["atajo_emergencia"])
-llm.interrumpir = emergencia.comprobar  # se comprueba en cada token que genera el modelo
 herramientas_grupo4.comprobar_emergencia = emergencia.comprobar  # y dentro de las herramientas largas
 herramientas_powershell.comprobar_emergencia = emergencia.comprobar
 autocompletar_login.comprobar_emergencia = emergencia.comprobar
-sincronizar_apps()
+
+
+def cargar_modelo():
+    """Carga Gemma (con un juego abierto espera a que se cierre) y sincroniza las apps del menú Inicio, que puede
+    usar el modelo para categorizar las nuevas. Una segunda llamada no hace nada."""
+    global llm
+    if llm is not None:
+        return llm
+    llm = crear_llm(CONFIG, esperar_juego=True)
+    llm.interrumpir = emergencia.comprobar  # se comprueba en cada token que genera el modelo
+    sincronizar_apps()
+    return llm
 
 ESQUEMA_ACCION = {
     "type": "object",
@@ -1158,6 +1170,7 @@ def bucle_texto(cola, historial, planificador):
 
 
 if __name__ == "__main__":
+    cargar_modelo()
     if emergencia.iniciar():
         print(f"Atajo de emergencia activo: {emergencia.atajo}")
     else:

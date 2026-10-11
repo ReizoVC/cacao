@@ -264,6 +264,7 @@ def crear_transcriptor():
 
 
 def preparar():
+    a.cargar_modelo()  # antes que Whisper y Piper, como cuando se cargaba al importar agente_minimo
     if a.emergencia.iniciar():
         print(f"Atajo de emergencia activo: {a.emergencia.atajo}")
     atajo = AtajoHablar(CONFIG_VOZ["atajo_hablar"])

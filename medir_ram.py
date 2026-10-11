@@ -43,7 +43,9 @@ def cargar_config():
 
 
 modelo.cargar_config = cargar_config
-import agente_minimo as a  # noqa: E402  (carga el modelo con el use_mmap elegido)
+import agente_minimo as a  # noqa: E402
+
+a.cargar_modelo()  # con el use_mmap elegido
 
 medir("modelo cargado")
 TAREAS = ["revisa una por una mis apps de música, de juegos, de oficina y de desarrollo y dime cuántas hay "
