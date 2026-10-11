@@ -14,6 +14,19 @@ Mientras no se actualice el equipo (16 GB de RAM y una sola GPU), el usuario pri
    de herramientas por pedido. Un prompt más corto es menos contexto, menos memoria y menos errores.
 3. **Memoria de experiencia** en el cerebro de Cacao (Obsidian): ver abajo.
 
+## Ideas del usuario para usar la memoria liberada (2026-10-11), con la opinión de Claude
+
+- **Ampliar el contexto:** no hace falta ahora. El contexto cuesta poca VRAM (16K → 8K solo ahorró 81 MiB,
+  [[no-reducir-whisper-ni-contexto]]), pero cada token más es más tiempo de lectura del prompt. Se amplía cuando un
+  uso lo pida (memoria de experiencia, conversaciones largas).
+- **MTP:** baja prioridad. Suma un modelo borrador (más VRAM). Acelera la generación, pero Cacao genera JSON corto:
+  pesa más el primer token. No consta que llama-cpp-python lo exponga ni que funcione con gramática ([[mtp]]).
+  Antes rinden más el camino rápido y el filtrado de herramientas. Se prueba en el banco, después de Qwen.
+- **Qwen 9B + voz:** es lo que más sentido tiene. Gemma con `swa_full=false` (~9,8 GB) más Whisper (~1,3) más
+  Qwen3-TTS (~5,25, perfil lean) no caben en 16 GB, y un modelo más pequeño sí. Pero el bloqueo de la voz es el
+  motor: Qwen3-TTS solo fue rápido con vLLM-Omni en WSL (descartado por RAM). En Windows con PyTorch fue lento
+  (RTF 3,84, [[qwen3-tts-vllm-omni]]). Hace falta buscar un motor de TTS para Windows.
+
 ## Memoria de experiencia (idea del usuario; propuesta de diseño, sin código)
 
 Cada vez que un resultado no es el deseado, Cacao anota qué hizo, qué resultado dio y en qué app. Con eso, ante un
