@@ -34,3 +34,16 @@ Entradas anteriores: [[log-2026-10-10]].
   - invariantes 10/10, que detectan las 7 roturas provocadas;
   - `codex/isla` avanzó hasta a690655.
 - **Sin compilar la app** (falta el permiso). Hasta recompilar, Cacao rechaza la isla vieja con 4003 (backlog #11d).
+
+## 2026-10-11: isla compilada con la bandeja y el protocolo v2 (isla a690655; cerebro: compilar-isla)
+
+- **Antes:** sin procesos de Cacao ni de la isla, salvo el registrador de hábitos (el usuario lo dejó seguir) y
+  con el puerto 8765 libre.
+- **Respaldo de la v1:** en `_prive\respaldos` del repositorio de la isla. Volver a la v1 exige revertir también
+  8a78d51 (y b15a349, a petición del usuario) en Cacao.
+- **Pruebas antes de compilar:** Rust sueltas 23/23.
+- **Build:** código 0 en 144 s. Memoria disponible mínima de 2,03 GiB; el registrador siguió intacto.
+- **Resultado:** el exe del 2026-10-11 01:22:58 embebe el bundle con `version` 2 (`kt=2`).
+- **Pruebas después de compilar:** invariantes 10/10, arnés 40/40, campo 18/18.
+- **Sin abrir la isla.** Los pasos de la prueba física están en `pendientes-presenciales` #7.
+- **Visto en la isla:** una carpeta sin seguimiento, `.codex-remote-attachments/`, que no es de Claude. No se tocó.

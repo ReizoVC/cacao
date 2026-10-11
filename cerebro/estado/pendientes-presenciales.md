@@ -27,9 +27,32 @@ registros o datos personales. Pregúntaselo al usuario y anota la respuesta aqu�
 4. **Arranque automático:** que Cacao aparezca a los ~60 s de iniciar sesión y que espere si se abre un juego.
 5. **«Cacao» en el día a día:** revisar el contador de activaciones tras unos días. Lo revisa el usuario; Claude no
    lee ese archivo.
-6. **Grabar la isla** con «Permitir capturas». Tras recompilar la isla:
-   - comprobar que ninguna opción de la bandeja hace nada con el teclado (y sí con un clic);
-   - comprobar que el permiso se apaga solo a los 10 minutos.
+6. **Grabar la isla** con «Permitir capturas».
+7. **Bandeja de la isla v2 con el arnés** (sin Cacao; la isla compilada el 2026-10-11, [[compilar-isla]]):
+   - **Preparación (Claude):**
+     - comprueba que Cacao y la isla están cerrados y el puerto 8765 libre;
+     - lanza `mock_agente.py --escenario ninguno`;
+     - **espera el aviso** para abrir `target\release\asistente-ui.exe`. El arnés debe decir «isla conectada
+       (versión 2)».
+   - **A. Con un clic físico:**
+     - Abrir y Ajustes abren la isla;
+     - Pausar la oculta y la vuelve a mostrar;
+     - Ver terminal muestra el aviso del arnés;
+     - con los dos modos, el arnés recibe `fisico: true` y marca la casilla;
+     - Permitir capturas se marca y Recortes ve la isla (anotar la hora).
+   - **B. Con el teclado** (flechas y Enter en el menú):
+     - ninguna opción hace nada y la casilla de capturas no se queda marcada;
+     - los modos llegan con `fisico: false` y la isla avisa «No cambio el modo».
+   - **C. Clic inyectado (opcional, solo si el usuario lo pide en ese momento):** con el cursor sobre «Permitir
+     capturas», un script inyecta un clic a los 3 s. No debe pasar nada.
+   - **D. Ajustes:** el interruptor de capturas se enciende con un clic físico.
+   - **E. Caducidad:** a los 10 minutos de encenderlo, se desmarca solo y Recortes ya no ve la isla.
+   - **F. Reinicio:**
+     - con capturas encendidas, «Salir de Cacao» cierra el arnés;
+     - un segundo «Salir» cierra la isla;
+     - al relanzar las dos, capturas aparece apagado.
+   - **Pruebas:** la salida del arnés. Con permiso del usuario, también las líneas `bandeja:` y `captura:` de
+     `%LOCALAPPDATA%\Asistente\asistente-ui.log`.
 7. **Mando:** detección de actividad (`entrada.py`).
 8. **Datos reales:**
    - Obsidian, la reflexión y las sugerencias tras una semana de hábitos;

@@ -51,6 +51,7 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[arrancar-detener]]: lanzador, simulación, salir y emergencia
 - [[mapa-archivos]]: archivos por rol
 - [[mapa-datos]]: datos personales (no leer), datos de prueba y modelos
+- [[compilar-isla]]: compilar la isla, respaldo de la v1 y cómo volver atrás (también el protocolo de Cacao)
 - [[comandos]]: comandos útiles y trucos del entorno
 - [[lecciones]]: fallos reales y su causa
 - [[mantenimiento]]: chequeo de frescura, formato y privacidad

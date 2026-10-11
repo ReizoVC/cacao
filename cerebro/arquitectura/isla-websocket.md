@@ -36,7 +36,7 @@ Escrito desde el código el 2026-10-11 (b7b81a7) y subido a la versión 2 (isla 
   hace Claude en los dos repositorios.
 - **Bandeja de la isla** (`bandeja.rs`, `captura.rs`, isla 5554214): ninguna opción actúa sin clic físico en el
   menú; los modos llegan con `fisico`. «Permitir capturas» solo se enciende con clic físico, se apaga a los 10
-  minutos y empieza apagada en cada arranque. **Sin compilar todavía** (falta permiso).
+  minutos y empieza apagada en cada arranque. Compilada el 2026-10-11 ([[compilar-isla]]); falta la prueba física.
 
 ## Protecciones del lado del agente
 
