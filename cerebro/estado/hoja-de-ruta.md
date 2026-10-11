@@ -50,8 +50,10 @@ Detalle por paso en `log-2026-10-11-b`. En `main` de la isla (15bed5e y 35d25d0)
 - **invariante 10** (Claude): una respuesta o un aviso ya no tapan una confirmación pendiente.
 
 En curso:
-- **Línea mínima** (Codex, e30e4fe y e441b90): no fusionada. Con la línea apagada cambiaba el comportamiento;
-  Codex la corrige.
+- **Rediseño de la isla** (Figma, página 02; aprobado por el usuario el 2026-10-11 con los ajustes de Claude):
+  línea 176 × 10, isla pequeña 420 × 52, desplegada de 800 px con pestañas Inicio · Armario · Ajustes. Codex hace
+  las vistas; Claude cambia `PANEL_W` de 720 a 800 en el lote (isla `0a956b7`, rama `claude/musica`).
+- **Línea mínima:** corregida y en `main` de la isla (356529e).
 - **Música v3** (Claude, [[musica-isla]]): ramas `claude/musica` (isla) y `claude/musica-v3` (Cacao), sin compilar.
   Se fusionan a la vez.
 - **Después:** una sola compilación con permiso y una prueba presencial de todo junto ([[compilar-isla]]).
