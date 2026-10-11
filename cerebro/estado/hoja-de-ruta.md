@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 397d0a2
+verificado_commit: 65696bc
 verificado_fecha: 2026-10-11
 fuentes: [config.json, comparacion_modelos/ejecutar.py, cerebro/frescura.py]
 ---
@@ -16,7 +16,7 @@ La lista viene del usuario (estado del proyecto del 2026-10-11). Aquí cada punt
 | «Cerebro: 29 páginas por revisar; `suites.md` y `lecciones.md` desactualizadas» | **Ya no.** `frescura.py`: 45 páginas, 0 por revisar (fb78182). Las dos páginas se corrigieron en a42d084 |
 | «CLAUDE.md más 41 páginas» | 45 páginas |
 | «Fase 1: otra sesión la cambió» | Fue la sesión que coordina (commits 7d31aa7, 8e72787, c6a74f3, 14c17cb, eb5a9c4). Suites sin modelo al día. Falta reiniciar Cacao y medir VRAM (backlog #5 y #11c) |
-| Falta en la lista: **65 frases × 3** | Obligatorio tras la Fase 1 (regla JSON y protecciones). Backlog #8 |
+| Falta en la lista: **65 frases × 3** | Hecha el 2026-10-11 con producción: 194/195 (`resumen_65x3_C.json`). Backlog #8 |
 | Falta en la lista: isla v2 | Bandeja con clic físico, «Permitir capturas» 10 min, protocolo v2, mouse sin clic en la bandeja (b15a349). Compilada y probada en físico ([[compilar-isla]]) |
 | «Prueba de Qwen 9B: preparada» | Coincide: copia en `modelos/comparacion_local/` (6,28 GiB) y `ejecutar.py` la lee (0b90b51). El backlog la tenía como «sin rastro»: corregido |
 | «Descartados: MTP, 26B, llama.cpp servidor, WSL» | El backlog los tenía pendientes (#14–16, #18, #19, #22): pasan a descartados |
@@ -26,8 +26,8 @@ La lista viene del usuario (estado del proyecto del 2026-10-11). Aquí cada punt
 
 | # | Punto | Estado | Quién |
 |---|---|---|---|
-| 1 | Verificar el cerebro y medir VRAM con `swa_full=False` | medido (−2,5 GB), pero las 65 × 3 cayeron y se revirtió (397d0a2). Causa sin confirmar ([[swa-full-false]]) | Claude (backend) |
-| 2 | Prueba reversible de Qwen (contrato de la ronda 2) | preparada, sin lanzar | sesión de pruebas, con permiso |
+| 1 | Verificar el cerebro y medir VRAM con `swa_full=False` | revertido (397d0a2). Producción sin la clave: 65 × 3 = 194/195 (base 193). Los 35/42 con false no se reproducen (brazo A 42/42): causa abierta ([[swa-full-false]]). En pausa hasta saber si Gemma sigue | Claude (backend) |
+| 2 | Prueba reversible de Qwen (contrato de la ronda 2) | preparada (945fa17), **siguiente**. Criterio del usuario: ≥ 185/195 (ideal ≥ 190), 0 acciones peligrosas o sin confirmar, VRAM medida; Gemma se repite con el mismo código | Claude (backend), con permiso |
 | 3 | Cierre rápido con `mensaje_final` | pendiente | usuario decide ([[cierre-rapido-mensaje-final]]) |
 | 4 | Hook y skill para que cada chat use el cerebro | sin empezar | — |
 | 5 | Reorganizar archivos | después del 2 | — |
