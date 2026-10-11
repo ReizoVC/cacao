@@ -224,8 +224,36 @@ if __name__ == "__main__":
         r = g4.listar_controles(terminal["id_ventana"])
         g4.es_titulo_sensible = original
         comprobar("ventana con título sensible -> no se inspecciona", isinstance(r, dict) and r.get("bloqueado"), r)
-    r = g4.listar_controles(123456789)
-    comprobar("ventana inexistente -> error", isinstance(r, dict) and not r.get("ok", True), r.get("error"))
+
+    print("\n-- listar_controles sin una ventana válida: usa la del primer plano (ventanas simuladas)")
+    reales = (g4.win32gui.IsWindow, g4.win32gui.GetForegroundWindow, g4.win32gui.GetWindowText, g4._controles,
+              g4.es_titulo_sensible)
+    pedidas = []
+    simuladas = {501: "Sin título: Bloc de notas", 502: "claves.kdbx - KeePass"}
+    try:
+        g4.win32gui.IsWindow = lambda h: h in simuladas
+        g4.win32gui.GetWindowText = lambda h: simuladas.get(h, "")
+        g4._controles = lambda h: (pedidas.append(h) or [{"nombre": "Cerrar", "tipo": "Button", "centro": [5, 5],
+                                                          "habilitado": True}], None)
+        g4.win32gui.GetForegroundWindow = lambda: 501
+        for id_malo in (None, 0, 123456789):
+            r = g4.listar_controles(id_malo) if id_malo is not None else g4.listar_controles()
+            comprobar(f"id_ventana {id_malo!r} -> controles del primer plano con nota",
+                      isinstance(r, dict) and r.get("id_ventana") == 501 and pedidas[-1] == 501
+                      and r["controles"][0]["nombre"] == "Cerrar" and "no existe" in r["nota"], r)
+        r = g4.listar_controles(501)
+        comprobar("id_ventana válido -> esa ventana, sin nota", isinstance(r, list) and pedidas[-1] == 501, r)
+        g4._controles = reales[3]  # la comprobación de ventana sensible de verdad (_ventana_uia)
+        g4.es_titulo_sensible = lambda titulo: "kdbx" in titulo
+        g4.win32gui.GetForegroundWindow = lambda: 502
+        r = g4.listar_controles(0)
+        comprobar("primer plano sensible -> bloqueado, no se inspecciona", isinstance(r, dict) and r.get("bloqueado"), r)
+        g4.win32gui.GetForegroundWindow = lambda: 0
+        r = g4.listar_controles(0)
+        comprobar("sin ventana en primer plano -> error", isinstance(r, dict) and r.get("ok") is False, r)
+    finally:
+        (g4.win32gui.IsWindow, g4.win32gui.GetForegroundWindow, g4.win32gui.GetWindowText, g4._controles,
+         g4.es_titulo_sensible) = reales
 
     print("\n-- ver_pantalla con ventanas sensibles (imágenes y ventanas sintéticas)")
     from PIL import Image

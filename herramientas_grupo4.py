@@ -519,11 +519,32 @@ def _controles(id_ventana):
     return controles, None
 
 
-def listar_controles(id_ventana: int, filtro: str = ""):
+def ventana_para_listar(id_ventana):
+    """(hwnd, nota). Con id_ventana ausente, 0 o de una ventana que no existe, usa la del primer plano (el modelo a
+    veces no lista las ventanas antes); _ventana_uia sigue bloqueando las sensibles y la isla."""
+    if id_ventana and win32gui.IsWindow(id_ventana):
+        return id_ventana, None
+    frente = win32gui.GetForegroundWindow()
+    if not frente:
+        return id_ventana, None
+    return frente, (f"La ventana {id_ventana!r} no existe: muestro la del primer plano "
+                    f"({win32gui.GetWindowText(frente)[:60]!r}, id_ventana {frente}).")
+
+
+def listar_controles(id_ventana: int = None, filtro: str = ""):
     """Controles de una ventana por UI Automation: nombre, tipo y posición en la pantalla real."""
+    id_ventana, nota = ventana_para_listar(id_ventana)
     controles, error = _controles(id_ventana)
     if error:
         return error
+    resultado = _filtrar_controles(controles, filtro)
+    if nota:
+        extra = resultado if isinstance(resultado, dict) else {"controles": resultado}
+        return {**extra, "id_ventana": id_ventana, "nota": " ".join(filter(None, [nota, extra.get("nota")]))}
+    return resultado
+
+
+def _filtrar_controles(controles, filtro):
     if filtro:
         f = _normalizar(filtro)
         controles = [c for c in controles if f in _normalizar(c["nombre"]) or f in _normalizar(c["tipo"])]

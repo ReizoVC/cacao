@@ -128,13 +128,21 @@ def _controles_sim(id_ventana):
              "habilitado": True} for i, (n, t) in enumerate(_CONTROLES_SIM.get(id_ventana, _BOTONES))], None
 
 
-def listar_controles_sim(id_ventana: int, filtro: str = ""):
+def listar_controles_sim(id_ventana: int = None, filtro: str = ""):
+    nota = None
+    if id_ventana not in _ID_SIM and id_ventana != win32gui.GetForegroundWindow():
+        # como herramientas_grupo4.ventana_para_listar: id ausente, 0 o inexistente -> la ventana al frente simulada
+        frente = next(v for v in VENTANAS_SIM if v["enfocada"])
+        nota = (f"La ventana {id_ventana!r} no existe: muestro la del primer plano ({frente['titulo']!r}, "
+                f"id_ventana {frente['id_ventana']}).")
+        id_ventana = frente["id_ventana"]
     controles, error = _controles_sim(id_ventana)
     if error:
         return error
     if filtro:
         controles = [c for c in controles if filtro.lower() in c["nombre"].lower() or filtro.lower() in c["tipo"].lower()]
-    return [{k: v for k, v in c.items() if k != "rect"} for c in controles]
+    controles = [{k: v for k, v in c.items() if k != "rect"} for c in controles]
+    return {"controles": controles, "id_ventana": id_ventana, "nota": nota} if nota else controles
 
 
 def estado_despues_sim():
