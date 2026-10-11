@@ -850,6 +850,16 @@ def atender(pedido, historial):
             else:
                 mensaje_final = None
             if mensaje_final:
+                # como finalizar: lo que afirma tiene que estar verificado; si no, se descarta y la tarea sigue
+                valida, correccion = validar_finalizacion(_tarea["proteccion"], mensaje_final, True)
+                if not valida:
+                    print(f"  [evidencia] mensaje_final descartado: {correccion}")
+                    if _tarea["proteccion"]["correcciones"] >= 2:
+                        return terminar(historial, correccion + " ¿Cómo quieres que continúe?", False,
+                                        "El ejecutor impidió una confirmación sin evidencia")
+                    historial.append({"role": "user", "content": correccion})
+                    mensaje_final = None
+            if mensaje_final:
                 # tarea de un paso: se responde sin otra llamada al modelo
                 print("  [mensaje_final] respuesta directa, sin volver a llamar al modelo")
                 return terminar(historial, mensaje_final, True, "Tarea de un paso completada")
