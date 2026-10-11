@@ -33,7 +33,7 @@ las dos ramas a la vez, al compilar la isla ([[compilar-isla]]).
 
 ## Falta
 
-- Compilar la isla (con permiso y con Cacao cerrado). No se ha pasado `cargo check`: el código de WinRT no se ha
-  compilado nunca.
+- Compilar la isla (con permiso y con Cacao cerrado). El `cargo check` de la rama pasó el 2026-10-11 sin errores
+  (isla 3bfef0f, con el rediseño y el panel de 800 px ya integrados); su `target` se borró.
 - Prueba física con el arnés y un reproductor real: diseño §6.
 - Comprobar que el API funciona sin declarar la capacidad `globalMediaControl` (la isla es un Win32 sin empaquetar).

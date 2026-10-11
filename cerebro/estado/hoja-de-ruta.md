@@ -57,5 +57,5 @@ En curso:
 - **Música v3** (Claude, [[musica-isla]]): ramas `claude/musica` (isla) y `claude/musica-v3` (Cacao), sin compilar.
   Se fusionan a la vez.
 - **Después:** una sola compilación con permiso y una prueba presencial de todo junto ([[compilar-isla]]).
-- **Antes de esa prueba (aprobado por el usuario):** `cargo check` en el worktree `C:sistente-ui-claude`
-  (sin `.exe` y sin cerrar Cacao); arreglar lo que salga y borrar su `target` al terminar.
+- **`cargo check` hecho** (2026-10-11): la rama `claude/musica` (música + rediseño en `main` 4ead7c5 + panel de 800,
+  3bfef0f) compila sin errores. Lista para la compilación con permiso.
