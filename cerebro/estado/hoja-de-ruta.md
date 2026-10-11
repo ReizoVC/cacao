@@ -27,7 +27,7 @@ La lista viene del usuario (estado del proyecto del 2026-10-11). Aquí cada punt
 | # | Punto | Estado | Quién |
 |---|---|---|---|
 | 1 | Verificar el cerebro y medir VRAM con `swa_full=False` | revertido (397d0a2). Producción sin la clave: 65 × 3 = 194/195 (base 193). Los 35/42 con false no se reproducen (brazo A 42/42): causa abierta ([[swa-full-false]]). En pausa hasta saber si Gemma sigue | Claude (backend) |
-| 2 | Prueba reversible de Qwen (contrato de la ronda 2) | banco: 189/195 y un caso de riesgo (#56, cierre forzado no pedido); 5,3 GiB menos de VRAM. El usuario decide probarla en producción, reversible, tras blindar el código | Claude (backend), con permiso |
+| 2 | Prueba reversible de Qwen (contrato de la ronda 2) | banco: 189/195 y un caso de riesgo (#56, cierre forzado no pedido); 5,3 GiB menos de VRAM. El usuario decide probarla en producción, reversible, tras blindar el código. Esa prueba de uso sustituye a la evaluación a ciegas Gemma/Qwen (el usuario la da por redundante). `swa_full=false` solo en el perfil de Qwen; se mide el máximo de memoria liberable sin perder calidad | Claude (backend), con permiso |
 | 3 | Cierre rápido con `mensaje_final` | pendiente | usuario decide ([[cierre-rapido-mensaje-final]]) |
 | 4 | Hook y skill para que cada chat use el cerebro | sin empezar | — |
 | 5 | Reorganizar archivos | después del 2 | — |
