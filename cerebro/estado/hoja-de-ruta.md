@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: fb78182
+verificado_commit: 397d0a2
 verificado_fecha: 2026-10-11
 fuentes: [config.json, comparacion_modelos/ejecutar.py, cerebro/frescura.py]
 ---
@@ -26,7 +26,7 @@ La lista viene del usuario (estado del proyecto del 2026-10-11). Aquí cada punt
 
 | # | Punto | Estado | Quién |
 |---|---|---|---|
-| 1 | Verificar el cerebro y medir VRAM con `swa_full=False` | cerebro hecho; VRAM pendiente (GPU, reiniciar Cacao) | sesión de pruebas, con permiso |
+| 1 | Verificar el cerebro y medir VRAM con `swa_full=False` | medido (−2,5 GB), pero las 65 × 3 cayeron y se revirtió (397d0a2). Causa sin confirmar ([[swa-full-false]]) | Claude (backend) |
 | 2 | Prueba reversible de Qwen (contrato de la ronda 2) | preparada, sin lanzar | sesión de pruebas, con permiso |
 | 3 | Cierre rápido con `mensaje_final` | pendiente | usuario decide ([[cierre-rapido-mensaje-final]]) |
 | 4 | Hook y skill para que cada chat use el cerebro | sin empezar | — |
