@@ -124,9 +124,59 @@ def _clase(hwnd):
     return win32gui.GetClassName(hwnd).lower()
 
 
+# La bandeja de Windows (área de notificación de cada barra de tareas) y su desbordamiento de íconos: ahí está el
+# ícono de la isla, cuyo menú cambia los modos, «Permitir capturas» y «Salir de Cacao». Sus menús contextuales son
+# ventanas del proceso de la isla (los cubre es_de_la_isla).
+BARRAS_DE_TAREAS = ("Shell_TrayWnd", "Shell_SecondaryTrayWnd")
+CLASES_DESBORDAMIENTO = ("NotifyIconOverflowWindow", "TopLevelWindowForOverflowXamlIsland")
+
+
+def _rects_bandeja():
+    rects = []
+    for clase in BARRAS_DE_TAREAS:
+        barra = win32gui.FindWindow(clase, None)
+        notificacion = barra and win32gui.FindWindowEx(barra, 0, "TrayNotifyWnd", None)
+        if notificacion:
+            rects.append(win32gui.GetWindowRect(notificacion))
+    for clase in CLASES_DESBORDAMIENTO:
+        h = win32gui.FindWindow(clase, None)
+        if h and win32gui.IsWindowVisible(h):
+            rects.append(win32gui.GetWindowRect(h))
+    return rects
+
+
+def _raiz_en(punto):
+    hwnd = win32gui.WindowFromPoint(punto)
+    return user32.GetAncestor(hwnd, 2) or hwnd  # GA_ROOT
+
+
+def _nombre_clase(hwnd):
+    return win32gui.GetClassName(hwnd)
+
+
+def bandeja_o_isla_en_punto(punto):
+    """Motivo si el punto cae en una ventana de la isla (también sus menús contextuales, fuera de la forma que
+    cubre zonas_isla), en la bandeja de Windows o en su desbordamiento de íconos; si no, None. Ante la duda, se
+    bloquea. Las pruebas reemplazan _raiz_en, _rects_bandeja, es_de_la_isla y _nombre_clase."""
+    try:
+        x, y = (int(v) for v in punto)
+        raiz = _raiz_en((x, y))
+        if es_de_la_isla(raiz):
+            return "Es la isla de Cacao o uno de sus menús (cambian sus modos o la cierran): no hago clic ahí."
+        if _nombre_clase(raiz) in CLASES_DESBORDAMIENTO or any(izq <= x < der and arr <= y < aba
+                                                               for izq, arr, der, aba in _rects_bandeja()):
+            return ("Es la bandeja de Windows (ahí está el ícono de Cacao, con sus modos y «Salir de Cacao»): no hago "
+                    "clic ahí.")
+        return None
+    except Exception:
+        return "No pude comprobar si ese punto es la bandeja de Windows o la isla; por seguridad no lo hago."
+
+
 def prohibida_en_punto(punto):
-    """ventana_prohibida para un clic en ese punto de la pantalla (las pruebas la reemplazan)."""
-    return ventana_prohibida(win32gui.WindowFromPoint(tuple(int(v) for v in punto)), teclado=False)
+    """ventana_prohibida para un clic en ese punto de la pantalla, más la bandeja y los menús de la isla (las pruebas
+    la reemplazan)."""
+    return bandeja_o_isla_en_punto(punto) or ventana_prohibida(win32gui.WindowFromPoint(tuple(int(v) for v in punto)),
+                                                                teclado=False)
 
 
 def prohibida_al_frente():

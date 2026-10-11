@@ -258,4 +258,61 @@ if __name__ == "__main__":
     comprobar("captura real de la pantalla: sin ventanas sensibles abiertas, no tapa nada",
               info["ventanas_tapadas"] == 0, info["ventanas_tapadas"])
 
+    # ---------- mouse: ni la bandeja de Windows ni los menús de la isla (ventanas simuladas) ----------
+    print("\n-- mouse: bandeja de Windows y menús de la isla --")
+    ISLA, BARRA, OTRA = 101, 202, 303
+    NOTIFICACION = (1694, 1078, 1920, 1126)
+    clases = {ISLA: "#32768", BARRA: "Shell_TrayWnd", OTRA: "Notepad"}
+    raiz_en_punto = {"valor": OTRA}
+    guardado_bandeja = g4._raiz_en, g4._rects_bandeja, g4.es_de_la_isla, g4._nombre_clase
+    g4._raiz_en = lambda _p: raiz_en_punto["valor"]
+    g4._rects_bandeja = lambda: [NOTIFICACION]
+    g4.es_de_la_isla = lambda h: h == ISLA
+    g4._nombre_clase = lambda h: clases[h]
+    try:
+        raiz_en_punto["valor"] = BARRA
+        comprobar("bandeja: un ícono del área de notificación, bloqueado",
+                  "bandeja de Windows" in (g4.bandeja_o_isla_en_punto((1800, 1100)) or ""))
+        comprobar("bandeja: el resto de la barra de tareas sigue permitido",
+                  g4.bandeja_o_isla_en_punto((900, 1100)) is None)
+        for clase in g4.CLASES_DESBORDAMIENTO:
+            clases[BARRA] = clase
+            comprobar(f"bandeja: el desbordamiento de íconos ({clase}), bloqueado",
+                      "bandeja de Windows" in (g4.bandeja_o_isla_en_punto((1600, 950)) or ""))
+        clases[BARRA] = "Shell_TrayWnd"
+        raiz_en_punto["valor"] = ISLA
+        comprobar("bandeja: un menú contextual de la isla (ventana de su proceso), bloqueado",
+                  "isla de Cacao" in (g4.bandeja_o_isla_en_punto((1500, 900)) or ""))
+        raiz_en_punto["valor"] = OTRA
+        comprobar("bandeja: una ventana normal, permitida", g4.bandeja_o_isla_en_punto((500, 500)) is None)
+        g4._raiz_en = lambda _p: 1 / 0
+        comprobar("bandeja: si no se puede comprobar, bloqueado",
+                  "por seguridad" in (g4.bandeja_o_isla_en_punto((500, 500)) or ""))
+        g4._raiz_en = lambda _p: raiz_en_punto["valor"]
+        # de punta a punta: planificar_mouse llama a prohibida_en_punto, que mira la bandeja antes que la ventana
+        zonas, captura, cursor = g4.zonas_isla, g4.vision.ultima_captura, g4.win32api.GetCursorPos
+        g4.zonas_isla = lambda: []
+        g4.vision.ultima_captura = {"momento": time.time() + 3600, "ancho": 1920, "alto": 1080, "escala": 1.0,
+                                    "origen": (0, 0)}
+        try:
+            px, py = g4.a_pantalla(1800, 1070, g4.vision.ultima_captura)
+            g4._rects_bandeja = lambda: [(px - 5, py - 5, px + 5, py + 5)]
+            raiz_en_punto["valor"] = BARRA
+            for accion in ("clic", "clic_derecho", "doble_clic", "mover"):
+                estado, error = resultado(g4.planificar_mouse(accion, 1800, 1070))
+                comprobar(f"planificar_mouse {accion} sobre la bandeja: bloqueado", estado == "bloqueado", error)
+            g4.win32api.GetCursorPos = lambda: (px, py)
+            estado, _ = resultado(g4.planificar_mouse("desplazar", cantidad=-3))
+            comprobar("planificar_mouse desplazar con el cursor en la bandeja: bloqueado", estado == "bloqueado")
+            raiz_en_punto["valor"] = ISLA
+            g4._rects_bandeja = lambda: []
+            estado, _ = resultado(g4.planificar_mouse("clic", 100, 100))
+            comprobar("planificar_mouse clic en un menú de la isla (fuera de su forma): bloqueado", estado == "bloqueado")
+        finally:
+            g4.zonas_isla, g4.vision.ultima_captura, g4.win32api.GetCursorPos = zonas, captura, cursor
+    finally:
+        g4._raiz_en, g4._rects_bandeja, g4.es_de_la_isla, g4._nombre_clase = guardado_bandeja
+    raices = g4._rects_bandeja()
+    comprobar("bandeja real: se encuentra el área de notificación de esta barra de tareas", len(raices) >= 1, raices)
+
     print(f"\n{'TODO OK' if not fallos else f'{len(fallos)} fallos: {fallos}'}")
