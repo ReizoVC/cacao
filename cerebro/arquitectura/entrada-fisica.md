@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 10b63cc
+verificado_commit: 8a78d51
 verificado_fecha: 2026-10-10
 fuentes: [entrada.py, entrada_fisica.py, ui_isla.py, emergencia.py, diagnostico_actividad.py]
 ---

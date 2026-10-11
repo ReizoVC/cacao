@@ -21,3 +21,16 @@ Entradas anteriores: [[log-2026-10-10]].
 - **Riesgo nuevo:** la bandeja permite cambiar «Permitir capturas» sin clic físico. Se documentó y no se arregló.
 - **Datos personales en la isla:** ninguno en archivos. Quedan el nombre de pila y el correo del autor en los
   metadatos de los commits.
+
+## 2026-10-11: bandeja de la isla cerrada y protocolo v2 (Cacao b15a349 y 8a78d51; isla 5554214, 41656f0 y a690655)
+
+- **Agente:** `mouse` no hace clic en la bandeja de Windows, en su desbordamiento de íconos ni en los menús de la
+  isla. `probar_grupo4` tiene 14 pruebas nuevas, que fallan con 3 roturas en una copia. `ui_isla` pasa a la
+  versión 2: comprueba la versión (4003) e ignora los JSON que no son objetos. `probar_fase7` A: 32/32.
+- **Isla:**
+  - `bandeja.rs` y `captura.rs`: ninguna opción del menú actúa sin clic físico, y «Permitir capturas» dura 10
+    minutos y no sobrevive a un reinicio;
+  - `agente.ts` y `docs/protocolo.md` en la versión 2; el arnés da 40/40;
+  - invariantes 10/10, que detectan las 7 roturas provocadas;
+  - `codex/isla` avanzó hasta a690655.
+- **Sin compilar la app** (falta el permiso). Hasta recompilar, Cacao rechaza la isla vieja con 4003 (backlog #11d).

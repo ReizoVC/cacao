@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: d4b36dd
+verificado_commit: 8a78d51
 verificado_fecha: 2026-10-11
 fuentes: [SRS.md, protecciones_ejecucion.py, herramientas.json, herramientas_powershell.py, resultados_swa_y_recursos.md, muestreo_gramatica.py, wiki.py, herramientas_grupo1.py]
 ---
@@ -23,7 +23,8 @@ Claude Code, más los nuevos.
 | RAM al recargar la pila WSL | Windows llegó al 99,96 %; 1,15 GiB de swap en WSL | Medido en `resultados_swa_y_recursos.md` |
 | Margen de VRAM en la pila WSL | 1,5–1,9 GiB libres en el pico | Modo juego; no reducir Whisper ni el contexto |
 | Licencia de assets de la isla (R-13) | La isla adapta Coucou | Uso personal; repositorio sin publicar. En `AGENTS.md` de la isla: sin remoto ni distribución |
-| Bandeja de la isla sin clic físico | «Permitir capturas» quita la exclusión de capturas con cualquier clic, también inyectado, y `zonas_isla` no cubre el menú | Sin arreglar; decide el usuario con Claude ([[isla-websocket]]) |
+| Bandeja de la isla sin clic físico | «Permitir capturas» quitaba la exclusión de capturas con cualquier clic | Cerrado en el código: `mouse` no llega a la bandeja (b15a349) y cada opción exige clic físico (isla 5554214). **La isla sin recompilar sigue con el comportamiento viejo** ([[isla-websocket]]) |
+| Isla sin recompilar tras la versión 2 | El exe actual manda la versión 1 y Cacao (8a78d51) la rechaza con 4003: sin isla hasta recompilar | Pedir permiso para compilar con Cacao cerrado ([[backlog]]) |
 | La isla en manos de otro agente (Codex) | Podría romper un invariante o el protocolo | Rama `codex/isla`, archivos PROTEGIDOS y `probar_invariantes.py` ([[isla-websocket]]) |
 
 ## Alcance de `cerebro/` frente a Cacao (comprobado en el código)

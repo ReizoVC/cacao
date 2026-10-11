@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: d4b36dd
+verificado_commit: 8a78d51
 verificado_fecha: 2026-10-10
 fuentes: [herramientas.json, agente_minimo.py, voz.py, modo_directo.py, ui_isla.py, entrada_fisica.py, herramientas_grupo1.py, herramientas_powershell.py, confirmacion_voz.py]
 ---
@@ -38,7 +38,7 @@ pide confirmación, aunque su permiso sea «libre» (abrir, volumen…).
   Siempre pregunta, también en el modo sin confirmación. Los patrones no son un sandbox: la barrera real es la
   confirmación.
 - **Isla:** el agente no ve el proceso `asistente-ui.exe`; `teclado` no escribe en la isla y `mouse` no hace clic
-  en ella.
+  en ella, en sus menús, en la bandeja de Windows ni en su desbordamiento de íconos ([[isla-websocket]]).
 
 ## Confirmación física
 

@@ -1,6 +1,6 @@
 ---
 estado: sin verificar
-verificado_commit: d4b36dd
+verificado_commit: 8a78d51
 verificado_fecha: 2026-10-10
 fuentes: [guia_instalacion_agente.md, SRS.md, config.json]
 ---
@@ -27,7 +27,9 @@ registros o datos personales. Pregúntaselo al usuario y anota la respuesta aqu�
 4. **Arranque automático:** que Cacao aparezca a los ~60 s de iniciar sesión y que espere si se abre un juego.
 5. **«Cacao» en el día a día:** revisar el contador de activaciones tras unos días. Lo revisa el usuario; Claude no
    lee ese archivo.
-6. **Grabar la isla** con «Permitir capturas».
+6. **Grabar la isla** con «Permitir capturas». Tras recompilar la isla:
+   - comprobar que ninguna opción de la bandeja hace nada con el teclado (y sí con un clic);
+   - comprobar que el permiso se apaga solo a los 10 minutos.
 7. **Mando:** detección de actividad (`entrada.py`).
 8. **Datos reales:**
    - Obsidian, la reflexión y las sugerencias tras una semana de hábitos;

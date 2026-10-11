@@ -10,7 +10,8 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[permisos-y-bloqueos]]: dónde se decide si se pregunta, niveles, bloqueos, confirmación física, modo sin confirmación
 - [[voz]]: entrada, frenos, Whisper, Piper y confirmaciones en voz
 - [[palabra-activacion]]: detector «Cacao» y escucha de seguimiento
-- [[isla-websocket]]: protocolo con la isla, protecciones, arnés, invariantes y traspaso a Codex
+- [[isla-websocket]]: protocolo con la isla (versión 2), protecciones y bandeja
+- [[isla-codex]]: traspaso de la isla a Codex: rama, arnés, invariantes y datos personales
 - [[modo-juego]]: detección de juego, descarga y recarga, guardia de la GPU
 - [[memoria-y-wiki]]: memoria.db, wiki, consultar_memoria, reflexión, lint y sugerencias
 - [[registro-habitos]]: registrador, privacidad y pausa

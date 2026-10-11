@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: d4b36dd
+verificado_commit: 8a78d51
 verificado_fecha: 2026-10-10
 fuentes: [iniciar_cacao.py, crear_acceso_directo.ps1, voz.py, agente_minimo.py, registro_habitos.py, emergencia.py, ui_isla.py]
 ---

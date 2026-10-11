@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: d4b36dd
+verificado_commit: 8a78d51
 verificado_fecha: 2026-10-10
 fuentes: [config.json, modelo.py, agente_minimo.py, protecciones_ejecucion.py, comparacion_modelos/ejecutar.py, REPORTE_TRABAJO_CACAO.md, SRS.md, guia_instalacion_agente.md, resultados_swa_y_recursos.md]
 ---
@@ -31,6 +31,7 @@ Cada punto se comprobó contra Git y los archivos el 2026-10-10:
 | 11 | Apagado automático del modo sin confirmación (SRS R-17, «valorar») | pendiente | `modo_directo.py` no tiene temporizador |
 | 11b | `entrenar_cacao.py` apunta a datos que se movieron a `D:\Cacao\entrenamiento\` (cambiar su ruta es código de Cacao: pedir permiso) | pendiente | `D:\Cacao\manifiesto_movimientos.md` |
 | 11c | Carga perezosa del modelo: importar `agente_minimo` ya no usa la GPU | hecho en código | 14c17cb; `probar_carga_modelo.py` 13/13. Arranque real de Cacao **no probado** (solo con un modelo falso) |
+| 11d | Recompilar la isla (bandeja y protocolo v2) | pendiente (permiso) | Cacao rechaza la isla vieja: 4003 ([[riesgos]]) |
 
 ## Temas pedidos el 2026-10-10 sin rastro en el repositorio (desconocido)
 
