@@ -165,7 +165,7 @@ def pruebas_bandeja():
     async def isla():
         async with websockets.connect("ws://127.0.0.1:8767",
                                       additional_headers={"Origin": "http://tauri.localhost"}) as ws:
-            await ws.send(json.dumps({"tipo": "hola", "token": token}))
+            await ws.send(json.dumps({"tipo": "hola", "token": token, "version": ui_isla.PROTOCOLO}))
             await asyncio.sleep(0.3)
             await ws.send(json.dumps({"tipo": "ver_terminal"}))
             await ws.send(json.dumps({"tipo": "salir"}))

@@ -8,7 +8,8 @@ Servidor WebSocket (el agente es el servidor):
     si no coincide, se cierra la conexión (4001). El archivo se borra al salir;
   - Origin: solo el del webview de Tauri (http://tauri.localhost, https://tauri.localhost) y, en desarrollo,
     http://localhost:1420. Cualquier otro (una página web abierta en el navegador) recibe 403 en el handshake;
-  - una sola isla a la vez (4002 para la segunda).
+  - una sola isla a la vez (4002 para la segunda);
+  - protocolo versión PROTOCOLO en «hola» (4003 si es otra); un JSON que no es un objeto se ignora.
 
 Pedidos escritos: {"tipo": "pedido", "texto"} del campo de texto de la isla (solo se puede escribir en él tras un
 clic físico) van a al_pedido, que los pone en la misma cola que la consola (pedidos.py).
@@ -38,6 +39,8 @@ from websockets.asyncio.server import serve
 from entrada_fisica import EntradaFisica
 
 PUERTO = 8765
+# versión de C:\asistente-ui\docs\protocolo.md; la isla la manda en «hola» y otra versión se rechaza (4003)
+PROTOCOLO = 2
 PROCESO_ISLA = "asistente-ui.exe"
 ORIGENES = ["http://tauri.localhost", "https://tauri.localhost", "http://localhost:1420"]
 RUTA_CONEXION = Path(os.environ.get("LOCALAPPDATA", ".")) / "Asistente" / "ui.json"
@@ -134,9 +137,17 @@ class ServidorIsla:
             self.rechazos.append("sin hola")
             await ws.close(4001, "sin token")
             return
+        if not isinstance(hola, dict):
+            self.rechazos.append("sin hola")
+            await ws.close(4001, "sin token")
+            return
         if hola.get("tipo") != "hola" or not hmac.compare_digest(str(hola.get("token", "")), self.token):
             self.rechazos.append("token")
             await ws.close(4001, "token incorrecto")
+            return
+        if hola.get("version") != PROTOCOLO:  # después del token: a quien no lo tiene no se le dice la versión
+            self.rechazos.append(f"version {hola.get('version')!r}")
+            await ws.close(4003, f"versión de protocolo distinta: espero {PROTOCOLO}")
             return
         if self.cliente is not None:
             self.rechazos.append("segunda isla")
@@ -152,6 +163,8 @@ class ServidorIsla:
                     m = json.loads(crudo)
                 except ValueError:
                     continue
+                if not isinstance(m, dict):  # un JSON que no es un objeto se ignora (antes cerraba con 1011)
+                    continue
                 if m.get("tipo") == "decision" and self.al_decidir:
                     self.al_decidir(str(m.get("id")), bool(m.get("si")))
                 elif m.get("tipo") == "modo" and self.al_cambiar_modo:
@@ -165,7 +178,10 @@ class ServidorIsla:
                 elif m.get("tipo") == "ver_terminal" and self.al_ver_terminal:
                     self.al_ver_terminal()
                 elif m.get("tipo") == "rect":
-                    self.rect = {k: float(m.get(k, 0)) for k in ("x", "y", "ancho", "alto", "escala")}
+                    try:
+                        self.rect = {k: float(m.get(k, 0)) for k in ("x", "y", "ancho", "alto", "escala")}
+                    except (TypeError, ValueError):
+                        continue  # un rect con valores que no son números se ignora; queda la forma anterior
         except websockets.ConnectionClosed:
             pass
         finally:

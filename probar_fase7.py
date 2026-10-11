@@ -162,7 +162,7 @@ async def _ws(puerto, token, origen):
     cabeceras = {"Origin": origen} if origen else {}
     try:
         async with websockets.connect(f"ws://127.0.0.1:{puerto}", additional_headers=cabeceras) as ws:
-            await ws.send(json.dumps({"tipo": "hola", "token": token}))
+            await ws.send(json.dumps({"tipo": "hola", "token": token, "version": ui_isla.PROTOCOLO}))
             try:
                 await asyncio.wait_for(ws.recv(), timeout=1)
             except asyncio.TimeoutError:
@@ -192,7 +192,7 @@ def pruebas_websocket():
     async def isla_y_segunda():
         cab = {"Origin": tauri}
         async with websockets.connect("ws://127.0.0.1:8766", additional_headers=cab) as isla:
-            await isla.send(json.dumps({"tipo": "hola", "token": datos["token"]}))
+            await isla.send(json.dumps({"tipo": "hola", "token": datos["token"], "version": ui_isla.PROTOCOLO}))
             await asyncio.sleep(0.3)
             conectada = s.conectada
             recibidas = []
@@ -201,14 +201,40 @@ def pruebas_websocket():
             await isla.send(json.dumps({"tipo": "rect", "x": 240, "y": 0, "ancho": 240, "alto": 36, "escala": 1.25}))
             await asyncio.sleep(0.3)
             rect = dict(s.rect) if s.rect else None
+            # versión 2: un JSON que no es un objeto o un rect con valores no numéricos se ignoran (antes: 1011)
+            await isla.send("[1, 2]")
+            await isla.send(json.dumps({"tipo": "rect", "x": "mucho", "y": 0, "ancho": 1, "alto": 1, "escala": 1}))
+            await isla.send(json.dumps({"tipo": "decision", "id": "def", "si": False}))
+            await asyncio.sleep(0.3)
+            sigue = s.conectada and recibidas[-1:] == [("def", False)] and s.rect == rect
             segunda = await _ws(8766, datos["token"], tauri)
-            return conectada, recibidas, segunda[0], rect
+            return conectada, recibidas[:1], segunda[0], rect, sigue
 
-    conectada, recibidas, segunda, rect = asyncio.run(isla_y_segunda())
+    async def hola_con_version(version):
+        async with websockets.connect("ws://127.0.0.1:8766", additional_headers={"Origin": tauri}) as ws:
+            hola = {"tipo": "hola", "token": datos["token"]}
+            if version is not None:
+                hola["version"] = version
+            await ws.send(json.dumps(hola))
+            try:
+                await asyncio.wait_for(ws.recv(), timeout=1)
+                return "abierta"
+            except asyncio.TimeoutError:
+                return "abierta"
+            except websockets.ConnectionClosed as e:
+                return f"cerrada {e.rcvd.code if e.rcvd else ''}"
+
+    conectada, recibidas, segunda, rect, sigue = asyncio.run(isla_y_segunda())
     ok("WebSocket: token y Origin correctos, conectada", conectada)
     ok("WebSocket: la decisión de la isla llega al agente", recibidas == [("abc", True)])
     ok("WebSocket: la forma de la isla llega al agente", rect and rect["escala"] == 1.25, str(rect))
+    ok("WebSocket: un JSON que no es objeto o un rect inválido se ignoran y la conexión sigue", sigue)
     ok("WebSocket: una segunda isla, rechazada", segunda == "cerrada 4002", segunda)
+    for version in (1, None, "2", 3):
+        r = asyncio.run(hola_con_version(version))
+        ok(f"WebSocket: versión de protocolo {version!r}, rechazada con 4003", r == "cerrada 4003", r)
+    r = asyncio.run(_ws(8766, datos["token"], tauri))[0]
+    ok(f"WebSocket: versión {ui_isla.PROTOCOLO}, aceptada", r == "abierta", r)
     s.cerrar()
     ok("al cerrar, ui.json se borra", not ruta.exists())
 

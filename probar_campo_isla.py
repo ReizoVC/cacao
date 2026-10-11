@@ -51,7 +51,7 @@ def pruebas_servidor():
     async def cliente(mensajes, token):
         async with websockets.connect("ws://127.0.0.1:8797", additional_headers=origen) as ws:
             if token is not None:
-                await ws.send(json.dumps({"tipo": "hola", "token": token, "version": 1}))
+                await ws.send(json.dumps({"tipo": "hola", "token": token, "version": ui_isla.PROTOCOLO}))
             for m in mensajes:
                 await ws.send(json.dumps(m))
             await asyncio.sleep(0.3)
