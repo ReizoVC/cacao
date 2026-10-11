@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 10b63cc
+verificado_commit: 0b90b51
 verificado_fecha: 2026-10-10
 fuentes: [.gitignore, config.json, memoria.py, wiki.py, habitos.py, voz.py, ui_isla.py, iniciar_cacao.py]
 ---
@@ -39,9 +39,12 @@ se añadieron a mano con `-f` y están sanitizados.
 | Rol | Dónde |
 |---|---|
 | LLM de producción y mmproj | `modelos/` (rutas en `config.json`) |
-| Piper y detector «Cacao» | `modelos/piper/`, `modelos/cacao/` |
+| Piper y detector «Cacao» | `modelos/piper/`, `modelos/cacao/` (`cacao.npz` es el de producción) |
+| Datos para entrenar «Cacao» (`acav_parcial.npy`, `validation_set_features.npy`, voces de `piper_cacao/`) | Movidos a `D:\Cacao\entrenamiento\` el 2026-10-10. `entrenar_cacao.py` todavía los busca en `modelos/` ([[backlog]]) |
+| Qwen 3.5 9B Q5 para la prueba | Copia en `modelos/comparacion_local/` (C:); `ejecutar.py` la usa |
 | Candidatos de comparación | `modelos/comparacion/` es una **unión (junction) a `D:\Cacao\ModelosComparacion`**: los GGUF viven solo en D: (disco duro), no ocupan C: |
 | Whisper | caché de Hugging Face del perfil del usuario |
 | Pila WSL (TTS, motores) | disco D y `/opt` dentro de WSL ([[wsl-dominio-cuda]]) |
 
-No muevas los modelos que producción espera en `modelos/` sin cambiar y validar `config.json`.
+No muevas los modelos que producción espera en `modelos/` sin cambiar y validar `config.json`. D: es un disco duro:
+solo copias y lo que no se usa. Registro de cada movimiento con SHA256: `D:\Cacao\manifiesto_movimientos.md`.

@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 10b63cc
+verificado_commit: 0b90b51
 verificado_fecha: 2026-10-10
 fuentes: [config.json, modelo.py, agente_minimo.py, protecciones_ejecucion.py, comparacion_modelos/ejecutar.py, REPORTE_TRABAJO_CACAO.md, SRS.md, guia_instalacion_agente.md, resultados_swa_y_recursos.md]
 ---
@@ -26,9 +26,10 @@ Cada punto se comprobó contra Git y los archivos el 2026-10-10:
 | 6 | Corregir los falsos positivos de la protección («escrita», «sonido… está», «no he podido») | pendiente | `_CLAIMS` y `_NEGATED_CLAIM` sin cambios desde 5889dda |
 | 7 | Volver a pasar las suites sin modelo después de 9e2c1f1 | desconocido | ningún commit posterior registra totales |
 | 8 | 65 frases con el prompt de producción después de las protecciones | pendiente | la última pasada (`resultados_pruebas_65_fecha.json`) es del 2026-10-06 |
-| 9 | Commit o descarte de los cambios de `comparacion_modelos/ejecutar.py` (swa_full, conjunto nuevo, ruta de Q4) y de `pruebas_nuevas_30.json` | pendiente | `git status` |
+| 9 | Commit de los cambios de `ejecutar.py`, `pruebas_nuevas_30.json` y `medir_recarga_completa.ps1` | hecho | cabf3ed |
 | 10 | Revisar la línea base de `verificar.py` | desconocido | `REPORTE` dice que falla; no se ejecutó |
 | 11 | Apagado automático del modo sin confirmación (SRS R-17, «valorar») | pendiente | `modo_directo.py` no tiene temporizador |
+| 11b | `entrenar_cacao.py` apunta a datos que se movieron a `D:\Cacao\entrenamiento\` (cambiar su ruta es código de Cacao: pedir permiso) | pendiente | `D:\Cacao\manifiesto_movimientos.md` |
 
 ## Modelos y voz (experimental)
 
