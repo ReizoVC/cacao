@@ -1,15 +1,29 @@
 ---
 estado: verificado
-verificado_commit: d4b36dd
-verificado_fecha: 2026-10-10
-fuentes: [resultados_swa_y_recursos.md, comparacion_modelos/ejecutar.py, modelo.py, config.json, probar_carga_modelo.py]
+verificado_commit: dd51ba6
+verificado_fecha: 2026-10-11
+fuentes: [resultados_swa_y_recursos.md, comparacion_modelos/probar_swa_cache.py, comparacion_modelos/ejecutar.py, modelo.py, config.json, probar_carga_modelo.py]
 ---
-# swa_full=False para Gemma (llama-cpp-python)
+# swa_full=False para Gemma (llama-cpp-python): revertido
 
-**Estado:** **preparado en producción, sin aplicar ni medir.** Desde eb5a9c4, `config.json` tiene
-`"swa_full": false` y `modelo.crear_llm` pasa `swa_full=config.get("swa_full")`; sin la clave queda el valor por
-defecto de llama-cpp-python. Cacao no se reinició: el valor se aplica **en el próximo arranque**, también en el
-automático al iniciar sesión.
+**Estado:** **revertido en producción** (397d0a2): `config.json` ya no tiene la clave y queda el valor por defecto
+de llama-cpp-python. `modelo.crear_llm` sigue pasando `swa_full=config.get("swa_full")`.
+
+**Por qué se revirtió:** con false, las 65 frases en producción dieron 35/42 en la semilla 11 (base 42/42,
+`resultados_pruebas_65_fase1_parcial.log`). El banco validó false vaciando la caché antes de cada caso
+(`ejecutar.py:286-287`); producción no la vacía.
+
+**Causa sin confirmar.** `comparacion_modelos/probar_swa_cache.py` (dd51ba6), con los 7 casos fallidos en orden
+(`datos/swa_cache/brazo_*.json`):
+
+| Brazo | Aciertos | Tiempo | VRAM cargado / pico |
+|---|---:|---:|---:|
+| A: false, sin vaciar | 7/7 | 24,4 s | 9 892 / 9 978 MiB |
+| B: false, vaciando | 7/7 | 36,9 s | 9 814 / 9 869 MiB |
+| C: por defecto, sin vaciar | 7/7 | 23,8 s | 12 278 / 12 339 MiB |
+
+A no reprodujo los fallos: la hipótesis «false + prefijo reutilizado» no queda demostrada. Vaciar cuesta ≈ +1,8 s
+por tarea. Arranque real con false: 787 → 9 819 MiB (`resultados_arranque_fase1.json`).
 
 ## Contexto
 
@@ -30,12 +44,10 @@ Con las 30 frases nuevas: 90/90 en los dos modelos. No hay ronda de esas frases 
 
 ## Qué falta (con permiso)
 
-1. Reiniciar Cacao y medir la VRAM real con Whisper y la visión cargados. **No medido.**
-2. Pasar las 65 frases × 3 semillas con el prompt de producción ([[evaluacion-65-frases]]).
-3. No está comprobado en producción cómo interactúa con la visión (el handler multimodal reevalúa todo el prompt)
-   ni con el calentamiento de `voz.py`.
+1. Explicar los 7 fallos: A con 7 casos no basta; quizá hace falta la secuencia previa entera (#1–25).
+2. Pasar las 65 frases × 3 con producción restaurada ([[evaluacion-65-frases]]).
 
-Volver atrás: quitar la clave o poner `null` en `config.json`.
+Volver a probar false: poner `"swa_full": false` en `config.json` (con permiso).
 
 ## No hacer
 

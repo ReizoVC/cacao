@@ -31,3 +31,15 @@ Entradas anteriores: [[log-2026-10-10]] y [[log-2026-10-11-isla]].
   reutilización del prefijo KV entre tareas. No se revirtió nada. Detalle en `backlog` #5 y #8.
 - `entrenar_cacao.py` lee de `D:\Cacao\entrenamiento\` (permiso del usuario). Lista de comprobación de Qwen 9B:
   `lista-qwen9b-ronda2`.
+
+## 2026-10-11: producción restaurada sin swa_full (397d0a2, a6e0cd6)
+
+- Orden del coordinador y permiso del usuario: `config.json` sin la clave `swa_full` (valor por defecto) y una nota
+  del motivo. Cacao no estaba en marcha. `probar_carga_modelo.py` ajustada a la nueva configuración: 13/13.
+
+## 2026-10-11: prueba A/B/C de swa_full (dd51ba6): la hipótesis no se confirma
+
+- `probar_swa_cache.py`, los 7 casos fallidos de la semilla 11 en orden: A (false, sin vaciar) 7/7, B (false,
+  vaciando) 7/7 y C (por defecto) 7/7. A no reprodujo los fallos: se paró ahí y la 65 × 3 no se lanzó.
+- Tabla en `swa-full-false`. Sin entrada en `lecciones.md`: la causa no está confirmada.
+- 21 páginas reselladas tras el cambio de `config.json` (una sola clave); `hoja-de-ruta` no se tocó.

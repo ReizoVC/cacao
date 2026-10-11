@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: d4b36dd
-verificado_fecha: 2026-10-10
+verificado_commit: dd51ba6
+verificado_fecha: 2026-10-11
 fuentes: [registro_habitos.py, habitos.py, agente_minimo.py, config.json, diseno_fase6.md]
 ---
 # Registro de hábitos

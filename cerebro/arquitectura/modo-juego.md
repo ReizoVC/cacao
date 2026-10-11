@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: d4b36dd
-verificado_fecha: 2026-10-10
+verificado_commit: dd51ba6
+verificado_fecha: 2026-10-11
 fuentes: [modo_juego.py, guardia_juego.py, deteccion.py, agente_minimo.py, config.json, SRS.md]
 ---
 # Modo juego y guardia de la GPU

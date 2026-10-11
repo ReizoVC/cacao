@@ -1,7 +1,7 @@
 ---
 estado: sin verificar
-verificado_commit: 8a78d51
-verificado_fecha: 2026-10-10
+verificado_commit: dd51ba6
+verificado_fecha: 2026-10-11
 fuentes: [guia_instalacion_agente.md, SRS.md, config.json]
 ---
 # Pendientes que necesitan al usuario frente al PC
@@ -72,5 +72,5 @@ registros o datos personales. Pregúntaselo al usuario y anota la respuesta aqu�
 ## Del trabajo con modelos
 
 11. Puntuar las evaluaciones a ciegas: `resultados_ciegas.md` y `resultados_ciegas_q4.md` ([[backlog]] #20–21).
-12. Cambios de producción: swa_full y la regla JSON ya están en el código (eb5a9c4, 7d31aa7). Falta el permiso para
-    reiniciar Cacao y medir la VRAM, y para pasar las 65 frases. El cierre rápido está **sin decidir** ([[backlog]] #3–5, #8).
+12. Cambios de producción: la regla JSON está en el código (7d31aa7); swa_full=false se revirtió (397d0a2). Las 65
+    frases quedaron detenidas por una regresión sin explicar. El cierre rápido está **sin decidir** ([[backlog]] #3–5, #8).

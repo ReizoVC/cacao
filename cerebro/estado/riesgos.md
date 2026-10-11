@@ -18,7 +18,7 @@ Claude Code, más los nuevos.
 | Windows Insider (R-07) | Cambios de API | Volver a probar tras cada actualización grande |
 | Falsos positivos de la protección | Respuestas correctas rechazadas que acaban confusas | Corregidos en c6a74f3. Queda un falso negativo conocido con una negación anterior en la misma cláusula ([[protecciones]]) |
 | Producción ≠ banco de pruebas | Las cifras de las rondas 2 y 3 no describen producción | [[cierre-rapido-mensaje-final]] |
-| `swa_full=False` y la regla JSON sin medir en producción | Se aplican en el próximo arranque de Cacao. La VRAM real y las 65 frases no se han medido | [[swa-full-false]], [[backlog]] |
+| Regresión sin explicar en las 65 frases (35/42 en la semilla 11) | `swa_full=false` se revirtió, pero A/B/C no reprodujo los fallos: la causa sigue abierta y la regla JSON y las protecciones siguen sin medir con las 65 × 3 | [[swa-full-false]], [[backlog]] #8 |
 | `verificar.py` falla | Congela la producción de la ronda 3, que ya cambió | Esperado; actualizar los hashes es decisión del usuario ([[comparacion-modelos]]) |
 | RAM al recargar la pila WSL | Windows llegó al 99,96 %; 1,15 GiB de swap en WSL | Medido en `resultados_swa_y_recursos.md` |
 | Margen de VRAM en la pila WSL | 1,5–1,9 GiB libres en el pico | Modo juego; no reducir Whisper ni el contexto |

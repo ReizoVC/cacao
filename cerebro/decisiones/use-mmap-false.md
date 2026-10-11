@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: d4b36dd
-verificado_fecha: 2026-10-10
+verificado_commit: dd51ba6
+verificado_fecha: 2026-10-11
 fuentes: [config.json, modelo.py, guia_instalacion_agente.md, resultados_ram_mmap.json, resultados_ram_nommap.json]
 ---
 # use_mmap = false

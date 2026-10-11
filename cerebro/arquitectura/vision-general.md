@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: d4b36dd
-verificado_fecha: 2026-10-10
+verificado_commit: dd51ba6
+verificado_fecha: 2026-10-11
 fuentes: [agente_minimo.py, voz.py, iniciar_cacao.py, modelo.py, muestreo_gramatica.py, config.json, herramientas.json]
 ---
 # Visión general y flujo de un pedido

@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: 8a78d51
-verificado_fecha: 2026-10-10
+verificado_commit: dd51ba6
+verificado_fecha: 2026-10-11
 fuentes: [probar_protecciones_ejecucion.py, probar_obstaculos.py, probar_modo_directo.py, probar_fase6.py, probar_fase7.py, probar_campo_isla.py, probar_autocompletar_login.py, probar_confirmacion_voz.py, probar_modo_juego.py, probar_palabra_activacion.py, probar_seguimiento.py, probar_segundo_plano.py, probar_actividad_fisica.py, probar_powershell.py, probar_apps.py, probar_grupo4.py, probar_carga_modelo.py, probar_salida_utf8.py, probar_gramatica_json.py, agente_minimo.py, comparacion_modelos/verificar.py]
 ---
 # Suites de pruebas sin modelo

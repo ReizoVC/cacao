@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: ac148e6
+verificado_commit: dd51ba6
 verificado_fecha: 2026-10-11
 fuentes: [entrenar_cacao.py, medir_arranque.py, config.json, modelo.py, agente_minimo.py, protecciones_ejecucion.py, comparacion_modelos/ejecutar.py, REPORTE_TRABAJO_CACAO.md, SRS.md, guia_instalacion_agente.md, resultados_swa_y_recursos.md]
 ---
@@ -22,10 +22,10 @@ Cada punto se comprobó contra Git y los archivos el 2026-10-10:
 | 2 | Salida UTF-8 | hecho | lanzador (99fd1bc) y también `voz.py` y el modo texto (8e72787, suite `probar_salida_utf8.py`) |
 | 3 | Regla JSON sin caracteres de control en producción | hecho en código, sin medir con el modelo | 7d31aa7; `probar_gramatica_json.py` 11/11 |
 | 4 | Decidir el cierre rápido `mensaje_final` frente al contrato de pruebas | pendiente | `agente_minimo.py:433` y 817-827 |
-| 5 | `swa_full=False` en producción | hecho y medido; **sospechoso de regresión** (ver #8) | eb5a9c4; VRAM y RAM en [[log]] (2026-10-11) |
+| 5 | `swa_full=False` en producción | **revertido** (397d0a2); causa sin confirmar | A/B/C (`probar_swa_cache.py`, dd51ba6): false sin vaciar dio 7/7 en los casos fallidos. [[swa-full-false]] |
 | 6 | Corregir los falsos positivos de la protección (también «no puedo verificar») | hecho en código | c6a74f3; `probar_protecciones_ejecucion.py` 44/44 |
 | 7 | Volver a pasar las suites sin modelo después de 9e2c1f1 | hecho (2026-10-10, eb5a9c4) | todas pasan; totales en [[suites]] |
-| 8 | 65 frases × 3 con producción después de las protecciones, la regla JSON y el detector nuevo (necesita GPU y permiso) | **detenida por regresión** (2026-10-11) | semilla 11, #1–42: 35/42 (base 42/42). Hipótesis: `swa_full=false` + prefijo KV reutilizado; el banco vaciaba la caché por caso. `resultados_pruebas_65_fase1_parcial.log` |
+| 8 | 65 frases × 3 con producción después de las protecciones, la regla JSON y el detector nuevo (necesita GPU y permiso) | **detenida por regresión** (2026-10-11); sin repetir | semilla 11, #1–42: 35/42 (base 42/42). Hipótesis: `swa_full=false` + prefijo KV reutilizado; el banco vaciaba la caché por caso. `resultados_pruebas_65_fase1_parcial.log` |
 | 9 | Commit de los cambios de `ejecutar.py`, `pruebas_nuevas_30.json` y `medir_recarga_completa.ps1` | hecho | cabf3ed |
 | 10 | Revisar la línea base de `verificar.py` | hecho: falla de verdad | hashes de la ronda 3 desde 84fbe0b; detalle en [[comparacion-modelos]]. Actualizarlos: decisión del usuario |
 | 11 | Apagado automático del modo sin confirmación (SRS R-17, «valorar») | pendiente | `modo_directo.py` no tiene temporizador |
