@@ -351,6 +351,7 @@ ns["notificar"] = lambda *_a, **_k: None
 
 # ---------- modelo con medición ----------
 CONFIG = cargar_config()
+ns["CIERRE_RAPIDO"] = CONFIG.get("cierre_rapido", True)  # como agente_minimo.CIERRE_RAPIDO (perfil activo)
 llm = crear_llm({**CONFIG, "modo_gramatica": None})  # cada corrida elige el modo con llm.modo_gramatica
 med = {}
 _eval, _sample = llm.eval, llm.sample

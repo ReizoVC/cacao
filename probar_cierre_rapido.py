@@ -124,5 +124,18 @@ ok("dos mensaje_final sin evidencia: cuentan como correcciones y la tarea termin
    ns["_tarea"]["proteccion"]["correcciones"] == 2 and respuesta.endswith("¿Cómo quieres que continúe?"),
    (llamadas, respuesta))
 
+print("-- sin cierre rápido (perfil qwen9b, CIERRE_RAPIDO = False): se ignora mensaje_final y se exige finalizar")
+for i, (pedido, primero, segundo, final) in CASOS.items():
+    ns, llamadas = cargar([primero, segundo, fin(final)], cierre_rapido=False)
+    respuesta = ns["atender"](pedido, [{"role": "system", "content": "s"}])
+    ok(f"#{i}: el modelo sigue hasta finalizar, sin contar correcciones",
+       llamadas == [primero["herramienta"], segundo["herramienta"]] and respuesta == final
+       and ns["_tarea"]["proteccion"]["correcciones"] == 0, (llamadas, respuesta))
+ns, llamadas = cargar([paso("volumen", {"accion": "fijar", "cantidad": 30}, "Listo, puse el volumen al 30%."),
+                       fin("Volumen al 30%.")], cierre_rapido=False)
+respuesta = ns["atender"]("pon el volumen al 30", [{"role": "system", "content": "s"}])
+ok("tarea de un paso: responde con finalizar, no con mensaje_final",
+   llamadas == ["volumen"] and respuesta == "Volumen al 30%.", (llamadas, respuesta))
+
 print(f"{len(ejecutadas) - len(fallos)}/{len(ejecutadas)} OK")
 sys.exit(1 if fallos else 0)

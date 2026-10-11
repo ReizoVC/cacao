@@ -59,6 +59,10 @@ ok("perfil gemma: Gemma Q5, su mmproj, sin swa_full ni sin_pensamiento",
 ok("perfil qwen9b: Qwen 9B Q5 (copia en C:), su mmproj, swa_full false y sin pensamiento",
    "Qwen3.5-9B" in qwen["modelo"] and qwen["mmproj"] == "modelos/comparacion/mmproj-F16.gguf"
    and qwen.get("swa_full") is False and qwen.get("sin_pensamiento") is True, qwen.get("modelo"))
+ok("cierre rápido: gemma true, qwen9b false (el ejecutor ignora mensaje_final)",
+   gemma.get("cierre_rapido") is True and qwen.get("cierre_rapido") is False)
+ok("agente_minimo.CIERRE_RAPIDO sale del perfil activo",
+   a.CIERRE_RAPIDO is (gemma if crudo["modelo_activo"] == "gemma" else qwen)["cierre_rapido"], a.CIERRE_RAPIDO)
 ok("los dos perfiles comparten el resto (contexto, caché KV, flash attention, mmap, gramática)",
    all(gemma[k] == qwen[k] for k in ("n_ctx", "type_k", "type_v", "flash_attn", "use_mmap", "modo_gramatica")))
 ok("ida y vuelta: qwen9b -> gemma da la misma config que gemma",

@@ -62,6 +62,8 @@ if not CONFIG.get("mmproj"):
 if CONFIG.get("autocompletar_login", {}).get("activa"):
     ACTIVAS.add("autocompletar_login")
 HERRAMIENTAS = {h["nombre"]: h for h in CATALOGO["herramientas"] if h["nombre"] in ACTIVAS}
+# cierre rápido con mensaje_final (perfil de config.json): false = el ejecutor lo ignora y exige finalizar
+CIERRE_RAPIDO = CONFIG.get("cierre_rapido", True)
 MAX_PASOS = CATALOGO["limites"]["max_pasos_por_tarea"]
 APPS_SENSIBLES = CATALOGO["limites"]["apps_sensibles"]
 
@@ -848,6 +850,9 @@ def atender(pedido, historial):
             elif resultado_verificado(nombre, args, resultado):
                 mensaje_final = rellenar_marcadores(mensaje_final, resultado)
             else:
+                mensaje_final = None
+            if mensaje_final and not CIERRE_RAPIDO:
+                print("  [cierre rápido] apagado en este perfil: se ignora mensaje_final")
                 mensaje_final = None
             if mensaje_final:
                 # como finalizar: lo que afirma tiene que estar verificado; si no, se descarta y la tarea sigue

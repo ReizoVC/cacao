@@ -3,13 +3,15 @@
  "perfiles": {
   "gemma": {
    "modelo": "modelos/gemma-4-12b-it-Q5_K_M.gguf",
-   "mmproj": "modelos/mmproj/mmproj-F16.gguf"
+   "mmproj": "modelos/mmproj/mmproj-F16.gguf",
+   "cierre_rapido": true
   },
   "qwen9b": {
    "modelo": "modelos/comparacion_local/Qwen3.5-9B-UD-Q5_K_XL.gguf",
    "mmproj": "modelos/comparacion/mmproj-F16.gguf",
    "swa_full": false,
-   "sin_pensamiento": true
+   "sin_pensamiento": true,
+   "cierre_rapido": false
   }
  },
  "n_ctx": 16384,
@@ -48,6 +50,7 @@
   "modo_gramatica": "topk (rápido, ver resultados_latencia.md), rechazo, o null para el muestreo original de llama-cpp-python.",
   "use_mmap": "false: el modelo se lee entero y, ya copiado a la GPU, deja ~1,3 GB de RAM física; con true el archivo mapeado ocupa ~8,6 GB del working set y el sistema se quedaba sin memoria (ver resultados_ram_*.json).",
   "modelo_activo": "Perfil de 'perfiles' que se carga (modelo.py lo aplica sobre el resto de claves). Volver a Gemma: \"modelo_activo\": \"gemma\". Qwen 9B probado en producción el 2026-10-11: 173/195 y confirmaciones falsas con mensaje_final; se volvió a gemma (cerebro/decisiones/qwen-como-cerebro.md).",
+  "cierre_rapido": "true: una tarea de un paso puede terminar con mensaje_final (validado como finalizar). false (perfil qwen9b): el ejecutor ignora mensaje_final y exige finalizar; el prompt y el esquema no cambian (cerebro/decisiones/cierre-rapido-mensaje-final.md).",
   "sin_pensamiento": "Qwen: plantilla de chat del modelo con enable_thinking=false (como el banco comparacion_modelos/ejecutar.py), también en ver_pantalla.",
   "swa_full": "Solo en el perfil qwen9b (false, decisión del usuario 2026-10-11). Gemma va sin la clave (valor por defecto de llama-cpp-python): false rompía la reutilización de memoria entre tareas en producción; ver backlog #5.",
   "voz": "voz.py. atajo_hablar: mantener para grabar (ctrl+espacio está libre en este PC). motor_transcripcion: whisper (faster-whisper; whisper_modelo/whisper_tipo, large-v3-turbo en int8 ocupa ~1,3 GB de VRAM) o gemma (audio nativo; descartado porque inventaba texto, ver resultados_voz.md; usa ctx_/lote_transcripcion). min_voz_s: menos segundos con voz que esto se descartan sin transcribir. max_grabacion_s: corte de cada pulsación. confirmar_timeout_s: espera de Enter/Esc antes de dar la acción por rechazada. piper_voz: .onnx con su .onnx.json al lado. velocidad: >1 habla más rápido. microfono: null = el de Windows por defecto, o nombre/índice de sounddevice. whisper_pausa: modelo de Whisper en la CPU para entender 'ya terminé' en modo juego (el de la GPU está descargado); se descarga la primera vez que se usa.",
