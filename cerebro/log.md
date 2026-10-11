@@ -43,3 +43,8 @@ Entradas anteriores: [[log-2026-10-10]] y [[log-2026-10-11-isla]].
   vaciando) 7/7 y C (por defecto) 7/7. A no reprodujo los fallos: se paró ahí y la 65 × 3 no se lanzó.
 - Tabla en `swa-full-false`. Sin entrada en `lecciones.md`: la causa no está confirmada.
 - 21 páginas reselladas tras el cambio de `config.json` (una sola clave); `hoja-de-ruta` no se tocó.
+
+## 2026-10-11: estrategia del usuario
+
+- Página nueva `estrategia-recursos`: ahorrar memoria primero, el modelo decide y el código hace, y propuesta de
+  memoria de experiencia (sin código).

@@ -45,6 +45,7 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[lista-qwen9b-ronda2]]: lista de comprobación de la prueba de Qwen 9B (preparada, sin lanzar)
 
 ## Estado
+- [[estrategia-recursos]]: prioridad del usuario: mínimos recursos, herramientas antes que modelo, memoria de experiencia
 - [[hoja-de-ruta]]: la lista del usuario cruzada con el repositorio, diferencias y estado de Codex
 - [[backlog]]: pendientes verificados (hecho, pendiente o desconocido)
 - [[riesgos]]: riesgos vigentes y alcance de cerebro/ frente a Cacao
