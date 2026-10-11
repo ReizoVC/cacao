@@ -71,7 +71,7 @@ def main():
     por_revisar = 0
     for p in paginas:
         rel = p.relative_to(CEREBRO).as_posix()
-        texto = p.read_text(encoding="utf-8")
+        texto = p.read_text(encoding="utf-8").replace("\r\n", "\n")  # también con CRLF de Git
         avisos = []
         sin_codigo = re.sub(r"```.*?```|`[^`\n]*`", "", texto, flags=re.S)  # los ejemplos en código no son enlaces
         rotos = sorted({e.split("|")[0] for e in re.findall(r"\[\[([^\]]+)\]\]", sin_codigo)} - nombres)
