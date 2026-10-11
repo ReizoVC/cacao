@@ -1,1 +1,3 @@
 .obsidian/
+# la raíz ignora modelos/ (los GGUF); esta carpeta del cerebro sí va a Git
+!modelos/
