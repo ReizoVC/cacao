@@ -6,7 +6,15 @@ fuentes: [agente_minimo.py, comparacion_modelos/integracion.py, resultados_compa
 ---
 # Cierre rápido con mensaje_final y contrato de las rondas 2 y 3
 
-**Estado:** hay una **diferencia abierta entre producción y el banco de pruebas**.
+**Estado: decidido por el usuario (2026-10-11), pendiente de implementar.**
+- En los dos modelos, `mensaje_final` pasa por `validar_finalizacion`: si afirma algo sin verificar, no se usa y la
+  tarea sigue.
+- En el perfil de Qwen el cierre rápido se apaga, como en el banco. Sin cambiar el prompt ni el esquema: el ejecutor
+  ignora `mensaje_final`.
+- **Motivo:** Qwen en producción (semilla 11) usó `mensaje_final` tras el primer paso en #29, #30, #31 y #34 y
+  confirmó lo que no hizo. Esa ruta se saltaba `validar_finalizacion`.
+
+Antes había una diferencia abierta entre producción y el banco de pruebas:
 
 ## En producción (`agente_minimo.py`)
 
@@ -32,7 +40,7 @@ El piloto documentó que `mensaje_final` terminaba toda la tarea después de una
 |---|---|
 | Regla JSON sin caracteres de control | Sí desde 7d31aa7: `modelo.py` cambia la regla en el proceso (`.venv` no se toca); `probar_gramatica_json.py` |
 | UTF-8 | Sí: el lanzador (`PYTHONIOENCODING`) y, desde 8e72787, `agente_minimo.salida_utf8()` en `voz.py` y en el modo texto |
-| Contrato sin cierre rápido | No. **Pendiente de decidir por el usuario** |
+| Contrato sin cierre rápido | Decidido el 2026-10-11 (arriba), sin implementar |
 
 ## Consecuencia
 
