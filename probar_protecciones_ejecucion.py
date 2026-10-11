@@ -58,6 +58,43 @@ ok("confirmación compuesta sin acciones detecta ambos efectos",
 ok("un fallo explícito no se interpreta como confirmación",
    not afirmaciones_sin_evidencia("No pude cambiar la ventana enfocada: seguía siendo PowerShell.",set()))
 
+# falsos positivos de resultados_swa_y_recursos.md (#108, conversación 6, #123 y #124)
+ok("«Grabadora de sonido está instalada» no afirma un cambio de volumen",
+   not afirmaciones_sin_evidencia("Sí, la Grabadora de sonido está instalada.",set()))
+estado=nueva_proteccion()
+valida,_=validar_finalizacion(estado,"La Grabadora de sonido está instalada en tu equipo.",True)
+ok("y la respuesta se acepta sin corrección",valida and estado["correcciones"]==0,estado)
+ok("«tarjeta de sonido» tampoco",not afirmaciones_sin_evidencia("Tu tarjeta de sonido está activa.",set()))
+ok("«escrita» como adjetivo no afirma escribir",
+   not afirmaciones_sin_evidencia("La forma escrita correcta es «haber».",set()))
+ok("«escrita» en una descripción tampoco",
+   not afirmaciones_sin_evidencia("En la versión escrita del informe aparece tu nombre.",set()))
+ok("«no he podido verificar» cuenta como negación",
+   not afirmaciones_sin_evidencia("No he podido verificar que se haya cerrado.",set()))
+ok("«no puedo verificar … se haya movido» cuenta como negación",
+   not afirmaciones_sin_evidencia("No puedo verificar que el archivo se haya movido.",set()))
+ok("«no he podido» sin verificar también",not afirmaciones_sin_evidencia("No he podido cerrar la ventana.",set()))
+ok("afirmar y decir que no se puede verificar no es un hecho",
+   not afirmaciones_sin_evidencia("Cerré la ventana, pero no puedo verificarlo.",set()))
+ok("una pregunta no afirma",not afirmaciones_sin_evidencia("¿La calculadora está abierta?",set()))
+ok("participio solo como adjetivo no afirma",
+   not afirmaciones_sin_evidencia("El archivo guardado en Descargas es el más reciente.",set()))
+# las afirmaciones reales se siguen detectando
+ok("la negación no cruza «pero»",
+   afirmaciones_sin_evidencia("No pude abrir Spotify, pero cerré la calculadora.",set())==["cerrar"])
+ok("«he escrito» exige evidencia",
+   afirmaciones_sin_evidencia("He escrito el texto en el Bloc de notas.",set())==["teclado"])
+ok("«Texto escrito.» exige evidencia",afirmaciones_sin_evidencia("Texto escrito.",set())==["teclado"])
+ok("«está cerrada» exige evidencia",afirmaciones_sin_evidencia("La ventana ya está cerrada.",set())==["cerrar"])
+ok("«el sonido está silenciado» exige evidencia",
+   afirmaciones_sin_evidencia("El sonido está silenciado.",set())==["volumen"])
+ok("«subí el volumen del sonido» exige evidencia",
+   afirmaciones_sin_evidencia("Subí el volumen del sonido.",set())==["volumen"])
+ok("«grabadora de sonido» no oculta un volumen afirmado después",
+   afirmaciones_sin_evidencia("Abrí la Grabadora de sonido y subí el volumen.",{"abrir_app"})==["volumen"])
+ok("una negación anterior no oculta una afirmación tras «y»",
+   afirmaciones_sin_evidencia("El volumen no cambió y ahora está al 40%.",set())==["volumen"])
+
 estado=nueva_proteccion()
 primero=registrar_resultado(estado,"teclado",{"accion":"atajo","teclas":["ctrl","g"]},
                             {"ok":True,"efecto_visible":False})
