@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: 10b63cc
-verificado_fecha: 2026-10-10
+verificado_commit: 945fa17
+verificado_fecha: 2026-10-11
 fuentes: [pruebas.json, evaluar_pruebas.py, benchmark_gramatica.py, comparacion_modelos/criterios.py, comparacion_modelos/integracion.py, SRS.md]
 ---
 # Evaluación con las 65 frases
@@ -45,7 +45,14 @@ Del SRS §4.4, con origen en `resultados_pruebas_65_fecha.json` (2026-10-06):
 - tareas completas: 193/195;
 - media: 3,91 s.
 
-Es **anterior** a las protecciones (9e2c1f1). No hay una pasada posterior con el prompt de producción ([[backlog]]).
+Es **anterior** a las protecciones (9e2c1f1).
+
+**Pasada del 2026-10-11** (Fase 1, sin `swa_full`; `probar_swa_cache.py C --casos todos --semillas 11 22 33`,
+origen `comparacion_modelos/datos/swa_cache/resumen_65x3_C.json`, ignorado por Git):
+- primera herramienta: 195/195; tareas completas: 194/195 (65, 64 y 65);
+- media por tarea: 4,65–4,79 s; VRAM pico 13 095 MiB;
+- frente a la base: #44 pasa en las semillas 11 y 33 (antes no enfocaba); #56 falla en la 22 (`listar_controles`
+  con `id_ventana` 0 sin listar ventanas; termina diciendo que no pudo).
 
 Las rondas 2 y 3 (195/195 para Gemma Q5) usan el contrato de pruebas de `integracion.py`, no el de producción
 ([[cierre-rapido-mensaje-final]], [[comparacion-modelos]]).

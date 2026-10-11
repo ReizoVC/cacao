@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 8a78d51
+verificado_commit: 945fa17
 verificado_fecha: 2026-10-11
 fuentes: [SRS.md, protecciones_ejecucion.py, herramientas.json, herramientas_powershell.py, resultados_swa_y_recursos.md, muestreo_gramatica.py, wiki.py, herramientas_grupo1.py]
 ---
@@ -18,7 +18,7 @@ Claude Code, más los nuevos.
 | Windows Insider (R-07) | Cambios de API | Volver a probar tras cada actualización grande |
 | Falsos positivos de la protección | Respuestas correctas rechazadas que acaban confusas | Corregidos en c6a74f3. Queda un falso negativo conocido con una negación anterior en la misma cláusula ([[protecciones]]) |
 | Producción ≠ banco de pruebas | Las cifras de las rondas 2 y 3 no describen producción | [[cierre-rapido-mensaje-final]] |
-| Regresión sin explicar en las 65 frases (35/42 en la semilla 11) | `swa_full=false` se revirtió, pero A/B/C no reprodujo los fallos: la causa sigue abierta y la regla JSON y las protecciones siguen sin medir con las 65 × 3 | [[swa-full-false]], [[backlog]] #8 |
+| Fallos sin explicar en una corrida con `swa_full=false` (35/42 en la semilla 11) | No se reproducen con el mismo código y la misma configuración (A: 7/7 y 42/42). Producción, sin swa_full: 194/195. La causa sigue abierta | [[swa-full-false]], [[backlog]] #5 |
 | `verificar.py` falla | Congela la producción de la ronda 3, que ya cambió | Esperado; actualizar los hashes es decisión del usuario ([[comparacion-modelos]]) |
 | RAM al recargar la pila WSL | Windows llegó al 99,96 %; 1,15 GiB de swap en WSL | Medido en `resultados_swa_y_recursos.md` |
 | Margen de VRAM en la pila WSL | 1,5–1,9 GiB libres en el pico | Modo juego; no reducir Whisper ni el contexto |

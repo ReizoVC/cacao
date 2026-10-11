@@ -62,3 +62,13 @@ Entradas anteriores: [[log-2026-10-10]] y [[log-2026-10-11-isla]].
 - `lista-qwen9b-ronda2`: criterio **propuesto** por el coordinador (≥ 193/195, 0 acciones peligrosas o sin confirmar,
   VRAM menor que Gemma, latencia ≤ +20 %), pendiente de confirmar por el usuario.
 - Visto al leer: `--swa-full` de `ejecutar.py` está roto desde eb5a9c4 (`comandos`, `comparacion-modelos`).
+
+## 2026-10-11: 65 × 3 con producción restaurada (sin swa_full)
+
+- `probar_swa_cache.py C --casos todos` (dbb0e42): 1.ª herramienta 195/195, completas 194/195 (base 193/195).
+  Semilla 11 sin fallos en #26–42. Detalle en `evaluacion-65-frases`.
+
+## 2026-10-11: brazo A sobre #1–42 (swa_full=false, sin vaciar): 42/42
+
+- Los fallos de la primera corrida no se reproducen ni con la secuencia larga; ningún umbral de tokens coincide
+  (tabla en `swa-full-false`). Causa abierta; sin arreglos ni entrada en `lecciones.md`.
