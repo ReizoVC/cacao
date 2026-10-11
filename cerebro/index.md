@@ -7,7 +7,7 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[vision-general]]: piezas, flujo de un pedido y dónde se decide cada cosa
 - [[agente-y-herramientas]]: catálogo, estructuras del ejecutor y cómo añadir una herramienta
 - [[protecciones]]: sin evidencia no hay «hecho», dos alternativas, atajos estructurados, emergencia
-- [[frenos-cierre]]: cerrar_app solo si se pide cerrar, forzar solo si se pide, listar_controles sin ventana válida
+- [[frenos-cierre]]: cerrar y forzar solo si se piden; listar_controles sin ventana
 - [[permisos-y-bloqueos]]: dónde se decide si se pregunta, niveles, bloqueos, confirmación física, modo sin confirmación
 - [[voz]]: entrada, frenos, Whisper, Piper y confirmaciones en voz
 - [[palabra-activacion]]: detector «Cacao» y escucha de seguimiento
@@ -37,20 +37,24 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 ## Modelos
 - [[configuracion-vigente]]: config.json de producción explicado
 - [[cifras-medidas]]: tabla de resultados con su archivo de origen
-- [[memoria-liberable]]: VRAM de Qwen 9B + Whisper por opción (flash, KV q8, swa_full, mmap) y si cabe Qwen3-TTS
+- [[memoria-liberable]]: VRAM de Qwen 9B + Whisper por opción
+- [[prompt-y-cache]]: tokens del prompt y caché de prefijo
 - [[criterio-de-cambio]]: criterio fijado y propuesta para cambiar de modelo o volver a Q5
 
 ## Pruebas
 - [[suites]]: suites sin modelo, qué cubren y su baseline por commit
 - [[suites-con-modelo]]: scripts que cargan la GPU o tocan el PC real
 - [[evaluacion-65-frases]]: pruebas.json, cómo correrla en simulación y sus criterios
+- [[frases-simples]]: frases para el camino rápido
 - [[comparacion-modelos]]: banco aislado ejecutar.py, rondas y evaluación a ciegas
 - [[lista-qwen9b-ronda2]]: lista de comprobación y criterio confirmado de la prueba de Qwen 9B
-- [[resultado-qwen9b-2026-10-11]]: Qwen 9B frente a Gemma en el banco (ronda 2, mismo código): 189/195, un (c)
-- [[resultado-qwen9b-produccion]]: Qwen 9B en producción: 173/195 y, con el cierre rápido arreglado, 182/195; no pasa
+- [[resultado-qwen9b-2026-10-11]]: Qwen 9B en el banco: 189/195, un (c)
+- [[resultado-qwen9b-produccion]]: Qwen 9B en producción: 173, 182 y 182/195
 
 ## Estado
 - [[estrategia-recursos]]: prioridad del usuario: mínimos recursos, herramientas antes que modelo, memoria de experiencia
+- [[camino-rapido]]: propuesto: pedidos simples sin modelo
+- [[filtrado-herramientas]]: propuesto: herramientas por pedido
 - [[hoja-de-ruta]]: la lista del usuario cruzada con el repositorio, diferencias y estado de Codex
 - [[backlog]]: pendientes verificados (hecho, pendiente o desconocido)
 - [[riesgos]]: riesgos vigentes y alcance de cerebro/ frente a Cacao

@@ -55,6 +55,7 @@ Ordenados por el usuario en [[hoja-de-ruta]] (2026-10-11). La prueba de Qwen 9B 
 | 22 | Reducir el margen de RAM en la recarga WSL (99,96 % de uso) | descartado (WSL) | `resultados_swa_y_recursos.md` |
 | 23 | Qwen 9B: banco 189/195; producción 173, 182 y 182 con contrato (no pasa) | **en uso real una semana** desde 5e9eee0, sin pasar el criterio | [[qwen-como-cerebro]]; `resumir_semana_qwen.py` |
 | 26 | El simulador de producción no mueve el foco al enfocar | candidata | `benchmark_gramatica.py:180` |
+| 28 | Camino rápido y filtrado de herramientas | propuestos (diseño, sin código) | [[camino-rapido]], [[filtrado-herramientas]] |
 
 ## Con el usuario delante
 

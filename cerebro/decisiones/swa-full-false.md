@@ -10,6 +10,8 @@ fuentes: [resultados_swa_y_recursos.md, comparacion_modelos/probar_swa_cache.py,
 llama-cpp-python). Desde 17bb46c, `swa_full: false` está **solo en el perfil `qwen9b`** (decisión del usuario,
 2026-10-11), que hoy no es el activo ([[configuracion-vigente]]). `modelo.crear_llm` pasa
 `swa_full=config.get("swa_full")`. Si con Qwen cambia algo, se mide en [[memoria-liberable]].
+Con Qwen la caché de prefijo no se reutiliza en ningún caso (0/593 llamadas: `kv_cache_seq_rm` falla con su memoria
+híbrida), con o sin `swa_full` ([[filtrado-herramientas]]).
 
 **Por qué se revirtió:** con false, las 65 frases en producción dieron 35/42 en la semilla 11 (base 42/42,
 `resultados_pruebas_65_fase1_parcial.log`). El banco validó false vaciando la caché antes de cada caso

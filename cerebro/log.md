@@ -53,3 +53,12 @@ Entradas anteriores: [[log-2026-10-10]], [[log-2026-10-11-isla]], [[log-2026-10-
 
 - Isla: rediseño de Codex (4ead7c5) en `main`; rama `claude/musica` con el panel de 800 (858d001) y `cargo check` limpio (3bfef0f).
 - Página nueva `voz-candidatas`: investigación web de motores de voz en Windows nativo, sin medir.
+
+## 2026-10-11: diseño del camino rápido y del filtrado de herramientas (sin código de producción)
+
+- ef06fb8: `medir_prompt.py`. Prompt de sistema: Gemma 3 802 tokens y Qwen 4 141; las herramientas son el 75–80 %.
+- Hallazgo: Qwen no reutiliza la caché de prefijo (0/593 llamadas) y recalcula ≈ 4 300 tokens por llamada
+  (1,54 s); Gemma reutiliza ≈ 3 965 (100 %).
+- Páginas nuevas (propuestas): `camino-rapido` (14 de las 95 frases), `filtrado-herramientas` (variante C y, antes,
+  la caché por estados para Qwen) y `frases-simples`. `simular_filtrado.py`: 53 de 95 con el núcleo solo.
+
