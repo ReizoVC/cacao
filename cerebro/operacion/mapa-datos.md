@@ -40,7 +40,7 @@ se añadieron a mano con `-f` y están sanitizados.
 |---|---|
 | LLM de producción y mmproj | `modelos/` (rutas en `config.json`) |
 | Piper y detector «Cacao» | `modelos/piper/`, `modelos/cacao/` |
-| Candidatos de comparación | `modelos/comparacion/` **y** una copia en otro disco (`D:\Cacao\ModelosComparacion`); los nombres coinciden. `ejecutar.py` (sin commit) lee Gemma Q4 del segundo |
+| Candidatos de comparación | `modelos/comparacion/` es una **unión (junction) a `D:\Cacao\ModelosComparacion`**: los GGUF viven solo en D: (disco duro), no ocupan C: |
 | Whisper | caché de Hugging Face del perfil del usuario |
 | Pila WSL (TTS, motores) | disco D y `/opt` dentro de WSL ([[wsl-dominio-cuda]]) |
 
