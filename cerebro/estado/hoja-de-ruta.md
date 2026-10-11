@@ -43,11 +43,15 @@ detallan aquí. El usuario pidió no activar nada con permisos amplios hasta cer
 
 ## Frontend (isla), a cargo de Codex
 
-- Rama `codex/isla` = `main` de la isla (cf09696). Codex no ha hecho commits todavía.
-- **Orden enviada (2026-10-11), sin reporte aún:**
-  - paso 0: vista previa con `dev.html`, que reproduce mensajes;
-  - paso 1: guardarropa y calendario, portados de las fuentes Swift y JS locales;
-  - paso 2: el accesorio en `localStorage`.
-- **Después:** ancho y estilo (la geometría va al lote de Rust) y la línea mínima.
+- **Pasos 0–2 hechos, revisados y en `main` de la isla (62b615c, fast-forward):**
+  - vista previa `dev.html`, fuera del build;
+  - guardarropa de 13 accesorios con calendario (octubre: sombrero de bruja);
+  - el accesorio se guarda en `localStorage`.
+  - Claude repitió las pruebas: invariantes 10/10 (sin Rust), arnés 40/40, campo 18/18, accesorios 116/116 y
+    build. `dist/` no tiene el reproductor. Ningún protegido cambió.
+  - **Sin verificar:** que `localStorage` persista en WebView2 (se comprueba con la próxima compilación).
+  - No se portaron la física elástica de Swift ni los accesorios del saludo.
+- **Siguiente orden:** ícono del guardarropa, recorte del sombrero, presentación dentro del panel y diseño de
+  la línea mínima (sin código si toca protegidos).
 - **Lote de Rust abierto** (Claude): música v3 y quitar funciones sin usar de `platform/`. Necesita permiso para
   compilar ([[isla-codex]]).
