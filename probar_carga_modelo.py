@@ -48,12 +48,13 @@ argumentos = []
 guardado = modelo.LlamaRapida
 modelo.LlamaRapida = lambda **k: argumentos.append(k) or LlmFalso()
 try:
-    modelo.crear_llm(a.CONFIG, comprobar_juego=False)
+    modelo.crear_llm({**a.CONFIG, "swa_full": False}, comprobar_juego=False)
     modelo.crear_llm({k: v for k, v in a.CONFIG.items() if k != "swa_full"}, comprobar_juego=False)
 finally:
     modelo.LlamaRapida = guardado
-ok("config.json pide swa_full=False", a.CONFIG.get("swa_full") is False, a.CONFIG.get("swa_full"))
-ok("crear_llm pasa swa_full de config.json", argumentos[0].get("swa_full") is False, argumentos[0].get("swa_full"))
+# producción sin la clave: false rompía la reutilización de memoria entre tareas (backlog #5)
+ok("config.json no fija swa_full", "swa_full" not in a.CONFIG, a.CONFIG.get("swa_full"))
+ok("crear_llm pasa swa_full de la configuración", argumentos[0].get("swa_full") is False, argumentos[0].get("swa_full"))
 ok("sin la clave, el valor por defecto de llama-cpp-python", argumentos[1].get("swa_full") is None)
 
 
