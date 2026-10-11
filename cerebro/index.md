@@ -35,6 +35,7 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 ## Modelos
 - [[configuracion-vigente]]: config.json de producción explicado
 - [[cifras-medidas]]: tabla de resultados con su archivo de origen
+- [[memoria-liberable]]: VRAM de Qwen 9B + Whisper por opción (flash, KV q8, swa_full, mmap) y si cabe Qwen3-TTS
 - [[criterio-de-cambio]]: criterio fijado y propuesta para cambiar de modelo o volver a Q5
 
 ## Pruebas
@@ -43,7 +44,7 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[evaluacion-65-frases]]: pruebas.json, cómo correrla en simulación y sus criterios
 - [[comparacion-modelos]]: banco aislado ejecutar.py, rondas y evaluación a ciegas
 - [[lista-qwen9b-ronda2]]: lista de comprobación y criterio confirmado de la prueba de Qwen 9B
-- [[resultado-qwen9b-2026-10-11]]: Qwen 9B frente a Gemma (ronda 2, mismo código): 189/195, un caso (c), no pasa
+- [[resultado-qwen9b-2026-10-11]]: Qwen 9B frente a Gemma: banco 189/195 y producción 173/195; no pasa
 
 ## Estado
 - [[estrategia-recursos]]: prioridad del usuario: mínimos recursos, herramientas antes que modelo, memoria de experiencia

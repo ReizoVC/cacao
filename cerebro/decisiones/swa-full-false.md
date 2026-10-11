@@ -1,13 +1,15 @@
 ---
 estado: verificado
-verificado_commit: 945fa17
+verificado_commit: 829fea9
 verificado_fecha: 2026-10-11
 fuentes: [resultados_swa_y_recursos.md, comparacion_modelos/probar_swa_cache.py, comparacion_modelos/ejecutar.py, modelo.py, config.json, probar_carga_modelo.py]
 ---
 # swa_full=False para Gemma (llama-cpp-python): revertido
 
-**Estado:** **revertido en producción** (397d0a2): `config.json` ya no tiene la clave y queda el valor por defecto
-de llama-cpp-python. `modelo.crear_llm` sigue pasando `swa_full=config.get("swa_full")`.
+**Estado:** **revertido para Gemma** (397d0a2): el perfil `gemma` no tiene la clave (valor por defecto de
+llama-cpp-python). Desde 17bb46c, `swa_full: false` está **solo en el perfil `qwen9b`** (decisión del usuario,
+2026-10-11), que hoy no es el activo ([[configuracion-vigente]]). `modelo.crear_llm` pasa
+`swa_full=config.get("swa_full")`. Si con Qwen cambia algo, se mide en [[memoria-liberable]].
 
 **Por qué se revirtió:** con false, las 65 frases en producción dieron 35/42 en la semilla 11 (base 42/42,
 `resultados_pruebas_65_fase1_parcial.log`). El banco validó false vaciando la caché antes de cada caso

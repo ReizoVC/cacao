@@ -1,8 +1,8 @@
 ---
 estado: verificado
-verificado_commit: 8a78d51
-verificado_fecha: 2026-10-10
-fuentes: [protecciones_ejecucion.py, probar_protecciones_ejecucion.py, agente_minimo.py, herramientas_grupo4.py, obstaculos.py, emergencia.py, resultados_swa_y_recursos.md]
+verificado_commit: e9a580d
+verificado_fecha: 2026-10-11
+fuentes: [protecciones_ejecucion.py, probar_protecciones_ejecucion.py, probar_modo_directo.py, probar_grupo4.py, agente_minimo.py, herramientas_grupo4.py, obstaculos.py, emergencia.py, resultados_swa_y_recursos.md]
 ---
 # Protecciones del ejecutor
 
@@ -45,6 +45,20 @@ ni los bloqueos o rechazos). Con 2, la tarea se corta: «Probé dos alternativas
 `parece_atajo()` detecta «Ctrl+G», «Alt+F4»… escritos como texto. La herramienta `teclado` los rechaza; los atajos
 van con `accion: "atajo"` y el arreglo `teclas` (`herramientas_grupo4.py`).
 
+## 4. Cierre forzado solo si se pide (0a3ea28)
+
+`quitar_forzar_no_pedido()`, al principio de `ejecutar()`: si el modelo manda `cerrar_app` con `forzar: true` y el
+pedido de la tarea no lo pide (`pide_forzar`: «forzar», «a la fuerza», «no responde», «colgado», «congelado»,
+«trabado», «bloqueado», «mata el proceso»…, sin tildes ni mayúsculas), se hace un cierre normal. El registro muestra
+`[forzar]` y el resultado lleva `nota_forzar` para el modelo. La confirmación física del cierre forzado no cambia.
+Origen: Qwen 9B, #56 s22 ([[resultado-qwen9b-2026-10-11]]). Límite: una respuesta «sí» a «¿lo fuerzo?» en una tarea
+nueva no basta; hay que decir la palabra.
+
+## 5. listar_controles sin ventana válida (e9a580d)
+
+Con `id_ventana` ausente, 0 o de una ventana que ya no existe, `listar_controles` usa la ventana al frente
+(`ventana_para_listar`) y lo dice en `nota`. Las ventanas sensibles y la isla siguen bloqueadas. `mouse` no cambia.
+
 ## Relacionadas
 
 - **Obstáculos** (`obstaculos.py`): si un atajo o clic no tuvo efecto visible y otra acción en la misma app sí lo
@@ -56,8 +70,8 @@ van con `accion: "atajo"` y el arreglo `teclas` (`herramientas_grupo4.py`).
 
 ## Pruebas
 
-- `probar_protecciones_ejecucion.py`: 44/44 en c6a74f3, de las cuales 19 son de los falsos positivos y de los
-  controles.
+- `probar_protecciones_ejecucion.py`: 66/66 en 0a3ea28 (44 de c6a74f3 + 22 de `forzar`);
+  `probar_modo_directo.py` 140/140 (cableado en `ejecutar`); `probar_grupo4.py` con ventanas simuladas (e9a580d).
 - `probar_obstaculos.py`.
 
 Detalles en [[suites]]. El banco de comparación las aplica igual (`comparacion_modelos/ejecutar.py`). Las cifras de

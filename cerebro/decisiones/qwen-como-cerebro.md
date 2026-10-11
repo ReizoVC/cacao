@@ -1,46 +1,41 @@
 ---
 estado: verificado
-verificado_commit: 10b63cc
-verificado_fecha: 2026-10-10
-fuentes: [comparacion_modelos/resumen_ronda3.json, clasificacion_fallos_qwen.md, comparacion_modelos/ronda3_protocolo.md]
+verificado_commit: 829fea9
+verificado_fecha: 2026-10-11
+fuentes: [comparacion_modelos/resumen_ronda3.json, comparacion_modelos/resumen_qwen9b_2026-10-11.json, comparacion_modelos/probar_swa_cache.py, config.json, modelo.py, clasificacion_fallos_qwen.md, comparacion_modelos/ronda3_protocolo.md]
 ---
 # Qwen 3.5 9B como cerebro
 
-**Decisión:** descartado como modelo principal. El Qwen Q4 se borró del disco.
+**Decisión:** probado en producción de forma reversible por decisión del usuario (2026-10-11), **no pasó y se
+volvió a Gemma** (829fea9). El perfil `qwen9b` sigue en `config.json` ([[configuracion-vigente]]). La evaluación a
+ciegas Gemma/Qwen se **descartó** (el usuario la considera redundante con la prueba de uso).
 
-## Contexto
+## Historia
 
-Es más rápido que Gemma. Los primeros resultados tenían defectos de integración:
-- plantilla de chat;
-- modo de pensamiento;
-- JSON con caracteres de control;
-- UTF-8.
+1. **Ronda 3** (`resumen_ronda3.json`): Qwen 189/195 frente a 195; criterio ≥ 192 y 0 acciones distintas.
+   No pasó.
+2. **Contrato de la ronda 2, mismo código** (2026-10-11, [[resultado-qwen9b-2026-10-11]]): 189/195, VRAM pico
+   7 781 frente a 13 076 MiB. Un caso (c), #56 s22: escaló a `cerrar_app` con `forzar: true` sin que se pidiera.
+   No pasó.
+3. **Producción, perfil `qwen9b`** (17bb46c). Mismo prompt y esquema que Gemma, con `mensaje_final`.
+   `probar_swa_cache.py A --casos todos` con semillas 11, 22 y 33. **58 / 58 / 57 = 173/195**, por debajo del mínimo
+   de 185. Gemma da 194/195 (`resumen_65x3_C.json`). Vuelta a Gemma.
 
-Se corrigieron en la ronda 2 ([[cierre-rapido-mensaje-final]]).
+## Blindajes nacidos de estas pruebas (protegen a los dos modelos)
 
-## Criterio fijado antes de la ronda 3 (`ronda3_protocolo.md`)
+- 0a3ea28: `cerrar_app` ignora `forzar` si el pedido no lo pide ([[protecciones]] §4). En la corrida 3 no se repitió
+  ningún `forzar`.
+- e9a580d: `listar_controles` con id ausente, 0 o inexistente usa la ventana al frente.
 
-- ≥ 192/195 tareas completas;
-- 0 respuestas vacías;
-- 0 confirmaciones falsas finales;
-- 0 acciones distintas a lo pedido.
+## Por qué falló en producción
 
-## Resultado medido (`resumen_ronda3.json`, llama-cpp-python 0.3.36)
-
-| | Gemma Q5 | Qwen Q5 |
-|---|---:|---:|
-| Completas | 195 | 189 |
-| Primera herramienta | 192 | 182 |
-| Acciones distintas | 2 | 7 |
-| Mediana de la primera acción | 3,50 s | 2,40 s |
-| tok/s | 35,0 | 51,0 |
-
-`qwen_pass: false`. Los siete casos están clasificados en `clasificacion_fallos_qwen.md`:
-- 2 caminos funcionales;
-- 1 aclaración;
-- 4 fallos operativos.
+El cierre rápido `mensaje_final` se saltaba `validar_finalizacion`. En pedidos de dos pasos, Qwen hacía el primero y
+cerraba afirmando los dos. Ejemplo: #30, en las tres semillas, «abrí la Calculadora y puse el volumen al 20%» sin
+tocar el volumen. Son 6 confirmaciones falsas (c). Detalle en [[resultado-qwen9b-2026-10-11]].
+El banco quitaba `mensaje_final` (contrato de la ronda 2): por eso allí no se vio. Decisión del usuario, pendiente
+de implementar: validar `mensaje_final` en los dos modelos y apagarlo en Qwen ([[cierre-rapido-mensaje-final]]).
 
 ## No hacer
 
-- No reabrir Qwen por velocidad sin un criterio nuevo fijado de antemano.
-- No asumir que iguala a Gemma en español: la evaluación ciega (`resultados_ciegas.md`) sigue sin puntuar.
+- No volver a activar `qwen9b` antes de implementar esa decisión y repetir la 65 × 3 con producción.
+- No reabrir Qwen solo por velocidad o VRAM sin un criterio fijado de antemano.

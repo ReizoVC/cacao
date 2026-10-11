@@ -1,8 +1,8 @@
 ---
 estado: verificado
-verificado_commit: 945fa17
+verificado_commit: 17bb46c
 verificado_fecha: 2026-10-11
-fuentes: [evaluar_pruebas.py, iniciar_cacao.py, comparacion_modelos/ejecutar.py, crear_acceso_directo.ps1, voz.py]
+fuentes: [evaluar_pruebas.py, iniciar_cacao.py, comparacion_modelos/ejecutar.py, crear_acceso_directo.ps1, voz.py, config.json, modelo.py]
 ---
 # Comandos útiles
 
@@ -34,6 +34,11 @@ set SIN_REALES=1 & set CONFIRMAR=s & .venv\Scripts\python evaluar_pruebas.py 11 
 `ejecutar.py` acepta `model` (ver `MODELS`), `--smoke`, `--vision-only`, `--round2`, `--round3`, `--diagnostic`,
 `--server-url`, `--engine-tag`, `--swa-full` (roto desde eb5a9c4: busca una línea de `modelo.py` que cambió), `--test-set`
 y `--salida DIR` (945fa17: carpeta nueva, sin sobrescribir rondas) ([[comparacion-modelos]]).
+
+## Modelo activo (Gemma o Qwen)
+
+En `config.json`, `"modelo_activo": "gemma"` o `"qwen9b"` y reiniciar Cacao ([[configuracion-vigente]]). Comprobar
+sin cargar el modelo: `.venv\Scripts\python probar_carga_modelo.py`.
 
 ## Git
 
