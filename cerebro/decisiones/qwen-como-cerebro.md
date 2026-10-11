@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: d95855d
+verificado_commit: e3dfe04
 verificado_fecha: 2026-10-11
 fuentes: [comparacion_modelos/resumen_ronda3.json, comparacion_modelos/resumen_qwen9b_2026-10-11.json, comparacion_modelos/probar_swa_cache.py, config.json, modelo.py, clasificacion_fallos_qwen.md, comparacion_modelos/ronda3_protocolo.md]
 ---
@@ -24,6 +24,11 @@ ciegas Gemma/Qwen se **descartó** (el usuario la considera redundante con la pr
    `qwen9b`). `resumen_qwen65x3cierre_A.json`: **59 / 61 / 62 = 182/195**, todavía por debajo de 185. Además, un
    caso (c): #19 s33 («abre algo para escribir») intentó cerrar Windows Terminal seis veces, cinco con `forzar`.
    No pasa; vuelta a Gemma.
+5. **Producción con el contrato de la ronda 2 en `qwen9b`** (f21e746, `contrato_ronda2: true`).
+   `resumen_qwen65x3contrato_A.json`: **63 / 60 / 59 = 182/195**. Dos (c): #58 s22 cerró PowerShell y #43 s22 cerró
+   el Bloc de notas que debía traer al frente. No pasa; vuelta a Gemma. El simulador de producción no mueve el foco
+   tras `enfocar_ventana` (el del banco sí), y Qwen, que con el contrato comprueba más, entra en bucle: ver
+   [[resultado-qwen9b-produccion]] §3.
 
 ## Blindajes nacidos de estas pruebas (protegen a los dos modelos)
 

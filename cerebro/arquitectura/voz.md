@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: d95855d
+verificado_commit: e3dfe04
 verificado_fecha: 2026-10-11
 fuentes: [voz.py, agente_minimo.py, transcripcion.py, microfono.py, confirmacion_voz.py, config.json]
 ---

@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: d95855d
+verificado_commit: e3dfe04
 verificado_fecha: 2026-10-11
 fuentes: [entrenar_cacao.py, medir_arranque.py, config.json, modelo.py, agente_minimo.py, protecciones_ejecucion.py, comparacion_modelos/ejecutar.py, REPORTE_TRABAJO_CACAO.md, SRS.md, guia_instalacion_agente.md, resultados_swa_y_recursos.md]
 ---
@@ -45,8 +45,8 @@ Ordenados por el usuario en [[hoja-de-ruta]] (2026-10-11). La prueba de Qwen 9B 
 | 12 | Mover WSL al disco D | hecho | existe `D:\WSL\Ubuntu-24.04` |
 | 13 | Perfil lean de Qwen3-TTS | hecho | `.comparacion-runtime/qwen3_tts_lean.yaml`, b7270b4 |
 | 14 | Lanzador supervisado en WSL conectado a Cacao | descartado (WSL) | producción no usa los puertos 18080 u 8091 |
-| 15 | Prueba prolongada del conjunto en WSL | descartado (WSL) | sin resultados |
-| 16 | Migrar producción a llama.cpp servidor | descartado por ahora (2026-10-11) | `modelo.py` usa llama_cpp; [[motor-llama-cpp]] |
+| 15 | Prueba prolongada en WSL | descartado (WSL) | — |
+| 16 | Migrar producción a llama.cpp servidor | descartado por ahora | [[motor-llama-cpp]] |
 | 17 | Sustituir Piper por Qwen3-TTS | pendiente: medir si cabe en Windows (RAM de 16 GB) | `config.voz.piper_voz` |
 | 18 | MTP | descartado por ahora | `mtp_probado: false` |
 | 19 | Gemma 26B A4B | descartado por ahora | sin datos |
@@ -54,7 +54,9 @@ Ordenados por el usuario en [[hoja-de-ruta]] (2026-10-11). La prueba de Qwen 9B 
 | 21 | Puntuar la evaluación a ciegas Q5 / Q4 | pendiente | `resultados_ciegas_q4.md`: 20 vacías, sin commit |
 | 22 | Reducir el margen de RAM en la recarga WSL (99,96 % de uso) | descartado (WSL) | `resultados_swa_y_recursos.md` |
 | 23 | Prueba de Qwen 9B con el contrato de la ronda 2 | hecho: **no pasa** (189/195, un caso (c)) | [[resultado-qwen9b-2026-10-11]] |
-| 24 | Qwen 9B en producción (perfil `qwen9b`) | **no pasa**: 173/195; con el cierre rápido arreglado, 182/195 y un (c); Gemma activo | [[qwen-como-cerebro]] |
+| 24 | Qwen 9B en producción | **no pasa**: 173/195; con el cierre rápido arreglado, 182/195 y un (c) | [[qwen-como-cerebro]] |
+| 25 | Qwen con el contrato de la ronda 2 | **no pasa**: 182/195, dos (c) | f21e746 |
+| 26 | El simulador de producción no mueve el foco al enfocar | candidata | `benchmark_gramatica.py:180` |
 
 ## Con el usuario delante
 

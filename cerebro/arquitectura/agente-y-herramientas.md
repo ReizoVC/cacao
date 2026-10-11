@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: d95855d
+verificado_commit: e3dfe04
 verificado_fecha: 2026-10-11
 fuentes: [agente_minimo.py, herramientas.json, herramientas_grupo1.py, herramientas_grupo4.py, herramientas_powershell.py, vision.py, memoria.py, benchmark_gramatica.py]
 ---
@@ -36,6 +36,8 @@ fuentes: [agente_minimo.py, herramientas.json, herramientas_grupo1.py, herramien
   contaminada.
 - `ESQUEMA_ACCION`: `{pensamiento ≤120, herramienta (enum), argumentos, mensaje_final opcional}`. `mensaje_final`
   se valida como `finalizar` y `CIERRE_RAPIDO` (perfil de `config.json`) puede apagarlo ([[cierre-rapido-mensaje-final]]).
+- Con `contrato_ronda2` (solo perfil qwen9b), `contrato_ronda2.aplicar(globals())` cambia `prompt_sistema`,
+  `HERRAMIENTAS` y `ESQUEMA_ACCION` como el banco de la ronda 2 ([[configuracion-vigente]]).
 - `prompt_sistema(voz)`: reglas, catálogo y memorias para el prompt. En modo voz añade `MODO_VOZ`.
 
 ## Añadir una herramienta nueva (lista de cambios)

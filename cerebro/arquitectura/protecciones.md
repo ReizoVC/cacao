@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: d95855d
+verificado_commit: e3dfe04
 verificado_fecha: 2026-10-11
 fuentes: [protecciones_ejecucion.py, probar_protecciones_ejecucion.py, probar_modo_directo.py, probar_grupo4.py, agente_minimo.py, herramientas_grupo4.py, obstaculos.py, emergencia.py, resultados_swa_y_recursos.md]
 ---

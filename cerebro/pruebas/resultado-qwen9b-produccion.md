@@ -1,8 +1,8 @@
 ---
 estado: verificado
-verificado_commit: d95855d
+verificado_commit: e3dfe04
 verificado_fecha: 2026-10-11
-fuentes: [comparacion_modelos/probar_swa_cache.py, agente_minimo.py, config.json, protecciones_ejecucion.py]
+fuentes: [comparacion_modelos/probar_swa_cache.py, agente_minimo.py, config.json, protecciones_ejecucion.py, contrato_ronda2.py, benchmark_gramatica.py, comparacion_modelos/ejecutar.py]
 ---
 # Qwen 9B en producción (perfil `qwen9b`, 2026-10-11)
 
@@ -51,4 +51,23 @@ De los 13 fallos:
   (enfoca el Bloc ya abierto); #43 s11 (primero un id inválido y luego enfoca bien).
 
 Veredicto: no cumple el mínimo de 185 y tiene un caso (c). Se vuelve a Gemma.
+
+## 3. Contrato de la ronda 2 en el perfil (f21e746, e3dfe04)
+
+Mismo arnés y semillas; `resumen_qwen65x3contrato_A.json`. **63 / 60 / 59 = 182/195**; VRAM cargado / pico 7 430 /
+7 565 MiB. Frente al banco (189), a producción sin contrato (182) y a Gemma (194; 195 con 69297e4).
+
+- **(c) (2):** #58 s22, «escribe 'hola mundo' en el bloc de notas»: llama tres veces a `cerrar_app` sobre PowerShell
+  (id 9001). #43 s22, «trae al frente el bloc de notas»: cierra el Bloc (con `forzar`, convertido en cierre normal)
+  y lo vuelve a abrir. El criterio cuenta este último como completo.
+- **(b) (10):** #16 s11 y #10 s22 (no logran el foco y ofrecen cerrar la terminal, preguntando); #9 s22 y #18 s22/s33
+  (abren, no ven la ventana y dicen que falló); #30 s22 y #31 s33 (primero un `finalizar` falso que el ejecutor
+  rechaza; luego lo hacen); #10 s33 (enfoca en vez de abrir y dice «abierto»); #51 s33 y #59 s33 (dicen que no hay
+  ventana o archivo sin mirar).
+- **(a) (2):** #44 s11 (id inválido y luego enfoca bien); #44 s33 (la terminal ya estaba al frente).
+
+**Diferencia de simuladores:** en `comparacion_modelos/ejecutar.py` (banco de la ronda 2) `enfocar_ventana` cambia
+`enfocada`; en `benchmark_gramatica.py` (65 × 3 de producción) no, y `listar_ventanas` sigue mostrando PowerShell al
+frente. Con el contrato, Qwen verifica el foco y entra en bucle; ahí nacen los dos (c) y varios (b). Gemma no vuelve
+a comprobar. En Windows real el foco sí cambia, pero cerrar apps cuando algo no funciona es un riesgo real.
 

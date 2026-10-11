@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: d95855d
+verificado_commit: e3dfe04
 verificado_fecha: 2026-10-11
 fuentes: [config.json, modelo.py, vision.py, muestreo_gramatica.py, requirements.txt, agente_minimo.py, probar_carga_modelo.py]
 ---
@@ -19,10 +19,13 @@ Leída de `config.json`. La fuente de verdad es ese archivo; esta página puede 
 | Perfil | `modelo` | `mmproj` | Extras |
 |---|---|---|---|
 | `gemma` | `modelos/gemma-4-12b-it-Q5_K_M.gguf` | `modelos/mmproj/mmproj-F16.gguf` | sin `swa_full` |
-| `qwen9b` | `modelos/comparacion_local/Qwen3.5-9B-UD-Q5_K_XL.gguf` (copia en C:) | `modelos/comparacion/mmproj-F16.gguf` | `swa_full: false`, `sin_pensamiento: true` |
+| `qwen9b` | `modelos/comparacion_local/Qwen3.5-9B-UD-Q5_K_XL.gguf` (copia en C:) | `modelos/comparacion/mmproj-F16.gguf` | `swa_full: false`, `sin_pensamiento: true`, `cierre_rapido: false`, `contrato_ronda2: true` |
 
 `sin_pensamiento`: la plantilla de chat del modelo con `enable_thinking=false`, en el texto (`modelo.py`) y en
-`ver_pantalla` (`vision.py`), igual que el banco. El prompt y el esquema son los mismos con los dos perfiles.
+`ver_pantalla` (`vision.py`), igual que el banco. `cierre_rapido` (gemma true, qwen9b false): [[cierre-rapido-mensaje-final]].
+`contrato_ronda2` (solo qwen9b, f21e746): `contrato_ronda2.py` cambia el prompt (RULES al final, sin las líneas de
+`mensaje_final`), las descripciones de finalizar y de la rueda del mouse y el esquema (oneOf, sin `mensaje_final`),
+igual que `integracion.adjust(ns, 'combined')`. El prompt y el esquema de Gemma no cambian (`probar_contrato_ronda2.py`).
 `mmproj` vacío o `null` desactiva `ver_pantalla`.
 
 Claves comunes:

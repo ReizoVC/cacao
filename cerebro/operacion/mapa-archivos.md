@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: d95855d
+verificado_commit: e3dfe04
 verificado_fecha: 2026-10-11
 fuentes: [agente_minimo.py, voz.py, iniciar_cacao.py, .gitignore]
 ---
@@ -25,7 +25,7 @@ Los nombres son relativos a la raíz del repositorio. Actualiza esta página al 
 
 | Rol | Archivos |
 |---|---|
-| Suites sin modelo | `probar_*.py` ([[suites]]); desde la Fase 1 también `probar_carga_modelo.py`, `probar_salida_utf8.py` y `probar_gramatica_json.py`; `probar_cierre_rapido.py` (69297e4) |
+| Suites sin modelo | `probar_*.py` ([[suites]]); desde la Fase 1 también `probar_carga_modelo.py`, `probar_salida_utf8.py` y `probar_gramatica_json.py`; `probar_cierre_rapido.py` (69297e4) y `probar_contrato_ronda2.py` (f21e746) |
 | Evaluación con modelo | `evaluar_pruebas.py`, `benchmark_gramatica.py`, `pruebas.json` ([[evaluacion-65-frases]]) |
 | Pruebas reales o presenciales | `prueba_real.py`, `prueba_presencial_isla.py` |
 | Mediciones | `medir_*.py`, `validar_transcripcion.py`, `simular_habitos.py`; `comparacion_modelos/medir_memoria.py` (VRAM por opción, [[memoria-liberable]]) |

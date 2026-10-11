@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: d95855d
+verificado_commit: e3dfe04
 verificado_fecha: 2026-10-11
 fuentes: [evaluar_pruebas.py, iniciar_cacao.py, comparacion_modelos/ejecutar.py, crear_acceso_directo.ps1, voz.py, config.json, modelo.py]
 ---

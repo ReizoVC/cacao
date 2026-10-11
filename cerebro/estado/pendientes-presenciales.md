@@ -1,6 +1,6 @@
 ---
 estado: sin verificar
-verificado_commit: d95855d
+verificado_commit: e3dfe04
 verificado_fecha: 2026-10-11
 fuentes: [guia_instalacion_agente.md, SRS.md, config.json]
 ---

@@ -54,3 +54,13 @@ Entradas anteriores: [[log-2026-10-10]], [[log-2026-10-11-isla]] y [[log-2026-10
   `evaluacion-65-frases`, `suites`, backlog (#4 hecho, #24), `swa-full-false`. 34 páginas revisadas tras los cambios
   de producción y re-selladas en d95855d.
 
+## 2026-10-11: contrato de la ronda 2 en el perfil qwen9b; Qwen 182/195, no pasa
+
+- f21e746 (permiso del usuario): `contrato_ronda2.py` y la clave `contrato_ronda2` (solo qwen9b).
+  `probar_contrato_ronda2.py` 16/16: igual al `adjust` del banco; Gemma sin cambios byte a byte; el esquema rechaza
+  `mensaje_final`.
+- e3dfe04: el banco valida JSON con `oneOf`; la primera corrida se paró en el calentamiento por eso.
+- 65 × 3 con qwen9b: 63/60/59 = 182/195 y dos (c) (#58 s22 y #43 s22). Vuelta a Gemma. El simulador de producción no
+  mueve el foco (backlog #26). Páginas: `qwen-como-cerebro`, `resultado-qwen9b-produccion` §3,
+  `configuracion-vigente`, `suites`, `mapa-archivos` y el backlog (#25, #26).
+
