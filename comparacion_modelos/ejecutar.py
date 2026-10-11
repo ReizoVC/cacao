@@ -180,6 +180,8 @@ def main():
     parser.add_argument('--engine-tag', default='llama_cpp_b11429')
     parser.add_argument('--swa-full', choices=('true','false'))
     parser.add_argument('--test-set', type=Path, help='JSON alternativo de pruebas; siempre se ejecuta en simulación')
+    parser.add_argument('--salida', type=Path, help='carpeta nueva para los datos crudos (por defecto, la de la ronda); '
+                        'no puede tener ya un JSON de este modelo, para no sobrescribir rondas anteriores')
     args = parser.parse_args()
     if args.vision_normalized:
         args.vision_only = True
@@ -187,10 +189,14 @@ def main():
         OUT = OUT / ('ronda3' if args.round3 else 'ronda2')
     if args.server_url:
         OUT = ROOT / 'comparacion_modelos' / 'datos' / args.engine_tag / ('ronda3' if args.round3 else 'base')
+    if args.salida:
+        OUT = args.salida.resolve()
+        if any(OUT.glob(f'{args.model}*.json')):
+            raise SystemExit(f'{OUT} ya tiene datos de {args.model}: elige otra carpeta con --salida.')
     OUT.mkdir(parents=True, exist_ok=True)
     swa_full = None if args.swa_full is None else args.swa_full == 'true'
-    runtime = prepare(args.model, args.round2 or args.round3 or bool(args.diagnostic),
-                      'ronda3' if args.round3 else 'ronda2', swa_full=swa_full)
+    ronda = ('ronda3' if args.round3 else 'ronda2') + (f'_{OUT.name}' if args.salida else '')  # --salida: runtime propio
+    runtime = prepare(args.model, args.round2 or args.round3 or bool(args.diagnostic), ronda, swa_full=swa_full)
     os.environ.update(SIN_REALES='1', CONFIRMAR='s', PYTHONDONTWRITEBYTECODE='1')
     sys.path.insert(0, str(runtime))
     from guardia_juego import exigir_gpu_libre, juego_abierto
