@@ -33,3 +33,16 @@ archivos protegidos y los invariantes los cambia Claude.
 - **`.codex-remote-attachments/`:** 5 JPG (28–55 KB) del 2026-10-11, de 01:17:30 a 01:17:34. Su carpeta se llama
   como la sesión de Codex `01a12989-0ecc-7a81-…`, que empezó a las 00:56:50. Se comprobó solo por los nombres y
   las fechas, sin abrir los archivos. Va en `.gitignore` (2ab8039) y no está en el historial.
+
+## Flujo de trabajo con Codex (desde el 2026-10-11)
+
+- Claude planifica y escribe las órdenes para Codex. El usuario las pasa y trae los reportes de Codex.
+- **Fuente para portar el guardarropa de Mochi:** no hay `outfits.ts` ni `wardrobe.ts` en el fork. Está en
+  local, en `NotchBuddy/Sources/CoucouKit/MochiWardrobe.swift` (selección y fechas), `MochiOutfitDrawing.swift`
+  (dibujo), `tests/MochiWardrobeTests.swift` y `design/outfits/mochi-outfits.js` (dibujo de referencia en Canvas
+  2D). Codex tiene permiso para leerlos, sin editarlos.
+- **Vista previa en el navegador:** `dev.html` y `src/dev/`, fuera del build, reproducen mensajes con
+  `cacao.recibir` (el gancho de `main.ts` en `npm run dev`). No se conectan al arnés: el navegador no tiene
+  `leer_conexion` y su Origin se rechazaría. El WebSocket de verdad se prueba con el exe y el arnés, por lotes.
+- **Preferencias de aspecto** (el accesorio): primero en `localStorage` del webview, sin Rust. Solo si no basta,
+  se pide una fila en el lote de Rust (`settings.rs`).

@@ -59,3 +59,9 @@ Entradas anteriores: [[log-2026-10-10]].
   Va en `.gitignore` (isla 2ab8039) y no está en el historial.
 - **Diseño de la música (protocolo v3, sin implementar):** isla cf09696. Las páginas nuevas son `musica-isla` y,
   en la isla, `docs/lote-rust.md` (protegido).
+
+## 2026-10-11: Claude coordina a Codex
+
+- Claude planifica y da las órdenes a Codex (`isla-codex`, sección «Flujo de trabajo»).
+- Primera orden: vista previa por reproducción de mensajes (sin WebSocket ni archivos protegidos) y portar el
+  guardarropa desde las fuentes Swift y JS locales del Coucou original.
