@@ -207,8 +207,23 @@ def pruebas_websocket():
             await isla.send(json.dumps({"tipo": "decision", "id": "def", "si": False}))
             await asyncio.sleep(0.3)
             sigue = s.conectada and recibidas[-1:] == [("def", False)] and s.rect == rect
+            # versión 3: música, solo un booleano exacto; lo demás se ignora y la conexión sigue
+            musica = []
+            await isla.send(json.dumps({"tipo": "musica", "reproduciendo": True}))
+            await asyncio.sleep(0.2)
+            musica.append(s.musica)
+            for malo in ("true", 1, None):
+                await isla.send(json.dumps({"tipo": "musica", "reproduciendo": malo}))
+            await isla.send(json.dumps({"tipo": "musica"}))
+            await asyncio.sleep(0.2)
+            musica.append(s.musica)
+            await isla.send(json.dumps({"tipo": "musica", "reproduciendo": False, "titulo": "Canción X", "app": "Y"}))
+            await asyncio.sleep(0.2)
+            musica.append(s.musica)
+            sin_titulo = "Canción X" not in repr(vars(s))
+            sigue = sigue and s.conectada
             segunda = await _ws(8766, datos["token"], tauri)
-            return conectada, recibidas[:1], segunda[0], rect, sigue
+            return conectada, recibidas[:1], segunda[0], rect, sigue, musica, sin_titulo
 
     async def hola_con_version(version):
         async with websockets.connect("ws://127.0.0.1:8766", additional_headers={"Origin": tauri}) as ws:
@@ -224,13 +239,24 @@ def pruebas_websocket():
             except websockets.ConnectionClosed as e:
                 return f"cerrada {e.rcvd.code if e.rcvd else ''}"
 
-    conectada, recibidas, segunda, rect, sigue = asyncio.run(isla_y_segunda())
+    conectada, recibidas, segunda, rect, sigue, musica, sin_titulo = asyncio.run(isla_y_segunda())
     ok("WebSocket: token y Origin correctos, conectada", conectada)
     ok("WebSocket: la decisión de la isla llega al agente", recibidas == [("abc", True)])
     ok("WebSocket: la forma de la isla llega al agente", rect and rect["escala"] == 1.25, str(rect))
     ok("WebSocket: un JSON que no es objeto o un rect inválido se ignoran y la conexión sigue", sigue)
+    ok("WebSocket: música true y false llegan; «true», 1, null o sin el campo se ignoran", musica == [True, True, False],
+       str(musica))
+    ok("WebSocket: de la música no se guarda nada más que el booleano (ni título ni app)", sin_titulo)
+    for _ in range(20):  # el servidor procesa el cierre en su hilo
+        if s.musica is None:
+            break
+        time.sleep(0.05)
+    ok("WebSocket: al desconectarse la isla, la música vuelve a desconocida", s.musica is None, str(s.musica))
+    voz = (Path(__file__).parent / "confirmacion_voz.py").read_text(encoding="utf-8")
+    ok("la confirmación por voz no usa el dato de la música (nunca relaja un freno)",
+       "musica" not in voz and "otro_audio_sonando" in voz)
     ok("WebSocket: una segunda isla, rechazada", segunda == "cerrada 4002", segunda)
-    for version in (1, None, "2", 3):
+    for version in (1, 2, None, "3", 4):
         r = asyncio.run(hola_con_version(version))
         ok(f"WebSocket: versión de protocolo {version!r}, rechazada con 4003", r == "cerrada 4003", r)
     r = asyncio.run(_ws(8766, datos["token"], tauri))[0]
