@@ -443,9 +443,21 @@ def json_valido(texto):
     except json.JSONDecodeError:
         return False
     esq = ns["ESQUEMA_ACCION"]
-    return (all(k in d for k in esq["required"])
-            and d["herramienta"] in esq["properties"]["herramienta"]["enum"]
+    # el contrato de la ronda 2 (perfil qwen9b) usa oneOf: vale si cumple exactamente una rama
+    return sum(_cumple_rama(d, rama) for rama in esq.get("oneOf", [esq])) == 1
+
+
+def _cumple_rama(d, esq):
+    if not isinstance(d, dict) or not all(k in d for k in esq["required"]):
+        return False
+    if esq.get("additionalProperties") is False and set(d) - set(esq["properties"]):
+        return False
+    argumentos = esq["properties"]["argumentos"]
+    return (d["herramienta"] in esq["properties"]["herramienta"]["enum"]
             and isinstance(d["argumentos"], dict)
+            and all(k in d["argumentos"] for k in argumentos.get("required", []))
+            and all(len(str(d["argumentos"].get(k, "x"))) >= p.get("minLength", 0)
+                    for k, p in argumentos.get("properties", {}).items())
             and len(d["pensamiento"]) <= 120)
 
 
