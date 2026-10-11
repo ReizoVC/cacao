@@ -529,6 +529,13 @@ def prompt_sistema(voz=False):
     return "\n".join(lineas)
 
 
+# perfil qwen9b ("contrato_ronda2": true): prompt, descripciones y esquema del contrato de la ronda 2
+# (contrato_ronda2.py, igual que comparacion_modelos/integracion.adjust). Gemma no lo usa.
+if CONFIG.get("contrato_ronda2"):
+    import contrato_ronda2
+    contrato_ronda2.aplicar(globals())
+
+
 def pedir_accion(historial):
     parametros = dict(messages=historial, response_format={"type": "json_object", "schema": ESQUEMA_ACCION},
                       temperature=0.3, top_p=0.95, top_k=64, max_tokens=512)
