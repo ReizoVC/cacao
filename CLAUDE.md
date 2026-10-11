@@ -1,7 +1,8 @@
 # Cacao — guía para Claude Code
 
-Cacao es un asistente de escritorio para Windows, local y en español. Un LLM local (hoy Gemma 4 12B Q5_K_M con
-llama-cpp-python 0.3.36) elige herramientas en JSON con gramática; un ejecutor en Python aplica permisos,
+Cacao es un asistente de escritorio para Windows, local y en español. Un LLM local con llama-cpp-python 0.3.36 (el que
+diga `modelo_activo` en `config.json`: la referencia es Gemma 4 12B Q5_K_M; desde el 2026-10-11 Qwen 3.5 9B Q5 está
+a prueba de uso una semana, ver `cerebro/decisiones/qwen-como-cerebro.md`) elige herramientas en JSON con gramática; un ejecutor en Python aplica permisos,
 protecciones y confirmaciones físicas. Tiene voz (Whisper + Piper), palabra de activación «Cacao», una isla de
 interfaz (repositorio aparte, C:\asistente-ui), modo juego, memoria tipo wiki y registro de hábitos.
 
