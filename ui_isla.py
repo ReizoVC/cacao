@@ -11,6 +11,10 @@ Servidor WebSocket (el agente es el servidor):
   - una sola isla a la vez (4002 para la segunda);
   - protocolo versión PROTOCOLO en «hola» (4003 si es otra); un JSON que no es un objeto se ignora.
 
+Música (protocolo v3): {"tipo": "musica", "reproduciendo": bool} dice si Windows reproduce algo. Solo se guarda un
+booleano exacto en self.musica (None: desconocido) y es informativo: nunca relaja un freno (la confirmación por voz
+sigue usando confirmacion_voz.otro_audio_sonando).
+
 Pedidos escritos: {"tipo": "pedido", "texto"} del campo de texto de la isla (solo se puede escribir en él tras un
 clic físico) van a al_pedido, que los pone en la misma cola que la consola (pedidos.py).
 
@@ -40,7 +44,7 @@ from entrada_fisica import EntradaFisica
 
 PUERTO = 8765
 # versión de C:\asistente-ui\docs\protocolo.md; la isla la manda en «hola» y otra versión se rechaza (4003)
-PROTOCOLO = 2
+PROTOCOLO = 3
 PROCESO_ISLA = "asistente-ui.exe"
 ORIGENES = ["http://tauri.localhost", "https://tauri.localhost", "http://localhost:1420"]
 RUTA_CONEXION = Path(os.environ.get("LOCALAPPDATA", ".")) / "Asistente" / "ui.json"
@@ -80,6 +84,7 @@ class ServidorIsla:
         self.token = None
         self.cliente = None
         self.rect = None          # forma de la isla que manda el webview (px CSS de la ventana) y su escala
+        self.musica = None        # True/False si Windows reproduce algo (protocolo v3); None: desconocido. Informativo
         self.al_decidir = None    # función(id, si) que pone Confirmar
         self.al_cambiar_modo = None  # función(modo, fisico, origen): solo el agente cambia sus modos
         self.al_conectar = None   # función() al conectarse la isla (el agente le manda sus modos)
@@ -182,12 +187,17 @@ class ServidorIsla:
                         self.rect = {k: float(m.get(k, 0)) for k in ("x", "y", "ancho", "alto", "escala")}
                     except (TypeError, ValueError):
                         continue  # un rect con valores que no son números se ignora; queda la forma anterior
+                elif m.get("tipo") == "musica":
+                    # solo un booleano exacto («true», 1 o null se ignoran); nada más del mensaje se lee ni se guarda
+                    if isinstance(m.get("reproduciendo"), bool):
+                        self.musica = m["reproduciendo"]
         except websockets.ConnectionClosed:
             pass
         finally:
             if self.cliente is ws:
                 self.cliente = None
                 self.rect = None
+                self.musica = None
                 self.anotar("[isla] desconectada")
 
     @property
