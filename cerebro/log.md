@@ -51,6 +51,7 @@ Entradas anteriores: [[log-2026-10-10]].
 ## 2026-10-11: prueba física de la bandeja, adjuntos de Codex y diseño de la música
 
 - **Prueba física con el arnés (sin Cacao ni GPU):** A–F correctos (detalle en `compilar-isla`).
+  - **F confirmado por el usuario:** al reabrir la isla, «Permitir capturas» salió desmarcada en el menú.
   - Un único clic inyectado, desde un script, contra el arnés: no hizo nada.
   - «Permitir capturas» se apagó sola a los 10 minutos justos y no sobrevivió a un reinicio.
   - Solo se leyeron las líneas `bandeja:` y `captura` del registro de la isla, con permiso del usuario.

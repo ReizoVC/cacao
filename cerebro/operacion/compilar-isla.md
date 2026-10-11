@@ -49,7 +49,9 @@ La isla vive en `C:\asistente-ui` (otro repositorio). Cacao lanza `windows\targe
   - **D, Ajustes:** el interruptor encendió las capturas con un clic físico (01:36:10).
   - **E:** se encendió a las 01:48:37 y se apagó sola a las 01:58:37 («pasaron 10 minutos»).
   - **F:** se encendió (01:59:07), «Salir» dos veces y se relanzó la isla. Arrancó con
-    `captura permitida=false` (07:26:22) aunque los ajustes guardados decían `true`.
+    `captura permitida=false` (07:26:22) aunque los ajustes guardados decían `true`. El usuario vio la casilla
+    desmarcada en el menú, y su primer clic (07:37:36) la encendió. Cierre limpio con «Salir» dos veces
+    (07:38:55 y 07:38:58).
 
 ## Respaldo de la isla v1
 
