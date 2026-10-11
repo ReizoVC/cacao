@@ -33,13 +33,9 @@ Cada punto se comprobó contra Git y los archivos el 2026-10-10:
 | 11c | Carga perezosa del modelo: importar `agente_minimo` ya no usa la GPU | hecho en código | 14c17cb; `probar_carga_modelo.py` 13/13. Arranque real de Cacao **no probado** (solo con un modelo falso) |
 | 11d | Recompilar la isla (bandeja y protocolo v2) | hecho y probado en físico | [[compilar-isla]] |
 
-## Temas pedidos el 2026-10-10 sin rastro en el repositorio (desconocido)
+## Temas sin código todavía
 
-El usuario los ordenó el 2026-10-11: ver [[hoja-de-ruta]]. La prueba reversible de Qwen 9B ya está preparada
-(0b90b51). Siguen sin código: camino rápido, filtrado de herramientas, Spotify con teclas multimedia, adaptadores por app,
-memoria de experiencia, Jev en modo sombra, cerrar pestañas por nombre, tabla de obstáculos antes de planificar
-(`obstaculos.para_prompt()` ya va en el prompt), RemoteShutdown y causa del contador de inactividad (hallazgo 2 de
-`resultados_fase6.md`).
+Ordenados por el usuario en [[hoja-de-ruta]] (2026-10-11). La prueba de Qwen 9B ya está preparada (0b90b51).
 
 ## Modelos y voz (experimental)
 
