@@ -1,13 +1,14 @@
 ---
 estado: verificado
-verificado_commit: e3dfe04
+verificado_commit: 77370e8
 verificado_fecha: 2026-10-11
 fuentes: [config.json, comparacion_modelos/resumen_gemma_q4_ronda3.json, comparacion_modelos/resumen_ronda3.json, resultados_swa_y_recursos.md, comparacion_modelos/motor_llama_cpp_b11429.json]
 ---
 # Gemma Q4 «por ahora»: solo en la pila experimental
 
 **Estado:**
-- **Producción:** Gemma 4 12B **Q5_K_M** (`config.json`).
+- **Producción:** perfil `gemma` = Gemma 4 12B **Q5_K_M**. Del 2026-10-11 a una semana está activo `qwen9b` a prueba
+  ([[qwen-como-cerebro]]).
 - **Pila experimental en WSL:** Gemma UD-Q4_K_XL ([[wsl-dominio-cuda]]).
 - **Cambio de producción a Q4:** no está aprobado.
 

@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: e3dfe04
+verificado_commit: 77370e8
 verificado_fecha: 2026-10-11
 fuentes: [comparacion_modelos/probar_swa_cache.py, agente_minimo.py, config.json, protecciones_ejecucion.py, contrato_ronda2.py, benchmark_gramatica.py, comparacion_modelos/ejecutar.py]
 ---

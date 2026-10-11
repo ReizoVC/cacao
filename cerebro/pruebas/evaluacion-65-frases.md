@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: e3dfe04
+verificado_commit: 77370e8
 verificado_fecha: 2026-10-11
 fuentes: [pruebas.json, evaluar_pruebas.py, benchmark_gramatica.py, comparacion_modelos/probar_swa_cache.py, comparacion_modelos/criterios.py, comparacion_modelos/integracion.py, SRS.md]
 ---

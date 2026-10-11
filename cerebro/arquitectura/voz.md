@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: e3dfe04
+verificado_commit: 77370e8
 verificado_fecha: 2026-10-11
 fuentes: [voz.py, agente_minimo.py, transcripcion.py, microfono.py, confirmacion_voz.py, config.json]
 ---
@@ -8,7 +8,7 @@ fuentes: [voz.py, agente_minimo.py, transcripcion.py, microfono.py, confirmacion
 
 `voz.py` es el proceso principal en producción. El lanzador ejecuta `voz.py`, que importa `agente_minimo` (sin
 cargar el modelo). Al arrancar, `a.salida_utf8()` pone la salida en UTF-8 y `preparar()` llama primero a
-`a.cargar_modelo()` (Gemma y las apps del menú Inicio) y después a Whisper y Piper.
+`a.cargar_modelo()` (el modelo del perfil activo y las apps del menú Inicio) y después a Whisper y Piper.
 
 ## Entrada
 

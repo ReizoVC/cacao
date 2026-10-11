@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: e3dfe04
+verificado_commit: 77370e8
 verificado_fecha: 2026-10-11
 fuentes: [entrenar_cacao.py, medir_arranque.py, config.json, modelo.py, agente_minimo.py, protecciones_ejecucion.py, comparacion_modelos/ejecutar.py, REPORTE_TRABAJO_CACAO.md, SRS.md, guia_instalacion_agente.md, resultados_swa_y_recursos.md]
 ---
@@ -31,8 +31,8 @@ Cada punto se comprobó contra Git y los archivos el 2026-10-10:
 | 11b | `entrenar_cacao.py` lee los datos movidos a `D:\Cacao\entrenamiento\` | hecho (permiso del usuario) | 3ad35c7 y 76baceb; rutas comprobadas sin entrenar |
 | 11c | Carga perezosa del modelo: importar `agente_minimo` ya no usa la GPU | hecho y probado con Gemma | 14c17cb; `medir_arranque.py` (ac148e6), sin micrófono ni isla |
 | 11d | Recompilar la isla (bandeja y protocolo v2) | hecho y probado en físico | [[compilar-isla]] |
-| 11e | `listar_controles` con id ausente, 0 o inexistente usa la ventana al frente | hecho | e9a580d ([[protecciones]] §5) |
-| 11f | `cerrar_app` ignora `forzar` si el pedido no lo pide | hecho | 0a3ea28 ([[protecciones]] §4) |
+| 11e | `listar_controles` con id ausente, 0 o inexistente usa la ventana al frente | hecho | e9a580d ([[frenos-cierre]] §2) |
+| 11f | `cerrar_app` ignora `forzar` si el pedido no lo pide | hecho | 0a3ea28 ([[frenos-cierre]] §1) |
 
 ## Temas sin código todavía
 
@@ -53,9 +53,7 @@ Ordenados por el usuario en [[hoja-de-ruta]] (2026-10-11). La prueba de Qwen 9B 
 | 20 | Puntuar la evaluación a ciegas Gemma Q5 / Qwen Q5 | descartada por el usuario | la sustituye la prueba en producción |
 | 21 | Puntuar la evaluación a ciegas Q5 / Q4 | pendiente | `resultados_ciegas_q4.md`: 20 vacías, sin commit |
 | 22 | Reducir el margen de RAM en la recarga WSL (99,96 % de uso) | descartado (WSL) | `resultados_swa_y_recursos.md` |
-| 23 | Prueba de Qwen 9B con el contrato de la ronda 2 | hecho: **no pasa** (189/195, un caso (c)) | [[resultado-qwen9b-2026-10-11]] |
-| 24 | Qwen 9B en producción | **no pasa**: 173/195; con el cierre rápido arreglado, 182/195 y un (c) | [[qwen-como-cerebro]] |
-| 25 | Qwen con el contrato de la ronda 2 | **no pasa**: 182/195, dos (c) | f21e746 |
+| 23 | Qwen 9B: banco 189/195; producción 173, 182 y 182 con contrato (no pasa) | **en uso real una semana** desde 5e9eee0, sin pasar el criterio | [[qwen-como-cerebro]]; `resumir_semana_qwen.py` |
 | 26 | El simulador de producción no mueve el foco al enfocar | candidata | `benchmark_gramatica.py:180` |
 
 ## Con el usuario delante

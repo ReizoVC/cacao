@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: e3dfe04
+verificado_commit: 77370e8
 verificado_fecha: 2026-10-11
 fuentes: [comparacion_modelos/ejecutar.py, comparacion_modelos/resumir_qwen9b.py, comparacion_modelos/ronda2_protocolo.md, comparacion_modelos/resumir_ronda2.py, comparacion_modelos/resumen_ronda2.json, comparacion_modelos/resumen_ronda3.json, config.json]
 ---

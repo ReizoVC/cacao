@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: e3dfe04
+verificado_commit: 77370e8
 verificado_fecha: 2026-10-11
 fuentes: [modo_juego.py, guardia_juego.py, deteccion.py, agente_minimo.py, config.json, SRS.md]
 ---
@@ -19,7 +19,7 @@ fuentes: [modo_juego.py, guardia_juego.py, deteccion.py, agente_minimo.py, confi
 - **Activo** según `config.modo_juego.activo`.
 - **Entrada:** `confirmar` = 2 comprobaciones seguidas con juego, cada `intervalo_s` = 5 s.
 - **Salida:** igual, 2 comprobaciones sin juego.
-- **Al entrar:** descarga Gemma, mmproj y Whisper (`descargar_modelos`) con el cerrojo del planificador; nunca a mitad
+- **Al entrar:** descarga el modelo del perfil activo (Gemma o Qwen), mmproj y Whisper (`descargar_modelos`) con el cerrojo del planificador; nunca a mitad
   de una tarea o de una reflexión. Al salir los recarga (`cargar_modelos`).
 - **En pausa:** responde sin modelo con un mensaje. «estoy jugando» y «ya terminé» fuerzan la entrada y la salida
   (`comando_modo_juego`), reconocidas con el Whisper base de la CPU ([[voz]]).

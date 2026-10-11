@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: e3dfe04
+verificado_commit: 5e9eee0
 verificado_fecha: 2026-10-11
 fuentes: [config.json, modelo.py, vision.py, muestreo_gramatica.py, requirements.txt, agente_minimo.py, probar_carga_modelo.py]
 ---
@@ -11,8 +11,8 @@ Leída de `config.json`. La fuente de verdad es ese archivo; esta página puede 
 ## LLM: perfiles (17bb46c)
 
 `modelo_activo` elige el perfil de `perfiles`, y `modelo.aplicar_perfil()` lo pone encima del resto de claves.
-**Hoy: `gemma`.** `qwen9b` se probó en producción el 2026-10-11 y no pasó; se volvió a Gemma (829fea9,
-[[qwen-como-cerebro]]).
+**Hoy: `qwen9b`**, en uso real una semana desde el 2026-10-11 por decisión del usuario, sin haber pasado el criterio
+(5e9eee0, [[qwen-como-cerebro]]).
 **Volver a Gemma:** en `config.json`, `"modelo_activo": "gemma"` y reiniciar Cacao. Nada más cambia.
 `probar_carga_modelo.py` comprueba los dos perfiles sin cargar el modelo.
 

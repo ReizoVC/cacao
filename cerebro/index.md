@@ -7,6 +7,7 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[vision-general]]: piezas, flujo de un pedido y dónde se decide cada cosa
 - [[agente-y-herramientas]]: catálogo, estructuras del ejecutor y cómo añadir una herramienta
 - [[protecciones]]: sin evidencia no hay «hecho», dos alternativas, atajos estructurados, emergencia
+- [[frenos-cierre]]: cerrar_app solo si se pide cerrar, forzar solo si se pide, listar_controles sin ventana válida
 - [[permisos-y-bloqueos]]: dónde se decide si se pregunta, niveles, bloqueos, confirmación física, modo sin confirmación
 - [[voz]]: entrada, frenos, Whisper, Piper y confirmaciones en voz
 - [[palabra-activacion]]: detector «Cacao» y escucha de seguimiento
@@ -66,3 +67,4 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[log-2026-10-10]]: entradas archivadas del 2026-10-10
 - [[log-2026-10-11-isla]]: entradas archivadas del 2026-10-11 (isla: traspaso, bandeja y prueba física)
 - [[log-2026-10-11-b]]: entradas archivadas del 2026-10-11 (coordinación de Codex, Fase 1 medida y swa_full)
+- [[log-2026-10-11-c]]: registro del 2026-10-11 (c): swa_full, música en la isla y Qwen frente a Gemma en el banco

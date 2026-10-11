@@ -1,14 +1,22 @@
 ---
 estado: verificado
-verificado_commit: e3dfe04
+verificado_commit: 77370e8
 verificado_fecha: 2026-10-11
 fuentes: [comparacion_modelos/resumen_ronda3.json, comparacion_modelos/resumen_qwen9b_2026-10-11.json, comparacion_modelos/probar_swa_cache.py, config.json, modelo.py, clasificacion_fallos_qwen.md, comparacion_modelos/ronda3_protocolo.md]
 ---
 # Qwen 3.5 9B como cerebro
 
-**Decisión:** probado en producción de forma reversible por decisión del usuario (2026-10-11), **no pasó y se
-volvió a Gemma** (829fea9). El perfil `qwen9b` sigue en `config.json` ([[configuracion-vigente]]). La evaluación a
-ciegas Gemma/Qwen se **descartó** (el usuario la considera redundante con la prueba de uso).
+**Decisión:** **en uso real una semana desde el 2026-10-11** por decisión del usuario, **sin haber pasado el
+criterio** (182/195 y dos (c) en el intento 5). Activo desde 5e9eee0, con `contrato_ronda2` y `cierre_rapido: false`
+([[configuracion-vigente]]). Se descarta si resulta molesto o impreciso en el uso real. La evaluación a ciegas
+Gemma/Qwen se descartó.
+
+**Vuelta atrás:** en `config.json`, `"modelo_activo": "gemma"` y reiniciar Cacao; nada más cambia (Gemma 195/195 con
+los blindajes, `resumen_gemma65x3cierre_C.json`).
+
+**Al final de la semana** (con permiso del usuario): `comparacion_modelos/resumir_semana_qwen.py --con-permiso`. Lee
+solo `registro_cacao.log` y `registro_cacao.1.log` y da cifras agregadas: pedidos, finalizaciones rechazadas,
+bloqueos, `cerrar_app` (intentos, frenados, negados), dos alternativas y límite de pasos. No da texto.
 
 ## Historia
 
@@ -32,7 +40,9 @@ ciegas Gemma/Qwen se **descartó** (el usuario la considera redundante con la pr
 
 ## Blindajes nacidos de estas pruebas (protegen a los dos modelos)
 
-- 0a3ea28: `cerrar_app` ignora `forzar` si el pedido no lo pide ([[protecciones]] §4). En la corrida 4 actuó
+- 98c763e: `cerrar_app` solo si el pedido expresa intención de cerrar ([[frenos-cierre]] §3); frena #58 s22, #43 s22
+  y #19 s33.
+- 0a3ea28: `cerrar_app` ignora `forzar` si el pedido no lo pide ([[frenos-cierre]] §1). En la corrida 4 actuó
   en #19 s33 (cinco `forzar: true` convertidos en cierre normal).
 - Memoria de Qwen por opción: [[memoria-liberable]].
 - e9a580d: `listar_controles` con id ausente, 0 o inexistente usa la ventana al frente.
@@ -47,5 +57,5 @@ El banco quitaba `mensaje_final` (contrato de la ronda 2): por eso allí no se v
 
 ## No hacer
 
-- No volver a activar `qwen9b` sin un cambio nuevo y otra 65 × 3 completa con producción.
+- No dejar `qwen9b` activo pasada la semana sin una decisión del usuario.
 - No reabrir Qwen solo por velocidad o VRAM sin un criterio fijado de antemano.

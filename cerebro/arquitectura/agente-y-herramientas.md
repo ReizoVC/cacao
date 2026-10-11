@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: e3dfe04
+verificado_commit: 77370e8
 verificado_fecha: 2026-10-11
 fuentes: [agente_minimo.py, herramientas.json, herramientas_grupo1.py, herramientas_grupo4.py, herramientas_powershell.py, vision.py, memoria.py, benchmark_gramatica.py]
 ---

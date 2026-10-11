@@ -1,12 +1,13 @@
 ---
 estado: sin verificar
-verificado_commit: e3dfe04
+verificado_commit: 77370e8
 verificado_fecha: 2026-10-11
 fuentes: [comparacion_modelos/ronda3_protocolo.md, comparacion_modelos/resumir_ronda3.py, config.json]
 ---
 # Criterio para cambiar de modelo y para volver a Gemma Q5
 
-Producción es Gemma Q5 ([[configuracion-vigente]]). «Volver a Gemma» significa volver a Q5 en llama-cpp-python
+Producción es Gemma Q5 (perfil `gemma`), salvo la semana de uso real de Qwen 9B desde el 2026-10-11
+([[configuracion-vigente]], [[qwen-como-cerebro]]). «Volver a Gemma» significa volver a Q5 en llama-cpp-python
 0.3.36 si un candidato (Q4, otro motor u otro modelo) falla después de adoptarlo.
 
 **Estado de esta página:** solo el criterio de la ronda 3 está en un archivo (`ronda3_protocolo.md`). El resto es
