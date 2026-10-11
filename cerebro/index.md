@@ -42,6 +42,7 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[suites-con-modelo]]: scripts que cargan la GPU o tocan el PC real
 - [[evaluacion-65-frases]]: pruebas.json, cómo correrla en simulación y sus criterios
 - [[comparacion-modelos]]: banco aislado ejecutar.py, rondas y evaluación a ciegas
+- [[lista-qwen9b-ronda2]]: lista de comprobación de la prueba de Qwen 9B (preparada, sin lanzar)
 
 ## Estado
 - [[hoja-de-ruta]]: la lista del usuario cruzada con el repositorio, diferencias y estado de Codex
