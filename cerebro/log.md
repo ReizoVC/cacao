@@ -62,3 +62,8 @@ Entradas anteriores: [[log-2026-10-10]], [[log-2026-10-11-isla]], [[log-2026-10-
 - Páginas nuevas (propuestas): `camino-rapido` (14 de las 95 frases), `filtrado-herramientas` (variante C y, antes,
   la caché por estados para Qwen) y `frases-simples`. `simular_filtrado.py`: 53 de 95 con el núcleo solo.
 
+## 2026-10-11: isla compilada con protocolo v3 (música, rediseño y 800 px)
+
+- Isla 3bfef0f compilada (exe `bcdc268e…`); respaldo v2 en `_prive/respaldos`. Cacao: fusión de
+  `claude/musica-v3` (2797ba4). Suites verdes; prueba física parcial con el arnés (la música llega). Páginas:
+  `compilar-isla`, `musica-isla`.

@@ -1,13 +1,13 @@
 ---
-estado: sin verificar
-verificado_commit: a9797ed
+estado: verificado
+verificado_commit: 2797ba4
 verificado_fecha: 2026-10-11
 fuentes: [confirmacion_voz.py, ui_isla.py, probar_fase7.py]
 ---
-# Música en la isla (protocolo v3): implementada en ramas, sin compilar
+# Música en la isla (protocolo v3): compilada y en main
 
-El diseño está en `C:\asistente-ui\docs\diseno-musica.md`. Está **sin verificar** porque la isla no se ha compilado
-y el API no se ha probado en este PC.
+El diseño está en `C:\asistente-ui\docs\diseno-musica.md`. Compilada el 2026-10-11 (isla 3bfef0f, Cacao 2797ba4) y
+probada con un reproductor real: llegaron `reproduciendo` y `nada suena` al arnés ([[compilar-isla]]).
 
 ## Qué hace
 
@@ -21,19 +21,13 @@ y el API no se ha probado en este PC.
   Una prueba comprueba que `confirmacion_voz.py` no usa el dato.
 - Con la isla cerrada no hay sondeo: solo despiertan los eventos de Windows. Si el API no está, no se manda nada.
 
-## Dónde está (2026-10-11)
+## Dónde está
 
-| Repositorio | Rama | Commits | Pruebas |
-|---|---|---|---|
-| Isla | `claude/musica` (worktree `C:\asistente-ui-claude`) | 1daebe0, 712a893, a90ddc9 | invariantes 12/12 con Rust, arnés 45/45, campo 18/18, build; 9 mutaciones del invariante 11 detectadas |
-| Cacao | `claude/musica-v3` (worktree `C:\asistente-claude`) | a9797ed | `probar_fase7.py` A 37/37; 3 mutaciones detectadas; segundo plano 23/23 y campo 29/29 |
-
-**No se fusionan en `main` por separado.** Una isla v2 con un Cacao v3, o al revés, se rechazan con 4003. Se fusionan
-las dos ramas a la vez, al compilar la isla ([[compilar-isla]]).
+En `main` de los dos repositorios: isla 3bfef0f (antes en `claude/musica`) y Cacao 2797ba4 (fusión de
+`claude/musica-v3`). Pruebas tras compilar: [[compilar-isla]].
 
 ## Falta
 
-- Compilar la isla (con permiso y con Cacao cerrado). El `cargo check` de la rama pasó el 2026-10-11 sin errores
-  (isla 3bfef0f, con el rediseño y el panel de 800 px ya integrados); su `target` se borró.
-- Prueba física con el arnés y un reproductor real: diseño §6.
-- Comprobar que el API funciona sin declarar la capacidad `globalMediaControl` (la isla es un Win32 sin empaquetar).
+- Nada en Cacao usa todavía el booleano (es solo informativo; no se ve en la isla). Cualquier uso nuevo se diseña
+  aparte y nunca relaja un freno.
+- Funcionó sin declarar la capacidad `globalMediaControl` (exe Win32 sin empaquetar).
