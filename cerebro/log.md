@@ -65,3 +65,9 @@ Entradas anteriores: [[log-2026-10-10]].
 - Claude planifica y da las órdenes a Codex (`isla-codex`, sección «Flujo de trabajo»).
 - Primera orden: vista previa por reproducción de mensajes (sin WebSocket ni archivos protegidos) y portar el
   guardarropa desde las fuentes Swift y JS locales del Coucou original.
+
+## 2026-10-11: hoja de ruta del usuario cruzada con el backlog
+
+- Página nueva `hoja-de-ruta`: diferencias con la lista del usuario, el «Siguiente» y el estado de Codex.
+- `backlog`: WSL, llama.cpp servidor, MTP y 26B pasan a descartados; la prueba de Qwen 9B está preparada (0b90b51).
+- `pendientes-presenciales`: añadidos Whisper pequeño, el «sí» solo y el mando; nota de la captura del 2026-10-11.

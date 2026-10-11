@@ -44,6 +44,7 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[comparacion-modelos]]: banco aislado ejecutar.py, rondas y evaluación a ciegas
 
 ## Estado
+- [[hoja-de-ruta]]: la lista del usuario cruzada con el repositorio, diferencias y estado de Codex
 - [[backlog]]: pendientes verificados (hecho, pendiente o desconocido)
 - [[riesgos]]: riesgos vigentes y alcance de cerebro/ frente a Cacao
 - [[pendientes-presenciales]]: lo que necesita al usuario delante

@@ -27,7 +27,10 @@ registros o datos personales. Pregúntaselo al usuario y anota la respuesta aqu�
 4. **Arranque automático:** que Cacao aparezca a los ~60 s de iniciar sesión y que espere si se abre un juego.
 5. **«Cacao» en el día a día:** revisar el contador de activaciones tras unos días. Lo revisa el usuario; Claude no
    lee ese archivo.
-6. **Grabar la isla** con «Permitir capturas».
+6. **Grabar la isla** con «Permitir capturas». El usuario tomó una captura el 2026-10-11 (~01:35) durante la
+   prueba de la bandeja; no se comprobó qué salió en ella.
+8. **De la lista del usuario (2026-10-11):** Whisper pequeño en CPU con audio real («estoy jugando», «ya
+   terminé»), un «sí» solo rechazado en vivo, y el mando o joystick.
 7. **Bandeja de la isla v2 con el arnés: HECHA el 2026-10-11** (01:33–07:26, con el usuario). Resultados en
    [[compilar-isla]]. Quedan dos cosas:
    - «Pausar» no se probó con el teclado;

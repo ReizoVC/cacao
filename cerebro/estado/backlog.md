@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: 8a78d51
-verificado_fecha: 2026-10-10
+verificado_commit: fb78182
+verificado_fecha: 2026-10-11
 fuentes: [config.json, modelo.py, agente_minimo.py, protecciones_ejecucion.py, comparacion_modelos/ejecutar.py, REPORTE_TRABAJO_CACAO.md, SRS.md, guia_instalacion_agente.md, resultados_swa_y_recursos.md]
 ---
 # Backlog
@@ -35,8 +35,8 @@ Cada punto se comprobó contra Git y los archivos el 2026-10-10:
 
 ## Temas pedidos el 2026-10-10 sin rastro en el repositorio (desconocido)
 
-Sin código ni documentos; el usuario tiene que definirlos: prueba reversible de Qwen 9B (solo hay el descarte,
-[[qwen-como-cerebro]]), camino rápido, filtrado de herramientas, Spotify con teclas multimedia, adaptadores por app,
+El usuario los ordenó el 2026-10-11: ver [[hoja-de-ruta]]. La prueba reversible de Qwen 9B ya está preparada
+(0b90b51). Siguen sin código: camino rápido, filtrado de herramientas, Spotify con teclas multimedia, adaptadores por app,
 memoria de experiencia, Jev en modo sombra, cerrar pestañas por nombre, tabla de obstáculos antes de planificar
 (`obstaculos.para_prompt()` ya va en el prompt), RemoteShutdown y causa del contador de inactividad (hallazgo 2 de
 `resultados_fase6.md`).
@@ -47,15 +47,15 @@ memoria de experiencia, Jev en modo sombra, cerrar pestañas por nombre, tabla d
 |---|---|---|---|
 | 12 | Mover WSL al disco D | hecho | existe `D:\WSL\Ubuntu-24.04` |
 | 13 | Perfil lean de Qwen3-TTS | hecho | `.comparacion-runtime/qwen3_tts_lean.yaml`, b7270b4 |
-| 14 | Lanzador experimental supervisado en WSL conectado a Cacao | pendiente | ningún archivo de producción usa los puertos 18080 u 8091 |
-| 15 | Prueba prolongada del conjunto en WSL (recuperación, suspensión, modo juego) | pendiente | sin archivos de resultados |
-| 16 | Migrar producción a llama.cpp servidor | pendiente | `modelo.py` usa llama_cpp; [[motor-llama-cpp]] |
-| 17 | Sustituir Piper por Qwen3-TTS | pendiente | `config.voz.piper_voz` |
-| 18 | MTP | pendiente | `mtp_probado: false` |
-| 19 | Gemma 26B A4B | pendiente (no se persigue) | sin datos |
+| 14 | Lanzador experimental supervisado en WSL conectado a Cacao | descartado (WSL, 2026-10-11) | ningún archivo de producción usa los puertos 18080 u 8091 |
+| 15 | Prueba prolongada del conjunto en WSL (recuperación, suspensión, modo juego) | descartado (WSL) | sin archivos de resultados |
+| 16 | Migrar producción a llama.cpp servidor | descartado por ahora (2026-10-11) | `modelo.py` usa llama_cpp; [[motor-llama-cpp]] |
+| 17 | Sustituir Piper por Qwen3-TTS | pendiente: medir si cabe en Windows (RAM de 16 GB) | `config.voz.piper_voz` |
+| 18 | MTP | descartado por ahora | `mtp_probado: false` |
+| 19 | Gemma 26B A4B | descartado por ahora | sin datos |
 | 20 | Puntuar la evaluación a ciegas Gemma Q5 / Qwen Q5 | pendiente | `resultados_ciegas.md`: 20 casillas `__/5` vacías |
 | 21 | Puntuar la evaluación a ciegas Q5 / Q4 | pendiente | `resultados_ciegas_q4.md`: 20 vacías, sin commit |
-| 22 | Reducir el margen de RAM en la recarga WSL (99,96 % de uso) | pendiente | `resultados_swa_y_recursos.md` |
+| 22 | Reducir el margen de RAM en la recarga WSL (99,96 % de uso) | descartado (WSL) | `resultados_swa_y_recursos.md` |
 
 ## Con el usuario delante
 
