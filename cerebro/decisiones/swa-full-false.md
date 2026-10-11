@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 829fea9
+verificado_commit: d95855d
 verificado_fecha: 2026-10-11
 fuentes: [resultados_swa_y_recursos.md, comparacion_modelos/probar_swa_cache.py, comparacion_modelos/ejecutar.py, modelo.py, config.json, probar_carga_modelo.py]
 ---
@@ -64,7 +64,7 @@ arreglos.
 
 - Decidir si vuelve false (≈ 2,4 GiB menos de VRAM) con una prueba larga en producción. Lo decide el usuario.
 
-Volver a probar false: poner `"swa_full": false` en `config.json` (con permiso).
+Volver a probar false con Gemma: poner `"swa_full": false` en el perfil `gemma` de `config.json` (con permiso).
 
 ## No hacer
 

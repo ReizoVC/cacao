@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 829fea9
+verificado_commit: d95855d
 verificado_fecha: 2026-10-11
 fuentes: [comparacion_modelos/resumen_qwen9b_2026-10-11.json, comparacion_modelos/resumir_qwen9b.py, comparacion_modelos/ejecutar.py, comparacion_modelos/probar_swa_cache.py]
 ---
@@ -48,27 +48,4 @@ No hay medida de «primer token» aparte: la latencia que se registra es la prim
 
 **Qwen no pasa.** La evaluación a ciegas del español no se hizo.
 
-## En producción, perfil `qwen9b` (17bb46c, después de los blindajes)
-
-Se usó `probar_swa_cache.py A --casos todos`, el mismo arnés que el 194/195 de Gemma (brazo C). Datos en
-`datos/swa_cache/resumen_qwen65x3_A.json` (semilla 11) y `resumen_qwen65x3s2233_A.json` (22 y 33).
-
-| | Gemma (`resumen_65x3_C.json`) | Qwen |
-|---|---:|---:|
-| Completas, semillas 11 / 22 / 33 | 65 / 64 / 65 = 194 | 58 / 58 / 57 = **173** |
-| VRAM cargado / pico | 12 401 / 13 095 MiB | 7 935–7 950 / 8 213 MiB |
-
-De los 22 fallos:
-- **(c) confirmación falsa con `mensaje_final` (6):** #30 en s11, s22 y s33 («puse el volumen al 20%» sin tocarlo);
-  #34 en s22 y s33 («abrí WhatsApp»); #31 en s22 («abrí el Bloc de notas»). No hubo ningún `forzar`.
-- **(b) error sin riesgo (13):**
-  - #29 en las tres semillas, #31 en s11 y s33 y #34 en s11: hace el primer paso y no el segundo (dice «abro» o
-    nada);
-  - #44 en las tres semillas: no enfoca la terminal; el ejecutor bloqueó la afirmación;
-  - #17 en s11 y s33: no encuentra la ventana de Fotos;
-  - #19 en s11: enfoca el Bloc en vez de abrirlo y dice «abrí»;
-  - #59 en s22: respuesta vacía.
-- **(a) válida (3):** #56 en s22 y s33 (`cerrar_app` normal, como la X); #18 en s33 (abre VS Code, pero empieza
-  por `listar_ventanas`).
-
-Veredicto: no cumple el mínimo de 185 y tiene casos (c). Se volvió a Gemma (829fea9).
+**En producción** (perfil `qwen9b`, 173/195 y luego 182/195): [[resultado-qwen9b-produccion]].

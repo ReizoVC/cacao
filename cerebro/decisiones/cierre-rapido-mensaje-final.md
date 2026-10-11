@@ -1,18 +1,23 @@
 ---
 estado: verificado
-verificado_commit: d4b36dd
-verificado_fecha: 2026-10-10
-fuentes: [agente_minimo.py, comparacion_modelos/integracion.py, resultados_comparacion_modelos.md, resultados_swa_y_recursos.md, iniciar_cacao.py, modelo.py, voz.py]
+verificado_commit: d95855d
+verificado_fecha: 2026-10-11
+fuentes: [agente_minimo.py, config.json, probar_cierre_rapido.py, benchmark_gramatica.py, comparacion_modelos/integracion.py, resultados_comparacion_modelos.md, resultados_swa_y_recursos.md, iniciar_cacao.py, modelo.py, voz.py]
 ---
 # Cierre rápido con mensaje_final y contrato de las rondas 2 y 3
 
-**Estado: decidido por el usuario (2026-10-11), pendiente de implementar.**
-- En los dos modelos, `mensaje_final` pasa por `validar_finalizacion`: si afirma algo sin verificar, no se usa y la
-  tarea sigue.
-- En el perfil de Qwen el cierre rápido se apaga, como en el banco. Sin cambiar el prompt ni el esquema: el ejecutor
-  ignora `mensaje_final`.
-- **Motivo:** Qwen en producción (semilla 11) usó `mensaje_final` tras el primer paso en #29, #30, #31 y #34 y
-  confirmó lo que no hizo. Esa ruta se saltaba `validar_finalizacion`.
+**Estado: implementado (2026-10-11)**, por decisión del usuario.
+- **69297e4, los dos modelos:** `mensaje_final` pasa por `validar_finalizacion`. Si afirma algo sin verificar, se
+  descarta, la corrección entra en el historial y la tarea sigue. Cuenta en `correcciones` como `finalizar`; con
+  2, la tarea termina preguntando.
+- **d95855d, por perfil:** `"cierre_rapido"` en `config.json`, true en `gemma` y false en `qwen9b`. Con false, el
+  ejecutor ignora `mensaje_final` y exige `finalizar`. El prompt y el esquema no cambian.
+- **Pruebas:** `probar_cierre_rapido.py` 13/13, con los textos de Qwen. Rechaza las 6 confirmaciones falsas.
+- **Límite conocido:** #29, #31 y #34 de la semilla 11 («…y abro Spotify», «Ahora abro…», o solo el volumen) no
+  afirman nada falso. La validación los acepta aunque la tarea quede a medias. Por eso, en Qwen, el cierre rápido
+  está apagado. No se ampliaron los patrones de `_CLAIMS`.
+- **Motivo:** Qwen en producción (17bb46c) usó `mensaje_final` tras el primer paso y confirmó lo que no hizo
+  ([[resultado-qwen9b-2026-10-11]]).
 
 Antes había una diferencia abierta entre producción y el banco de pruebas:
 
@@ -40,13 +45,13 @@ El piloto documentó que `mensaje_final` terminaba toda la tarea después de una
 |---|---|
 | Regla JSON sin caracteres de control | Sí desde 7d31aa7: `modelo.py` cambia la regla en el proceso (`.venv` no se toca); `probar_gramatica_json.py` |
 | UTF-8 | Sí: el lanzador (`PYTHONIOENCODING`) y, desde 8e72787, `agente_minimo.salida_utf8()` en `voz.py` y en el modo texto |
-| Contrato sin cierre rápido | Decidido el 2026-10-11 (arriba), sin implementar |
+| Contrato sin cierre rápido | Solo en el perfil `qwen9b` (d95855d); `mensaje_final` siempre validado (69297e4) |
 
 ## Consecuencia
 
-Las cifras de las rondas 2 y 3 valen para el contrato de pruebas, no para el agente tal como está hoy. Si se lleva
-el contrato a producción:
-- cambia el prompt y el esquema → volver a pasar las 65 frases;
-- cuesta una llamada más en los pedidos de un paso.
+Las cifras de las rondas 2 y 3 valen para el contrato de pruebas, no para producción: allí el prompt y el esquema
+no tenían `mensaje_final`. En producción el prompt y el esquema siguen con `mensaje_final`; en `qwen9b` el ejecutor
+lo ignora, y eso cuesta una llamada más en los pedidos de un paso. Las 65 frases se repiten con cada perfil
+([[evaluacion-65-frases]]).
 
-Pendiente de decidir: [[backlog]].
+Backlog #4: hecho ([[backlog]]).

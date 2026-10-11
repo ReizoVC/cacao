@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: dd51ba6
+verificado_commit: d95855d
 verificado_fecha: 2026-10-11
 fuentes: [ui_isla.py, herramientas_grupo4.py, config.json]
 ---

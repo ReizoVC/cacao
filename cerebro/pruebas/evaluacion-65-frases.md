@@ -1,8 +1,8 @@
 ---
 estado: verificado
-verificado_commit: 945fa17
+verificado_commit: d95855d
 verificado_fecha: 2026-10-11
-fuentes: [pruebas.json, evaluar_pruebas.py, benchmark_gramatica.py, comparacion_modelos/criterios.py, comparacion_modelos/integracion.py, SRS.md]
+fuentes: [pruebas.json, evaluar_pruebas.py, benchmark_gramatica.py, comparacion_modelos/probar_swa_cache.py, comparacion_modelos/criterios.py, comparacion_modelos/integracion.py, SRS.md]
 ---
 # Evaluación con las 65 frases
 
@@ -53,6 +53,17 @@ origen `comparacion_modelos/datos/swa_cache/resumen_65x3_C.json`, ignorado por G
 - media por tarea: 4,65–4,79 s; VRAM pico 13 095 MiB;
 - frente a la base: #44 pasa en las semillas 11 y 33 (antes no enfocaba); #56 falla en la 22 (`listar_controles`
   con `id_ventana` 0 sin listar ventanas; termina diciendo que no pudo).
+
+**Pasadas con perfiles** (`probar_swa_cache.py`, `--semillas 11 22 33`, datos en `datos/swa_cache/`):
+
+| Perfil y código | Archivo | Completas (11 / 22 / 33) | VRAM pico |
+|---|---|---:|---:|
+| `qwen9b`, 17bb46c (cierre rápido sin validar) | `resumen_qwen65x3_A.json` + `resumen_qwen65x3s2233_A.json` | 58 / 58 / 57 = 173 | 8 213 MiB |
+| `qwen9b`, d95855d (sin cierre rápido) | `resumen_qwen65x3cierre_A.json` | 59 / 61 / 62 = 182 | 8 214 MiB |
+| `gemma`, d95855d (`mensaje_final` validado, blindajes) | `resumen_gemma65x3cierre_C.json` | 65 / 65 / 65 = **195** | 12 940 MiB |
+
+Con Gemma, ningún `mensaje_final` se descartó y ningún `forzar` se ignoró (registro de la corrida); #56 s22 ya pasa.
+Clasificación de Qwen en [[resultado-qwen9b-2026-10-11]].
 
 Las rondas 2 y 3 (195/195 para Gemma Q5) usan el contrato de pruebas de `integracion.py`, no el de producción
 ([[cierre-rapido-mensaje-final]], [[comparacion-modelos]]).

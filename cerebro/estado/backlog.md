@@ -1,13 +1,12 @@
 ---
 estado: verificado
-verificado_commit: 829fea9
+verificado_commit: d95855d
 verificado_fecha: 2026-10-11
 fuentes: [entrenar_cacao.py, medir_arranque.py, config.json, modelo.py, agente_minimo.py, protecciones_ejecucion.py, comparacion_modelos/ejecutar.py, REPORTE_TRABAJO_CACAO.md, SRS.md, guia_instalacion_agente.md, resultados_swa_y_recursos.md]
 ---
 # Backlog
 
-El pedido original remitía a «la lista de abajo», pero esa lista no venía en el mensaje. Esta se armó con los
-pendientes documentados en `REPORTE_TRABAJO_CACAO.md` §15–16, el SRS §9, la guía y `resultados_swa_y_recursos.md`.
+Armado con los pendientes de `REPORTE_TRABAJO_CACAO.md` §15–16, el SRS §9, la guía y `resultados_swa_y_recursos.md`.
 
 Cada punto se comprobó contra Git y los archivos el 2026-10-10:
 - **hecho**: hay evidencia;
@@ -21,12 +20,12 @@ Cada punto se comprobó contra Git y los archivos el 2026-10-10:
 | 1 | Protecciones del ejecutor en producción | hecho | 9e2c1f1 y 5889dda; `protecciones_ejecucion.py` |
 | 2 | Salida UTF-8 | hecho | lanzador (99fd1bc) y también `voz.py` y el modo texto (8e72787, suite `probar_salida_utf8.py`) |
 | 3 | Regla JSON sin caracteres de control en producción | hecho y medido (65 × 3, #8) | 7d31aa7; `probar_gramatica_json.py` 11/11 |
-| 4 | Cierre rápido `mensaje_final`: validarlo y apagarlo en Qwen | decidido, sin implementar | [[cierre-rapido-mensaje-final]] |
+| 4 | Cierre rápido `mensaje_final`: validarlo y apagarlo en Qwen | hecho | 69297e4 y d95855d ([[cierre-rapido-mensaje-final]]) |
 | 5 | `swa_full=False` en producción | revertido para Gemma (397d0a2); solo en el perfil `qwen9b` | `ejecutar.py --swa-full` roto (se deja). [[swa-full-false]] |
 | 6 | Corregir los falsos positivos de la protección (también «no puedo verificar») | hecho en código | c6a74f3; `probar_protecciones_ejecucion.py` 44/44 |
 | 7 | Volver a pasar las suites sin modelo después de 9e2c1f1 | hecho (2026-10-10, eb5a9c4) | todas pasan; totales en [[suites]] |
 | 8 | 65 frases × 3 con producción tras la Fase 1 | hecho (2026-10-11) | 195/195 y 194/195 (base 193). [[evaluacion-65-frases]] |
-| 9 | Commit de los cambios de `ejecutar.py`, `pruebas_nuevas_30.json` y `medir_recarga_completa.ps1` | hecho | cabf3ed |
+| 9 | Commit de `ejecutar.py`, `pruebas_nuevas_30.json` y `medir_recarga_completa.ps1` | hecho | cabf3ed |
 | 10 | Revisar la línea base de `verificar.py` | hecho: falla de verdad | hashes de la ronda 3 desde 84fbe0b; detalle en [[comparacion-modelos]]. Actualizarlos: decisión del usuario |
 | 11 | Apagado automático del modo sin confirmación (SRS R-17, «valorar») | pendiente | `modo_directo.py` no tiene temporizador |
 | 11b | `entrenar_cacao.py` lee los datos movidos a `D:\Cacao\entrenamiento\` | hecho (permiso del usuario) | 3ad35c7 y 76baceb; rutas comprobadas sin entrenar |
@@ -45,17 +44,17 @@ Ordenados por el usuario en [[hoja-de-ruta]] (2026-10-11). La prueba de Qwen 9B 
 |---|---|---|---|
 | 12 | Mover WSL al disco D | hecho | existe `D:\WSL\Ubuntu-24.04` |
 | 13 | Perfil lean de Qwen3-TTS | hecho | `.comparacion-runtime/qwen3_tts_lean.yaml`, b7270b4 |
-| 14 | Lanzador experimental supervisado en WSL conectado a Cacao | descartado (WSL, 2026-10-11) | ningún archivo de producción usa los puertos 18080 u 8091 |
-| 15 | Prueba prolongada del conjunto en WSL (recuperación, suspensión, modo juego) | descartado (WSL) | sin archivos de resultados |
+| 14 | Lanzador supervisado en WSL conectado a Cacao | descartado (WSL) | producción no usa los puertos 18080 u 8091 |
+| 15 | Prueba prolongada del conjunto en WSL | descartado (WSL) | sin resultados |
 | 16 | Migrar producción a llama.cpp servidor | descartado por ahora (2026-10-11) | `modelo.py` usa llama_cpp; [[motor-llama-cpp]] |
 | 17 | Sustituir Piper por Qwen3-TTS | pendiente: medir si cabe en Windows (RAM de 16 GB) | `config.voz.piper_voz` |
 | 18 | MTP | descartado por ahora | `mtp_probado: false` |
 | 19 | Gemma 26B A4B | descartado por ahora | sin datos |
-| 20 | Puntuar la evaluación a ciegas Gemma Q5 / Qwen Q5 | descartada por el usuario (2026-10-11) | la prueba de uso de Qwen en producción la sustituye |
+| 20 | Puntuar la evaluación a ciegas Gemma Q5 / Qwen Q5 | descartada por el usuario | la sustituye la prueba en producción |
 | 21 | Puntuar la evaluación a ciegas Q5 / Q4 | pendiente | `resultados_ciegas_q4.md`: 20 vacías, sin commit |
 | 22 | Reducir el margen de RAM en la recarga WSL (99,96 % de uso) | descartado (WSL) | `resultados_swa_y_recursos.md` |
 | 23 | Prueba de Qwen 9B con el contrato de la ronda 2 | hecho: **no pasa** (189/195, un caso (c)) | [[resultado-qwen9b-2026-10-11]] |
-| 24 | Qwen 9B en producción (perfil `qwen9b`, reversible) | hecho: **no pasa** (173/195, 6 confirmaciones falsas con `mensaje_final`); vuelta a Gemma | 17bb46c y 829fea9; [[qwen-como-cerebro]] |
+| 24 | Qwen 9B en producción (perfil `qwen9b`) | **no pasa**: 173/195; con el cierre rápido arreglado, 182/195 y un (c); Gemma activo | [[qwen-como-cerebro]] |
 
 ## Con el usuario delante
 

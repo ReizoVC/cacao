@@ -42,3 +42,15 @@ Entradas anteriores: [[log-2026-10-10]], [[log-2026-10-11-isla]] y [[log-2026-10
 - Cambios en `configuracion-vigente`, `comandos` (cómo volver a Gemma) y `swa-full-false` (solo en el perfil
   `qwen9b`).
 
+## 2026-10-11: cierre rápido implementado; Qwen 182/195, Gemma 195/195
+
+- 69297e4: `mensaje_final` pasa por `validar_finalizacion` en los dos modelos. Rechaza las 6 confirmaciones falsas
+  de Qwen; acepta #29, #31 y #34 de s11, que no afirman nada falso (límite conocido, sin ampliar `_CLAIMS`).
+- d95855d: `cierre_rapido` por perfil (gemma true, qwen9b false); `probar_cierre_rapido.py` 13/13,
+  `probar_carga_modelo.py` 25/25.
+- Qwen activo, 65 × 3 completa: 59/61/62 = 182/195 y un (c) (#19 s33 intentó cerrar Windows Terminal). No pasa.
+- Gemma activo, 65 × 3 completa: 65/65/65 = 195/195. **Queda Gemma.**
+- Páginas: `cierre-rapido-mensaje-final` (implementado), `qwen-como-cerebro`, `resultado-qwen9b-2026-10-11`,
+  `evaluacion-65-frases`, `suites`, backlog (#4 hecho, #24), `swa-full-false`. 34 páginas revisadas tras los cambios
+  de producción y re-selladas en d95855d.
+

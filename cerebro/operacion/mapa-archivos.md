@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: d4b36dd
+verificado_commit: d95855d
 verificado_fecha: 2026-10-11
 fuentes: [agente_minimo.py, voz.py, iniciar_cacao.py, .gitignore]
 ---
@@ -25,10 +25,10 @@ Los nombres son relativos a la raíz del repositorio. Actualiza esta página al 
 
 | Rol | Archivos |
 |---|---|
-| Suites sin modelo | `probar_*.py` ([[suites]]); desde la Fase 1 también `probar_carga_modelo.py`, `probar_salida_utf8.py` y `probar_gramatica_json.py` |
+| Suites sin modelo | `probar_*.py` ([[suites]]); desde la Fase 1 también `probar_carga_modelo.py`, `probar_salida_utf8.py` y `probar_gramatica_json.py`; `probar_cierre_rapido.py` (69297e4) |
 | Evaluación con modelo | `evaluar_pruebas.py`, `benchmark_gramatica.py`, `pruebas.json` ([[evaluacion-65-frases]]) |
 | Pruebas reales o presenciales | `prueba_real.py`, `prueba_presencial_isla.py` |
-| Mediciones | `medir_*.py`, `validar_transcripcion.py`, `simular_habitos.py` |
+| Mediciones | `medir_*.py`, `validar_transcripcion.py`, `simular_habitos.py`; `comparacion_modelos/medir_memoria.py` (VRAM por opción, [[memoria-liberable]]) |
 | Palabra «Cacao» | `entrenar_cacao.py`, `grabar_cacao.py`, `grabar_fondo_cacao.py`, `evaluar_*_cacao*.py` |
 | Diagnósticos puntuales | `diagnostico_actividad.py`, `diagnostico_atajos*.py` |
 | Comparación de modelos | `comparacion_modelos/`, con `verificar.py` (hashes congelados) y sus `probar_*.py` (unittest) ([[comparacion-modelos]]) |

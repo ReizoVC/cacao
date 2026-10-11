@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: d4b36dd
-verificado_fecha: 2026-10-10
+verificado_commit: d95855d
+verificado_fecha: 2026-10-11
 fuentes: [entrada.py, diagnostico_atajos3.py, modelo.py, muestreo_gramatica.py, comparacion_modelos/integracion.py, guia_instalacion_agente.md, resultados_comparacion_modelos.md, protecciones_ejecucion.py, guardia_juego.py, agente_minimo.py]
 ---
 # Lecciones aprendidas (fallos reales y su causa)
@@ -15,7 +15,7 @@ fuentes: [entrada.py, diagnostico_atajos3.py, modelo.py, muestreo_gramatica.py, 
 | Generación a ~8 tok/s con gramática | llama-cpp-python aplica la gramática antes de top_k, sobre ~262 000 tokens | `LlamaRapida` «topk» (SRS RNF-01: 38,0 tok/s) |
 | `JSONDecodeError` con un salto de línea en el pensamiento | La regla `char` de la gramática permite U+0000–U+001F | Regla estricta en `modelo.py` (7d31aa7) y en `integracion.py`; `probar_gramatica_json.py` |
 | `UnicodeEncodeError` al imprimir | Consola cp1252 | UTF-8 en el lanzador y en `voz.py` y el modo texto (`salida_utf8`, 8e72787); en pruebas, reconfigurar stdout |
-| Pedidos de varias acciones a medias | `mensaje_final` cerraba la tarea tras la primera acción | Contrato sin cierre rápido en las pruebas ([[cierre-rapido-mensaje-final]]) |
+| Pedidos de varias acciones a medias | `mensaje_final` cerraba la tarea tras la primera acción, sin validar | Contrato sin cierre rápido en las pruebas; en producción, `mensaje_final` validado y apagado en Qwen ([[cierre-rapido-mensaje-final]]) |
 | El endpoint de Gemma en Windows dejó de responder | CUDA en Windows y en WSL a la vez | Un solo dominio CUDA ([[wsl-dominio-cuda]]) |
 | Whisper escribe «Gracias por ver el video» en silencio | Alucinación típica | Frenos en `voz.filtrar` |
 | Las pruebas cargaron unos 12 GB de VRAM mientras alguien jugaba | No se comprobaba si había un juego abierto | `guardia_juego` en `crear_llm` y en Whisper; avisar y no esquivar |

@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: 8a78d51
-verificado_fecha: 2026-10-10
+verificado_commit: d95855d
+verificado_fecha: 2026-10-11
 fuentes: [iniciar_cacao.py, crear_acceso_directo.ps1, voz.py, agente_minimo.py, registro_habitos.py, emergencia.py, ui_isla.py]
 ---
 # Arrancar y detener Cacao

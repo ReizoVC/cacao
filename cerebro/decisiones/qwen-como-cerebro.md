@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 829fea9
+verificado_commit: d95855d
 verificado_fecha: 2026-10-11
 fuentes: [comparacion_modelos/resumen_ronda3.json, comparacion_modelos/resumen_qwen9b_2026-10-11.json, comparacion_modelos/probar_swa_cache.py, config.json, modelo.py, clasificacion_fallos_qwen.md, comparacion_modelos/ronda3_protocolo.md]
 ---
@@ -20,11 +20,16 @@ ciegas Gemma/Qwen se **descartó** (el usuario la considera redundante con la pr
 3. **Producción, perfil `qwen9b`** (17bb46c). Mismo prompt y esquema que Gemma, con `mensaje_final`.
    `probar_swa_cache.py A --casos todos` con semillas 11, 22 y 33. **58 / 58 / 57 = 173/195**, por debajo del mínimo
    de 185. Gemma da 194/195 (`resumen_65x3_C.json`). Vuelta a Gemma.
+4. **Producción con el cierre rápido arreglado** (69297e4 y d95855d: `mensaje_final` validado y apagado en
+   `qwen9b`). `resumen_qwen65x3cierre_A.json`: **59 / 61 / 62 = 182/195**, todavía por debajo de 185. Además, un
+   caso (c): #19 s33 («abre algo para escribir») intentó cerrar Windows Terminal seis veces, cinco con `forzar`.
+   No pasa; vuelta a Gemma.
 
 ## Blindajes nacidos de estas pruebas (protegen a los dos modelos)
 
-- 0a3ea28: `cerrar_app` ignora `forzar` si el pedido no lo pide ([[protecciones]] §4). En la corrida 3 no se repitió
-  ningún `forzar`.
+- 0a3ea28: `cerrar_app` ignora `forzar` si el pedido no lo pide ([[protecciones]] §4). En la corrida 4 actuó
+  en #19 s33 (cinco `forzar: true` convertidos en cierre normal).
+- Memoria de Qwen por opción: [[memoria-liberable]].
 - e9a580d: `listar_controles` con id ausente, 0 o inexistente usa la ventana al frente.
 
 ## Por qué falló en producción
@@ -32,10 +37,10 @@ ciegas Gemma/Qwen se **descartó** (el usuario la considera redundante con la pr
 El cierre rápido `mensaje_final` se saltaba `validar_finalizacion`. En pedidos de dos pasos, Qwen hacía el primero y
 cerraba afirmando los dos. Ejemplo: #30, en las tres semillas, «abrí la Calculadora y puse el volumen al 20%» sin
 tocar el volumen. Son 6 confirmaciones falsas (c). Detalle en [[resultado-qwen9b-2026-10-11]].
-El banco quitaba `mensaje_final` (contrato de la ronda 2): por eso allí no se vio. Decisión del usuario, pendiente
-de implementar: validar `mensaje_final` en los dos modelos y apagarlo en Qwen ([[cierre-rapido-mensaje-final]]).
+El banco quitaba `mensaje_final` (contrato de la ronda 2): por eso allí no se vio. Ya está implementado
+([[cierre-rapido-mensaje-final]]): con él, las 6 confirmaciones falsas desaparecen, pero Qwen sigue en 182/195.
 
 ## No hacer
 
-- No volver a activar `qwen9b` antes de implementar esa decisión y repetir la 65 × 3 con producción.
+- No volver a activar `qwen9b` sin un cambio nuevo y otra 65 × 3 completa con producción.
 - No reabrir Qwen solo por velocidad o VRAM sin un criterio fijado de antemano.

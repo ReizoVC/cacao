@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: 8a78d51
-verificado_fecha: 2026-10-10
+verificado_commit: d95855d
+verificado_fecha: 2026-10-11
 fuentes: [agente_minimo.py, herramientas.json, herramientas_grupo1.py, herramientas_grupo4.py, herramientas_powershell.py, vision.py, memoria.py, benchmark_gramatica.py]
 ---
 # Agente y herramientas
@@ -34,7 +34,8 @@ fuentes: [agente_minimo.py, herramientas.json, herramientas_grupo1.py, herramien
 - `TEXTO_EXTERNO`: herramientas cuyo resultado marca la tarea como «contaminada».
 - `GUARDAN_SOBRE_REIZO`: recordar, sugerencias y registro_habitos, que piden confirmación si la tarea está
   contaminada.
-- `ESQUEMA_ACCION`: `{pensamiento ≤120, herramienta (enum), argumentos, mensaje_final opcional}`.
+- `ESQUEMA_ACCION`: `{pensamiento ≤120, herramienta (enum), argumentos, mensaje_final opcional}`. `mensaje_final`
+  se valida como `finalizar` y `CIERRE_RAPIDO` (perfil de `config.json`) puede apagarlo ([[cierre-rapido-mensaje-final]]).
 - `prompt_sistema(voz)`: reglas, catálogo y memorias para el prompt. En modo voz añade `MODO_VOZ`.
 
 ## Añadir una herramienta nueva (lista de cambios)

@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: d4b36dd
-verificado_fecha: 2026-10-10
+verificado_commit: d95855d
+verificado_fecha: 2026-10-11
 fuentes: [comparacion_modelos/resumen_gemma_q5_llama_b11429.json, comparacion_modelos/motor_llama_cpp_b11429.json, modelo.py, muestreo_gramatica.py, vision.py, transcripcion.py, requirements.txt]
 ---
 # Motor: llama-cpp-python 0.3.36 frente a llama.cpp b11429 (servidor)

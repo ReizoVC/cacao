@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: 8a78d51
-verificado_fecha: 2026-10-10
+verificado_commit: d95855d
+verificado_fecha: 2026-10-11
 fuentes: [herramientas.json, agente_minimo.py, voz.py, modo_directo.py, ui_isla.py, entrada_fisica.py, herramientas_grupo1.py, herramientas_powershell.py, confirmacion_voz.py]
 ---
 # Permisos, bloqueos y confirmaciones

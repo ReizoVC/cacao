@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 945fa17
+verificado_commit: d95855d
 verificado_fecha: 2026-10-11
 fuentes: [comparacion_modelos/ejecutar.py, comparacion_modelos/integracion.py, comparacion_modelos/criterios.py, comparacion_modelos/resumir_ronda3.py, comparacion_modelos/README.md, comparacion_modelos/verificar.py]
 ---
@@ -11,7 +11,8 @@ Banco aislado para comparar modelos y motores sin tocar producción.
 ## Cómo funciona `ejecutar.py`
 
 - `prepare()` copia el código a `.comparacion-runtime/<modelo>[_<ronda>]/`:
-  - escribe allí su propio `config.json` (el modelo de `MODELS`, `n_ctx` 16384, KV q8_0, sin mmap);
+  - escribe allí su propio `config.json` (el modelo de `MODELS`, `n_ctx` 16384, KV q8_0, sin mmap), sin los perfiles
+    de producción (17bb46c);
   - deja `datos_locales.json` vacío;
   - quita el atajo de emergencia global.
 - Variables de entorno: `SIN_REALES=1` y `CONFIRMAR=s`. Comprueba que no haya juego (`guardia_juego`).

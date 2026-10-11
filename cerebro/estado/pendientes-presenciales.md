@@ -1,6 +1,6 @@
 ---
 estado: sin verificar
-verificado_commit: dd51ba6
+verificado_commit: d95855d
 verificado_fecha: 2026-10-11
 fuentes: [guia_instalacion_agente.md, SRS.md, config.json]
 ---
@@ -72,5 +72,6 @@ registros o datos personales. Pregúntaselo al usuario y anota la respuesta aqu�
 ## Del trabajo con modelos
 
 11. Puntuar las evaluaciones a ciegas: `resultados_ciegas.md` y `resultados_ciegas_q4.md` ([[backlog]] #20–21).
-12. Cambios de producción: la regla JSON está en el código (7d31aa7); swa_full=false se revirtió (397d0a2). Las 65
-    frases quedaron detenidas por una regresión sin explicar. El cierre rápido está **sin decidir** ([[backlog]] #3–5, #8).
+12. Cambios de producción: la regla JSON está en el código (7d31aa7); swa_full=false se revirtió para Gemma
+    (397d0a2). Las 65 frases con producción dieron 194/195. El cierre rápido se valida y se apaga en Qwen
+    (69297e4, d95855d; [[backlog]] #4).

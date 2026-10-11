@@ -44,7 +44,8 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[evaluacion-65-frases]]: pruebas.json, cómo correrla en simulación y sus criterios
 - [[comparacion-modelos]]: banco aislado ejecutar.py, rondas y evaluación a ciegas
 - [[lista-qwen9b-ronda2]]: lista de comprobación y criterio confirmado de la prueba de Qwen 9B
-- [[resultado-qwen9b-2026-10-11]]: Qwen 9B frente a Gemma: banco 189/195 y producción 173/195; no pasa
+- [[resultado-qwen9b-2026-10-11]]: Qwen 9B frente a Gemma en el banco (ronda 2, mismo código): 189/195, un (c)
+- [[resultado-qwen9b-produccion]]: Qwen 9B en producción: 173/195 y, con el cierre rápido arreglado, 182/195; no pasa
 
 ## Estado
 - [[estrategia-recursos]]: prioridad del usuario: mínimos recursos, herramientas antes que modelo, memoria de experiencia

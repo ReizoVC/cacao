@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: dd51ba6
+verificado_commit: d95855d
 verificado_fecha: 2026-10-11
 fuentes: [agente_minimo.py, voz.py, iniciar_cacao.py, modelo.py, muestreo_gramatica.py, config.json, herramientas.json]
 ---
@@ -45,8 +45,8 @@ proceso aparte, sin modelo.
    - si no, llama a `ejecutar()`: permisos, planificadores sin efecto, confirmación física y luego la
      implementación. El resultado vuelve al historial como mensaje de usuario;
    - `registrar_resultado()`: con dos alternativas fallidas corta y pregunta;
-   - cierre rápido: si la acción trae `mensaje_final` y su efecto quedó verificado, termina sin otra llamada al
-     modelo ([[cierre-rapido-mensaje-final]]).
+   - cierre rápido: si la acción trae `mensaje_final`, su efecto quedó verificado y `validar_finalizacion` lo
+     acepta, termina sin otra llamada al modelo. El perfil `qwen9b` lo apaga ([[cierre-rapido-mensaje-final]]).
 5. **Respuesta.** La lee Piper. El pensamiento y los pasos solo van al registro. Se añade una sugerencia si toca y
    se notifica el estado a la isla.
 

@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: dd51ba6
+verificado_commit: d95855d
 verificado_fecha: 2026-10-11
 fuentes: [probar_protecciones_ejecucion.py, probar_obstaculos.py, probar_modo_directo.py, probar_fase6.py, probar_fase7.py, probar_campo_isla.py, probar_autocompletar_login.py, probar_confirmacion_voz.py, probar_modo_juego.py, probar_palabra_activacion.py, probar_seguimiento.py, probar_segundo_plano.py, probar_actividad_fisica.py, probar_powershell.py, probar_apps.py, probar_grupo4.py, probar_carga_modelo.py, probar_salida_utf8.py, probar_gramatica_json.py, agente_minimo.py, comparacion_modelos/verificar.py]
 ---
@@ -17,9 +17,9 @@ avisar.
 
 | Suite | Cubre | Baseline |
 |---|---|---|
-| `probar_protecciones_ejecucion.py` | Afirmaciones sin evidencia (también los falsos positivos), atajos como texto, dos alternativas | 44/44 |
+| `probar_protecciones_ejecucion.py` | Afirmaciones sin evidencia (también los falsos positivos), atajos como texto, dos alternativas, `forzar` no pedido | 66/66 (0a3ea28) |
 | `probar_obstaculos.py` | Efecto de clics y atajos, tabla de obstáculos | 35/35 |
-| `probar_modo_directo.py` | Política del modo sin confirmación | 138/138 |
+| `probar_modo_directo.py` | Política del modo sin confirmación; `forzar` en `ejecutar` | 140/140 |
 | `probar_fase6.py [seccion…]` | Hábitos, wiki, reflexión con modelo falso, sugerencias, lint (vault y bases temporales) | 142/142 |
 | `probar_fase7.py A` | Confirmaciones físicas e inyectadas (simuladas), WebSocket (protocolo v2: versión 4003, JSON que no es objeto), rechazo con el agente | 32/32 en 8a78d51 (≈40 s por esperas de 30 s) |
 | `probar_fase7.py B` / `C` | B: **isla real**. C: **clic inyectado de verdad** en la isla | no se corren sin permiso; últimas: 13/13 y 5/5 (491b45e / d80ea7f) |
@@ -34,7 +34,8 @@ avisar.
 | `probar_powershell.py` | Planificador, patrones, tiempo máximo; `--modelo` **carga Gemma** | «TODO OK», 54 líneas OK. El 59/59 de aa4c561 era la corrida `--modelo` |
 | `probar_apps.py` | Elección de apps contra `apps_categorias.json` (datos personales: mira solo el total) | «TODO OK», 72 líneas OK |
 | `probar_grupo4.py` | Planes del grupo 4; `mouse` sin bandeja de Windows ni menús de la isla | «TODO OK», 66 líneas OK en b15a349 (antes 51). Hace una captura real de la pantalla en memoria |
-| `probar_carga_modelo.py` | Importar sin modelo, `cargar_modelo()`, orden del arranque, `swa_full` | 13/13 |
+| `probar_carga_modelo.py` | Importar sin modelo, `cargar_modelo()`, orden del arranque, perfiles `gemma`/`qwen9b` (`swa_full`, `cierre_rapido`) | 25/25 (d95855d) |
+| `probar_cierre_rapido.py` | `mensaje_final` validado y `cierre_rapido` por perfil, con los textos de Qwen | 13/13 (d95855d) |
 | `probar_salida_utf8.py` | UTF-8 en `voz.py` y en el modo texto sin el lanzador | 6/6 |
 | `probar_gramatica_json.py` | Regla `char` estricta: lee **solo el vocabulario** del GGUF (sin pesos, 0 capas en la GPU) y pasa respuestas por el muestreador de gramática | 11/11 |
 | `comparacion_modelos`: `probar_criterios` | Criterio oficial del banco (`python -m unittest`, desde esa carpeta) | 7/7 |

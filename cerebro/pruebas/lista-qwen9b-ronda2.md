@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 0bedb0f
+verificado_commit: d95855d
 verificado_fecha: 2026-10-11
 fuentes: [comparacion_modelos/ejecutar.py, comparacion_modelos/resumir_qwen9b.py, comparacion_modelos/ronda2_protocolo.md, comparacion_modelos/resumir_ronda2.py, comparacion_modelos/resumen_ronda2.json, comparacion_modelos/resumen_ronda3.json, config.json]
 ---
@@ -30,7 +30,7 @@ Punto 2 del «Siguiente» de [[hoja-de-ruta]]. **Lanzada el 2026-10-11**: result
 | 3 | Motor de pruebas | `.venv-pruebas`: llama_cpp 0.3.36 y jsonschema | 0.3.36 y 4.26.0 |
 | 4 | Suites del banco | desde `comparacion_modelos/`: `.venv-pruebas\Scripts\python -m unittest probar_criterios probar_integracion` | sin correr hoy (antes 7/7 y 4/4) |
 | 5 | **Sin sobrescribir** | `--salida comparacion_modelos\datos\qwen9b_<fecha>`: se niega si la carpeta ya tiene datos del modelo y usa un runtime propio | hecho (945fa17), probado en seco |
-| 6 | `swa_full` heredado | `prepare()` copia `config.json`; desde 397d0a2 no trae `swa_full` (valor por defecto). No usar `--swa-full`: busca una línea de `modelo.py` que ya no existe y se para | anotar en el informe |
+| 6 | `swa_full` heredado | `prepare()` copia `config.json` y quita `modelo_activo`, `perfiles`, `swa_full` y `sin_pensamiento` (17bb46c): valor por defecto. No usar `--swa-full`: busca una línea de `modelo.py` que ya no existe y se para | anotar en el informe |
 | 7 | Visión (opcional) | el mmproj de Qwen está en `modelos/comparacion/` (D:, disco duro: carga lenta, sin efecto en la medición) | existe (918 MB) |
 
 ## C. Justo antes de lanzar (con el usuario)
