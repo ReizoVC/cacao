@@ -59,3 +59,4 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[mantenimiento]]: chequeo de frescura, formato y privacidad
 - [[log]]: registro cronológico de cambios del cerebro
 - [[log-2026-10-10]]: entradas archivadas del 2026-10-10
+- [[log-2026-10-11-isla]]: entradas archivadas del 2026-10-11 (isla: traspaso, bandeja y prueba física)
