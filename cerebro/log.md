@@ -21,3 +21,10 @@ Entradas anteriores: [[log-2026-10-10]], [[log-2026-10-11-isla]] y [[log-2026-10
 - No van a `main` hasta compilar: v2 y v3 no se conectan (4003). Página `musica-isla` al día.
 - Al revisar la línea mínima de Codex (e30e4fe, e441b90) se pidieron correcciones: con la línea apagada cambiaba
   el comportamiento. No se fusionó.
+
+## 2026-10-11: Qwen 9B frente a Gemma, contrato de la ronda 2 (0bedb0f)
+
+- Gemma y luego Qwen con `--salida` (`datos/gemma_2026-10-11`, `datos/qwen9b_2026-10-11`); resumen
+  `comparacion_modelos/resumen_qwen9b_2026-10-11.json`. Gemma 195/195; Qwen 189/195, VRAM pico 7 781 frente a 13 076.
+- Clasificación de 49 casos distintos: 37 (a), 11 (b), 1 (c) (#56 s22, cierre forzado no pedido). **No pasa.**
+  Página nueva `resultado-qwen9b-2026-10-11`. `qwen-como-cerebro` sin cambiar: propuesta en el reporte.

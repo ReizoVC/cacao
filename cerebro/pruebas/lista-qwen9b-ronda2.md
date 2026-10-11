@@ -6,8 +6,7 @@ fuentes: [comparacion_modelos/ejecutar.py, comparacion_modelos/resumir_qwen9b.py
 ---
 # Lista de comprobación: prueba de Qwen 3.5 9B Q5 (contrato de la ronda 2)
 
-Punto 2 del «Siguiente» de [[hoja-de-ruta]]. **Preparada, sin lanzar**: espera la orden del coordinador y el permiso
-del usuario (usa la GPU). No cambia producción: todo corre en `.comparacion-runtime/` con `.venv-pruebas`.
+Punto 2 del «Siguiente» de [[hoja-de-ruta]]. **Lanzada el 2026-10-11**: resultado en [[resultado-qwen9b-2026-10-11]]. No cambia producción: todo corre en `.comparacion-runtime/` con `.venv-pruebas`.
 
 ## A. Decidir antes de lanzar (no es técnico)
 
