@@ -19,17 +19,18 @@ Cada punto se comprobó contra Git y los archivos el 2026-10-10:
 | # | Punto | Estado | Evidencia |
 |---|---|---|---|
 | 1 | Protecciones del ejecutor en producción | hecho | 9e2c1f1 y 5889dda; `protecciones_ejecucion.py` |
-| 2 | Salida UTF-8 | hecho (solo con el lanzador) | `iniciar_cacao.py:70`, 99fd1bc |
-| 3 | Regla JSON sin caracteres de control en producción | pendiente | regla `char` de `.venv` sin cambios; solo `integracion.py` la parchea |
+| 2 | Salida UTF-8 | hecho | lanzador (99fd1bc) y también `voz.py` y el modo texto (8e72787, suite `probar_salida_utf8.py`) |
+| 3 | Regla JSON sin caracteres de control en producción | hecho en código, sin medir | 7d31aa7 (`modelo.py`, `probar_gramatica_json.py`) |
 | 4 | Decidir el cierre rápido `mensaje_final` frente al contrato de pruebas | pendiente | `agente_minimo.py:433` y 817-827 |
-| 5 | `swa_full=False` en producción | pendiente | ni `modelo.py` ni `config.json` lo pasan |
-| 6 | Corregir los falsos positivos de la protección («escrita», «sonido… está», «no he podido») | pendiente | `_CLAIMS` y `_NEGATED_CLAIM` sin cambios desde 5889dda |
+| 5 | `swa_full=False` en producción | hecho en código, sin reiniciar ni medir | eb5a9c4 (`config.json`, `modelo.py`) |
+| 6 | Corregir los falsos positivos de la protección | hecho en código | c6a74f3 (`protecciones_ejecucion.py`) |
 | 7 | Volver a pasar las suites sin modelo después de 9e2c1f1 | desconocido | ningún commit posterior registra totales |
 | 8 | 65 frases con el prompt de producción después de las protecciones | pendiente | la última pasada (`resultados_pruebas_65_fecha.json`) es del 2026-10-06 |
 | 9 | Commit de los cambios de `ejecutar.py`, `pruebas_nuevas_30.json` y `medir_recarga_completa.ps1` | hecho | cabf3ed |
 | 10 | Revisar la línea base de `verificar.py` | desconocido | `REPORTE` dice que falla; no se ejecutó |
 | 11 | Apagado automático del modo sin confirmación (SRS R-17, «valorar») | pendiente | `modo_directo.py` no tiene temporizador |
 | 11b | `entrenar_cacao.py` apunta a datos que se movieron a `D:\Cacao\entrenamiento\` (cambiar su ruta es código de Cacao: pedir permiso) | pendiente | `D:\Cacao\manifiesto_movimientos.md` |
+| 11c | Carga perezosa del modelo: importar `agente_minimo` ya no usa la GPU | hecho en código | 14c17cb; `suites.md` y `lecciones.md` aún dicen lo contrario ([[mantenimiento]]) |
 
 ## Modelos y voz (experimental)
 

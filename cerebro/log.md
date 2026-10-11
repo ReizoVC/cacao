@@ -35,3 +35,12 @@ Páginas leídas después de `CLAUDE.md` e `index.md`, en cinco preguntas. En ni
 
 **Frescura:** `frescura.py` solo avisa de los cambios sin commit de `comparacion_modelos/ejecutar.py`, que son
 trabajo previo pendiente (backlog #9).
+
+## 2026-10-10: liberación de espacio en C: (0b90b51, 4daa737, 16e25a8)
+
+- Datos de entrenamiento de «Cacao» movidos a `D:\Cacao\entrenamiento\`, con SHA256 verificado y manifiesto en
+  `D:\Cacao\manifiesto_movimientos.md`.
+- Borrados, porque se regeneran: la caché de pip y `target\debug` de la isla.
+- Qwen 3.5 9B Q5 copiado a `modelos/comparacion_local/`. `modelos/comparacion/` es una unión a D: (00c36fb).
+- Otra sesión cambió producción en paralelo: 8e72787, 14c17cb, c6a74f3, 7d31aa7 y eb5a9c4. El backlog ya lo
+  refleja. **Hay 29 páginas por volver a verificar** (`frescura.py`).
