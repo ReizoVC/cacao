@@ -20,7 +20,7 @@ MODELS = {
     'gemma_q5': ROOT / 'modelos/gemma-4-12b-it-Q5_K_M.gguf',
     'gemma_q4': Path(r'D:\Cacao\ModelosComparacion\gemma-4-12b-it-UD-Q4_K_XL.gguf'),
     'qwen_q4': ROOT / 'modelos/comparacion/Qwen3.5-9B-UD-Q4_K_XL.gguf',
-    'qwen_q5': ROOT / 'modelos/comparacion/Qwen3.5-9B-UD-Q5_K_XL.gguf',
+    'qwen_q5': ROOT / 'modelos/comparacion_local/Qwen3.5-9B-UD-Q5_K_XL.gguf',  # copia en C: (SSD); original en D:
     'qwen_wrench_q4': ROOT / 'modelos/comparacion/Wrench-9B-Q4_K_M.gguf',
 }
 QUESTIONS = [
