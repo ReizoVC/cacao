@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 10b63cc
+verificado_commit: d4b36dd
 verificado_fecha: 2026-10-10
 fuentes: [iniciar_cacao.py, crear_acceso_directo.ps1, voz.py, agente_minimo.py, registro_habitos.py, emergencia.py, ui_isla.py]
 ---
@@ -16,7 +16,7 @@ fuentes: [iniciar_cacao.py, crear_acceso_directo.ps1, voz.py, agente_minimo.py, 
 | Al iniciar sesión | `iniciar_cacao.py --al-inicio` (el acceso de Inicio) | Espera 60 s y, con `ESPERAR_JUEGO=1`, espera a que se cierre un juego |
 | Simulación | `.venv\Scripts\python iniciar_cacao.py --simular` | Solo comprueba y dice lo que haría; no carga nada |
 | Con terminal (depuración) | `.venv\Scripts\python voz.py` | Modo voz a la vista |
-| Modo texto | `.venv\Scripts\python agente_minimo.py` | Sin audio. Carga el modelo al importar |
+| Modo texto | `.venv\Scripts\python agente_minimo.py` | Sin audio. `cargar_modelo()` al empezar (importar el módulo ya no lo carga) |
 | Registro de hábitos | `.venv\Scripts\pythonw registro_habitos.py` | Proceso aparte, sin modelo, de una sola instancia |
 
 - `crear_acceso_directo.ps1` crea `Cacao.lnk` (ignorado por Git); `-Inicio` lo añade a la carpeta de Inicio y

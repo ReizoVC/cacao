@@ -1,6 +1,6 @@
 ---
 estado: sin verificar
-verificado_commit: 10b63cc
+verificado_commit: d4b36dd
 verificado_fecha: 2026-10-10
 fuentes: [guia_instalacion_agente.md, SRS.md, config.json]
 ---
@@ -38,4 +38,5 @@ registros o datos personales. Pregúntaselo al usuario y anota la respuesta aqu�
 ## Del trabajo con modelos
 
 11. Puntuar las evaluaciones a ciegas: `resultados_ciegas.md` y `resultados_ciegas_q4.md` ([[backlog]] #20–21).
-12. Decidir los cambios de producción: swa_full, la regla JSON y el cierre rápido ([[backlog]] #3–5).
+12. Cambios de producción: swa_full y la regla JSON ya están en el código (eb5a9c4, 7d31aa7). Falta el permiso para
+    reiniciar Cacao y medir la VRAM, y para pasar las 65 frases. El cierre rápido está **sin decidir** ([[backlog]] #3–5, #8).

@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 10b63cc
+verificado_commit: d4b36dd
 verificado_fecha: 2026-10-10
 fuentes: [probar_voz.py, probar_memoria.py, probar_emergencia.py, probar_reflexion.py, probar_vision.py, probar_seguridad_vision.py, prueba_real.py, validar_transcripcion.py, guardia_juego.py]
 ---

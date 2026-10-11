@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 10b63cc
+verificado_commit: d4b36dd
 verificado_fecha: 2026-10-10
 fuentes: [comparacion_modelos/ejecutar.py, comparacion_modelos/integracion.py, comparacion_modelos/criterios.py, comparacion_modelos/resumir_ronda3.py, comparacion_modelos/README.md, comparacion_modelos/verificar.py]
 ---
@@ -32,16 +32,31 @@ Banco aislado para comparar modelos y motores sin tocar producción.
 ## Evaluación a ciegas
 
 - Las respuestas de conversación se mezclan con A/B sorteados por pregunta, con la clave en un archivo aparte.
-- Archivos: `resultados_ciegas.md` (Gemma Q5 frente a Qwen Q5) y `resultados_ciegas_q4.md` (Q5 frente a Q4, sin
-  commit).
+- Archivos: `resultados_ciegas.md` (Gemma Q5 frente a Qwen Q5) y `resultados_ciegas_q4.md` (Q5 frente a Q4). El
+  segundo y su clave entraron en cabf3ed y se sacaron del índice en 4daa737: siguen en el disco, fuera de Git.
 - Las dos están **sin puntuar**.
+
+## `verificar.py` (este directorio)
+
+Comprueba hashes congelados y entregables sin cargar modelos. Si llega al final, **reescribe `integridad.json`** y
+guarda el hash de `apps_categorias.json`. Por eso no se ejecutó tal cual. El 2026-10-10 se repitieron sus
+comparaciones en una copia de solo lectura:
+- `config.json`: coincidía hasta 68d0b4a (con CRLF). Desde eb5a9c4 (`swa_full`) ya no coincide, y es la primera
+  aserción.
+- `ronda3_congelado.json`:
+  - `ejecutar.py` dejó de coincidir en 84fbe0b;
+  - `protecciones_ejecucion.py`, en 5889dda;
+  - `agente_minimo.py` no coincide con ninguna versión en Git (se congeló con cambios sin commit).
+- Ronda 2, visión de la ronda 2, conversación nueva y motor `.venv` = `.venv-pruebas`: coinciden.
+
+Conclusión: **falla de verdad desde 84fbe0b/5889dda**, porque congela la producción de la ronda 3. No indica
+corrupción. Actualizar sus hashes es una decisión del usuario. Las comprobaciones de la sección de Gemma Q4 (por
+ejemplo, el tamaño del GGUF en `modelos/comparacion`) no se repitieron.
 
 ## Avisos
 
-- `verificar.py` compara hashes congelados, entre ellos el de `config.json`. Según `REPORTE_TRABAJO_CACAO.md`
-  puede fallar porque los archivos cambiaron después (**sin verificar**: no se ejecutó).
-- `ejecutar.py` tiene cambios **sin commit** (`--swa-full`, `--test-set` y la ruta de Gemma Q4 en otro disco)
-  ([[backlog]]).
+- `ejecutar.py` está en Git desde cabf3ed (`--swa-full`, `--test-set` y las rutas). En 0b90b51 Qwen pasó a leerse de
+  `modelos/comparacion_local`.
 - Los runtimes y scripts de WSL viven en `.comparacion-runtime/`, que Git ignora: una clonación no los trae
   ([[mapa-archivos]]).
 

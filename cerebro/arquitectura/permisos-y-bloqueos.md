@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 10b63cc
+verificado_commit: d4b36dd
 verificado_fecha: 2026-10-10
 fuentes: [herramientas.json, agente_minimo.py, voz.py, modo_directo.py, ui_isla.py, entrada_fisica.py, herramientas_grupo1.py, herramientas_powershell.py, confirmacion_voz.py]
 ---

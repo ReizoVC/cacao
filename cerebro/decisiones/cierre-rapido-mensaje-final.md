@@ -1,8 +1,8 @@
 ---
 estado: verificado
-verificado_commit: 10b63cc
+verificado_commit: d4b36dd
 verificado_fecha: 2026-10-10
-fuentes: [agente_minimo.py, comparacion_modelos/integracion.py, resultados_comparacion_modelos.md, resultados_swa_y_recursos.md, iniciar_cacao.py]
+fuentes: [agente_minimo.py, comparacion_modelos/integracion.py, resultados_comparacion_modelos.md, resultados_swa_y_recursos.md, iniciar_cacao.py, modelo.py, voz.py]
 ---
 # Cierre rápido con mensaje_final y contrato de las rondas 2 y 3
 
@@ -26,13 +26,13 @@ fuentes: [agente_minimo.py, comparacion_modelos/integracion.py, resultados_compa
 El piloto documentó que `mensaje_final` terminaba toda la tarea después de una sola acción en pedidos de varias
 (#29, #30, #31 y #34) (`resultados_comparacion_modelos.md`, ronda 2).
 
-## Qué hay en producción (comprobado en `resultados_swa_y_recursos.md` §4)
+## Qué hay en producción (comprobado en el código)
 
 | Cambio | En producción |
 |---|---|
-| Regla JSON sin caracteres de control | No (la regla de `.venv` sigue igual) |
-| UTF-8 | Sí, al arrancar desde el lanzador (`iniciar_cacao.py` pone `PYTHONIOENCODING`) |
-| Contrato sin cierre rápido | No |
+| Regla JSON sin caracteres de control | Sí desde 7d31aa7: `modelo.py` cambia la regla en el proceso (`.venv` no se toca); `probar_gramatica_json.py` |
+| UTF-8 | Sí: el lanzador (`PYTHONIOENCODING`) y, desde 8e72787, `agente_minimo.salida_utf8()` en `voz.py` y en el modo texto |
+| Contrato sin cierre rápido | No. **Pendiente de decidir por el usuario** |
 
 ## Consecuencia
 

@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 10b63cc
+verificado_commit: d4b36dd
 verificado_fecha: 2026-10-10
 fuentes: [evaluar_pruebas.py, iniciar_cacao.py, comparacion_modelos/ejecutar.py, crear_acceso_directo.ps1, voz.py]
 ---
@@ -15,6 +15,8 @@ Ejecutar desde la raíz del repositorio. Todo usa el intérprete `.venv\Scripts\
 .venv\Scripts\python probar_protecciones_ejecucion.py
 .venv\Scripts\python probar_modo_directo.py
 .venv\Scripts\python probar_fase6.py            # o una sección: probar_fase6.py <seccion>
+.venv\Scripts\python probar_fase7.py A          # solo A: sin argumentos abre la isla real (B)
+cd comparacion_modelos & ..\.venv-pruebas\Scripts\python -m unittest probar_criterios probar_integracion
 .venv\Scripts\python iniciar_cacao.py --simular
 python -I cerebro/frescura.py                   # frescura del cerebro, solo lectura
 ```

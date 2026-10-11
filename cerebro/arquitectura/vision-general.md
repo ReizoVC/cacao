@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 10b63cc
+verificado_commit: d4b36dd
 verificado_fecha: 2026-10-10
 fuentes: [agente_minimo.py, voz.py, iniciar_cacao.py, modelo.py, muestreo_gramatica.py, config.json, herramientas.json]
 ---
@@ -13,7 +13,7 @@ fuentes: [agente_minimo.py, voz.py, iniciar_cacao.py, modelo.py, muestreo_gramat
 | Lanzador sin terminal | `iniciar_cacao.py` | [[arrancar-detener]] |
 | Modo voz (proceso principal) | `voz.py` | [[voz]] |
 | Agente: prompt, esquema, bucle, ejecutor | `agente_minimo.py` | [[agente-y-herramientas]] |
-| Carga del modelo | `modelo.py` + `muestreo_gramatica.py` | [[configuracion-vigente]] |
+| Carga del modelo | `agente_minimo.cargar_modelo()` → `modelo.py` + `muestreo_gramatica.py` (importar no carga) | [[configuracion-vigente]] |
 | Protecciones del bucle | `protecciones_ejecucion.py` | [[protecciones]] |
 | Permisos, bloqueos, confirmaciones | `herramientas.json`, `ui_isla.py`, `entrada_fisica.py`, `modo_directo.py` | [[permisos-y-bloqueos]] |
 | Isla (interfaz) | `ui_isla.py` ↔ repositorio `C:\asistente-ui` | [[isla-websocket]] |

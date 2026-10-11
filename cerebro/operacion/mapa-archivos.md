@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 10b63cc
+verificado_commit: d4b36dd
 verificado_fecha: 2026-10-10
 fuentes: [agente_minimo.py, voz.py, iniciar_cacao.py, .gitignore]
 ---
@@ -25,13 +25,13 @@ Los nombres son relativos a la raíz del repositorio. Actualiza esta página al 
 
 | Rol | Archivos |
 |---|---|
-| Suites sin modelo | `probar_*.py` ([[suites]]) |
+| Suites sin modelo | `probar_*.py` ([[suites]]); desde la Fase 1 también `probar_carga_modelo.py`, `probar_salida_utf8.py` y `probar_gramatica_json.py` |
 | Evaluación con modelo | `evaluar_pruebas.py`, `benchmark_gramatica.py`, `pruebas.json` ([[evaluacion-65-frases]]) |
 | Pruebas reales o presenciales | `prueba_real.py`, `prueba_presencial_isla.py` |
 | Mediciones | `medir_*.py`, `validar_transcripcion.py`, `simular_habitos.py` |
 | Palabra «Cacao» | `entrenar_cacao.py`, `grabar_cacao.py`, `grabar_fondo_cacao.py`, `evaluar_*_cacao*.py` |
 | Diagnósticos puntuales | `diagnostico_actividad.py`, `diagnostico_atajos*.py` |
-| Comparación de modelos | `comparacion_modelos/` ([[comparacion-modelos]]) |
+| Comparación de modelos | `comparacion_modelos/`, con `verificar.py` (hashes congelados) y sus `probar_*.py` (unittest) ([[comparacion-modelos]]) |
 
 ## Documentos
 
@@ -39,13 +39,14 @@ Los nombres son relativos a la raíz del repositorio. Actualiza esta página al 
 |---|---|
 | Para Claude Code | `CLAUDE.md`, `cerebro/` |
 | Requisitos y guía | `SRS.md`, `guia_instalacion_agente.md`, `diseno_fase6.md`, `diseno_fase7.md` |
-| Informes | `resultados_comparacion_modelos.md`, `resultados_swa_y_recursos.md`, `clasificacion_fallos_qwen.md` |
+| Informes | `resultados_comparacion_modelos.md`, `resultados_swa_y_recursos.md`, `clasificacion_fallos_qwen.md`, `INFORME_VALIDACION_SWA_GENERALIZACION.md` (cabf3ed, **sin verificar**) |
 | Informes de otras herramientas (**sin verificar**) | `REPORTE_TRABAJO_CACAO.md`, `EvaluacionIA.md` |
 | Evaluaciones a ciegas | `resultados_ciegas*.md`, `respuestas_*_ciegas.md`; claves en `clave_*.md` |
 
 ## Ignorados por Git (no los trae una clonación)
 
-- `.venv/`, `.venv-pruebas/` y `modelos/` (los GGUF, Piper y el detector «Cacao»).
+- `.venv/`, `.venv-pruebas/` y `modelos/` (los GGUF, Piper y el detector «Cacao»). `.venv-pruebas` tiene el mismo
+  llama_cpp que `.venv` y además `jsonschema` (lo usa `comparacion_modelos/probar_integracion.py`).
 - `.comparacion-runtime/`: motores, perfiles de TTS y scripts de WSL.
 - `comparacion_modelos/datos/`: datos crudos.
 - `resultados_*.json`, `resultados_*.md` y `*.log` (salvo los añadidos a mano con `-f`).

@@ -1,30 +1,39 @@
 ---
 estado: verificado
-verificado_commit: 10b63cc
+verificado_commit: d4b36dd
 verificado_fecha: 2026-10-10
-fuentes: [protecciones_ejecucion.py, agente_minimo.py, herramientas_grupo4.py, obstaculos.py, emergencia.py, resultados_swa_y_recursos.md]
+fuentes: [protecciones_ejecucion.py, probar_protecciones_ejecucion.py, agente_minimo.py, herramientas_grupo4.py, obstaculos.py, emergencia.py, resultados_swa_y_recursos.md]
 ---
 # Protecciones del ejecutor
 
-Son deterministas: no dependen del modelo. Se añadieron en el commit 9e2c1f1 y se reforzaron en 5889dda.
+Son deterministas: no dependen del modelo. Se añadieron en el commit 9e2c1f1, se reforzaron en 5889dda y el
+detector de afirmaciones se rehízo en c6a74f3.
 
 ## 1. Sin efecto verificado, no hay «hecho»
 
 - `resultado_verificado()` acepta un resultado como evidencia según la herramienta (`volumen_actual`,
   `app_abierta`, `cerrada`, `ruta_final`…, o `efecto_visible`).
-- `afirmaciones_sin_evidencia(mensaje, verificadas)` busca con las expresiones regulares de `_CLAIMS` («cerré»,
-  «moví», «escribí», «desplacé», «volumen al 40 %»…) y excluye las cláusulas negadas (`_NEGATED_CLAIM`).
+- `afirmaciones_sin_evidencia(mensaje, verificadas)` busca candidatas con los patrones de `_CLAIMS`. Cada patrón
+  marca con `(?P<v>…)` la palabra que afirma la acción. Después, `_afirma()` analiza la frase:
+  - descarta las preguntas y las frases con «no puedo / no he podido verificar…» (`_SIN_COMPROBAR`);
+  - descarta un negador («no», «nunca», «ni», «sin»…) dentro de la misma cláusula. Las cláusulas se separan por
+    puntuación y por «pero», «y», «aunque»…;
+  - descarta el subjuntivo («se haya cerrado») y los infinitivos;
+  - un participio solo cuenta con auxiliar («he escrito», «quedó guardado», «está cerrada») o al final de una
+    cláusula corta sin cópula («Calculadora abierta.»);
+  - descarta «de sonido» sin artículo («Grabadora de sonido», «tarjeta de sonido»).
 - En `atender()`, un `finalizar` con afirmaciones sin evidencia recibe una corrección. Con 2 correcciones, la tarea
   termina preguntando al usuario.
 - Además, un clic o atajo sin comprobar (`sin_verificar`) obliga a comprobarlo, como máximo 2 recordatorios.
 
-**Falsos positivos conocidos** ([[riesgos]]):
-- «escrita» coincide con `escrit[oa]`;
-- «sonido … está» activa el patrón de volumen;
-- «no he podido» y «no puedo» no cuentan como negación, porque `_NEGATED_CLAIM` solo reconoce «no pude», «no
-  logré»…
+**Falsos positivos corregidos** (casos de `resultados_swa_y_recursos.md`, ahora en la suite):
+- «escrita» como adjetivo;
+- «la Grabadora de sonido está instalada»;
+- «no he podido» y «no puedo verificar».
 
-Hay casos con las tres formas en `resultados_swa_y_recursos.md`.
+**Límite conocido (falso negativo):** una negación anterior en la misma cláusula también anula la afirmación
+(«La ventana que no respondía la cerré» no se detecta). Hay que tenerlo en cuenta si se amplía la lista de
+negadores.
 
 ## 2. Dos alternativas fallidas, alto
 
@@ -47,5 +56,9 @@ van con `accion: "atajo"` y el arreglo `teclas` (`herramientas_grupo4.py`).
 
 ## Pruebas
 
-`probar_protecciones_ejecucion.py` y `probar_obstaculos.py` (ver [[suites]]). El banco de comparación las aplica
-igual (`comparacion_modelos/ejecutar.py`).
+- `probar_protecciones_ejecucion.py`: 44/44 en c6a74f3, de las cuales 19 son de los falsos positivos y de los
+  controles.
+- `probar_obstaculos.py`.
+
+Detalles en [[suites]]. El banco de comparación las aplica igual (`comparacion_modelos/ejecutar.py`). Las cifras de
+las rondas 2 y 3 se midieron con el detector anterior.

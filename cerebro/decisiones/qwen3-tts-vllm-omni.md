@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 10b63cc
+verificado_commit: d4b36dd
 verificado_fecha: 2026-10-10
 fuentes: [comparacion_modelos/resumen_convivencia_gemma_q4_qwen3_tts.json, comparacion_modelos/resumen_optimizacion_qwen3_tts.json, comparacion_modelos/resumen_convivencia_completa_wsl.json, config.json]
 ---

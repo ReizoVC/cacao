@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 10b63cc
+verificado_commit: d4b36dd
 verificado_fecha: 2026-10-10
 fuentes: [SRS.md, protecciones_ejecucion.py, herramientas.json, herramientas_powershell.py, resultados_swa_y_recursos.md, muestreo_gramatica.py, wiki.py, herramientas_grupo1.py]
 ---
@@ -16,9 +16,10 @@ Claude Code, más los nuevos.
 | Otra persona frente al PC (R-16) | Cualquiera puede confirmar con Enter o con la voz | Costumbre: apagar la escucha y el modo |
 | Actualizar llama-cpp-python rompe `LlamaRapida` y la visión (R-06) | Partes internas de 0.3.36 | Versión fijada ([[motor-llama-cpp]]) |
 | Windows Insider (R-07) | Cambios de API | Volver a probar tras cada actualización grande |
-| Falsos positivos de la protección | Respuestas correctas rechazadas que acaban confusas | Pendiente ([[protecciones]], [[backlog]]) |
+| Falsos positivos de la protección | Respuestas correctas rechazadas que acaban confusas | Corregidos en c6a74f3. Queda un falso negativo conocido con una negación anterior en la misma cláusula ([[protecciones]]) |
 | Producción ≠ banco de pruebas | Las cifras de las rondas 2 y 3 no describen producción | [[cierre-rapido-mensaje-final]] |
-| Baselines anteriores a 9e2c1f1 | Las suites no se volvieron a correr tras cambiar el ejecutor | [[suites]] |
+| `swa_full=False` y la regla JSON sin medir en producción | Se aplican en el próximo arranque de Cacao. La VRAM real y las 65 frases no se han medido | [[swa-full-false]], [[backlog]] |
+| `verificar.py` falla | Congela la producción de la ronda 3, que ya cambió | Esperado; actualizar los hashes es decisión del usuario ([[comparacion-modelos]]) |
 | RAM al recargar la pila WSL | Windows llegó al 99,96 %; 1,15 GiB de swap en WSL | Medido en `resultados_swa_y_recursos.md` |
 | Margen de VRAM en la pila WSL | 1,5–1,9 GiB libres en el pico | Modo juego; no reducir Whisper ni el contexto |
 | Licencia de assets de la isla (R-13) | La isla adapta Coucou | Uso personal; repositorio sin publicar |

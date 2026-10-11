@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 10b63cc
+verificado_commit: d4b36dd
 verificado_fecha: 2026-10-10
 fuentes: [comparacion_modelos/resumen_gemma_q5_llama_b11429.json, comparacion_modelos/motor_llama_cpp_b11429.json, modelo.py, muestreo_gramatica.py, vision.py, transcripcion.py, requirements.txt]
 ---
@@ -28,7 +28,10 @@ Producción depende de partes internas de 0.3.36:
   «topk».
 - **`vision.ManejadorVision`** sustituye `_mtmd_cpp` para fijar los tokens por imagen.
 - **`transcripcion.py`** clona el contexto (audio nativo) usando atributos internos.
-- **`modelo.py`** captura los registros de llama.cpp en `errores_llama.log`.
+- **`modelo.py`**:
+  - captura los registros de llama.cpp en `errores_llama.log`;
+  - cambia `llama_grammar.PRIMITIVE_RULES["char"]` (7d31aa7). Con llama-server, la regla JSON hay que
+    comprobarla en el lado del servidor.
 
 Con llama-server todo eso pasa a ser HTTP: gramática y esquema por petición, visión con `--mmproj` (b11429 limitó
 los tokens de imagen a 512 por `n_ubatch`) y control de interrupciones.

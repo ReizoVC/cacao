@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 10b63cc
+verificado_commit: d4b36dd
 verificado_fecha: 2026-10-10
 fuentes: [config.json, modelo.py, muestreo_gramatica.py, requirements.txt, agente_minimo.py]
 ---
@@ -20,8 +20,9 @@ Leída de `config.json`. La fuente de verdad es ese archivo; esta página puede 
 | `flash_attn` | true |
 | `type_k` / `type_v` | q8_0 / q8_0 |
 | `modo_gramatica` | `topk` (`muestreo_gramatica.LlamaRapida`) |
+| Regla `char` de la gramática JSON | estricta, sin U+0000–U+001F: la pone `modelo.py` al importarse (7d31aa7) |
 | `use_mmap` | false ([[use-mmap-false]]) |
-| `swa_full` | no se pasa: el valor por defecto de llama-cpp-python ([[swa-full-false]]) |
+| `swa_full` | false desde eb5a9c4; Cacao no se ha reiniciado con este valor ni se ha medido ([[swa-full-false]]) |
 | Muestreo en `pedir_accion` | temperatura 0,3, top_p 0,95, top_k 64, 512 tokens |
 
 ## Voz

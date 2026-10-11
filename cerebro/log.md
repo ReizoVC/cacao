@@ -44,3 +44,33 @@ trabajo previo pendiente (backlog #9).
 - Qwen 3.5 9B Q5 copiado a `modelos/comparacion_local/`. `modelos/comparacion/` es una unión a D: (00c36fb).
 - Otra sesión cambió producción en paralelo: 8e72787, 14c17cb, c6a74f3, 7d31aa7 y eb5a9c4. El backlog ya lo
   refleja. **Hay 29 páginas por volver a verificar** (`frescura.py`).
+
+## 2026-10-10: Fase 1 de producción (14c17cb, 7d31aa7, 8e72787, c6a74f3, eb5a9c4)
+
+- **Código:**
+  - carga perezosa con `cargar_modelo()`;
+  - regla JSON estricta en `modelo.py`;
+  - `salida_utf8()` en `voz.py` y en el modo texto;
+  - detector de afirmaciones por cláusula, sin los falsos positivos;
+  - `swa_full: false` preparado (Cacao sin reiniciar y sin medir).
+- **Suites nuevas:** `probar_carga_modelo.py`, `probar_salida_utf8.py` y `probar_gramatica_json.py`.
+- **Suites sin modelo:** todas pasan. Totales en `suites.md` (backlog #7).
+- **`verificar.py`:** falla de verdad desde 84fbe0b y 5889dda (hashes de la ronda 3). No se ejecutó tal cual,
+  porque reescribe `integridad.json`. El detalle está en `comparacion-modelos` (backlog #10).
+- **Páginas con errores o atrasadas ya antes del cambio (6):**
+  - `backlog`: UTF-8 marcado «hecho», #9 y #10;
+  - `swa-full-false` y `comparacion-modelos`: «sin commit» tras cabf3ed;
+  - `suites`: el 59/59 de PowerShell era la corrida con modelo, y `probar_fase7` A y `probar_modo_juego` cargaban
+    Gemma;
+  - `lecciones`: «las suites no lo importan» era falso;
+  - `mapa-archivos`: faltaban el informe de cabf3ed y `verificar.py`.
+- **Páginas actualizadas por el cambio (9):** `protecciones`, `cierre-rapido-mensaje-final`, `configuracion-vigente`,
+  `voz`, `arrancar-detener`, `riesgos`, `pendientes-presenciales`, `motor-llama-cpp` y `vision-general`. Otras 15 se
+  revisaron sin cambios de contenido; solo se actualizó su commit verificado.
+- **Huecos que obligaron a leer código:**
+  - la importación de `agente_minimo` también ejecutaba `sincronizar_apps()`;
+  - dónde está `verificar.py`;
+  - qué suites importaban `agente_minimo`;
+  - `jsonschema` solo está en `.venv-pruebas`.
+- **Backlog:** 11 temas pedidos no tienen rastro en el repositorio. Quedan como desconocidos.
+- **Frescura:** 0 páginas por revisar tras el cambio.
