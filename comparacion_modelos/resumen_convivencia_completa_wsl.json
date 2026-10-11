@@ -47,5 +47,37 @@
     "ahorro_normalizado_mib": 81,
     "decision": "Mantener 16384 tokens: 81 MiB no compensan reducir a la mitad el historial util."
   },
+  "ajuste_qwen3_tts": {
+    "whisper_modificado": false,
+    "whisper": "large-v3-turbo int8_float16",
+    "perfil_intermedio": {
+      "gpu_memory_utilization_talker": 0.15,
+      "gpu_memory_utilization_code2wav": 0.075,
+      "voces_ok": "5/5",
+      "transcripciones_ok": "5/5",
+      "primer_audio_promedio_s": 0.606,
+      "total_promedio_s": 0.891,
+      "pico_mib": 14511,
+      "libre_pico_mib": 1800
+    },
+    "perfil_ajustado": {
+      "gpu_memory_utilization_talker": 0.145,
+      "gpu_memory_utilization_code2wav": 0.07,
+      "voces_ok": "5/5",
+      "transcripciones_ok": "5/5",
+      "similitud_transcripcion_minima": 0.97,
+      "gemma_post_prueba_ok": true,
+      "primer_audio_promedio_s": 0.556,
+      "total_promedio_s": 0.842,
+      "rtf_promedio": 0.244,
+      "pico_mib": 14431,
+      "libre_pico_mib": 1880,
+      "ahorro_reposo_frente_original_mib": 214,
+      "ahorro_pico_frente_original_mib": 329,
+      "talker_kv_tokens": 2416,
+      "talker_concurrencia_para_2048": 1.18
+    },
+    "decision": "Usar 0.145/0.07 como candidato de integracion y no reducir mas antes de una prueba prolongada."
+  },
   "produccion_modificada": false
 }

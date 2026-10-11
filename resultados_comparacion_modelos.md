@@ -852,3 +852,29 @@ imágenes durante tareas largas. Las órdenes sencillas seguirían funcionando
 igual, pero las secuencias extensas alcanzarían antes el truncamiento. Se
 mantiene la recomendación de contexto 16.384; la reserva de Qwen3-TTS y la carga
 de Whisper ofrecen oportunidades de ahorro mucho mayores.
+
+### Ajuste de memoria de Qwen3-TTS
+
+Se mantuvieron sin cambios Gemma Q4 con visión y Whisper `large-v3-turbo
+int8_float16`. Se probaron dos perfiles de Qwen3-TTS frente al original
+`0,16/0,08`: uno intermedio `0,15/0,075` y otro ajustado `0,145/0,07`. Cada
+perfil generó cinco frases distintas, Whisper transcribió los cinco WAV y Gemma
+respondió después de la tanda.
+
+| Perfil TTS (talker/code2wav) | Voces | Transcripciones | Primer audio caliente | Total caliente | Pico conjunto | Libre en pico |
+|---|---:|---:|---:|---:|---:|---:|
+| Original `0,16/0,08` | 3/3 | 3/3 | 0,574 s | 1,103 s | 14.760 MiB | 1.551 MiB |
+| Intermedio `0,15/0,075` | 5/5 | 5/5 | 0,606 s | 0,891 s | 14.511 MiB | 1.800 MiB |
+| Ajustado `0,145/0,07` | 5/5 | 5/5 | 0,556 s | 0,842 s | 14.431 MiB | 1.880 MiB |
+
+El perfil ajustado redujo 214 MiB en reposo y 329 MiB en el pico frente a la
+prueba completa original. La similitud mínima de las transcripciones fue 0,97;
+Whisper no se cambió. No hubo audio vacío, errores, falta de memoria ni caída de
+Gemma. El talker conservó 2.416 tokens de caché para un máximo configurado de
+2.048 y una concurrencia calculada de 1,18; por tanto, no conviene reducir más
+la reserva sin reducir también la capacidad de una solicitud.
+
+**Recomendación:** adoptar `0,145/0,07` como perfil candidato de integración,
+manteniendo una sola solicitud simultánea. Antes de producción debe pasar una
+prueba prolongada con frases más largas y reinicios repetidos. El reconocimiento
+de voz permanece con `large-v3-turbo`.
