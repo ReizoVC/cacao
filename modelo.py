@@ -74,5 +74,5 @@ def crear_llm(config, esperar_juego=False, comprobar_juego=True):
     return LlamaRapida(model_path=str(config["modelo"]), n_gpu_layers=config["n_gpu_layers"],
                        n_ctx=config["n_ctx"], flash_attn=config["flash_attn"],
                        type_k=TIPOS_KV[config["type_k"]], type_v=TIPOS_KV[config["type_v"]],
-                       use_mmap=config.get("use_mmap", True), verbose=False,
+                       use_mmap=config.get("use_mmap", True), swa_full=config.get("swa_full"), verbose=False,
                        modo_gramatica=config["modo_gramatica"])

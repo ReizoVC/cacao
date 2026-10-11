@@ -41,6 +41,21 @@ ok("cargar_modelo conecta el atajo de emergencia", a.llm.interrumpir == a.emerge
 ok("cargar_modelo sincroniza las apps después de cargar", sincronizados == [1], sincronizados)
 a.llm = None
 
+# swa_full: config.json lo pasa a llama-cpp-python; sin la clave queda su valor por defecto (None)
+import modelo  # noqa: E402
+
+argumentos = []
+guardado = modelo.LlamaRapida
+modelo.LlamaRapida = lambda **k: argumentos.append(k) or LlmFalso()
+try:
+    modelo.crear_llm(a.CONFIG, comprobar_juego=False)
+    modelo.crear_llm({k: v for k, v in a.CONFIG.items() if k != "swa_full"}, comprobar_juego=False)
+finally:
+    modelo.LlamaRapida = guardado
+ok("config.json pide swa_full=False", a.CONFIG.get("swa_full") is False, a.CONFIG.get("swa_full"))
+ok("crear_llm pasa swa_full de config.json", argumentos[0].get("swa_full") is False, argumentos[0].get("swa_full"))
+ok("sin la clave, el valor por defecto de llama-cpp-python", argumentos[1].get("swa_full") is None)
+
 
 def primera_sentencia(ruta, funcion=None):
     arbol = ast.parse((BASE / ruta).read_text(encoding="utf-8"))
