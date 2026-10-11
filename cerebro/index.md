@@ -28,6 +28,7 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[no-reducir-whisper-ni-contexto]]: 8K de contexto ahorra solo 81 MiB; recortar antes el TTS
 - [[swa-full-false]]: −2,5 GiB de VRAM sin perder tareas; no aplicado
 - [[qwen3-tts-vllm-omni]]: voz experimental; Piper sigue en producción
+- [[voz-candidatas]]: motores de voz personalizada para Windows nativo (investigación, sin medir)
 - [[motor-llama-cpp]]: 0.3.36 frente a b11429 y por qué migrar no es trivial
 - [[use-mmap-false]]: mmap apagado por la RAM
 - [[cierre-rapido-mensaje-final]]: diferencias entre producción y el banco de pruebas

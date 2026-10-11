@@ -49,3 +49,7 @@ Entradas anteriores: [[log-2026-10-10]], [[log-2026-10-11-isla]], [[log-2026-10-
   `registro_cacao.log`).
 - Páginas: `qwen-como-cerebro`, `protecciones`, `configuracion-vigente` y el backlog (#27).
 
+## 2026-10-11: rediseño de la isla, cargo check y voz
+
+- Isla: rediseño de Codex (4ead7c5) en `main`; rama `claude/musica` con el panel de 800 (858d001) y `cargo check` limpio (3bfef0f).
+- Página nueva `voz-candidatas`: investigación web de motores de voz en Windows nativo, sin medir.
