@@ -17,6 +17,7 @@ import json
 import os
 import re
 import subprocess
+import sys
 import time
 import unicodedata
 from collections import Counter
@@ -423,6 +424,14 @@ emergencia = Emergencia(CATALOGO["limites"]["atajo_emergencia"])
 herramientas_grupo4.comprobar_emergencia = emergencia.comprobar  # y dentro de las herramientas largas
 herramientas_powershell.comprobar_emergencia = emergencia.comprobar
 autocompletar_login.comprobar_emergencia = emergencia.comprobar
+
+
+def salida_utf8():
+    """Sin el lanzador (que pone PYTHONIOENCODING), la salida redirigida a un archivo o a una tubería usa cp1252 y una
+    tilde rara o un emoji del modelo daba UnicodeEncodeError al imprimir. La llaman el modo texto y voz.py."""
+    for flujo in (sys.stdout, sys.stderr):
+        if flujo is not None and hasattr(flujo, "reconfigure"):  # con pythonw no hay dónde escribir
+            flujo.reconfigure(encoding="utf-8", errors="replace")
 
 
 def cargar_modelo():
@@ -1170,6 +1179,7 @@ def bucle_texto(cola, historial, planificador):
 
 
 if __name__ == "__main__":
+    salida_utf8()
     cargar_modelo()
     if emergencia.iniciar():
         print(f"Atajo de emergencia activo: {emergencia.atajo}")

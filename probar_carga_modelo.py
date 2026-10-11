@@ -48,7 +48,8 @@ def primera_sentencia(ruta, funcion=None):
         cuerpo = next(n for n in arbol.body if isinstance(n, ast.FunctionDef) and n.name == funcion).body
     else:  # el bloque if __name__ == "__main__"
         cuerpo = next(n for n in arbol.body if isinstance(n, ast.If) and "__main__" in ast.unparse(n.test)).body
-    return ast.unparse(cuerpo[0])
+    sentencias = [ast.unparse(n) for n in cuerpo]
+    return next(s for s in sentencias if "salida_utf8()" not in s)  # la salida UTF-8 va antes (probar_salida_utf8)
 
 
 ok("modo texto: lo primero del arranque es cargar_modelo()",

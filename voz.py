@@ -534,4 +534,5 @@ def bucle(medir=0):
 
 
 if __name__ == "__main__":
+    a.salida_utf8()
     bucle(int(sys.argv[sys.argv.index("--medir") + 1]) if "--medir" in sys.argv else 0)
