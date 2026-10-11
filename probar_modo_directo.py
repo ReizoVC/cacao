@@ -23,6 +23,7 @@ from pathlib import Path
 import herramientas_grupo1 as g1
 import herramientas_grupo4 as g4
 import modo_directo as md
+from protecciones_ejecucion import quitar_forzar_no_pedido
 
 BASE = Path(__file__).parent
 resultados = []
@@ -370,6 +371,7 @@ def cargar_ejecutor():
                                       "nombre_atajo": staticmethod(lambda teclas: "+".join(teclas or [])),
                                       "contar_uso": staticmethod(lambda *a: None)})()
     ns = {"json": json, "modo_directo": md, "herramientas_grupo4": g4, "PLANIFICADORES": {}, "Detenido": KeyError,
+          "quitar_forzar_no_pedido": quitar_forzar_no_pedido,
           "obstaculos": obstaculos_falso,
           "HERRAMIENTAS": {h["nombre"]: h for h in catalogo["herramientas"]}, "_isla": IslaFalsa(),
           "confirmar": lambda *a, **k: preguntas.append(a) or False,
@@ -409,6 +411,20 @@ def pruebas_agente():
     ok("otro clic físico lo desactiva", ns["_modos"]["sin_confirmacion"] is False)
     ns["cambiar_modo"]("cualquier_otro", True, "isla")
     ok("un modo desconocido no se crea", "cualquier_otro" not in ns["_modos"])
+    # cerrar_app con forzar=true: el ejecutor lo quita si el pedido no pide forzar (y no cambia la confirmación)
+    argumentos = []
+    ns["IMPLEMENTACIONES"]["cerrar_app"] = lambda **a: argumentos.append(a) or {"ok": True, "cerrada": True}
+    ns["confirmar"] = lambda *a, **k: ns["preguntas"].append(a) or True
+    ns["_tarea"].update(pedido="haz clic en la X de la ventana activa para cerrarla")
+    ns["preguntas"].clear()
+    r = ns["ejecutar"]("cerrar_app", {"id_ventana": 7, "forzar": True})
+    ok("agente: forzar no pedido se ejecuta como cierre normal y se avisa al modelo",
+       argumentos[-1] == {"id_ventana": 7, "forzar": False} and "nota_forzar" in r and len(ns["preguntas"]) == 1,
+       (argumentos, r))
+    ns["_tarea"].update(pedido="el bloc de notas no responde, ciérralo a la fuerza")
+    r = ns["ejecutar"]("cerrar_app", {"proceso": "notepad.exe", "forzar": True})
+    ok("agente: forzar pedido se mantiene y se confirma", argumentos[-1]["forzar"] is True
+       and "nota_forzar" not in r and len(ns["preguntas"]) == 2, (argumentos, r))
     # ninguna herramienta ni frase cambia el modo
     catalogo = json.loads((BASE / "herramientas.json").read_text(encoding="utf-8"))
     sospechosas = [h["nombre"] for h in catalogo["herramientas"]

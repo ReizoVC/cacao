@@ -2,8 +2,9 @@
 import sys
 
 import herramientas_grupo4 as g4
-from protecciones_ejecucion import (afirmaciones_sin_evidencia, nueva_proteccion, parece_atajo,
-                                    registrar_resultado, resultado_verificado, validar_finalizacion)
+from protecciones_ejecucion import (afirmaciones_sin_evidencia, nueva_proteccion, parece_atajo, pide_forzar,
+                                    quitar_forzar_no_pedido, registrar_resultado, resultado_verificado,
+                                    validar_finalizacion)
 
 fallos=[]
 ejecutadas=[]
@@ -107,6 +108,26 @@ ok("dos alternativas diferentes detienen",segundo,estado)
 estado=nueva_proteccion()
 registrar_resultado(estado,"listar_carpeta",{"ruta":"x"},{"ok":False,"error":"no"})
 ok("una lectura fallida no consume alternativa",not estado["fallos"],estado)
+
+# cerrar_app con forzar=true solo si el pedido lo pide (caso #56 s22 de Qwen: forzó el cierre de «la X»)
+for pedido in ["el bloc de notas no responde, ciérralo a la fuerza", "fuerza el cierre de Chrome",
+               "ciérralo forzado", "Spotify se colgó, ciérralo", "el juego está congelado, ciérralo",
+               "forzar cierre del bloc", "FUÉRZALO", "Word no contesta", "se trabó Discord, ciérralo",
+               "mata el proceso de chrome", "la app está bloqueada, ciérrala"]:
+    ok(f"pide forzar: {pedido}",pide_forzar(pedido))
+for pedido in ["haz clic en la X de la ventana activa para cerrarla", "cierra el bloc de notas",
+               "cierra todo", "", None, "con esfuerzo, cierra la ventana", "cierra Spotify rápido"]:
+    ok(f"no pide forzar: {pedido!r}",not pide_forzar(pedido))
+args,nota=quitar_forzar_no_pedido("cerrar_app",{"id_ventana":3,"forzar":True},
+                                  "haz clic en la X de la ventana activa para cerrarla")
+ok("forzar no pedido: cierre normal y nota",args=={"id_ventana":3,"forzar":False} and bool(nota),(args,nota))
+args,nota=quitar_forzar_no_pedido("cerrar_app",{"proceso":"notepad.exe","forzar":True},
+                                  "el bloc de notas no responde, ciérralo a la fuerza")
+ok("forzar pedido: se mantiene",args["forzar"] is True and nota is None,(args,nota))
+args,nota=quitar_forzar_no_pedido("cerrar_app",{"proceso":"notepad.exe"},"cierra el bloc")
+ok("sin forzar: no cambia",args=={"proceso":"notepad.exe"} and nota is None)
+args,nota=quitar_forzar_no_pedido("mover_archivo",{"forzar":True},"mueve el archivo")
+ok("solo afecta a cerrar_app",args=={"forzar":True} and nota is None)
 
 print(f"{len(ejecutadas)-len(fallos)}/{len(ejecutadas)} OK")
 sys.exit(1 if fallos else 0)

@@ -836,6 +836,7 @@ def agente_sin_modelo(respuestas_input):
           "confirmar": lambda *_a, **_k: (respuestas.pop(0) if respuestas else "n") == "s",
           "app_en_marcha": lambda app: False, "herramientas_grupo4": __import__("herramientas_grupo4"),
           "modo_directo": __import__("modo_directo"),
+          "quitar_forzar_no_pedido": __import__("protecciones_ejecucion").quitar_forzar_no_pedido,
           # obstáculos (ejecutar consulta los caminos aprendidos y anota cada intento): sin efecto aquí
           "obstaculos": type("O", (), {"consultar": staticmethod(lambda app, accion: None),
                                        "nombre_atajo": staticmethod(lambda teclas: "+".join(teclas or [])),

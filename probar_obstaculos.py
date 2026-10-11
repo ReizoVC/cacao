@@ -145,6 +145,7 @@ def cargar_agente(preguntas, enviados):
                                "win32gui": type("W", (), {"GetForegroundWindow": staticmethod(lambda: 1)})})()
     ns = {"json": json, "modo_directo": md, "obstaculos": obstaculos, "herramientas_grupo4": g4_falso,
           "PLANIFICADORES": {}, "Detenido": KeyError, "print": lambda *a, **k: None,
+          "quitar_forzar_no_pedido": __import__("protecciones_ejecucion").quitar_forzar_no_pedido,
           "HERRAMIENTAS": {h["nombre"]: h for h in catalogo["herramientas"]},
           "_isla": type("I", (), {"enviar": staticmethod(lambda m: avisos_isla.append(m))})(),
           "confirmar": lambda herramienta, resumen, *a, **k: preguntas.append(resumen) or True,

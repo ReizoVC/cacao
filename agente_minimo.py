@@ -42,7 +42,8 @@ from herramientas_grupo1 import listar_ventanas, enfocar_ventana, listar_carpeta
 from herramientas_grupo4 import cerrar_app, deshacer_movimiento, listar_controles, mover_archivo, mouse, teclado
 from herramientas_powershell import ejecutar_powershell, planificar_powershell
 from memoria import recordar, consultar_memoria
-from protecciones_ejecucion import nueva_proteccion, registrar_resultado, resultado_verificado, validar_finalizacion
+from protecciones_ejecucion import (nueva_proteccion, quitar_forzar_no_pedido, registrar_resultado, resultado_verificado,
+                                    validar_finalizacion)
 from modelo import cargar_config, crear_llm
 from vision import CapturaBloqueada, ManejadorVision, PRESUPUESTOS, capturar
 
@@ -614,6 +615,9 @@ def cerrar_obstaculos(exito):
 
 def ejecutar(nombre, args):
     h = HERRAMIENTAS[nombre]
+    args, forzar_ignorado = quitar_forzar_no_pedido(nombre, args, _tarea["pedido"])
+    if forzar_ignorado:
+        print(f"  [forzar] {forzar_ignorado}")
     args, error = camino_conocido(nombre, args)
     if error:
         return error
@@ -648,6 +652,8 @@ def ejecutar(nombre, args):
             return {"ok": False, "rechazado": True, "error": "Reizo no lo autorizó (Denegar, Esc o sin respuesta)."}
     try:
         resultado = IMPLEMENTACIONES[nombre](**args)
+        if forzar_ignorado and isinstance(resultado, dict):
+            resultado["nota_forzar"] = "Reizo no pidió forzar: hice un cierre normal. No lo fuerces sin que lo pida."
         anotar_intento(nombre, args, resultado)
         if directo and nombre == "mover_archivo" and isinstance(resultado, dict) and resultado.get("ok"):
             _tarea["movidos"] += detalle["archivos"]

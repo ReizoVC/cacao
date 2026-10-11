@@ -106,6 +106,27 @@ def _afirma(texto, m):
     return not resto and len(clausula) <= 5 and not _COPULA & set(clausula)
 
 
+# cerrar_app con forzar=true termina el proceso (puede perder trabajo sin guardar): solo si el pedido de Reizo lo pide
+# con palabras explícitas. Se compara sin tildes y en minúsculas.
+_PIDE_FORZAR = re.compile(r"\b(?:forz\w*|fuerz\w*|a la fuerza|no (?:me )?(?:responde|contesta|reacciona)\w*|"
+                          r"colgad[oa]s?|se (?:ha )?colg\w*|congelad[oa]s?|se (?:ha )?congel\w*|trabad[oa]s?|"
+                          r"se (?:ha )?trab[oóa]\w*|bloquead[oa]s?|matal[oa]|mata(?:r)? (?:el|la|ese|esa) "
+                          r"(?:proceso|programa|app|aplicacion)|kill)\b")
+
+
+def pide_forzar(pedido):
+    texto = unicodedata.normalize("NFD", str(pedido or "").lower())
+    return bool(_PIDE_FORZAR.search("".join(c for c in texto if unicodedata.category(c) != "Mn")))
+
+
+def quitar_forzar_no_pedido(nombre, args, pedido):
+    """(args, nota). Si el modelo pide cerrar_app con forzar=true y el pedido no lo pide, devuelve args sin forzar
+    (cierre normal) y una nota para el registro; si no, (args, None). La confirmación del cierre forzado no cambia."""
+    if nombre != "cerrar_app" or not args.get("forzar") or pide_forzar(pedido):
+        return args, None
+    return {**args, "forzar": False}, "forzar=true ignorado: el pedido no pide forzar el cierre; cierre normal"
+
+
 def parece_atajo(texto):
     return isinstance(texto, str) and bool(_SHORTCUT.fullmatch(texto))
 
