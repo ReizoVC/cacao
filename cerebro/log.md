@@ -48,3 +48,9 @@ Entradas anteriores: [[log-2026-10-10]] y [[log-2026-10-11-isla]].
 
 - Página nueva `estrategia-recursos`: ahorrar memoria primero, el modelo decide y el código hace, y propuesta de
   memoria de experiencia (sin código).
+
+## 2026-10-11: pasos 3–5 de Codex e invariante 10 de la isla
+
+- Isla 1085c15, 7b4b0a8, 1fbcf2c y 15bed5e revisados; pruebas repetidas y fast-forward de `main`.
+- En la revisión: `alert()` dejaba que una respuesta o un aviso taparan la confirmación pendiente. Arreglado en
+  `agente.ts` (aplazados hasta cerrar la tarjeta) con el invariante 10 (isla 35d25d0). Detalle en `hoja-de-ruta`.
