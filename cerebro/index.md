@@ -10,7 +10,7 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[permisos-y-bloqueos]]: dónde se decide si se pregunta, niveles, bloqueos, confirmación física, modo sin confirmación
 - [[voz]]: entrada, frenos, Whisper, Piper y confirmaciones en voz
 - [[palabra-activacion]]: detector «Cacao» y escucha de seguimiento
-- [[isla-websocket]]: servidor WebSocket, token, mensajes y protecciones de la isla
+- [[isla-websocket]]: protocolo con la isla, protecciones, arnés, invariantes y traspaso a Codex
 - [[modo-juego]]: detección de juego, descarga y recarga, guardia de la GPU
 - [[memoria-y-wiki]]: memoria.db, wiki, consultar_memoria, reflexión, lint y sugerencias
 - [[registro-habitos]]: registrador, privacidad y pausa
@@ -54,3 +54,4 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[lecciones]]: fallos reales y su causa
 - [[mantenimiento]]: chequeo de frescura, formato y privacidad
 - [[log]]: registro cronológico de cambios del cerebro
+- [[log-2026-10-10]]: entradas archivadas del 2026-10-10

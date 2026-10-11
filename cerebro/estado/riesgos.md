@@ -1,7 +1,7 @@
 ---
 estado: verificado
 verificado_commit: d4b36dd
-verificado_fecha: 2026-10-10
+verificado_fecha: 2026-10-11
 fuentes: [SRS.md, protecciones_ejecucion.py, herramientas.json, herramientas_powershell.py, resultados_swa_y_recursos.md, muestreo_gramatica.py, wiki.py, herramientas_grupo1.py]
 ---
 # Riesgos vigentes
@@ -22,7 +22,9 @@ Claude Code, más los nuevos.
 | `verificar.py` falla | Congela la producción de la ronda 3, que ya cambió | Esperado; actualizar los hashes es decisión del usuario ([[comparacion-modelos]]) |
 | RAM al recargar la pila WSL | Windows llegó al 99,96 %; 1,15 GiB de swap en WSL | Medido en `resultados_swa_y_recursos.md` |
 | Margen de VRAM en la pila WSL | 1,5–1,9 GiB libres en el pico | Modo juego; no reducir Whisper ni el contexto |
-| Licencia de assets de la isla (R-13) | La isla adapta Coucou | Uso personal; repositorio sin publicar |
+| Licencia de assets de la isla (R-13) | La isla adapta Coucou | Uso personal; repositorio sin publicar. En `AGENTS.md` de la isla: sin remoto ni distribución |
+| Bandeja de la isla sin clic físico | «Permitir capturas» quita la exclusión de capturas con cualquier clic, también inyectado, y `zonas_isla` no cubre el menú | Sin arreglar; decide el usuario con Claude ([[isla-websocket]]) |
+| La isla en manos de otro agente (Codex) | Podría romper un invariante o el protocolo | Rama `codex/isla`, archivos PROTEGIDOS y `probar_invariantes.py` ([[isla-websocket]]) |
 
 ## Alcance de `cerebro/` frente a Cacao (comprobado en el código)
 
