@@ -1,20 +1,20 @@
 """
 Entrena y mide el detector de la palabra "Cacao" (palabra_activacion.py). Todo local y en la CPU.
 
-1. Datos sintéticos con Piper (voces en español de modelos/piper_cacao y modelos/piper):
+1. Datos sintéticos con Piper (voces en español de D:\Cacao\entrenamiento\piper_cacao y modelos/piper):
    - positivos: "Cacao" con cada voz y hablante, a varias velocidades y variaciones, colocada al final de una ventana
      de 2 s sobre ruido, con reverberación y volumen al azar;
    - negativos: frases en español sin "cacao" (órdenes, charla, números) y palabras parecidas ("caso", "Macao",
      "cacahuate", "Caracas"...), ruido y música sintética, y las grabaciones reales de voz_registro/ (tu voz).
    - negativos reales: una parte (los primeros 1,2 GB, ~390 000 ventanas) de las características que publica
-     openWakeWord de ~2000 h de audio real (ACAV100M: habla, música, ruido), en modelos/cacao/acav_parcial.npy;
+     openWakeWord de ~2000 h de audio real (ACAV100M: habla, música, ruido), en D:\Cacao\entrenamiento\cacao\acav_parcial.npy;
    - el ruido de fondo real de tu micrófono (los silencios de voz_registro/) se mezcla con los positivos.
 2. Características de openWakeWord (16 tramas x 96) y un MLP pequeño (scikit-learn) encima, con una segunda ronda
    que añade los negativos reales que más se parecen a la palabra.
 3. Medición con voces que NO se usaron al entrenar (es_AR-daniela-high y es_MX-claude-high) y frases nuevas:
    detección de "Cacao" (sola y dicha de corrido con la orden), activaciones falsas por hora en conversación, en
    frases que mencionan "cacao" de pasada y con audio de fondo, en tus grabaciones de voz_pruebas/ y en las
-   ~11 h del conjunto de validación de openWakeWord (modelos/cacao/validation_set_features.npy).
+   ~11 h del conjunto de validación de openWakeWord (D:\Cacao\entrenamiento\cacao\validation_set_features.npy).
 Sale modelos/cacao/cacao.npz y resultados_cacao.json.
 
 Con --reales se añaden las grabaciones de Reizo de voz_pruebas/cacao_real (grabar_cacao.py): dos tercios de cada
@@ -37,6 +37,8 @@ from scipy.signal import fftconvolve
 import palabra_activacion as pa
 
 BASE = Path(__file__).parent
+# datos que solo usa el entrenamiento: en el disco D (D:\Cacao\manifiesto_movimientos.md)
+ENTRENAMIENTO = Path(r"D:\Cacao\entrenamiento")
 RNG = np.random.default_rng(7)
 PRUEBA = {"es_AR-daniela-high", "es_MX-claude-high"}  # voces que no se usan al entrenar
 
@@ -121,7 +123,7 @@ DE_CORRIDO = ["Cacao, sube el volumen.", "Cacao sube el volumen.", "Cacao, abre 
 
 def cargar_voces():
     voces = []
-    for carpeta in (BASE / "modelos" / "piper_cacao", BASE / "modelos" / "piper"):
+    for carpeta in (ENTRENAMIENTO / "piper_cacao", BASE / "modelos" / "piper"):
         for onnx in sorted(carpeta.glob("*.onnx")):
             voz = PiperVoice.load(str(onnx))
             voces.append((onnx.stem, voz, max(1, int(voz.config.num_speakers or 1))))
@@ -335,8 +337,8 @@ def datos(voces):
 
 # ---------- entrenamiento ----------
 
-ACAV = BASE / "modelos" / "cacao" / "acav_parcial.npy"
-VALIDACION = BASE / "modelos" / "cacao" / "validation_set_features.npy"
+ACAV = ENTRENAMIENTO / "cacao" / "acav_parcial.npy"
+VALIDACION = ENTRENAMIENTO / "cacao" / "validation_set_features.npy"
 
 
 def acav():
