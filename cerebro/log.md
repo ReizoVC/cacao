@@ -47,3 +47,14 @@ Entradas anteriores: [[log-2026-10-10]].
 - **Pruebas después de compilar:** invariantes 10/10, arnés 40/40, campo 18/18.
 - **Sin abrir la isla.** Los pasos de la prueba física están en `pendientes-presenciales` #7.
 - **Visto en la isla:** una carpeta sin seguimiento, `.codex-remote-attachments/`, que no es de Claude. No se tocó.
+
+## 2026-10-11: prueba física de la bandeja, adjuntos de Codex y diseño de la música
+
+- **Prueba física con el arnés (sin Cacao ni GPU):** A–F correctos (detalle en `compilar-isla`).
+  - Un único clic inyectado, desde un script, contra el arnés: no hizo nada.
+  - «Permitir capturas» se apagó sola a los 10 minutos justos y no sobrevivió a un reinicio.
+  - Solo se leyeron las líneas `bandeja:` y `captura` del registro de la isla, con permiso del usuario.
+- **`.codex-remote-attachments/`:** 5 JPG de la sesión de Codex `01a12989-…` (2026-10-11, 01:17), sin abrirlos.
+  Va en `.gitignore` (isla 2ab8039) y no está en el historial.
+- **Diseño de la música (protocolo v3, sin implementar):** isla cf09696. Las páginas nuevas son `musica-isla` y,
+  en la isla, `docs/lote-rust.md` (protegido).

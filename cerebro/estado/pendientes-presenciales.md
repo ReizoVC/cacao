@@ -28,7 +28,13 @@ registros o datos personales. Pregúntaselo al usuario y anota la respuesta aqu�
 5. **«Cacao» en el día a día:** revisar el contador de activaciones tras unos días. Lo revisa el usuario; Claude no
    lee ese archivo.
 6. **Grabar la isla** con «Permitir capturas».
-7. **Bandeja de la isla v2 con el arnés** (sin Cacao; la isla compilada el 2026-10-11, [[compilar-isla]]):
+7. **Bandeja de la isla v2 con el arnés: HECHA el 2026-10-11** (01:33–07:26, con el usuario). Resultados en
+   [[compilar-isla]]. Quedan dos cosas:
+   - «Pausar» no se probó con el teclado;
+   - un «Escuchar «Cacao»» con `fisico=false` a las 01:59:15 que el usuario no supo explicar (se rechazó, como
+     debía).
+
+   Procedimiento, por si hay que repetirla:
    - **Preparación (Claude):**
      - comprueba que Cacao y la isla están cerrados y el puerto 8765 libre;
      - lanza `mock_agente.py --escenario ninguno`;

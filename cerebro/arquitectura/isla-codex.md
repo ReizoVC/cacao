@@ -25,3 +25,11 @@ archivos protegidos y los invariantes los cambia Claude.
 - La rama `codex/isla` avanzó hasta a690655 (fast-forward desde `main`).
 - **Datos personales:** ninguno en el árbol ni en el historial. Queda el nombre de pila en
   `identifier`/`Cargo.toml` y el nombre y el correo del autor en los metadatos de 14 commits.
+
+## Lote de Rust y adjuntos de Codex (2026-10-11)
+
+- **Lote de Rust:** `docs/lote-rust.md` (protegido). Codex pide los cambios de Rust por filas; Claude los implementa
+  y se compila una vez por lote. El lote abierto incluye la música ([[musica-isla]]).
+- **`.codex-remote-attachments/`:** 5 JPG (28–55 KB) del 2026-10-11, de 01:17:30 a 01:17:34. Su carpeta se llama
+  como la sesión de Codex `01a12989-0ecc-7a81-…`, que empezó a las 00:56:50. Se comprobó solo por los nombres y
+  las fechas, sin abrir los archivos. Va en `.gitignore` (2ab8039) y no está en el historial.

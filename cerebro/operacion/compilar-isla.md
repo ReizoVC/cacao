@@ -40,7 +40,16 @@ La isla vive en `C:\asistente-ui` (otro repositorio). Cacao lanza `windows\targe
   - `probar_invariantes.py`: 10/10;
   - `probar_arnes.py`: 40/40;
   - `npm run probar-campo`: 18/18.
-- La isla **no se ha abierto**. Falta la prueba física de la bandeja ([[pendientes-presenciales]]).
+- **Prueba física con el arnés (2026-10-11, con el usuario delante):**
+  - **A, clic:** las 8 opciones del menú actuaron, todas con `fisico=true`; los modos llegaron con
+    `origen: bandeja`.
+  - **B, teclado:** Abrir, Ajustes, Ver terminal, Permitir capturas, Salir y los dos modos dieron
+    `fisico=false` y no hicieron nada (los modos, con aviso). «Pausar» no se probó.
+  - **C, un clic inyectado** (script, 01:47:03): `bandeja: captura (fisico=false)` y nada más.
+  - **D, Ajustes:** el interruptor encendió las capturas con un clic físico (01:36:10).
+  - **E:** se encendió a las 01:48:37 y se apagó sola a las 01:58:37 («pasaron 10 minutos»).
+  - **F:** se encendió (01:59:07), «Salir» dos veces y se relanzó la isla. Arrancó con
+    `captura permitida=false` (07:26:22) aunque los ajustes guardados decían `true`.
 
 ## Respaldo de la isla v1
 

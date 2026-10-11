@@ -30,6 +30,7 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[motor-llama-cpp]]: 0.3.36 frente a b11429 y por qué migrar no es trivial
 - [[use-mmap-false]]: mmap apagado por la RAM
 - [[cierre-rapido-mensaje-final]]: diferencias entre producción y el banco de pruebas
+- [[musica-isla]]: detección de música en la isla (protocolo v3): diseño sin implementar, solo un booleano
 
 ## Modelos
 - [[configuracion-vigente]]: config.json de producción explicado
