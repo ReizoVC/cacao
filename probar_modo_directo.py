@@ -23,7 +23,7 @@ from pathlib import Path
 import herramientas_grupo1 as g1
 import herramientas_grupo4 as g4
 import modo_directo as md
-from protecciones_ejecucion import quitar_forzar_no_pedido
+from protecciones_ejecucion import cierre_no_pedido, quitar_forzar_no_pedido
 
 BASE = Path(__file__).parent
 resultados = []
@@ -371,7 +371,7 @@ def cargar_ejecutor():
                                       "nombre_atajo": staticmethod(lambda teclas: "+".join(teclas or [])),
                                       "contar_uso": staticmethod(lambda *a: None)})()
     ns = {"json": json, "modo_directo": md, "herramientas_grupo4": g4, "PLANIFICADORES": {}, "Detenido": KeyError,
-          "quitar_forzar_no_pedido": quitar_forzar_no_pedido,
+          "quitar_forzar_no_pedido": quitar_forzar_no_pedido, "cierre_no_pedido": cierre_no_pedido,
           "obstaculos": obstaculos_falso,
           "HERRAMIENTAS": {h["nombre"]: h for h in catalogo["herramientas"]}, "_isla": IslaFalsa(),
           "confirmar": lambda *a, **k: preguntas.append(a) or False,
@@ -421,10 +421,22 @@ def pruebas_agente():
     ok("agente: forzar no pedido se ejecuta como cierre normal y se avisa al modelo",
        argumentos[-1] == {"id_ventana": 7, "forzar": False} and "nota_forzar" in r and len(ns["preguntas"]) == 1,
        (argumentos, r))
+    # cerrar_app sin intención de cerrar en el pedido: ni se ejecuta ni se pregunta
+    for pedido in ("escribe 'hola mundo' en el bloc de notas", "trae al frente el bloc de notas"):
+        ns["_tarea"].update(pedido=pedido)
+        antes_preguntas, antes_cierres = len(ns["preguntas"]), len(argumentos)
+        r = ns["ejecutar"]("cerrar_app", {"id_ventana": 7, "forzar": True})
+        ok(f"agente: «{pedido}» -> cerrar_app no se ejecuta ni se pregunta",
+           r.get("cierre_no_pedido") and len(argumentos) == antes_cierres
+           and len(ns["preguntas"]) == antes_preguntas, r)
+    ns["_tarea"].update(pedido="cierra el bloc de notas")
+    r = ns["ejecutar"]("cerrar_app", {"id_ventana": 7})
+    ok("agente: «cierra el bloc de notas» -> se confirma y se ejecuta", argumentos[-1] == {"id_ventana": 7}
+       and r.get("cerrada"), r)
     ns["_tarea"].update(pedido="el bloc de notas no responde, ciérralo a la fuerza")
     r = ns["ejecutar"]("cerrar_app", {"proceso": "notepad.exe", "forzar": True})
     ok("agente: forzar pedido se mantiene y se confirma", argumentos[-1]["forzar"] is True
-       and "nota_forzar" not in r and len(ns["preguntas"]) == 2, (argumentos, r))
+       and "nota_forzar" not in r and len(ns["preguntas"]) == 3, (argumentos, r))
     # ninguna herramienta ni frase cambia el modo
     catalogo = json.loads((BASE / "herramientas.json").read_text(encoding="utf-8"))
     sospechosas = [h["nombre"] for h in catalogo["herramientas"]

@@ -115,8 +115,7 @@ _PIDE_FORZAR = re.compile(r"\b(?:forz\w*|fuerz\w*|a la fuerza|no (?:me )?(?:resp
 
 
 def pide_forzar(pedido):
-    texto = unicodedata.normalize("NFD", str(pedido or "").lower())
-    return bool(_PIDE_FORZAR.search("".join(c for c in texto if unicodedata.category(c) != "Mn")))
+    return bool(_PIDE_FORZAR.search(_sin_tildes(pedido)))
 
 
 def quitar_forzar_no_pedido(nombre, args, pedido):
@@ -125,6 +124,32 @@ def quitar_forzar_no_pedido(nombre, args, pedido):
     if nombre != "cerrar_app" or not args.get("forzar") or pide_forzar(pedido):
         return args, None
     return {**args, "forzar": False}, "forzar=true ignorado: el pedido no pide forzar el cierre; cierre normal"
+
+
+# cerrar_app solo si el pedido de Reizo expresa intención de cerrar (Qwen cerró apps que nadie pidió cerrar cuando
+# algo no funcionaba: #19 s33, #43 s22, #58 s22). Se compara sin tildes y en minúsculas.
+_PIDE_CERRAR = re.compile(r"\b(?:cierr\w*|cerr\w*|sal(?:ir|te)? de|quita(?:lo|la|r)?|termin(?:a|ar|alo|ala)|"
+                          r"mat(?:a|ar|alo|ala)|apag\w* (?:la|el|esa|ese) (?:app|aplicacion|programa|ventana)|"
+                          r"close|kill)\b")
+CIERRE_NO_PEDIDO = ("El usuario no pidió cerrar ninguna app; no cierres nada. Si no puedes hacer lo pedido, "
+                    "explícalo y pregunta.")
+
+
+def _sin_tildes(texto):
+    texto = unicodedata.normalize("NFD", str(texto or "").lower())
+    return "".join(c for c in texto if unicodedata.category(c) != "Mn")
+
+
+def pide_cerrar(pedido):
+    return bool(_PIDE_CERRAR.search(_sin_tildes(pedido)))
+
+
+def cierre_no_pedido(nombre, pedido):
+    """Resultado para el modelo si es cerrar_app y el pedido no expresa intención de cerrar; si no, None. No ejecuta
+    nada ni pregunta al usuario. Sin 'bloqueado': el modelo sigue y puede explicarlo y preguntar."""
+    if nombre != "cerrar_app" or pide_cerrar(pedido):
+        return None
+    return {"ok": False, "cierre_no_pedido": True, "error": CIERRE_NO_PEDIDO}
 
 
 def parece_atajo(texto):

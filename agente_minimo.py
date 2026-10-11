@@ -42,8 +42,8 @@ from herramientas_grupo1 import listar_ventanas, enfocar_ventana, listar_carpeta
 from herramientas_grupo4 import cerrar_app, deshacer_movimiento, listar_controles, mover_archivo, mouse, teclado
 from herramientas_powershell import ejecutar_powershell, planificar_powershell
 from memoria import recordar, consultar_memoria
-from protecciones_ejecucion import (nueva_proteccion, quitar_forzar_no_pedido, registrar_resultado, resultado_verificado,
-                                    validar_finalizacion)
+from protecciones_ejecucion import (cierre_no_pedido, nueva_proteccion, quitar_forzar_no_pedido, registrar_resultado,
+                                    resultado_verificado, validar_finalizacion)
 from modelo import cargar_config, crear_llm
 from vision import CapturaBloqueada, ManejadorVision, PRESUPUESTOS, capturar
 
@@ -625,6 +625,10 @@ def cerrar_obstaculos(exito):
 
 def ejecutar(nombre, args):
     h = HERRAMIENTAS[nombre]
+    no_pedido = cierre_no_pedido(nombre, _tarea["pedido"])
+    if no_pedido:  # ni se cierra ni se pregunta: el modelo recibe el motivo y sigue
+        print(f"  [cerrar] cerrar_app bloqueado: el pedido no pide cerrar nada ({json.dumps(args, ensure_ascii=False)})")
+        return no_pedido
     args, forzar_ignorado = quitar_forzar_no_pedido(nombre, args, _tarea["pedido"])
     if forzar_ignorado:
         print(f"  [forzar] {forzar_ignorado}")

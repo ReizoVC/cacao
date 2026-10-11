@@ -29,8 +29,8 @@ import wiki
 from emergencia import Detenido, Emergencia
 from herramientas_grupo1 import listar_carpeta, leer_archivo, url_busqueda
 from modelo import cargar_config, crear_llm
-from protecciones_ejecucion import (nueva_proteccion, quitar_forzar_no_pedido, registrar_resultado, resultado_verificado,
-                                    validar_finalizacion)
+from protecciones_ejecucion import (cierre_no_pedido, nueva_proteccion, quitar_forzar_no_pedido, registrar_resultado,
+                                    resultado_verificado, validar_finalizacion)
 from vision import CapturaBloqueada, ManejadorVision, PRESUPUESTOS, capturar
 
 BASE = Path(__file__).parent
@@ -75,6 +75,7 @@ obstaculos_sim = SimpleNamespace(para_prompt=obstaculos.para_prompt, nombre_ataj
 from datetime import datetime
 ns = {"obstaculos": obstaculos_sim, "datetime": datetime, "json": json, "re": re, "time": time, "herramientas_grupo4": herramientas_grupo4, "modo_directo": modo_directo, "Counter": Counter, "process": process, "fuzz": fuzz, "unicodedata": unicodedata,
       "nueva_proteccion": nueva_proteccion, "quitar_forzar_no_pedido": quitar_forzar_no_pedido,
+      "cierre_no_pedido": cierre_no_pedido,
       "registrar_resultado": registrar_resultado,
       "resultado_verificado": resultado_verificado, "validar_finalizacion": validar_finalizacion,
       "CATALOGO": CATALOGO, "planificar_powershell": ps.planificar_powershell, "capturar": capturar, "PRESUPUESTOS": PRESUPUESTOS, "CapturaBloqueada": CapturaBloqueada,

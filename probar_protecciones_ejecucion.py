@@ -2,7 +2,8 @@
 import sys
 
 import herramientas_grupo4 as g4
-from protecciones_ejecucion import (afirmaciones_sin_evidencia, nueva_proteccion, parece_atajo, pide_forzar,
+from protecciones_ejecucion import (afirmaciones_sin_evidencia, cierre_no_pedido, nueva_proteccion, parece_atajo,
+                                    pide_cerrar, pide_forzar,
                                     quitar_forzar_no_pedido, registrar_resultado, resultado_verificado,
                                     validar_finalizacion)
 
@@ -128,6 +129,35 @@ args,nota=quitar_forzar_no_pedido("cerrar_app",{"proceso":"notepad.exe"},"cierra
 ok("sin forzar: no cambia",args=={"proceso":"notepad.exe"} and nota is None)
 args,nota=quitar_forzar_no_pedido("mover_archivo",{"forzar":True},"mueve el archivo")
 ok("solo afecta a cerrar_app",args=={"forzar":True} and nota is None)
+
+# cerrar_app solo si el pedido expresa intención de cerrar (Qwen: #58 s22, #43 s22 y #19 s33 cerraron apps no pedidas)
+for pedido in ["cierra el bloc de notas", "ciérrame Spotify", "cerrar Chrome", "sal de Discord", "salir de Word",
+               "quítalo", "termina el bloc de notas", "mata el proceso de chrome", "apaga la app de música",
+               "el bloc de notas no responde, ciérralo a la fuerza", "haz clic en la X de la ventana activa para cerrarla",
+               "cierra únicamente la ventana del bloc de notas que está abierta",
+               "termina a la fuerza el bloc de notas porque quedó congelado"]:
+    ok(f"pide cerrar: {pedido}", pide_cerrar(pedido))
+for pedido in ["escribe 'hola mundo' en el bloc de notas", "trae al frente el bloc de notas",
+               "abre algo para escribir", "abre el bloc de notas", "cambia a la ventana de la terminal", "", None]:
+    ok(f"no pide cerrar: {pedido!r}", not pide_cerrar(pedido))
+r = cierre_no_pedido("cerrar_app", "escribe 'hola mundo' en el bloc de notas")
+ok("#58: cerrar_app no pedido -> resultado para el modelo, sin ejecutar",
+   r and r["ok"] is False and r["cierre_no_pedido"] and "no pidió cerrar" in r["error"] and "bloqueado" not in r, r)
+ok("#43: trae al frente -> cerrar_app no pedido", cierre_no_pedido("cerrar_app", "trae al frente el bloc de notas"))
+ok("cierra el bloc de notas -> pasa", cierre_no_pedido("cerrar_app", "cierra el bloc de notas") is None)
+ok("solo afecta a cerrar_app", cierre_no_pedido("mover_archivo", "abre el bloc de notas") is None)
+
+# toda frase de las 65 (y de las 30 nuevas, si están) cuya acción esperada incluye cerrar_app pasa el freno
+import json
+from pathlib import Path
+for archivo in (Path("pruebas.json"), Path("comparacion_modelos/pruebas_nuevas_30.json")):
+    if not archivo.exists():
+        continue
+    datos = json.loads(archivo.read_text(encoding="utf-8"))
+    for prueba in (datos["pruebas"] if isinstance(datos, dict) else datos):
+        esperado = prueba["esperado"] if isinstance(prueba["esperado"], list) else [prueba["esperado"]]
+        if "cerrar_app" in esperado + prueba.get("requiere", []):
+            ok(f"{archivo.name} #{prueba['id']} pasa el freno de cerrar_app", pide_cerrar(prueba["frase"]), prueba["frase"])
 
 print(f"{len(ejecutadas)-len(fallos)}/{len(ejecutadas)} OK")
 sys.exit(1 if fallos else 0)
