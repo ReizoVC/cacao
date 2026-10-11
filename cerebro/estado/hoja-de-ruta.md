@@ -43,21 +43,15 @@ detallan aquí. El usuario pidió no activar nada con permisos amplios hasta cer
 
 ## Frontend (isla), a cargo de Codex
 
-- **Pasos 0–2 hechos, revisados y en `main` de la isla (62b615c, fast-forward):**
-  - vista previa `dev.html`, fuera del build;
-  - guardarropa de 13 accesorios con calendario (octubre: sombrero de bruja);
-  - el accesorio se guarda en `localStorage`.
-  - Claude repitió las pruebas: invariantes 10/10 (sin Rust), arnés 40/40, campo 18/18, accesorios 116/116 y
-    build. `dist/` no tiene el reproductor. Ningún protegido cambió.
-  - **Sin verificar:** que `localStorage` persista en WebView2 (se comprueba con la próxima compilación).
-  - No se portaron la física elástica de Swift ni los accesorios del saludo.
-- **Pasos 3–5 hechos y en `main` de la isla (15bed5e):** ícono SVG, accesorios dentro de la isla, textos largos
-  desplazables con los botones fijos, canvas al cambiar la densidad, y el diseño de la línea mínima
-  (`docs/diseno-linea-minima.md`, aprobado con condiciones).
-- **Hueco encontrado en la revisión y cerrado por Claude (isla 35d25d0):** una respuesta o un aviso tapaban una
-  confirmación pendiente. Ahora esperan a que se cierre. Es el **invariante 10** (4 mutaciones detectadas); la
-  música pasa a ser el 11. Va en el exe con la próxima compilación.
-- **Siguiente orden:** implementar la línea mínima sin tocar protegidos y un aviso de «hay más» en las
-  confirmaciones largas.
-- **Lote de Rust abierto** (Claude): música v3 y quitar funciones sin usar de `platform/`. Necesita permiso para
-  compilar ([[isla-codex]]).
+Detalle por paso en `log-2026-10-11-b`. En `main` de la isla (15bed5e y 35d25d0):
+- vista previa `dev.html` fuera del build, guardarropa con calendario y accesorio en `localStorage` (**sin
+  verificar** que persista en WebView2);
+- textos largos desplazables y la línea mínima diseñada;
+- **invariante 10** (Claude): una respuesta o un aviso ya no tapan una confirmación pendiente.
+
+En curso:
+- **Línea mínima** (Codex, e30e4fe y e441b90): no fusionada. Con la línea apagada cambiaba el comportamiento;
+  Codex la corrige.
+- **Música v3** (Claude, [[musica-isla]]): ramas `claude/musica` (isla) y `claude/musica-v3` (Cacao), sin compilar.
+  Se fusionan a la vez.
+- **Después:** una sola compilación con permiso y una prueba presencial de todo junto ([[compilar-isla]]).

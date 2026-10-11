@@ -62,3 +62,4 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[log]]: registro cronológico de cambios del cerebro
 - [[log-2026-10-10]]: entradas archivadas del 2026-10-10
 - [[log-2026-10-11-isla]]: entradas archivadas del 2026-10-11 (isla: traspaso, bandeja y prueba física)
+- [[log-2026-10-11-b]]: entradas archivadas del 2026-10-11 (coordinación de Codex, Fase 1 medida y swa_full)

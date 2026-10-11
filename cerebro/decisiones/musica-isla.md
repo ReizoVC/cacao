@@ -1,40 +1,39 @@
 ---
 estado: sin verificar
-verificado_commit: 6a01ca1
+verificado_commit: a9797ed
 verificado_fecha: 2026-10-11
-fuentes: [confirmacion_voz.py, ui_isla.py]
+fuentes: [confirmacion_voz.py, ui_isla.py, probar_fase7.py]
 ---
-# Música en la isla (protocolo v3): diseño, sin implementar
+# Música en la isla (protocolo v3): implementada en ramas, sin compilar
 
-El diseño completo está en `C:\asistente-ui\docs\diseno-musica.md` (isla cf09696). Está **sin verificar** porque el
-API no se ha probado en este PC.
+El diseño está en `C:\asistente-ui\docs\diseno-musica.md`. Está **sin verificar** porque la isla no se ha compilado
+y el API no se ha probado en este PC.
 
-## La decisión propuesta
+## Qué hace
 
-- La isla lee `Windows.Media.Control` y **solo** mira `PlaybackStatus`. A la isla y al agente solo les llega el
-  booleano `reproduciendo`.
-- **Nunca** cruzan el título, el artista, la carátula, la app (`SourceAppUserModelId`) ni la posición. Tampoco se usa
-  ningún `Try…Async` de control. Son texto de un tercero y serían una vía de inyección.
-- **Protocolo v3:** mensaje isla → agente `{"tipo": "musica", "reproduciendo": bool}`, al conectar y en cada cambio
-  (antirrebote de 1 s, un mensaje por segundo como mucho). Un valor que no sea booleano se ignora.
-- **En Cacao es solo informativo:** nunca relaja un freno. La confirmación por voz sigue usando
-  `confirmacion_voz.otro_audio_sonando`, que mira los medidores de pico de cada sesión de audio, sin capturar audio.
+- La isla lee `Windows.Media.Control` y **solo** mira `PlaybackStatus` de cada sesión. Al agente solo le llega
+  `{"tipo": "musica", "reproduciendo": bool}`: al conectar y en cada cambio, con antirrebote de 1 s y como mucho un
+  mensaje por segundo.
+- **Nunca** cruzan el título, el artista, la carátula, la app ni la posición, ni se usa ningún `Try…Async` de
+  control. Serían texto de un tercero, una vía de inyección. Es el **invariante 11** de la isla.
+- **En Cacao es solo informativo:** `ServidorIsla.musica` (`True`, `False` o `None`; vuelve a `None` al
+  desconectarse). Nunca relaja un freno: la confirmación por voz sigue con `confirmacion_voz.otro_audio_sonando`.
+  Una prueba comprueba que `confirmacion_voz.py` no usa el dato.
+- Con la isla cerrada no hay sondeo: solo despiertan los eventos de Windows. Si el API no está, no se manda nada.
 
-## Comprobado en la documentación (2026-10-11)
+## Dónde está (2026-10-11)
 
-- Windows 10 1809 o posterior.
-- Capacidad `globalMediaControl`, que es de **uso general**, no restringida.
-- Microsoft dice que las capacidades se aplican «sobre todo» a apps empaquetadas o en AppContainer. La isla es un
-  Win32 sin empaquetar, así que **se infiere** que no hace falta declarar nada. Se confirma en el prototipo.
-- No hay credenciales ni captura de audio: el API lee lo que publica cada reproductor.
+| Repositorio | Rama | Commits | Pruebas |
+|---|---|---|---|
+| Isla | `claude/musica` (worktree `C:\asistente-ui-claude`) | 1daebe0, 712a893, a90ddc9 | invariantes 12/12 con Rust, arnés 45/45, campo 18/18, build; 9 mutaciones del invariante 11 detectadas |
+| Cacao | `claude/musica-v3` (worktree `C:\asistente-claude`) | a9797ed | `probar_fase7.py` A 37/37; 3 mutaciones detectadas; segundo plano 23/23 y campo 29/29 |
 
-## Dónde va
+**No se fusionan en `main` por separado.** Una isla v2 con un Cacao v3, o al revés, se rechazan con 4003. Se fusionan
+las dos ramas a la vez, al compilar la isla ([[compilar-isla]]).
 
-En el **lote de Rust** (`C:\asistente-ui\docs\lote-rust.md`, protegido): los cambios de Rust se juntan y se compilan
-una sola vez. Codex pide los suyos por filas y no edita los archivos protegidos ([[isla-codex]]). Archivos que toca:
-- en la isla: `Cargo.toml` (features `Media_Control` y `Foundation`), un `musica.rs` nuevo, `platform/windows.rs`,
-  `lib.rs`, `agente.ts`, `main.ts`, `docs/protocolo.md` y el arnés;
-- en Cacao: `ui_isla.py` y `probar_fase7.py`.
+## Falta
 
-Habrá un invariante 10 nuevo (solo `PlaybackStatus` y un booleano) y una prueba física con un reproductor real
-([[compilar-isla]]).
+- Compilar la isla (con permiso y con Cacao cerrado). No se ha pasado `cargo check`: el código de WinRT no se ha
+  compilado nunca.
+- Prueba física con el arnés y un reproductor real: diseño §6.
+- Comprobar que el API funciona sin declarar la capacidad `globalMediaControl` (la isla es un Win32 sin empaquetar).
