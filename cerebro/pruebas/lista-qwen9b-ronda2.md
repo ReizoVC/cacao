@@ -1,8 +1,8 @@
 ---
 estado: verificado
-verificado_commit: dd51ba6
+verificado_commit: 945fa17
 verificado_fecha: 2026-10-11
-fuentes: [comparacion_modelos/ejecutar.py, comparacion_modelos/ronda2_protocolo.md, comparacion_modelos/resumir_ronda2.py, comparacion_modelos/resumen_ronda2.json, comparacion_modelos/resumen_ronda3.json, config.json]
+fuentes: [comparacion_modelos/ejecutar.py, comparacion_modelos/resumir_qwen9b.py, comparacion_modelos/ronda2_protocolo.md, comparacion_modelos/resumir_ronda2.py, comparacion_modelos/resumen_ronda2.json, comparacion_modelos/resumen_ronda3.json, config.json]
 ---
 # Lista de comprobación: prueba de Qwen 3.5 9B Q5 (contrato de la ronda 2)
 
@@ -11,16 +11,16 @@ del usuario (usa la GPU). No cambia producción: todo corre en `.comparacion-run
 
 ## A. Decidir antes de lanzar (no es técnico)
 
-1. **Criterio fijado de antemano.** [[qwen-como-cerebro]] dice que no se reabre Qwen sin un criterio nuevo. Hay
-   dos escritos:
-   - ronda 2 (`ronda2_protocolo.md`): ≥ 186/195 completas, 0 vacías (195 tareas y 10 preguntas) y no empeorar en
-     la evaluación a ciegas;
-   - ronda 3 (`ronda3_protocolo.md`): ≥ 192/195, 0 vacías, 0 confirmaciones falsas y 0 acciones distintas.
-   Referencias: ronda 2, Qwen 188/195 (`resumen_ronda2.json`); ronda 3, 189/195 y `qwen_pass: false`
-   (`resumen_ronda3.json`).
+1. **Criterio: propuesto** por el coordinador (2026-10-11), **lo confirma el usuario**:
+   - ≥ 193/195 completas con el contrato de la ronda 2 (`complete_round2`);
+   - 0 acciones peligrosas o sin confirmar (confirmaciones falsas + acciones distintas de `resumir_ronda3.stats`);
+   - pico de VRAM medido y menor que el de Gemma;
+   - mediana de la primera acción ≤ +20 % sobre Gemma;
+   - la evaluación a ciegas del español la hace el usuario aparte.
+   Antes: ronda 2, Qwen 188/195; ronda 3, 189/195 y `qwen_pass: false` ([[qwen-como-cerebro]]).
 2. **¿Gemma Q5 como referencia en la misma tanda?** El protocolo exige los mismos cambios para los dos. El código
-   copiado hoy no es el congelado de la ronda 2 (Fase 1: regla JSON, protecciones, carga perezosa). Sin repetir
-   Gemma, la comparación es con números de otro código.
+   copiado hoy no es el congelado de la ronda 2: la regla JSON es la misma (`integracion.adjust` aplicaba ya la de
+   7d31aa7), pero las protecciones (c6a74f3) y el agente sí cambiaron. Sin repetir Gemma, se compara con otro código.
 
 ## B. Comprobaciones sin GPU
 
@@ -30,8 +30,8 @@ del usuario (usa la GPU). No cambia producción: todo corre en `.comparacion-run
 | 2 | Ruta en `ejecutar.py` | `MODELS['qwen_q5']` → `modelos/comparacion_local/` | sí (0b90b51) |
 | 3 | Motor de pruebas | `.venv-pruebas`: llama_cpp 0.3.36 y jsonschema | 0.3.36 y 4.26.0 |
 | 4 | Suites del banco | desde `comparacion_modelos/`: `.venv-pruebas\Scripts\python -m unittest probar_criterios probar_integracion` | sin correr hoy (antes 7/7 y 4/4) |
-| 5 | **Respaldo de la evidencia** | copiar `comparacion_modelos/datos/ronda2/` a otra carpeta: `ejecutar.py` escribe `qwen_q5.json` y `gemma_q5.json` **encima** de los de la ronda 2 | pendiente |
-| 6 | `swa_full` heredado | `prepare()` copia `config.json`; desde 397d0a2 no trae `swa_full` (valor por defecto). Con `--swa-full` se fija y el archivo lleva `_swa_false` | anotar en el informe |
+| 5 | **Sin sobrescribir** | `--salida comparacion_modelos\datos\qwen9b_<fecha>`: se niega si la carpeta ya tiene datos del modelo y usa un runtime propio | hecho (945fa17), probado en seco |
+| 6 | `swa_full` heredado | `prepare()` copia `config.json`; desde 397d0a2 no trae `swa_full` (valor por defecto). No usar `--swa-full`: busca una línea de `modelo.py` que ya no existe y se para | anotar en el informe |
 | 7 | Visión (opcional) | el mmproj de Qwen está en `modelos/comparacion/` (D:, disco duro: carga lenta, sin efecto en la medición) | existe (918 MB) |
 
 ## C. Justo antes de lanzar (con el usuario)
@@ -43,8 +43,8 @@ del usuario (usa la GPU). No cambia producción: todo corre en `.comparacion-run
 ## D. Ejecución
 
 ```
-.venv-pruebas\Scripts\python comparacion_modelos\ejecutar.py qwen_q5 --round2
-.venv-pruebas\Scripts\python comparacion_modelos\ejecutar.py gemma_q5 --round2      (si A.2 = sí)
+.venv-pruebas\Scripts\python comparacion_modelos\ejecutar.py qwen_q5 --round2 --salida comparacion_modelos\datos\qwen9b_<fecha>
+.venv-pruebas\Scripts\python comparacion_modelos\ejecutar.py gemma_q5 --round2 --salida comparacion_modelos\datos\qwen9b_<fecha>   (si A.2 = sí)
 ```
 
 Fija `SIN_REALES=1` y `CONFIRMAR=s` por sí mismo. Son 195 casos más 10 preguntas por modelo. Opcional:
@@ -52,17 +52,17 @@ Fija `SIN_REALES=1` y `CONFIRMAR=s` por sí mismo. Son 195 casos más 10 pregunt
 
 ## E. Resumen e informe
 
-- Métricas con `integracion.complete_round2` (criterio oficial), importando `resumir_ronda2.stats` desde un
-  script aparte. **No correr `resumir_ronda2.py` entero:** reescribe archivos en Git (`resumen_ronda2.json`,
-  `metricas_ronda2.json`, `auditoria_qwen_ronda2.json`, `vision_ronda2.json`, `ronda2_pilotos.json`), anexa al
-  informe y regenera `respuestas_integracion_ciegas.md` con su clave (evaluación a ciegas).
+- `.venv-pruebas\Scripts\python comparacion_modelosesumir_qwen9b.py --datos comparacion_modelos\datos\qwen9b_<fecha>
+  --fecha <fecha>`: escribe solo `resumen_qwen9b_<fecha>.json` y aplica el criterio propuesto. Sin Gemma en la
+  carpeta, usa `resumen_ronda2.json` y lo marca como «otro código».
+- **No correr `resumir_ronda2.py` ni `resumir_ronda3.py` enteros:** reescriben resúmenes en Git y los archivos a
+  ciegas con su clave.
 - Cada cifra con su archivo de origen; los datos crudos no van a Git.
 
 ## F. Reversión
 
 - Producción no cambia: nada que revertir en `config.json` ni `.venv`.
 - Al cerrar la prueba, con permiso: borrar la copia de C: (6,28 GiB; el original sigue en D:) y anotarlo en el
-  manifiesto. Restaurar `datos/ronda2/` desde el respaldo del paso B.5 si se quiere conservar la ronda 2 original
-  en su sitio.
+  manifiesto. Los datos de la ronda 2 no se tocan.
 
 Relacionadas: [[comparacion-modelos]], [[cifras-medidas]], [[criterio-de-cambio]].

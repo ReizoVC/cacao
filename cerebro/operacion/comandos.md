@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: d4b36dd
-verificado_fecha: 2026-10-10
+verificado_commit: 945fa17
+verificado_fecha: 2026-10-11
 fuentes: [evaluar_pruebas.py, iniciar_cacao.py, comparacion_modelos/ejecutar.py, crear_acceso_directo.ps1, voz.py]
 ---
 # Comandos útiles
@@ -32,7 +32,8 @@ set SIN_REALES=1 & set CONFIRMAR=s & .venv\Scripts\python evaluar_pruebas.py 11 
 ```
 
 `ejecutar.py` acepta `model` (ver `MODELS`), `--smoke`, `--vision-only`, `--round2`, `--round3`, `--diagnostic`,
-`--server-url`, `--engine-tag`, `--swa-full` y `--test-set` ([[comparacion-modelos]]).
+`--server-url`, `--engine-tag`, `--swa-full` (roto desde eb5a9c4: busca una línea de `modelo.py` que cambió), `--test-set`
+y `--salida DIR` (945fa17: carpeta nueva, sin sobrescribir rondas) ([[comparacion-modelos]]).
 
 ## Git
 

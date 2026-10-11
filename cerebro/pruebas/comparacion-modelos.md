@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: d4b36dd
-verificado_fecha: 2026-10-10
+verificado_commit: 945fa17
+verificado_fecha: 2026-10-11
 fuentes: [comparacion_modelos/ejecutar.py, comparacion_modelos/integracion.py, comparacion_modelos/criterios.py, comparacion_modelos/resumir_ronda3.py, comparacion_modelos/README.md, comparacion_modelos/verificar.py]
 ---
 # Banco de comparación de modelos (`comparacion_modelos/`)
@@ -19,7 +19,10 @@ Banco aislado para comparar modelos y motores sin tocar producción.
   - `--round2` o `--round3`: aplica el contrato de `integracion.py` (sin `mensaje_final`, regla JSON sin
     caracteres de control y protecciones);
   - `--server-url` y `--engine-tag`: llama-server ya iniciado (b11429);
-  - `--swa-full`, `--test-set` (30 frases nuevas), `--vision-only`, `--smoke` y `--diagnostic`.
+  - `--swa-full`, `--test-set` (30 frases nuevas), `--vision-only`, `--smoke` y `--diagnostic`;
+  - `--salida DIR` (945fa17): datos crudos y runtime aparte; se niega si la carpeta ya tiene datos del modelo.
+- `--swa-full` está roto desde eb5a9c4: inyecta una línea de `modelo.py` que ya no existe y se para.
+- Antes de cada caso vacía la caché KV (`llm.reset()` y `kv_cache_clear()`); producción no lo hace.
 - Salida en `comparacion_modelos/datos/` (ignorado por Git): JSON por caso, muestras de GPU y conversación de 10
   preguntas.
 

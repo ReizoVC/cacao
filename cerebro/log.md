@@ -54,3 +54,11 @@ Entradas anteriores: [[log-2026-10-10]] y [[log-2026-10-11-isla]].
 - Isla 1085c15, 7b4b0a8, 1fbcf2c y 15bed5e revisados; pruebas repetidas y fast-forward de `main`.
 - En la revisión: `alert()` dejaba que una respuesta o un aviso taparan la confirmación pendiente. Arreglado en
   `agente.ts` (aplazados hasta cerrar la tarjeta) con el invariante 10 (isla 35d25d0). Detalle en `hoja-de-ruta`.
+
+## 2026-10-11: Qwen 9B preparada sin sobrescribir (945fa17), sin lanzar
+
+- `ejecutar.py --salida DIR` (por defecto igual) y `resumir_qwen9b.py` (un único `resumen_qwen9b_<fecha>.json`).
+  Prueba en seco: SHA256 de 368 archivos iguales antes y después.
+- `lista-qwen9b-ronda2`: criterio **propuesto** por el coordinador (≥ 193/195, 0 acciones peligrosas o sin confirmar,
+  VRAM menor que Gemma, latencia ≤ +20 %), pendiente de confirmar por el usuario.
+- Visto al leer: `--swa-full` de `ejecutar.py` está roto desde eb5a9c4 (`comandos`, `comparacion-modelos`).
