@@ -10,11 +10,20 @@ import time
 from pathlib import Path
 
 import llama_cpp
+from llama_cpp import llama_grammar
 
 from muestreo_gramatica import LlamaRapida
 
 BASE = Path(__file__).parent
 TIPOS_KV = {"f16": llama_cpp.GGML_TYPE_F16, "q8_0": llama_cpp.GGML_TYPE_Q8_0, "q4_0": llama_cpp.GGML_TYPE_Q4_0}
+
+# ---------- gramática JSON ----------
+# La regla "char" del conversor de esquemas de 0.3.36 deja pasar U+0000..U+001F crudos dentro de las cadenas, y un
+# salto de línea literal (p. ej. en "pensamiento") rompía json.loads. Se cambia solo en este proceso, antes de que se
+# compile ningún esquema; .venv no se toca. Es la misma regla que validaron las rondas 2 y 3
+# (comparacion_modelos/integracion.py). Nunca se repara la salida ni se relaja json.loads.
+CHAR_ESTRICTO = r'[^"\\\x7F\x00-\x1F] | "\\" (["\\/bfnrt] | "u" [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F])'
+llama_grammar.PRIMITIVE_RULES["char"] = llama_grammar.BuiltinRule(CHAR_ESTRICTO, [])
 
 # ---------- errores de llama.cpp / CUDA ----------
 # ggml usa ERROR=4 y CONT=5 (continuación), pero llama-cpp-python 0.3.36 (_logger.py) aún asume ERROR=3 y trata el 4
