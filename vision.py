@@ -54,9 +54,10 @@ class _MtmdConPresupuesto:
 
 
 class ManejadorVision(Gemma4ChatHandler):
-    def __init__(self, clip_model_path, presupuesto=280):
+    def __init__(self, clip_model_path, presupuesto=280, sin_pensamiento=False):
         super().__init__(clip_model_path=str(clip_model_path), verbose=False)
         self.presupuesto = presupuesto
+        self.sin_pensamiento = sin_pensamiento  # Qwen: plantilla del modelo sin <think> (modelo.SIN_PENSAMIENTO)
         self._presupuesto_ctx = None
         self._mtmd_cpp = _MtmdConPresupuesto(self._mtmd_cpp, self)
         atexit.register(self.cerrar)
@@ -79,6 +80,10 @@ class ManejadorVision(Gemma4ChatHandler):
     def _init_mtmd_context(self, llama_model):
         super()._init_mtmd_context(llama_model)
         self._presupuesto_ctx = self.presupuesto
+
+    def _get_chat_template(self, llama_model):
+        plantilla = super()._get_chat_template(llama_model)
+        return ("{% set enable_thinking = false %}" + plantilla) if self.sin_pensamiento else plantilla
 
 
 def dibujar_cuadricula(imagen, paso=100):

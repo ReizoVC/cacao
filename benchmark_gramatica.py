@@ -418,7 +418,8 @@ class VisionMedida:
 
 
 ns["llm"] = Proxy()
-ns["vision"] = VisionMedida(ManejadorVision(CONFIG["mmproj"])) if CONFIG.get("mmproj") else None
+ns["vision"] = (VisionMedida(ManejadorVision(CONFIG["mmproj"], sin_pensamiento=CONFIG.get("sin_pensamiento", False)))
+                if CONFIG.get("mmproj") else None)
 _pedir = ns["pedir_accion"]
 herramientas_usadas = []
 

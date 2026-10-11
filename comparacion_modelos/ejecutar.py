@@ -72,6 +72,9 @@ def prepare(model, isolated_round=False, round_name='ronda2', swa_full=None):
     for name in ('herramientas.json', 'pruebas.json', 'wiki_esquema.json', 'apps_categorias.json'):
         shutil.copy2(ROOT / name, runtime / name)
     config = json.loads((ROOT / 'config.json').read_text(encoding='utf-8'))
+    # los perfiles de producción (modelo_activo) no cuentan aquí: el modelo lo elige el banco
+    for key in ('modelo_activo', 'perfiles', 'swa_full', 'sin_pensamiento'):
+        config.pop(key, None)
     config.update(modelo=str(MODELS[model]), mmproj=None, n_ctx=16384, flash_attn=True,
                   type_k='q8_0', type_v='q8_0', use_mmap=False, modo_gramatica='topk')
     if swa_full is not None:

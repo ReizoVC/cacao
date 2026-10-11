@@ -41,21 +41,55 @@ ok("cargar_modelo conecta el atajo de emergencia", a.llm.interrumpir == a.emerge
 ok("cargar_modelo sincroniza las apps después de cargar", sincronizados == [1], sincronizados)
 a.llm = None
 
-# swa_full: config.json lo pasa a llama-cpp-python; sin la clave queda su valor por defecto (None)
+# perfiles: "modelo_activo" elige gemma o qwen9b; volver a Gemma = cambiar esa clave (sin cargar ningún modelo)
+import json  # noqa: E402
+
 import modelo  # noqa: E402
 
-argumentos = []
-guardado = modelo.LlamaRapida
-modelo.LlamaRapida = lambda **k: argumentos.append(k) or LlmFalso()
+crudo = json.loads((BASE / "config.json").read_text(encoding="utf-8"))
+ok("config.json tiene modelo_activo y los perfiles gemma y qwen9b",
+   crudo.get("modelo_activo") in ("gemma", "qwen9b") and {"gemma", "qwen9b"} <= set(crudo.get("perfiles", {})),
+   crudo.get("modelo_activo"))
+ok("config.json no fija modelo ni mmproj fuera de los perfiles", not {"modelo", "mmproj", "swa_full"} & set(crudo))
+gemma = modelo.aplicar_perfil({**json.loads(json.dumps(crudo)), "modelo_activo": "gemma"})
+qwen = modelo.aplicar_perfil({**json.loads(json.dumps(crudo)), "modelo_activo": "qwen9b"})
+ok("perfil gemma: Gemma Q5, su mmproj, sin swa_full ni sin_pensamiento",
+   "gemma-4-12b" in gemma["modelo"] and gemma["mmproj"] == "modelos/mmproj/mmproj-F16.gguf"
+   and "swa_full" not in gemma and not gemma.get("sin_pensamiento") and "perfiles" not in gemma, gemma.get("modelo"))
+ok("perfil qwen9b: Qwen 9B Q5 (copia en C:), su mmproj, swa_full false y sin pensamiento",
+   "Qwen3.5-9B" in qwen["modelo"] and qwen["mmproj"] == "modelos/comparacion/mmproj-F16.gguf"
+   and qwen.get("swa_full") is False and qwen.get("sin_pensamiento") is True, qwen.get("modelo"))
+ok("los dos perfiles comparten el resto (contexto, caché KV, flash attention, mmap, gramática)",
+   all(gemma[k] == qwen[k] for k in ("n_ctx", "type_k", "type_v", "flash_attn", "use_mmap", "modo_gramatica")))
+ok("ida y vuelta: qwen9b -> gemma da la misma config que gemma",
+   modelo.aplicar_perfil({**json.loads(json.dumps(crudo)), "modelo_activo": "gemma"}) == gemma)
 try:
-    modelo.crear_llm({**a.CONFIG, "swa_full": False}, comprobar_juego=False)
-    modelo.crear_llm({k: v for k, v in a.CONFIG.items() if k != "swa_full"}, comprobar_juego=False)
+    modelo.aplicar_perfil({**json.loads(json.dumps(crudo)), "modelo_activo": "otro"})
+    ok("modelo_activo desconocido -> error", False)
+except ValueError as e:
+    ok("modelo_activo desconocido -> error", "otro" in str(e))
+ok("sin perfiles (copias del banco) la config no cambia", modelo.aplicar_perfil({"modelo": "x"}) == {"modelo": "x"})
+ok("agente_minimo usa el perfil activo", a.CONFIG["modelo"].name in (Path(gemma["modelo"]).name,
+                                                                     Path(qwen["modelo"]).name)
+   and a.CONFIG.get("modelo_activo") == crudo["modelo_activo"], a.CONFIG.get("modelo_activo"))
+
+# crear_llm: swa_full del perfil a llama-cpp-python (sin la clave, su valor por defecto) y plantilla sin pensamiento
+argumentos, manejadores = [], []
+guardado = modelo.LlamaRapida, modelo.manejador_sin_pensamiento
+modelo.LlamaRapida = lambda **k: argumentos.append(k) or LlmFalso()
+modelo.manejador_sin_pensamiento = lambda llm: manejadores.append(llm) or "manejador"
+try:
+    llm_qwen = modelo.crear_llm(qwen, comprobar_juego=False)
+    llm_gemma = modelo.crear_llm(gemma, comprobar_juego=False)
 finally:
-    modelo.LlamaRapida = guardado
-# producción sin la clave: false rompía la reutilización de memoria entre tareas (backlog #5)
-ok("config.json no fija swa_full", "swa_full" not in a.CONFIG, a.CONFIG.get("swa_full"))
-ok("crear_llm pasa swa_full de la configuración", argumentos[0].get("swa_full") is False, argumentos[0].get("swa_full"))
-ok("sin la clave, el valor por defecto de llama-cpp-python", argumentos[1].get("swa_full") is None)
+    modelo.LlamaRapida, modelo.manejador_sin_pensamiento = guardado
+ok("crear_llm: qwen9b pasa swa_full=False", argumentos[0].get("swa_full") is False, argumentos[0].get("swa_full"))
+ok("crear_llm: gemma, el valor por defecto de llama-cpp-python", argumentos[1].get("swa_full") is None)
+ok("crear_llm: solo qwen9b usa la plantilla sin pensamiento",
+   getattr(llm_qwen, "chat_handler", None) == "manejador" and not hasattr(llm_gemma, "chat_handler")
+   and len(manejadores) == 1)
+ok("la plantilla sin pensamiento es la del banco",
+   modelo.SIN_PENSAMIENTO in (BASE / "comparacion_modelos" / "ejecutar.py").read_text(encoding="utf-8"))
 
 
 def primera_sentencia(ruta, funcion=None):

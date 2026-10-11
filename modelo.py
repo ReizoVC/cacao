@@ -50,8 +50,20 @@ def _log_llama(nivel, texto, _datos):
 llama_cpp.llama_log_set(_log_llama, ctypes.c_void_p(0))
 
 
+def aplicar_perfil(config):
+    """El perfil de "perfiles" que nombra "modelo_activo" (modelo, mmproj, swa_full...) va encima del resto. Volver
+    a Gemma = "modelo_activo": "gemma". Sin "perfiles", la config se usa tal cual (copias del banco)."""
+    perfiles = config.pop("perfiles", None)
+    if perfiles is None:
+        return config
+    activo = config.get("modelo_activo")
+    if activo not in perfiles:
+        raise ValueError(f"config.json: modelo_activo = {activo!r} no está en perfiles ({', '.join(perfiles)})")
+    return {**config, **perfiles[activo]}
+
+
 def cargar_config():
-    config = json.loads((BASE / "config.json").read_text(encoding="utf-8"))
+    config = aplicar_perfil(json.loads((BASE / "config.json").read_text(encoding="utf-8")))
     for clave in ("modelo", "mmproj"):
         if config.get(clave):
             ruta = Path(config[clave])
@@ -71,8 +83,25 @@ def crear_llm(config, esperar_juego=False, comprobar_juego=True):
     # LlamaRapida aplica la gramática después de top_k (~26 ms/token en vez de ~125; ver resultados_latencia.md).
     # OJO: sobrescribe Llama._init_sampler, método interno de llama-cpp-python 0.3.36; puede romperse al
     # actualizar. Si falla, pon "modo_gramatica": null en config.json para volver al muestreo original.
-    return LlamaRapida(model_path=str(config["modelo"]), n_gpu_layers=config["n_gpu_layers"],
-                       n_ctx=config["n_ctx"], flash_attn=config["flash_attn"],
-                       type_k=TIPOS_KV[config["type_k"]], type_v=TIPOS_KV[config["type_v"]],
-                       use_mmap=config.get("use_mmap", True), swa_full=config.get("swa_full"), verbose=False,
-                       modo_gramatica=config["modo_gramatica"])
+    llm = LlamaRapida(model_path=str(config["modelo"]), n_gpu_layers=config["n_gpu_layers"],
+                      n_ctx=config["n_ctx"], flash_attn=config["flash_attn"],
+                      type_k=TIPOS_KV[config["type_k"]], type_v=TIPOS_KV[config["type_v"]],
+                      use_mmap=config.get("use_mmap", True), swa_full=config.get("swa_full"), verbose=False,
+                      modo_gramatica=config["modo_gramatica"])
+    if config.get("sin_pensamiento"):
+        llm.chat_handler = manejador_sin_pensamiento(llm)
+    return llm
+
+
+SIN_PENSAMIENTO = "{% set enable_thinking = false %}"
+
+
+def manejador_sin_pensamiento(llm):
+    """Qwen: la plantilla de chat del propio modelo con el pensamiento apagado, como el banco
+    (comparacion_modelos/ejecutar.py). El protocolo de Cacao es JSON con gramática: sin <think>."""
+    from llama_cpp.llama_chat_format import Jinja2ChatFormatter
+    formato = Jinja2ChatFormatter(template=SIN_PENSAMIENTO + llm.metadata["tokenizer.chat_template"],
+                                  eos_token=llm.detokenize([llm.token_eos()], special=True).decode(),
+                                  bos_token=llm.detokenize([llm.token_bos()], special=True).decode(),
+                                  stop_token_ids=[llm.token_eos()])
+    return formato.to_chat_handler()

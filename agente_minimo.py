@@ -419,7 +419,8 @@ _sugerencia = {"pendiente": None}  # la última mostrada, para saber si Reizo la
 # El modelo se carga con cargar_modelo() (modo texto, voz.py, prueba_real.py, medir_ram.py): importar este módulo
 # no toca la GPU, así las pruebas sin modelo pueden importarlo.
 llm = None
-vision = ManejadorVision(CONFIG["mmproj"]) if CONFIG.get("mmproj") else None
+vision = (ManejadorVision(CONFIG["mmproj"], sin_pensamiento=CONFIG.get("sin_pensamiento", False))
+          if CONFIG.get("mmproj") else None)
 _presupuesto_imagen = 560
 emergencia = Emergencia(CATALOGO["limites"]["atajo_emergencia"])
 herramientas_grupo4.comprobar_emergencia = emergencia.comprobar  # y dentro de las herramientas largas
