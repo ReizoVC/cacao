@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: c297bcb
+verificado_commit: bedf068
 verificado_fecha: 2026-10-11
 fuentes: [comparacion_modelos/medir_memoria.py, comparacion_modelos/datos/memoria/2026-10-11_1135.json, config.json, voz.py, transcripcion.py, cerebro/decisiones/qwen3-tts-vllm-omni.md]
 ---
