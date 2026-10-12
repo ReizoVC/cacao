@@ -100,6 +100,7 @@ def isolated_tools(b):
     ns['PLANIFICADORES'] = {}
     ns['anotar_intento'] = lambda *a: None
     ns['camino_conocido'] = lambda name, args: (args, None)
+    ns['CAMINO_RAPIDO'] = False  # el banco mide al modelo: sin el camino rápido de producción
     original_date = ns['con_fecha']
     from datetime import datetime
     ns['con_fecha'] = lambda text: original_date(text, datetime(2026, 10, 7, 15, 0))
@@ -183,6 +184,8 @@ def main():
     parser.add_argument('--engine-tag', default='llama_cpp_b11429')
     parser.add_argument('--swa-full', choices=('true','false'))
     parser.add_argument('--test-set', type=Path, help='JSON alternativo de pruebas; siempre se ejecuta en simulación')
+    parser.add_argument('--cache-estado', action='store_true',
+                        help='fase A: restaura el estado tras el prompt de sistema antes de cada llamada (cache_estado.py)')
     parser.add_argument('--salida', type=Path, help='carpeta nueva para los datos crudos (por defecto, la de la ronda); '
                         'no puede tener ya un JSON de este modelo, para no sobrescribir rondas anteriores')
     args = parser.parse_args()
@@ -260,6 +263,10 @@ def main():
               'config': json.loads((runtime/'config.json').read_text(encoding='utf-8')),
               'prompt_sha256': hashlib.sha256(b.ns['prompt_sistema']().encode()).hexdigest(),
               'architecture': b.llm.metadata.get('general.architecture'), 'cases': [], 'conversation': []}
+    cache = None
+    if args.cache_estado:  # después de la plantilla de Qwen y del contrato: el prefijo es el del prompt final
+        from cache_estado import CacheEstado
+        cache = CacheEstado(b.llm, lambda: b.ns['prompt_sistema']())
     report['swa_full'] = swa_full
     report['integration']=integration
     report['template_probe']=(template_probe if args.model.startswith('qwen') and not args.server_url else
@@ -436,6 +443,7 @@ def main():
               "_smoke" if args.smoke else "_swa_false" if swa_full is False else "")
     if args.test_set:
         suffix += '_nuevas30'
+    report['cache_estado'] = cache.resumen() if cache else None
     dump(OUT/f'{args.model}{suffix}.json', report)
     print('FIN',args.model,flush=True)
     b.llm.close()
