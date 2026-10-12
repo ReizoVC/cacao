@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: b251284
+verificado_commit: 07123e7
 verificado_fecha: 2026-10-11
 fuentes: [config.json, comparacion_modelos/ejecutar.py, cerebro/frescura.py]
 ---
@@ -32,8 +32,8 @@ La lista viene del usuario (estado del proyecto del 2026-10-11). Aquí cada punt
 | 4 | Hook y skill para que cada chat use el cerebro | sin empezar | — |
 | 5 | Reorganizar archivos | después del 2 | — |
 | 6 | Spotify: teclas multimedia, Chromium, visión | sin empezar. Enlaza con la música de la isla ([[musica-isla]]) | — |
-| 7 | Camino rápido y filtrado de herramientas | sin empezar | — |
-| 8 | Qwen3-TTS 0.6B en Windows (RAM) | sin medir; WSL descartado | — |
+| 7 | Camino rápido y caché por estados de Qwen | **hechos y activos** (fdf84d1, b056954); filtrado aparcado | [[camino-rapido]], [[cache-estados]] |
+| 8 | Qwen3-TTS 0.6B en Windows nativo (GGML), voz A1_equilibrada | elegido por el usuario; orden lista, sin medir | [[voz-candidatas]] |
 
 **Futuro:** adaptadores por app, memoria de experiencia (diseño aprobado), Jev en modo sombra, cerrar pestañas por
 nombre, Tailscale, especialista visual, SRS 1.3. Ninguno tiene código.
@@ -43,19 +43,10 @@ detallan aquí. El usuario pidió no activar nada con permisos amplios hasta cer
 
 ## Frontend (isla), a cargo de Codex
 
-Detalle por paso en `log-2026-10-11-b`. En `main` de la isla (15bed5e y 35d25d0):
-- vista previa `dev.html` fuera del build, guardarropa con calendario y accesorio en `localStorage` (**sin
-  verificar** que persista en WebView2);
-- textos largos desplazables y la línea mínima diseñada;
-- **invariante 10** (Claude): una respuesta o un aviso ya no tapan una confirmación pendiente.
+**Compilado el 2026-10-11** (isla 3bfef0f, Cacao 2797ba4; [[compilar-isla]]): rediseño de tres niveles (Figma,
+página 02), panel de 800 px, música v3 ([[musica-isla]]), invariante 10, guardarropa y línea mínima. Prueba física
+parcial: falta la confirmación, el armario tras reiniciar (persistencia en WebView2) y «Pausar» con teclado.
 
-En curso:
-- **Rediseño de la isla** (Figma, página 02; aprobado por el usuario el 2026-10-11 con los ajustes de Claude):
-  línea 176 × 10, isla pequeña 420 × 52, desplegada de 800 px con pestañas Inicio · Armario · Ajustes. Codex hace
-  las vistas; Claude cambia `PANEL_W` de 720 a 800 en el lote (isla `0a956b7`, rama `claude/musica`).
-- **Línea mínima:** corregida y en `main` de la isla (356529e).
-- **Música v3** (Claude, [[musica-isla]]): ramas `claude/musica` (isla) y `claude/musica-v3` (Cacao), sin compilar.
-  Se fusionan a la vez.
-- **Después:** una sola compilación con permiso y una prueba presencial de todo junto ([[compilar-isla]]).
-- **`cargo check` hecho** (2026-10-11): la rama `claude/musica` (música + rediseño en `main` 4ead7c5 + panel de 800,
-  3bfef0f) compila sin errores. Lista para la compilación con permiso.
+**Siguiente (Codex):** línea fina con 5 barras que se mueven cuando Cacao habla (`State.cacaoHabla`, isla 912abce),
+curvas de notch e icono de seguimiento (b38feb3, en `main`). Falta su corrección de la respuesta hablada con la isla
+abierta. Luego se compila (solo interfaz) y se completa la prueba física.

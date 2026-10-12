@@ -8,7 +8,7 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[agente-y-herramientas]]: catálogo, estructuras del ejecutor y cómo añadir una herramienta
 - [[protecciones]]: sin evidencia no hay «hecho», dos alternativas, atajos estructurados, emergencia
 - [[frenos-cierre]]: frenos de cerrar_app y listar_controles
-- [[permisos-y-bloqueos]]: dónde se decide si se pregunta, niveles, bloqueos, confirmación física, modo sin confirmación
+- [[permisos-y-bloqueos]]: dónde se decide si se pregunta, bloqueos, confirmación física, modo sin confirmación
 - [[voz]]: entrada, frenos, Whisper, Piper y confirmaciones en voz
 - [[palabra-activacion]]: detector «Cacao» y escucha de seguimiento
 - [[isla-websocket]]: protocolo con la isla (versión 2), protecciones y bandeja
@@ -32,7 +32,7 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[motor-llama-cpp]]: 0.3.36 frente a b11429 y por qué migrar no es trivial
 - [[use-mmap-false]]: mmap apagado por la RAM
 - [[cierre-rapido-mensaje-final]]: diferencias entre producción y el banco de pruebas
-- [[musica-isla]]: detección de música en la isla (protocolo v3): diseño sin implementar, solo un booleano
+- [[musica-isla]]: música en la isla (protocolo v3, un booleano), compilada
 
 ## Modelos
 - [[configuracion-vigente]]: config.json de producción explicado
@@ -53,7 +53,7 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[resultado-qwen9b-produccion]]: Qwen 9B en producción: 173, 182 y 182/195
 
 ## Estado
-- [[estrategia-recursos]]: prioridad del usuario: mínimos recursos, herramientas antes que modelo, memoria de experiencia
+- [[estrategia-recursos]]: mínimos recursos, herramientas antes que modelo, memoria de experiencia
 - [[camino-rapido]]: implementado: pedidos simples sin modelo
 - [[filtrado-herramientas]]: aparcado: herramientas por pedido
 - [[hoja-de-ruta]]: la lista del usuario cruzada con el repositorio, diferencias y estado de Codex
@@ -65,7 +65,8 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[arrancar-detener]]: lanzador, simulación, salir y emergencia
 - [[mapa-archivos]]: archivos por rol
 - [[mapa-datos]]: datos personales (no leer), datos de prueba y modelos
-- [[compilar-isla]]: compilar la isla, respaldo de la v1 y cómo volver atrás (también el protocolo de Cacao)
+- [[compilar-isla]]: compilar la isla, última compilación (v3) y volver a la v2
+- [[compilar-isla-historial]]: compilación v2 y volver a la v1
 - [[comandos]]: comandos útiles y trucos del entorno
 - [[lecciones]]: fallos reales y su causa
 - [[mantenimiento]]: chequeo de frescura, formato y privacidad

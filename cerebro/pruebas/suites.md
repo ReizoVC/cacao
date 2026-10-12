@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 77370e8
+verificado_commit: 07123e7
 verificado_fecha: 2026-10-11
 fuentes: [probar_protecciones_ejecucion.py, probar_obstaculos.py, probar_modo_directo.py, probar_fase6.py, probar_fase7.py, probar_campo_isla.py, probar_autocompletar_login.py, probar_confirmacion_voz.py, probar_modo_juego.py, probar_palabra_activacion.py, probar_seguimiento.py, probar_segundo_plano.py, probar_actividad_fisica.py, probar_powershell.py, probar_apps.py, probar_grupo4.py, probar_carga_modelo.py, probar_salida_utf8.py, probar_gramatica_json.py, agente_minimo.py, comparacion_modelos/verificar.py]
 ---
@@ -16,7 +16,7 @@ ejecución, con su commit; las salidas no se guardan ([[log]]).
 | `probar_obstaculos.py` | Efecto de clics y atajos, tabla de obstáculos | 35/35 |
 | `probar_modo_directo.py` | Política del modo sin confirmación; `forzar` en `ejecutar` | 140/140 |
 | `probar_fase6.py [seccion…]` | Hábitos, wiki, reflexión con modelo falso, sugerencias, lint (vault y bases temporales) | 142/142 |
-| `probar_fase7.py A` | Confirmaciones físicas e inyectadas (simuladas), WebSocket (protocolo v2: versión 4003, JSON que no es objeto), rechazo con el agente | 32/32 en 8a78d51 (≈40 s por esperas de 30 s) |
+| `probar_fase7.py A` | Confirmaciones físicas e inyectadas (simuladas), WebSocket (protocolo v3: versión 4003, JSON que no es objeto, `musica` solo booleano), rechazo con el agente | 32/32 en 8a78d51 (≈40 s por esperas de 30 s) |
 | `probar_fase7.py B` / `C` | B: **isla real**. C: **clic inyectado de verdad** en la isla | no se corren sin permiso; últimas: 13/13 y 5/5 (491b45e / d80ea7f) |
 | `probar_campo_isla.py` | Campo de texto de la isla, lado del agente | 29/29 |
 | `probar_autocompletar_login.py` | Autocompletado con Chrome simulado | 46/46 |

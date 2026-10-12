@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 77370e8
+verificado_commit: 07123e7
 verificado_fecha: 2026-10-11
 fuentes: [herramientas.json, agente_minimo.py, voz.py, modo_directo.py, ui_isla.py, entrada_fisica.py, herramientas_grupo1.py, herramientas_powershell.py, confirmacion_voz.py]
 ---
@@ -8,7 +8,8 @@ fuentes: [herramientas.json, agente_minimo.py, voz.py, modo_directo.py, ui_isla.
 
 ## ¿Dónde se decide si una acción pide confirmación?
 
-En `agente_minimo.ejecutar(nombre, args)`, en este orden:
+En `agente_minimo.ejecutar(nombre, args)`, en este orden. Las acciones del camino rápido (`paso_rapido`,
+[[camino-rapido]]) pasan por el mismo `ejecutar()`: solo sustituyen la elección del modelo.
 
 1. `camino_conocido()` aplica los [[protecciones|obstáculos]] aprendidos.
 2. `PLANIFICADORES[nombre]` valida sin efectos (PowerShell, teclado). Si falla, devuelve el error sin preguntar.

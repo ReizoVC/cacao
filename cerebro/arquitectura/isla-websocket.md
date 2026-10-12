@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 77370e8
+verificado_commit: 07123e7
 verificado_fecha: 2026-10-11
 fuentes: [ui_isla.py, herramientas_grupo4.py, pedidos.py, agente_minimo.py, voz.py, entrada_fisica.py, config.json, diseno_fase7.md, prueba_presencial_isla.py, medir_isla_juego.py]
 ---
@@ -13,18 +13,20 @@ Cacao lanza el exe de `config.ui.exe`. Diseño: `diseno_fase7.md`. Adapta Coucou
 El `CLAUDE.md` y el `docs/AGENTS.md` de ese repositorio son del Coucou original (macOS) y **no** describen la isla. Lo
 que vale es el `AGENTS.md` de la raíz (desde ca7fb21).
 
-## Contrato: `C:\asistente-ui\docs\protocolo.md` (versión 2)
+## Contrato: `C:\asistente-ui\docs\protocolo.md` (versión 3)
 
-Escrito desde el código el 2026-10-11 (b7b81a7) y subido a la versión 2 (isla 41656f0, Cacao 8a78d51). Resumen:
+Escrito desde el código el 2026-10-11 (b7b81a7), subido a la versión 2 (isla 41656f0, Cacao 8a78d51) y a la
+versión 3 con la música (isla 3bfef0f, Cacao 2797ba4). Resumen:
 - **Conexión:** `ui_isla.ServidorIsla` (el agente es el servidor).
   - Solo `127.0.0.1:8765`.
   - Token por sesión (`token_urlsafe(32)`) en `%LOCALAPPDATA%\Asistente\ui.json`, que se borra al salir.
   - Origin solo `tauri.localhost` o `localhost:1420`; si no, 403.
   - Primer mensaje `hola` en ≤ 5 s; si no llega, no es un objeto o el token no coincide, cierre 4001.
-  - Después del token, `version` tiene que ser `ui_isla.PROTOCOLO` (2); si no, cierre 4003.
+  - Después del token, `version` tiene que ser `ui_isla.PROTOCOLO` (3); si no, cierre 4003.
   - Una sola isla (4002).
   - Un JSON que no es un objeto, o un `rect` con valores no numéricos, se ignora (en la versión 1 cerraba con 1011).
-- **Isla → agente:** `hola`, `rect`, `decision`, `modo` (con `fisico`, alterna), `pedido`, `salir` y `ver_terminal`.
+- **Isla → agente:** `hola`, `rect`, `decision`, `modo` (con `fisico`, alterna), `pedido`, `salir`, `ver_terminal` y `musica`
+  (solo `reproduciendo`, un booleano exacto; informativo, [[musica-isla]]).
 - **Agente → isla:** `estado`, `confirmar`, `decision_rechazada`, `cancelar`, `respuesta`, `fin_habla`, `seguimiento`,
   `aviso` y `modos`.
   - Estados que se mandan hoy: `reposo`, `escuchando`, `pensando`, `ejecutando`, `pregunta`, `detenido` y `juego`.

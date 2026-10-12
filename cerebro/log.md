@@ -54,3 +54,9 @@ Entradas anteriores: [[log-2026-10-10]], [[log-2026-10-11-isla]], [[log-2026-10-
   `mouse_sim`, que mira el escritorio real (backlog #31), no de la caché. Ningún (c). Tarea 6,8 → 3,2 s. Activa.
 - El camino rápido se queda activo (decisión del coordinador y del usuario).
 
+## 2026-10-11: cerebro al día con el protocolo v3 y revisión del backend
+
+- Revisados y aprobados el camino rápido (fdf84d1, 456/456) y la caché por estados en `qwen9b` (b056954, 13/13;
+  carga 26/26). `isla-websocket`, `suites`, `isla-codex`, `hoja-de-ruta` y `permisos-y-bloqueos` al día;
+  `compilar-isla` dividida en `compilar-isla-historial`. Re-sellados `entrada-fisica`, `arrancar-detener`,
+  `mapa-datos`.
