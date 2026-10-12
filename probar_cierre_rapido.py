@@ -54,7 +54,7 @@ def cargar(guion, cierre_rapido=True):
     ns = {"json": json, "time": time, "datetime": datetime, "re": re, "modo_directo": modo_directo, "herramientas_grupo4": herramientas_grupo4,
           "nueva_proteccion": nueva_proteccion, "registrar_resultado": registrar_resultado,
           "resultado_verificado": resultado_verificado, "validar_finalizacion": validar_finalizacion,
-          "Detenido": KeyError, "MAX_PASOS": 8, "CIERRE_RAPIDO": cierre_rapido, "print": lambda *a, **k: None,
+          "Detenido": KeyError, "MAX_PASOS": 8, "CIERRE_RAPIDO": cierre_rapido, "CAMINO_RAPIDO": False, "print": lambda *a, **k: None,
           "emergencia": type("E", (), {"comprobar": staticmethod(lambda: None),
                                        "detenido": staticmethod(lambda: False)})(),
           "notificar": lambda *a, **k: None, "enviar_modos": lambda: None, "compactar_historial": lambda h: None,

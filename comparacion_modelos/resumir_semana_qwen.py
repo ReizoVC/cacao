@@ -35,7 +35,7 @@ HERRAMIENTA = re.compile(r"^  \[([a-z_]+)\] ")
 def contar(lineas, desde):
     c = {"sesiones": 0, "pedidos": 0, "finalizaciones_rechazadas": 0, "mensaje_final_descartado": 0, "bloqueos": 0,
          "cerrar_app_intentos": 0, "cerrar_app_bloqueados_freno": 0, "cerrar_app_negados_usuario": 0,
-         "forzar_ignorado": 0, "dos_alternativas_fallidas": 0, "limite_de_pasos": 0}
+         "forzar_ignorado": 0, "dos_alternativas_fallidas": 0, "limite_de_pasos": 0, "camino_rapido": 0}
     dentro, ultima = False, None
     for linea in lineas:
         linea = linea.rstrip("\r\n")
@@ -61,6 +61,8 @@ def contar(lineas, desde):
             c["cerrar_app_bloqueados_freno"] += 1
         elif linea.startswith("  [forzar] "):
             c["forzar_ignorado"] += 1
+        elif linea.startswith("  [camino rápido] "):
+            c["camino_rapido"] += 1
         elif linea.startswith("  [alternativas] dos caminos fallaron"):
             c["dos_alternativas_fallidas"] += 1
         elif linea.startswith("  [rechazado] "):

@@ -28,6 +28,7 @@ from rapidfuzz import process, fuzz
 from pycaw.pycaw import AudioUtilities
 
 import autocompletar_login
+import camino_rapido
 import habitos
 import herramientas_grupo4
 import modo_directo
@@ -64,6 +65,8 @@ if CONFIG.get("autocompletar_login", {}).get("activa"):
 HERRAMIENTAS = {h["nombre"]: h for h in CATALOGO["herramientas"] if h["nombre"] in ACTIVAS}
 # cierre rápido con mensaje_final (perfil de config.json): false = el ejecutor lo ignora y exige finalizar
 CIERRE_RAPIDO = CONFIG.get("cierre_rapido", True)
+# camino rápido (camino_rapido.py): pedidos simples sin el modelo, por el mismo ejecutor. Por defecto, activo
+CAMINO_RAPIDO = CONFIG.get("camino_rapido", True)
 MAX_PASOS = CATALOGO["limites"]["max_pasos_por_tarea"]
 APPS_SENSIBLES = CATALOGO["limites"]["apps_sensibles"]
 
@@ -779,7 +782,42 @@ def con_fecha(pedido, ahora=None):
 MENSAJE_DETENIDO = "Estoy detenido por el atajo de emergencia; no haré nada hasta que escribas 'reanudar'."
 
 
-def atender(pedido, historial):
+def resolver_app_rapido(nombre):
+    """Para el camino rápido: solo un nombre que no es genérico y que elegir_app resuelve sin error ni dudas."""
+    return not es_generico(nombre) and elegir_app(nombre, _cache_apps)[1] is None
+
+
+def paso_rapido(nombre, args, historial):
+    """Una acción del camino rápido, por el mismo ejecutor que las del modelo (permisos, protecciones, confirmaciones
+    físicas, registro). Devuelve la respuesta, o None si el resultado no quedó verificado: entonces la tarea sigue con
+    el modelo, con lo ocurrido ya en el historial."""
+    print(f"  [camino rápido] {nombre}")
+    historial.append({"role": "assistant", "content": json.dumps(
+        {"pensamiento": "Camino rápido: pedido simple reconocido por el código.", "herramienta": nombre,
+         "argumentos": args}, ensure_ascii=False)})
+    notificar("ejecutando", f"{nombre}: camino rápido")
+    emergencia.comprobar()
+    resultado = ejecutar(nombre, args)
+    _tarea["herramientas"].append((nombre, args))
+    historial.append({"role": "user", "content": f"Resultado de {nombre}: {json.dumps(resultado, ensure_ascii=False)}"})
+    registrar_resultado(_tarea["proteccion"], nombre, args, resultado)
+    if isinstance(resultado, dict) and resultado.get("bloqueado"):
+        memoria.registrar_bloqueo(_tarea["pedido"], nombre, args, resultado.get("error", ""))
+        print("  [bloqueado] tarea terminada por el ejecutor")
+        return terminar(historial, f"No lo hice: {resultado.get('error', 'está bloqueado por seguridad.')}", False,
+                        "Acción bloqueada; el ejecutor terminó la tarea")
+    if isinstance(resultado, dict) and resultado.get("rechazado"):
+        print("  [rechazado] Reizo dijo que no: tarea terminada por el ejecutor")
+        return terminar(historial, "No lo hice porque no lo autorizaste.", False,
+                        "Reizo rechazó la acción; el ejecutor terminó la tarea")
+    if resultado_verificado(nombre, args, resultado):
+        return terminar(historial, camino_rapido.respuesta(nombre, args, resultado), True,
+                        "Camino rápido: tarea de un paso completada")
+    return None
+
+
+def atender(pedido, historial, en_pausa=False):
+    """en_pausa: modo juego con el modelo descargado; solo el camino rápido del volumen, nunca el modelo."""
     if emergencia.detenido():
         # el atajo se pulsó antes o entre tareas: no se descarta, la tarea nueva no empieza
         print("  [emergencia] agente detenido: la tarea no se ejecuta")
@@ -793,6 +831,16 @@ def atender(pedido, historial):
     _decision.update(clave=None, valor=None)
     sin_verificar, recordatorios = None, 0  # último clic o atajo que el modelo aún no comprobó
     try:
+        # camino rápido: solo sustituye la elección del modelo; la acción pasa por ejecutar() como cualquier otra
+        rapido = (camino_rapido.reconocer(pedido, resolver_app_rapido, solo={"volumen"} if en_pausa else None)
+                  if CAMINO_RAPIDO else None)
+        if rapido:
+            respuesta = paso_rapido(*rapido, historial)
+            if respuesta is not None:
+                return respuesta
+        if en_pausa:  # sin modelo: lo que no resolvió el camino rápido no se hace
+            return terminar(historial, "No pude hacerlo durante la pausa del modo juego.", False,
+                            "Modo juego: sin modelo")
         for _ in range(MAX_PASOS):
             emergencia.comprobar()
             notificar("pensando")
@@ -1158,6 +1206,11 @@ def atender_con_memoria(pedido, historial, planificador, voz=False):
         notificar("juego" if _modo_juego.en_pausa() else "reposo")
         return respuesta
     if _modo_juego is not None and _modo_juego.en_pausa():
+        # solo el volumen por el camino rápido: sin despertar ni cargar el modelo y sin usar la GPU
+        if CAMINO_RAPIDO and camino_rapido.reconocer(pedido, solo={"volumen"}):
+            respuesta = atender(pedido, historial, en_pausa=True)
+            notificar("juego", respuesta)
+            return respuesta
         notificar("juego", _modo_juego.mensaje())
         return _modo_juego.mensaje()
     with planificador.pedido():

@@ -55,7 +55,7 @@ NOMBRES = {"CATEGORIAS", "LIMITE_RESULTADO", "normalizar", "listar_apps", "ESQUE
            "MODO_VOZ", "PLANIFICADORES", "TEXTO_EXTERNO", "GUARDAN_SOBRE_REIZO", "SOLO_CONSULTAN", "_tarea",
            "_modos", "_decision", "_politica", "decision_modo", "enviar_modos", "_isla",
            "camino_conocido", "anotar_intento", "legible", "nombre_app", "NOMBRES_APPS", "con_fecha", "DIAS",
-           "MESES"}
+           "MESES", "paso_rapido"}
 arbol = ast.parse((BASE / "agente_minimo.py").read_text(encoding="utf-8"))
 nodos = [n for n in arbol.body
          if (isinstance(n, ast.FunctionDef) and n.name in NOMBRES)
@@ -353,6 +353,12 @@ ns["notificar"] = lambda *_a, **_k: None
 # ---------- modelo con medición ----------
 CONFIG = cargar_config()
 ns["CIERRE_RAPIDO"] = CONFIG.get("cierre_rapido", True)  # como agente_minimo.CIERRE_RAPIDO (perfil activo)
+# camino rápido, como en agente_minimo; las apps del banco son las de _categorias (las mismas que abrir_app_sim)
+import camino_rapido
+ns["camino_rapido"] = camino_rapido
+ns["CAMINO_RAPIDO"] = CONFIG.get("camino_rapido", True)
+ns["resolver_app_rapido"] = lambda nombre: (not ns["es_generico"](nombre) and ns["elegir_app"](
+    nombre, [{"nombre": d["nombre"], "id": i} for i, d in ns["_categorias"].items()])[1] is None)
 if CONFIG.get("contrato_ronda2"):  # como agente_minimo: el contrato de la ronda 2 del perfil qwen9b
     import contrato_ronda2
     contrato_ronda2.aplicar(ns)

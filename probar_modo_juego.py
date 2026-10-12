@@ -187,10 +187,22 @@ def pruebas_logica():
             return "Listo, ya volví"
 
     import unicodedata
-    ns = {"_modo_juego": ModoFalso(), "unicodedata": unicodedata, "notificar": lambda *a, **k: None}
+    import camino_rapido
+    en_pausa = []
+    ns = {"_modo_juego": ModoFalso(), "unicodedata": unicodedata, "notificar": lambda *a, **k: None,
+          "CAMINO_RAPIDO": True, "camino_rapido": camino_rapido,
+          "atender": lambda pedido, historial, en_pausa=False: en_pausa_llamadas(pedido, en_pausa)}
+
+    def en_pausa_llamadas(pedido, pausa):
+        en_pausa.append((pedido, pausa))
+        return "Listo, puse el volumen al 30%."
+
     exec(compile(ast.Module(body=nodos, type_ignores=[]), "agente_minimo.py", "exec"), ns)
+    r = ns["atender_con_memoria"]("abre spotify", [], PlanFalso())
+    ok("pedido en modo juego: aviso de pausa sin llamar al modelo", "pausa" in r and not usado and not en_pausa, r)
     r = ns["atender_con_memoria"]("pon el volumen al 30", [], PlanFalso())
-    ok("pedido en modo juego: aviso de pausa sin llamar al modelo", "pausa" in r and not usado, r)
+    ok("volumen en modo juego: camino rápido en pausa (sin reservar el modelo)",
+       r == "Listo, puse el volumen al 30%." and en_pausa == [("pon el volumen al 30", True)] and not usado, r)
     r = ns["atender_con_memoria"]("Ya terminé.", [], PlanFalso())
     ok("'Ya terminé.' lo atiende el código, sin el modelo", r == "Listo, ya volví" and not usado, r)
     r = ns["atender_con_memoria"]("estoy jugando", [], PlanFalso())
