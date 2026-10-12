@@ -78,15 +78,20 @@ ok("agente_minimo usa el perfil activo", a.CONFIG["modelo"].name in (Path(gemma[
    and a.CONFIG.get("modelo_activo") == crudo["modelo_activo"], a.CONFIG.get("modelo_activo"))
 
 # crear_llm: swa_full del perfil a llama-cpp-python (sin la clave, su valor por defecto) y plantilla sin pensamiento
+import cache_estados  # noqa: E402
+
 argumentos, manejadores = [], []
-guardado = modelo.LlamaRapida, modelo.manejador_sin_pensamiento
+guardado = modelo.LlamaRapida, modelo.manejador_sin_pensamiento, cache_estados.CacheEstados
 modelo.LlamaRapida = lambda **k: argumentos.append(k) or LlmFalso()
 modelo.manejador_sin_pensamiento = lambda llm: manejadores.append(llm) or "manejador"
+cache_estados.CacheEstados = lambda llm: "cache"
 try:
     llm_qwen = modelo.crear_llm(qwen, comprobar_juego=False)
     llm_gemma = modelo.crear_llm(gemma, comprobar_juego=False)
 finally:
-    modelo.LlamaRapida, modelo.manejador_sin_pensamiento = guardado
+    modelo.LlamaRapida, modelo.manejador_sin_pensamiento, cache_estados.CacheEstados = guardado
+ok("crear_llm: solo qwen9b usa la caché por estados (Gemma ya reutiliza el prefijo)",
+   getattr(llm_qwen, "cache_estados", None) == "cache" and not hasattr(llm_gemma, "cache_estados"))
 ok("crear_llm: qwen9b pasa swa_full=False", argumentos[0].get("swa_full") is False, argumentos[0].get("swa_full"))
 ok("crear_llm: gemma, el valor por defecto de llama-cpp-python", argumentos[1].get("swa_full") is None)
 ok("crear_llm: solo qwen9b usa la plantilla sin pensamiento",

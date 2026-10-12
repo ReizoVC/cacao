@@ -90,6 +90,11 @@ def crear_llm(config, esperar_juego=False, comprobar_juego=True):
                       modo_gramatica=config["modo_gramatica"])
     if config.get("sin_pensamiento"):
         llm.chat_handler = manejador_sin_pensamiento(llm)
+    if config.get("cache_estados"):
+        # perfil qwen9b: restaura el estado tras el prompt de sistema en cada llamada (cache_estados.py). Una caché
+        # por modelo: al descargarlo o recargarlo (modo juego), el estado anterior desaparece con él
+        from cache_estados import CacheEstados
+        llm.cache_estados = CacheEstados(llm)
     return llm
 
 

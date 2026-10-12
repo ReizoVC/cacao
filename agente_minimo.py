@@ -540,6 +540,9 @@ if CONFIG.get("contrato_ronda2"):
 
 
 def pedir_accion(historial):
+    cache = getattr(llm, "cache_estados", None)
+    if cache is not None:  # perfil qwen9b: el prompt de sistema vigente, para la caché por estados
+        cache.sistema(historial[0]["content"])
     parametros = dict(messages=historial, response_format={"type": "json_object", "schema": ESQUEMA_ACCION},
                       temperature=0.3, top_p=0.95, top_k=64, max_tokens=512)
     if vision is not None and any(isinstance(m["content"], list) for m in historial):
