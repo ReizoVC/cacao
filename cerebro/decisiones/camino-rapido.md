@@ -1,14 +1,14 @@
 ---
 estado: verificado
-verificado_commit: 76250a2
+verificado_commit: 62cd4fc
 verificado_fecha: 2026-10-11
 fuentes: [camino_rapido.py, agente_minimo.py, voz.py, benchmark_gramatica.py, probar_camino_rapido.py, pruebas.json, comparacion_modelos/pruebas_nuevas_30.json]
 ---
 # Camino rápido: pedidos simples sin el modelo
 
 **Estado: implementado (fdf84d1, 2026-10-11)**, por decisión del usuario, con las ampliaciones y el volumen en la
-pausa del modo juego. **Falta la 65 × 3 de los dos modelos**: espera a que la GPU esté libre (el usuario está
-jugando). Sigue [[estrategia-recursos]]: el modelo decide; el código hace.
+pausa del modo juego. 65 × 3 hecha (abajo): las frases del camino rápido son correctas en los dos modelos; ninguno
+llega del todo al criterio por casos ajenos. Sigue [[estrategia-recursos]]: el modelo decide; el código hace.
 
 ## Qué pedidos entran (`camino_rapido.py`, lista blanca)
 
@@ -67,8 +67,15 @@ voz), nunca texto externo.
     interruptor);
   - el modo juego;
   - 8 mutaciones detectadas (quitar cada freno hace fallar alguna prueba).
-- **Pendiente:** 65 × 3 de `gemma` y de `qwen9b` (`probar_swa_cache.py --perfil`). Criterio del coordinador: Gemma
-  195/195; Qwen no peor que 182/195 y sin casos (c) nuevos.
+- **65 × 3** (`probar_swa_cache.py --perfil`, `datos/swa_cache/*rapido*.json`). El banco no anotaba las herramientas
+  del camino rápido; corregido en 62cd4fc y recalificado sin modelo (`recalificado_*.json`):
+  - las 39 frases del camino rápido (13 × 3; las otras 4 no están en las 65) son correctas en los dos modelos;
+  - **Gemma: 65 / 65 / 64 = 194/195** (criterio 195). Falla #44 s33: lista las ventanas y dice que la terminal ya
+    está al frente, cosa cierta en el simulador. No es una frase del camino rápido;
+  - **Qwen: 62 / 58 / 60 = 180/195** (criterio ≥ 182). Ningún (c) ejecutado: dos intentos de cerrar una app sin
+    pedirlo (#43 s33 y #58 s33) los paró el freno de [[frenos-cierre]];
+  - fallan casos que el camino rápido no toca (#41, #59, #19, #35…) y que antes pasaban: este arnés no fija la
+    hora del pedido y las salidas de Qwen cambian de una corrida a otra (ver [[prompt-y-cache]], fase A).
 
 **Ganancia esperada:** con el modelo, esas frases tardaban de media 1,82 s con Gemma y 6,09 s con Qwen
 (`datos/swa_cache/*cierre_C.json` y `*contrato_A.json`); por este camino solo cuenta el tiempo de la herramienta.

@@ -38,3 +38,11 @@ Entradas anteriores: [[log-2026-10-10]], [[log-2026-10-11-isla]], [[log-2026-10-
   (aparcado), `modo-juego`, `voz`, `vision-general`, `suites`, `mapa-archivos`, `comparacion-modelos`, backlog
   (#28–30) y `evaluacion-65-frases` (pendiente).
 
+## 2026-10-11: tres corridas con GPU (caché corregida, camino rápido en los dos modelos)
+
+- Banco con caché corregida: 189/195. Las dos corridas con caché son idénticas entre sí; #56 s22/s33 difieren de la
+  corrida sin caché por los frenos posteriores (0a3ea28, e9a580d), no por la caché.
+- 65 × 3 con el camino rápido. El banco no anotaba sus herramientas: corregido y recalificado (62cd4fc). Gemma
+  194/195 (#44 s33); Qwen 180/195, sin (c) ejecutados (dos cierres no pedidos, frenados). Las 39 frases del camino
+  rápido son correctas. Este arnés no fija la hora del pedido: las salidas de Qwen varían entre corridas.
+

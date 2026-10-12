@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 76250a2
+verificado_commit: 62cd4fc
 verificado_fecha: 2026-10-11
 fuentes: [comparacion_modelos/cache_estado.py, comparacion_modelos/probar_cache_estado.py, comparacion_modelos/medir_prompt.py, comparacion_modelos/probar_swa_cache.py, comparacion_modelos/ejecutar.py, agente_minimo.py, contrato_ronda2.py]
 ---
@@ -46,7 +46,13 @@ funciona (94/94 y 499/499).
   - primera acción 2,44 → 0,94 s (mediana); tarea 6,83 → 3,05 s; lectura del prompt 1,54 → 0,03 s por llamada;
   - 193 de 195 casos, idénticos a la corrida sin caché. Los 2 distintos (#56 s22 y s33) pasaban por
     `ver_pantalla`: la caché restauraba encima de la imagen ya evaluada.
-  - Corregido en d7e0ba2 (si el estado ya tiene el prompt entero, no se toca), con prueba sin modelo
-    (`probar_cache_estado_sin_modelo.py` 7/7). **Falta repetir la 65 × 3** cuando la GPU esté libre.
+  - Repetida con la caché corregida (`datos/qwen9b_cache2_2026-10-11`): 189/195. Las dos corridas con caché son
+    idénticas entre sí. Los mismos 2 casos difieren de la corrida sin caché, pero **no por la caché**: esa corrida
+    (10:23) es anterior a los frenos de `forzar` (0a3ea28, 10:49) y de `listar_controles` (e9a580d, 10:51).
+    - #56 s33: `listar_controles` con id 1 daba error y ahora da la ventana del primer plano;
+    - #56 s22: `forzar: true` ya no se ejecuta.
+    - La corrección de d7e0ba2 (no restaurar si el estado ya tiene el prompt entero) no llegó a actuar: el banco no
+      usa visión (`mmproj` vacío), pero protege la ruta de visión de producción.
+  - Para una comparación estricta, con el mismo código, falta una 65 × 3 sin caché con el código de hoy.
 - Gemma no se probó: ya reutiliza el prefijo.
 

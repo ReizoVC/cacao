@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 76250a2
+verificado_commit: 62cd4fc
 verificado_fecha: 2026-10-11
 fuentes: [pruebas.json, evaluar_pruebas.py, benchmark_gramatica.py, comparacion_modelos/probar_swa_cache.py, comparacion_modelos/criterios.py, comparacion_modelos/integracion.py, SRS.md]
 ---
@@ -62,8 +62,8 @@ origen `comparacion_modelos/datos/swa_cache/resumen_65x3_C.json`, ignorado por G
 | `qwen9b`, d95855d (sin cierre rápido) | `resumen_qwen65x3cierre_A.json` | 59 / 61 / 62 = 182 | 8 214 MiB |
 | `gemma`, d95855d (`mensaje_final` validado, blindajes) | `resumen_gemma65x3cierre_C.json` | 65 / 65 / 65 = **195** | 12 940 MiB |
 
-**Pendiente (GPU):** la 65 × 3 de `gemma` y `qwen9b` con el camino rápido (fdf84d1), con
-`probar_swa_cache.py --perfil`.
+**Con el camino rápido (fdf84d1)**, recalificado (62cd4fc): `gemma` 65/65/64 = 194 y `qwen9b` 62/58/60 = 180
+(`datos/swa_cache/recalificado_*rapido*.json`). Detalle en [[camino-rapido]].
 
 Con Gemma, ningún `mensaje_final` se descartó y ningún `forzar` se ignoró (registro de la corrida); #56 s22 ya pasa.
 Clasificación de Qwen en [[resultado-qwen9b-2026-10-11]].
