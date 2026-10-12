@@ -1,8 +1,8 @@
 ---
 estado: sin verificar
-verificado_commit: e10b522
+verificado_commit: e9084f7
 verificado_fecha: 2026-10-12
-fuentes: [config.json, comparacion_modelos/resumen_qwen3_tts_windows.json]
+fuentes: [config.json, comparacion_modelos/resumen_qwen3_tts_windows.json, comparacion_modelos/resumen_qwen3_tts_llama_cpp.json]
 ---
 # Voz personalizada: motores candidatos en Windows (investigación del 2026-10-11)
 
@@ -17,8 +17,9 @@ con vLLM-Omni en WSL, y WSL está descartado ([[qwen3-tts-vllm-omni]]).
 | XTTS v2 (PyTorch) | sí, con ~6 s de audio | sí, bien documentado | PyTorch en Windows | ~4 GB | ~2 s por frase en RTX 3060 | CPML (no comercial; vale para uso personal) |
 | Kokoro | no (voces fijas) | sí | sí, incluso en CPU | 2–3 GB | el más rápido | Apache 2.0 |
 
-**Medido el 2026-10-12** ([[qwen3-tts-windows]]): `qwen3-tts.cpp` compila en Windows con CUDA, pero da RTF 0,74
-en F16 y 5,09 en Q8_0 (criterio ≤ 0,5); la convivencia no se midió.
+**Medido el 2026-10-12** ([[qwen3-tts-windows]]): `qwen3-tts.cpp` da RTF 0,74 (F16), no pasa. **llama.cpp
+(`llama-tts`, el backend de KreutzM) pasa**: RTF 0,31, primer audio en caliente 0,88 s de mediana y, junto a
+`qwen9b` + Whisper + visión, 3 047 MiB libres en el pico. Falta escuchar su calidad.
 
 Lo ya medido aquí antes: Qwen3-TTS con PyTorch en Windows, RTF 3,84 (descartado); con vLLM-Omni en WSL, RTF 0,249, primer
 audio en 0,6 s y pico de 5 250 MiB.

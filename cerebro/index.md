@@ -29,7 +29,7 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[swa-full-false]]: −2,5 GiB de VRAM sin perder tareas; no aplicado
 - [[qwen3-tts-vllm-omni]]: voz experimental; Piper sigue en producción
 - [[voz-candidatas]]: motores de voz para Windows nativo
-- [[qwen3-tts-windows]]: qwen3-tts.cpp en Windows: RTF 0,74, no pasa
+- [[qwen3-tts-windows]]: Qwen3-TTS en Windows: pasa con llama.cpp
 - [[motor-llama-cpp]]: 0.3.36 frente a b11429 y por qué migrar no es trivial
 - [[use-mmap-false]]: mmap apagado por la RAM
 - [[cierre-rapido-mensaje-final]]: diferencias entre producción y el banco de pruebas
@@ -75,5 +75,4 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[log-2026-10-10]]: entradas archivadas del 2026-10-10
 - [[log-2026-10-11-isla]]: entradas archivadas del 2026-10-11 (isla: traspaso, bandeja y prueba física)
 - [[log-2026-10-11-b]]: entradas archivadas del 2026-10-11 (coordinación de Codex, Fase 1 medida y swa_full)
-- [[log-2026-10-11-c]]: registro del 2026-10-11 (c)
-- [[log-2026-10-11-d]]: registro del 2026-10-11 (d)
+- [[log-2026-10-11-c]], [[log-2026-10-11-d]], [[log-2026-10-11-e]]: entradas archivadas del 2026-10-11

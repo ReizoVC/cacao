@@ -47,8 +47,9 @@ Los nombres son relativos a la raíz del repositorio. Actualiza esta página al 
 
 - `.venv/`, `.venv-pruebas/` y `modelos/` (los GGUF, Piper y el detector «Cacao»). `.venv-pruebas` tiene el mismo
   llama_cpp que `.venv` y además `jsonschema` (lo usa `comparacion_modelos/probar_integracion.py`).
-- `.comparacion-runtime/`: motores, perfiles de TTS y scripts de WSL. `qwen3-tts-cpp/`: banco de Qwen3-TTS en Windows nativo
-  (fuente, scripts, modelos GGUF y WAV de salida). Resumen en `comparacion_modelos/resumen_qwen3_tts_windows.json`.
+- `.comparacion-runtime/`: motores, perfiles de TTS y scripts de WSL. `qwen3-tts-cpp/` y `qwen3-tts-kreutzm/`: bancos de Qwen3-TTS
+  en Windows nativo (fuente, scripts, modelos GGUF y WAV de salida). Resúmenes en
+  `comparacion_modelos/resumen_qwen3_tts_windows.json` y `resumen_qwen3_tts_llama_cpp.json`.
 - `comparacion_modelos/datos/`: datos crudos.
 - `resultados_*.json`, `resultados_*.md` y `*.log` (salvo los añadidos a mano con `-f`).
 
