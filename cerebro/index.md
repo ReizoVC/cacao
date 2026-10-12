@@ -38,7 +38,8 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[configuracion-vigente]]: config.json de producción explicado
 - [[cifras-medidas]]: tabla de resultados con su archivo de origen
 - [[memoria-liberable]]: VRAM de Qwen 9B + Whisper por opción
-- [[prompt-y-cache]]: tokens del prompt y caché de prefijo
+- [[prompt-y-cache]]: tokens del prompt y prefijo
+- [[cache-estados]]: caché por estados de Qwen
 - [[criterio-de-cambio]]: criterio fijado y propuesta para cambiar de modelo o volver a Q5
 
 ## Pruebas

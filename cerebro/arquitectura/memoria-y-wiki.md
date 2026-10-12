@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 77370e8
+verificado_commit: c297bcb
 verificado_fecha: 2026-10-11
 fuentes: [memoria.py, wiki.py, reflexion.py, lint.py, sugerencias.py, deteccion.py, obstaculos.py, config.json, diseno_fase6.md]
 ---

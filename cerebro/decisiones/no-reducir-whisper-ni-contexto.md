@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 77370e8
+verificado_commit: c297bcb
 verificado_fecha: 2026-10-11
 fuentes: [config.json, comparacion_modelos/resumen_convivencia_completa_wsl.json, comparacion_modelos/resumen_optimizacion_qwen3_tts.json]
 ---

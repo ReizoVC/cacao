@@ -1,14 +1,15 @@
 ---
 estado: verificado
-verificado_commit: 62cd4fc
+verificado_commit: c297bcb
 verificado_fecha: 2026-10-11
 fuentes: [camino_rapido.py, agente_minimo.py, voz.py, benchmark_gramatica.py, probar_camino_rapido.py, pruebas.json, comparacion_modelos/pruebas_nuevas_30.json]
 ---
 # Camino rápido: pedidos simples sin el modelo
 
 **Estado: implementado (fdf84d1, 2026-10-11)**, por decisión del usuario, con las ampliaciones y el volumen en la
-pausa del modo juego. 65 × 3 hecha (abajo): las frases del camino rápido son correctas en los dos modelos; ninguno
-llega del todo al criterio por casos ajenos. Sigue [[estrategia-recursos]]: el modelo decide; el código hace.
+pausa del modo juego. **Se queda activo** (decisión del coordinador y del usuario, 2026-10-11). En la 65 × 3 las
+frases del camino rápido son correctas en los dos modelos. Los fallos no son suyos: el #44 de Gemma es el simulador
+de foco (backlog #26) y Qwen varió por la hora del pedido, sin ejecutar ningún (c). Sigue [[estrategia-recursos]]: el modelo decide; el código hace.
 
 ## Qué pedidos entran (`camino_rapido.py`, lista blanca)
 
@@ -77,6 +78,5 @@ voz), nunca texto externo.
   - fallan casos que el camino rápido no toca (#41, #59, #19, #35…) y que antes pasaban: este arnés no fija la
     hora del pedido y las salidas de Qwen cambian de una corrida a otra (ver [[prompt-y-cache]], fase A).
 
-**Ganancia esperada:** con el modelo, esas frases tardaban de media 1,82 s con Gemma y 6,09 s con Qwen
-(`datos/swa_cache/*cierre_C.json` y `*contrato_A.json`); por este camino solo cuenta el tiempo de la herramienta.
+**Ganancia:** con el modelo esas frases tardaban 1,82 s (Gemma) y 6,09 s (Qwen); aquí solo cuenta la herramienta.
 No cambia el prompt ni el esquema.

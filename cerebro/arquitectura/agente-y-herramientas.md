@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 62cd4fc
+verificado_commit: c297bcb
 verificado_fecha: 2026-10-11
 fuentes: [agente_minimo.py, herramientas.json, herramientas_grupo1.py, herramientas_grupo4.py, herramientas_powershell.py, vision.py, memoria.py, benchmark_gramatica.py]
 ---
@@ -34,7 +34,8 @@ fuentes: [agente_minimo.py, herramientas.json, herramientas_grupo1.py, herramien
 - `TEXTO_EXTERNO`: herramientas cuyo resultado marca la tarea como «contaminada».
 - `GUARDAN_SOBRE_REIZO`: recordar, sugerencias y registro_habitos, que piden confirmación si la tarea está
   contaminada.
-- `atender()` prueba antes el [[camino-rapido]] (`paso_rapido`, `CAMINO_RAPIDO`).
+- `atender()` prueba antes el [[camino-rapido]] (`paso_rapido`, `CAMINO_RAPIDO`). Con Qwen, `pedir_accion` indica el
+  prompt de sistema a la [[cache-estados]].
 - `ESQUEMA_ACCION`: `{pensamiento ≤120, herramienta (enum), argumentos, mensaje_final opcional}`. `mensaje_final`
   se valida como `finalizar` y `CIERRE_RAPIDO` (perfil de `config.json`) puede apagarlo ([[cierre-rapido-mensaje-final]]).
 - Con `contrato_ronda2` (solo perfil qwen9b), `contrato_ronda2.aplicar(globals())` cambia `prompt_sistema`,

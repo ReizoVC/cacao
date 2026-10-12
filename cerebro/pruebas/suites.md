@@ -29,10 +29,11 @@ ejecución, con su commit; las salidas no se guardan ([[log]]).
 | `probar_powershell.py` | Planificador, patrones, tiempo máximo; `--modelo` **carga el modelo** | «TODO OK», 54 líneas OK |
 | `probar_apps.py` | Elección de apps contra `apps_categorias.json` (datos personales: mira solo el total) | «TODO OK», 72 líneas OK |
 | `probar_grupo4.py` | Planes del grupo 4 con ventanas reales; captura en memoria | «TODO OK»; con dos ventanas del Explorador abiertas fallan 2 (dependen del escritorio) |
-| `probar_carga_modelo.py` | Importar sin modelo, `cargar_modelo()`, orden del arranque, perfiles `gemma`/`qwen9b` (`swa_full`, `cierre_rapido`) | 25/25 (d95855d) |
+| `probar_carga_modelo.py` | Importar sin modelo, `cargar_modelo()`, orden del arranque, perfiles `gemma`/`qwen9b` | 26/26 (b056954) |
 | `probar_cierre_rapido.py` | `mensaje_final` validado y `cierre_rapido` por perfil | 13/13 (d95855d) |
 | `probar_contrato_ronda2.py` | Contrato de qwen9b igual al del banco; Gemma sin cambios | 16/16 (f21e746) |
 | `probar_camino_rapido.py` | Camino rápido: 17 frases, trampas, mismo ejecutor, modo juego y 8 mutaciones | 456/456 (fdf84d1) |
+| `probar_cache_estados.py` | Caché por estados de producción: visión, modo juego, atajo | 13/13 (b056954) |
 | `comparacion_modelos/probar_cache_estado_sin_modelo.py` | Caché por estados con un Llama falso | 7/7 (76250a2) |
 | `probar_salida_utf8.py` | UTF-8 en `voz.py` y en el modo texto sin el lanzador | 6/6 |
 | `probar_gramatica_json.py` | Regla `char` estricta: lee **solo el vocabulario** del GGUF (sin pesos, 0 capas en la GPU) y pasa respuestas por el muestreador de gramática | 11/11 |

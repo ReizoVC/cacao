@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: d95855d
+verificado_commit: c297bcb
 verificado_fecha: 2026-10-11
 fuentes: [comparacion_modelos/resumen_gemma_q5_llama_b11429.json, comparacion_modelos/motor_llama_cpp_b11429.json, modelo.py, muestreo_gramatica.py, vision.py, transcripcion.py, requirements.txt]
 ---

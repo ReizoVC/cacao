@@ -1,6 +1,6 @@
 ---
 estado: sin verificar
-verificado_commit: 0a88f92
+verificado_commit: c297bcb
 verificado_fecha: 2026-10-11
 fuentes: [config.json]
 ---

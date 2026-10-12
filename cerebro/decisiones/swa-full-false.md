@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 76250a2
+verificado_commit: c297bcb
 verificado_fecha: 2026-10-11
 fuentes: [resultados_swa_y_recursos.md, comparacion_modelos/probar_swa_cache.py, comparacion_modelos/ejecutar.py, modelo.py, config.json, probar_carga_modelo.py]
 ---

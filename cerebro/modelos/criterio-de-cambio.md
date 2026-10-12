@@ -1,6 +1,6 @@
 ---
 estado: sin verificar
-verificado_commit: 77370e8
+verificado_commit: c297bcb
 verificado_fecha: 2026-10-11
 fuentes: [comparacion_modelos/ronda3_protocolo.md, comparacion_modelos/resumir_ronda3.py, config.json]
 ---

@@ -46,3 +46,11 @@ Entradas anteriores: [[log-2026-10-10]], [[log-2026-10-11-isla]], [[log-2026-10-
   194/195 (#44 s33); Qwen 180/195, sin (c) ejecutados (dos cierres no pedidos, frenados). Las 39 frases del camino
   rápido son correctas. Este arnés no fija la hora del pedido: las salidas de Qwen varían entre corridas.
 
+## 2026-10-11: caché por estados en producción (qwen9b) y hora fija en el banco
+
+- 180d71d: `probar_swa_cache.py` fija la hora del pedido; dos corridas del mismo código, 65/65 idénticas.
+- b056954 (permiso del usuario): `cache_estados.py` en el perfil `qwen9b`; `probar_cache_estados.py` 13/13.
+- 65 × 3 con y sin caché, hora fija: 181 frente a 182; 192/195 casos idénticos. Los 3 distintos vienen de
+  `mouse_sim`, que mira el escritorio real (backlog #31), no de la caché. Ningún (c). Tarea 6,8 → 3,2 s. Activa.
+- El camino rápido se queda activo (decisión del coordinador y del usuario).
+

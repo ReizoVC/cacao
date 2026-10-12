@@ -1,13 +1,13 @@
 ---
 estado: sin verificar
-verificado_commit: 76250a2
+verificado_commit: c297bcb
 verificado_fecha: 2026-10-11
 fuentes: [agente_minimo.py, contrato_ronda2.py, comparacion_modelos/medir_prompt.py, comparacion_modelos/simular_filtrado.py, comparacion_modelos/probar_swa_cache.py]
 ---
 # Filtrado de herramientas por pedido
 
 **Estado: aparcado por decisión del usuario (2026-10-11)** hasta ver la caché por estados de Qwen. Primeros datos
-([[prompt-y-cache]], fase A): con la caché, Qwen lee el prompt en ≈ 0,03 s por llamada en vez de 1,54 s, así que
+([[cache-estados]]): con la caché, Qwen lee el prompt en ≈ 0,03 s por llamada en vez de 1,54 s, así que
 el filtrado le ahorraría poco tiempo. Sigue [[estrategia-recursos]].
 
 ## Datos
@@ -55,8 +55,7 @@ fallarán más. Por eso el respaldo es obligatorio.
 1. **Primero, sin filtrar: devolverle a Qwen la caché del prompt de sistema.** Guardar el estado tras el prompt de
    sistema (`save_state`/`load_state` de llama-cpp-python) y restaurarlo en cada llamada. Si funciona con su memoria
    híbrida, ahorra ≈ 4 000 tokens por llamada (≈ 1,4 s, ≈ 4 s por tarea), más que el filtrado, y **sin cambiar el
-   prompt**. Probado en el banco: funciona (fase A, [[prompt-y-cache]]); falta repetir la 65 × 3 tras el arreglo de
-   la visión.
+   prompt**. Hecho: activo en `qwen9b` ([[cache-estados]]).
 2. **Después, la variante C** con grupos fijos: es la única que no empeora a Gemma en el caso típico y le da a Qwen
    casi todo el ahorro de A. La D conserva mejor la caché de Gemma, pero pone descripciones de herramientas en el
    mensaje del usuario, un cambio de formato más arriesgado para los dos modelos.

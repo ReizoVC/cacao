@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: fdf84d1
+verificado_commit: c297bcb
 verificado_fecha: 2026-10-11
 fuentes: [pruebas.json, comparacion_modelos/pruebas_nuevas_30.json, agente_minimo.py]
 ---

@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 77370e8
+verificado_commit: c297bcb
 verificado_fecha: 2026-10-11
 fuentes: [palabra_activacion.py, seguimiento.py, entrenar_cacao.py, config.json, SRS.md]
 ---

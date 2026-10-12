@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 76250a2
+verificado_commit: c297bcb
 verificado_fecha: 2026-10-11
 fuentes: [config.json, modelo.py, vision.py, muestreo_gramatica.py, requirements.txt, agente_minimo.py, probar_carga_modelo.py]
 ---
@@ -19,7 +19,7 @@ Leída de `config.json`. La fuente de verdad es ese archivo; esta página puede 
 | Perfil | `modelo` | `mmproj` | Extras |
 |---|---|---|---|
 | `gemma` | `modelos/gemma-4-12b-it-Q5_K_M.gguf` | `modelos/mmproj/mmproj-F16.gguf` | sin `swa_full` |
-| `qwen9b` | `modelos/comparacion_local/Qwen3.5-9B-UD-Q5_K_XL.gguf` (copia en C:) | `modelos/comparacion/mmproj-F16.gguf` | `swa_full: false`, `sin_pensamiento: true`, `cierre_rapido: false`, `contrato_ronda2: true` |
+| `qwen9b` | `modelos/comparacion_local/Qwen3.5-9B-UD-Q5_K_XL.gguf` (copia en C:) | `modelos/comparacion/mmproj-F16.gguf` | `swa_full: false`, `sin_pensamiento: true`, `cierre_rapido: false`, `contrato_ronda2: true`, `cache_estados: true` |
 
 `sin_pensamiento`: la plantilla de chat del modelo con `enable_thinking=false`, en el texto (`modelo.py`) y en
 `ver_pantalla` (`vision.py`), igual que el banco. `cierre_rapido` (gemma true, qwen9b false): [[cierre-rapido-mensaje-final]].

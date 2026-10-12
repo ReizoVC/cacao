@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 76250a2
+verificado_commit: c297bcb
 verificado_fecha: 2026-10-11
 fuentes: [entrenar_cacao.py, medir_arranque.py, config.json, modelo.py, agente_minimo.py, protecciones_ejecucion.py, comparacion_modelos/ejecutar.py, REPORTE_TRABAJO_CACAO.md, SRS.md, guia_instalacion_agente.md, resultados_swa_y_recursos.md]
 ---
@@ -54,9 +54,10 @@ Ordenados por el usuario en [[hoja-de-ruta]] (2026-10-11). La prueba de Qwen 9B 
 | 22 | Margen de RAM en la recarga WSL | descartado (WSL) | — |
 | 23 | Qwen 9B: banco 189/195; producción 173, 182 y 182 con contrato (no pasa) | **en uso real una semana** desde 5e9eee0, sin pasar el criterio | [[qwen-como-cerebro]]; `resumir_semana_qwen.py` |
 | 26 | El simulador de producción no mueve el foco al enfocar | candidata | `benchmark_gramatica.py:180` |
-| 28 | Camino rápido (17 frases, volumen en pausa) | **hecho** en fdf84d1; falta la 65 × 3 de los dos modelos | [[camino-rapido]] |
-| 29 | Caché por estados para Qwen (banco) | funciona (189/195); repetir tras arreglar la visión | [[prompt-y-cache]] |
-| 30 | Filtrado de herramientas | aparcado | [[filtrado-herramientas]] |
+| 28 | Camino rápido (17 frases, volumen en pausa) | **hecho** y activo (fdf84d1) | [[camino-rapido]] |
+| 29 | Caché por estados para Qwen | **hecho**: activa en qwen9b | [[cache-estados]] |
+| 31 | `mouse_sim` mira la ventana real | candidata | `benchmark_gramatica.py:206` |
+| 30 | Filtrado | aparcado | [[filtrado-herramientas]] |
 
 ## Con el usuario delante
 
