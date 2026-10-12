@@ -1,0 +1,28 @@
+{
+ "fecha": "2026-10-12",
+ "motor": "qwen3-tts.cpp (predict-woo, MIT) commit b3ba14077cf1b3e11b86e5f84aa9184605c89b28, ggml 3af5f5760e19a96427f5f7a93b79cbdf3d4b265b",
+ "compilacion": "VS 2022 (MSVC, vcvars64) + Ninja, CUDA 13.4, sm_120, GGML_CUDA=ON; qwen3tts.dll con CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON (el repo no exporta símbolos en Windows)",
+ "pesos": "Qwen/Qwen3-TTS-12Hz-0.6B-Base revision 5d83992436eae1d760afd27aff78a71d676296fc, convertidos con los scripts del repo",
+ "voz": "A1_equilibrada.wav (sintética), clonación por x-vector (sin texto de referencia)",
+ "gpu": "RTX 5060 Ti 16 311 MiB; Cacao cerrado y sin juegos (guardia_juego: None)",
+ "frases": [
+  "Listo, puse el volumen al treinta por ciento.",
+  "Hecho.",
+  "Listo, abrí Spotify.",
+  "El volumen está al 45%.",
+  "No encontré esa aplicación. ¿Quieres que busque otra parecida?",
+  "Tienes tres ventanas abiertas: el navegador, el bloc de notas y la terminal.",
+  "Pausé el registro de hábitos. Cuando quieras, dime que lo reanude.",
+  "No pude cerrar la calculadora porque tiene cambios sin guardar. ¿Quieres que lo intente de nuevo?",
+  "En la carpeta de descargas hay doce archivos; el más reciente es un documento PDF de esta mañana.",
+  "Buenos días. Hoy es lunes doce de octubre y son las diez de la mañana.",
+  "Encontré tres resultados sobre el clima de esta semana. El primero dice que lloverá el miércoles y que el fin de semana estará despejado.",
+  "Abrí la calculadora y puse el volumen al veinte por ciento. Si quieres, también puedo dejar la música sonando mientras trabajas, o avisarte cuando termine la descarga que tienes pendiente."
+ ],
+ "q4_k": "no disponible: gguf-py no cuantiza Q4_K y el conversor cae a F16 en los 271 tensores",
+ "fase_a": {
+  "q8_0": null,
+  "f16": null
+ },
+ "fase_b": "no se corrió: la fase A dio RTF > 0,5"
+}
