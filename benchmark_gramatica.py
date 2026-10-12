@@ -442,6 +442,16 @@ def pedir_medido(historial):
 
 
 ns["pedir_accion"] = pedir_medido
+_paso_rapido = ns["paso_rapido"]
+
+
+def paso_rapido_medido(nombre, args, historial):
+    # el camino rápido elige la herramienta sin el modelo: se anota igual que una elección del modelo
+    herramientas_usadas.append((nombre, args))
+    return _paso_rapido(nombre, args, historial)
+
+
+ns["paso_rapido"] = paso_rapido_medido
 
 
 def json_valido(texto):
