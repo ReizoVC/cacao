@@ -118,7 +118,7 @@ class CacheEstado:
         self._ultima_restaurada = not ya_evaluado and len(tokens) > p and tokens[:p] == self.prefijo
         if self._ultima_restaurada:
             self.restaurar()
-        else:
+        elif not ya_evaluado:
             self.stats["sin_prefijo"] += 1
         yield from self.generar(tokens, *args, **kwargs)
 
