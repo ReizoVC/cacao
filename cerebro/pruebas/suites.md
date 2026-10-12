@@ -6,14 +6,9 @@ fuentes: [probar_protecciones_ejecucion.py, probar_obstaculos.py, probar_modo_di
 ---
 # Suites de pruebas sin modelo
 
-Se corren con `.venv\Scripts\python <suite>`. No cargan Gemma ni Whisper, salvo con las opciones indicadas.
-Desde 14c17cb, importar `agente_minimo` (o `voz`) **ya no carga el modelo**: lo carga `cargar_modelo()`. Antes,
-`probar_fase7.py` A (`pruebas_rechazo`) y `probar_modo_juego.py` (`pruebas_filtrar_en_pausa`) cargaban Gemma sin
-avisar.
-
-**Línea base:** todas pasadas el 2026-10-10 en eb5a9c4 (después de 9e2c1f1 y de la Fase 1), con
-`PYTHONIOENCODING=utf-8`. Las salidas no se guardaron en el repositorio; las cifras salen de la ejecución de ese día
-([[log]]).
+Se corren con `.venv\Scripts\python <suite>` y `PYTHONIOENCODING=utf-8`. No cargan el modelo ni Whisper, salvo con
+las opciones indicadas (desde 14c17cb importar `agente_minimo` o `voz` no carga el modelo). Cifras de la última
+ejecución, con su commit; las salidas no se guardan ([[log]]).
 
 | Suite | Cubre | Baseline |
 |---|---|---|
@@ -26,17 +21,19 @@ avisar.
 | `probar_campo_isla.py` | Campo de texto de la isla, lado del agente | 29/29 |
 | `probar_autocompletar_login.py` | Autocompletado con Chrome simulado | 46/46 |
 | `probar_confirmacion_voz.py` | «confirmo la instrucción» | 33/33 |
-| `probar_modo_juego.py` | Lógica con juego simulado; `--medir` **carga modelos** | 32/32 |
+| `probar_modo_juego.py` | Lógica con juego simulado; volumen en pausa; `--medir` **carga modelos** | 33/33 (fdf84d1) |
 | `probar_palabra_activacion.py` | Detector «Cacao» con audio de prueba (CPU) | 41/41 |
 | `probar_seguimiento.py` | Escucha de 8 s | 35/35 |
 | `probar_segundo_plano.py` | Lanzador, registro, avisos, instancia única | 23/23 |
 | `probar_actividad_fisica.py` | Raw Input, periodos dudosos | 29/29 |
-| `probar_powershell.py` | Planificador, patrones, tiempo máximo; `--modelo` **carga Gemma** | «TODO OK», 54 líneas OK. El 59/59 de aa4c561 era la corrida `--modelo` |
+| `probar_powershell.py` | Planificador, patrones, tiempo máximo; `--modelo` **carga el modelo** | «TODO OK», 54 líneas OK |
 | `probar_apps.py` | Elección de apps contra `apps_categorias.json` (datos personales: mira solo el total) | «TODO OK», 72 líneas OK |
-| `probar_grupo4.py` | Planes del grupo 4; `mouse` sin bandeja de Windows ni menús de la isla | «TODO OK», 66 líneas OK en b15a349 (antes 51). Hace una captura real de la pantalla en memoria |
+| `probar_grupo4.py` | Planes del grupo 4 con ventanas reales; captura en memoria | «TODO OK»; con dos ventanas del Explorador abiertas fallan 2 (dependen del escritorio) |
 | `probar_carga_modelo.py` | Importar sin modelo, `cargar_modelo()`, orden del arranque, perfiles `gemma`/`qwen9b` (`swa_full`, `cierre_rapido`) | 25/25 (d95855d) |
 | `probar_cierre_rapido.py` | `mensaje_final` validado y `cierre_rapido` por perfil | 13/13 (d95855d) |
 | `probar_contrato_ronda2.py` | Contrato de qwen9b igual al del banco; Gemma sin cambios | 16/16 (f21e746) |
+| `probar_camino_rapido.py` | Camino rápido: 17 frases, trampas, mismo ejecutor, modo juego y 8 mutaciones | 456/456 (fdf84d1) |
+| `comparacion_modelos/probar_cache_estado_sin_modelo.py` | Caché por estados con un Llama falso | 7/7 (76250a2) |
 | `probar_salida_utf8.py` | UTF-8 en `voz.py` y en el modo texto sin el lanzador | 6/6 |
 | `probar_gramatica_json.py` | Regla `char` estricta: lee **solo el vocabulario** del GGUF (sin pesos, 0 capas en la GPU) y pasa respuestas por el muestreador de gramática | 11/11 |
 | `comparacion_modelos`: `probar_criterios` | Criterio oficial del banco (`python -m unittest`, desde esa carpeta) | 7/7 |

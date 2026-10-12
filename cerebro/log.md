@@ -2,52 +2,7 @@
 
 Una entrada por tarea, la más reciente al final: fecha, qué cambió y commit.
 
-Entradas anteriores: [[log-2026-10-10]], [[log-2026-10-11-isla]], [[log-2026-10-11-b]] y [[log-2026-10-11-c]].
-
-## 2026-10-11: blindajes, Qwen 9B en producción (reversible) y memoria liberable
-
-- 0a3ea28: `cerrar_app` ignora `forzar` si el pedido no lo pide. e9a580d: `listar_controles` usa la ventana al
-  frente si el id falta o no existe (backlog #11e y #11f). Página `protecciones` §4–5.
-- 17bb46c (permiso del usuario): `config.json` con `modelo_activo` y perfiles `gemma` / `qwen9b`; `modelo.py`
-  aplica el perfil y apaga el pensamiento de Qwen. `probar_carga_modelo.py` 23/23.
-- 65 × 3 con producción y Qwen: 58/58/57 = 173/195, con 6 confirmaciones falsas con `mensaje_final`. 829fea9:
-  vuelta a Gemma. Páginas `qwen-como-cerebro`, `resultado-qwen9b-2026-10-11` y backlog (#4, #5, #20, #24).
-- Memoria liberable con Qwen (`medir_memoria.py`): pico de 10 424 MiB con todo; flash attention es casi todo el
-  ahorro. Página nueva `memoria-liberable`.
-- Cambios en `configuracion-vigente`, `comandos` (cómo volver a Gemma) y `swa-full-false` (solo en el perfil
-  `qwen9b`).
-
-## 2026-10-11: cierre rápido implementado; Qwen 182/195, Gemma 195/195
-
-- 69297e4: `mensaje_final` pasa por `validar_finalizacion` en los dos modelos. Rechaza las 6 confirmaciones falsas
-  de Qwen; acepta #29, #31 y #34 de s11, que no afirman nada falso (límite conocido, sin ampliar `_CLAIMS`).
-- d95855d: `cierre_rapido` por perfil (gemma true, qwen9b false); `probar_cierre_rapido.py` 13/13,
-  `probar_carga_modelo.py` 25/25.
-- Qwen activo, 65 × 3 completa: 59/61/62 = 182/195 y un (c) (#19 s33 intentó cerrar Windows Terminal). No pasa.
-- Gemma activo, 65 × 3 completa: 65/65/65 = 195/195. **Queda Gemma.**
-- Páginas: `cierre-rapido-mensaje-final` (implementado), `qwen-como-cerebro`, `resultado-qwen9b-2026-10-11`,
-  `evaluacion-65-frases`, `suites`, backlog (#4 hecho, #24), `swa-full-false`. 34 páginas revisadas tras los cambios
-  de producción y re-selladas en d95855d.
-
-## 2026-10-11: contrato de la ronda 2 en el perfil qwen9b; Qwen 182/195, no pasa
-
-- f21e746 (permiso del usuario): `contrato_ronda2.py` y la clave `contrato_ronda2` (solo qwen9b).
-  `probar_contrato_ronda2.py` 16/16: igual al `adjust` del banco; Gemma sin cambios byte a byte; el esquema rechaza
-  `mensaje_final`.
-- e3dfe04: el banco valida JSON con `oneOf`; la primera corrida se paró en el calentamiento por eso.
-- 65 × 3 con qwen9b: 63/60/59 = 182/195 y dos (c) (#58 s22 y #43 s22). Vuelta a Gemma. El simulador de producción no
-  mueve el foco (backlog #26). Páginas: `qwen-como-cerebro`, `resultado-qwen9b-produccion` §3,
-  `configuracion-vigente`, `suites`, `mapa-archivos` y el backlog (#25, #26).
-
-## 2026-10-11: freno de cerrar_app y Qwen 9B en uso real una semana
-
-- 98c763e: `cerrar_app` solo si el pedido expresa intención de cerrar (`protecciones` §6). Las 4 frases de las
-  65 + 30 que esperan `cerrar_app` pasan; #58 y #43 quedan frenados.
-- 5e9eee0 (decisión del usuario): `modelo_activo` = `qwen9b` una semana, sin otra 65 × 3 y sin haber pasado el
-  criterio. Vuelta atrás: `"gemma"`.
-- 77370e8: `comparacion_modelos/resumir_semana_qwen.py` para el final de la semana (solo con `--con-permiso`; lee
-  `registro_cacao.log`).
-- Páginas: `qwen-como-cerebro`, `protecciones`, `configuracion-vigente` y el backlog (#27).
+Entradas anteriores: [[log-2026-10-10]], [[log-2026-10-11-isla]], [[log-2026-10-11-b]], [[log-2026-10-11-c]] y [[log-2026-10-11-d]].
 
 ## 2026-10-11: rediseño de la isla, cargo check y voz
 
@@ -67,3 +22,19 @@ Entradas anteriores: [[log-2026-10-10]], [[log-2026-10-11-isla]], [[log-2026-10-
 - Isla 3bfef0f compilada (exe `bcdc268e…`); respaldo v2 en `_prive/respaldos`. Cacao: fusión de
   `claude/musica-v3` (2797ba4). Suites verdes; prueba física parcial con el arnés (la música llega). Páginas:
   `compilar-isla`, `musica-isla`.
+
+## 2026-10-11: fase A (caché por estados de Qwen, banco) y fase B (camino rápido)
+
+- 0b3624e: `cache_estado.py` y `probar_cache_estado.py`.
+  - 42 casos con salidas idénticas con y sin caché (greedy, hora fija, estado alineado a `n_batch`).
+  - Llamada 2,86 → 1,25 s; estado de 118 MB en RAM, sin VRAM extra; restaurar, 26 ms.
+- 65 × 3 del banco con caché: 189/195 (igual que sin caché); tarea 6,83 → 3,05 s.
+  - 193 de 195 casos idénticos; los 2 distintos (#56 con `ver_pantalla`) se arreglaron en d7e0ba2.
+  - 76250a2: prueba sin modelo, 7/7.
+  - Falta repetir la 65 × 3 (el usuario está jugando: sin GPU).
+- fdf84d1: camino rápido (17 frases, volumen en la pausa del modo juego, mismo `ejecutar()`).
+  `probar_camino_rapido.py` 456/456 con 8 mutaciones. Falta la 65 × 3 de `gemma` y `qwen9b`.
+- Páginas: `camino-rapido` (implementado), `frases-simples`, `prompt-y-cache` (fase A), `filtrado-herramientas`
+  (aparcado), `modo-juego`, `voz`, `vision-general`, `suites`, `mapa-archivos`, `comparacion-modelos`, backlog
+  (#28–30) y `evaluacion-65-frases` (pendiente).
+

@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 5e9eee0
+verificado_commit: 76250a2
 verificado_fecha: 2026-10-11
 fuentes: [config.json, modelo.py, vision.py, muestreo_gramatica.py, requirements.txt, agente_minimo.py, probar_carga_modelo.py]
 ---

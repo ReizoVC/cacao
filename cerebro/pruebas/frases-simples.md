@@ -1,13 +1,14 @@
 ---
-estado: sin verificar
-verificado_commit: ef06fb8
+estado: verificado
+verificado_commit: fdf84d1
 verificado_fecha: 2026-10-11
 fuentes: [pruebas.json, comparacion_modelos/pruebas_nuevas_30.json, agente_minimo.py]
 ---
 # Frases simples de las 65 + 30 (para el camino rápido)
 
-Clasificación hecha a mano leyendo `pruebas.json` y `pruebas_nuevas_30.json`, sin ejecutar nada. «Sí» significa que
-una regla de frase entera da la herramienta y los argumentos sin interpretar; diseño en [[camino-rapido]].
+Clasificación hecha a mano leyendo `pruebas.json` y `pruebas_nuevas_30.json`. «Sí» significa que una regla de frase
+entera da la herramienta y los argumentos sin interpretar. Implementado con las ampliaciones (fdf84d1): entran las
+17, comprobadas en `probar_camino_rapido.py` ([[camino-rapido]]).
 
 ## Frases de una herramienta
 
@@ -23,9 +24,9 @@ una regla de frase entera da la herramienta y los argumentos sin interpretar; di
 | 8–12 | abre spotify / la calculadora / el bloc de notas / Google Chrome / discord | abrir_app nombre | sí (si `elegir_app` da una sola app; si no, al modelo) |
 | 103 | vuelve a activar el audio del equipo | volumen activar | sí |
 | 104 | inicia la aplicación de calculadora | abrir_app Calculadora | sí |
-| 101 | déjame el sonido a cuarenta y cinco por ciento | volumen fijar 45 | solo con números en palabras (ampliación) |
-| 65 | deja de registrar lo que hago | registro_habitos pausar | ampliación: frase literal, reversible |
-| 130 | reanuda el registro de mis hábitos | registro_habitos reanudar | ampliación |
+| 101 | déjame el sonido a cuarenta y cinco por ciento | volumen fijar 45 | sí (números en palabras) |
+| 65 | deja de registrar lo que hago | registro_habitos pausar | sí (frase literal, reversible) |
+| 130 | reanuda el registro de mis hábitos | registro_habitos reanudar | sí |
 | 13–15, 102 | está muy fuerte / no escucho nada / ponlo más bajito / que se escuche menos fuerte | volumen | no: hay que interpretar |
 | 105 | quiero usar Discord, ábrelo | abrir_app | no: forma libre (fase 1) |
 | 21–28, 107, 108 | ¿qué apps de… tengo? | listar_apps | no: la respuesta interpreta la lista |
@@ -46,4 +47,4 @@ una regla de frase entera da la herramienta y los argumentos sin interpretar; di
 - **Cerrar:** #51, #52, #119, #120.
 - **Mouse y teclado:** #56–59, #123–126.
 
-**Total:** 14 «sí» en la fase 1 (#1–12, #103 y #104); 17 con las ampliaciones (#65, #130 y #101).
+**Total:** 17 (#1–12, #65, #101, #103, #104 y #130); las ampliaciones las aprobó el usuario.

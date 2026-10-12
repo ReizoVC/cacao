@@ -7,7 +7,7 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[vision-general]]: piezas, flujo de un pedido y dónde se decide cada cosa
 - [[agente-y-herramientas]]: catálogo, estructuras del ejecutor y cómo añadir una herramienta
 - [[protecciones]]: sin evidencia no hay «hecho», dos alternativas, atajos estructurados, emergencia
-- [[frenos-cierre]]: cerrar y forzar solo si se piden; listar_controles sin ventana
+- [[frenos-cierre]]: frenos de cerrar_app y listar_controles
 - [[permisos-y-bloqueos]]: dónde se decide si se pregunta, niveles, bloqueos, confirmación física, modo sin confirmación
 - [[voz]]: entrada, frenos, Whisper, Piper y confirmaciones en voz
 - [[palabra-activacion]]: detector «Cacao» y escucha de seguimiento
@@ -53,8 +53,8 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 
 ## Estado
 - [[estrategia-recursos]]: prioridad del usuario: mínimos recursos, herramientas antes que modelo, memoria de experiencia
-- [[camino-rapido]]: propuesto: pedidos simples sin modelo
-- [[filtrado-herramientas]]: propuesto: herramientas por pedido
+- [[camino-rapido]]: implementado: pedidos simples sin modelo
+- [[filtrado-herramientas]]: aparcado: herramientas por pedido
 - [[hoja-de-ruta]]: la lista del usuario cruzada con el repositorio, diferencias y estado de Codex
 - [[backlog]]: pendientes verificados (hecho, pendiente o desconocido)
 - [[riesgos]]: riesgos vigentes y alcance de cerebro/ frente a Cacao
@@ -72,4 +72,5 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[log-2026-10-10]]: entradas archivadas del 2026-10-10
 - [[log-2026-10-11-isla]]: entradas archivadas del 2026-10-11 (isla: traspaso, bandeja y prueba física)
 - [[log-2026-10-11-b]]: entradas archivadas del 2026-10-11 (coordinación de Codex, Fase 1 medida y swa_full)
-- [[log-2026-10-11-c]]: registro del 2026-10-11 (c): swa_full, música en la isla y Qwen frente a Gemma en el banco
+- [[log-2026-10-11-c]]: registro del 2026-10-11 (c)
+- [[log-2026-10-11-d]]: registro del 2026-10-11 (d)

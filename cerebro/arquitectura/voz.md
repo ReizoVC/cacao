@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 77370e8
+verificado_commit: 76250a2
 verificado_fecha: 2026-10-11
 fuentes: [voz.py, agente_minimo.py, transcripcion.py, microfono.py, confirmacion_voz.py, config.json]
 ---
@@ -26,8 +26,8 @@ Se descarta:
 ## Transcripción
 
 - **Motor:** `motor_transcripcion: whisper`, faster-whisper `large-v3-turbo` `int8_float16` en la GPU
-  (`transcripcion.TranscriptorWhisper`). `whisper_pausa: base`: en modo juego, «estoy jugando» o «ya terminé» se
-  reconocen con un Whisper base en la CPU.
+  (`transcripcion.TranscriptorWhisper`). `whisper_pausa: base`: en modo juego, «estoy jugando», «ya terminé» y las
+  frases de volumen del [[camino-rapido]] se reconocen con un Whisper base en la CPU (`voz.filtrar`).
 - **Audio nativo de Gemma:** `transcripcion.py` incluye una alternativa con el audio nativo del mmproj (segundo
   contexto sobre los mismos pesos). Hoy no es el motor activo según `config.json`.
 

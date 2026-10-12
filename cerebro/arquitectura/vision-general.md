@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 77370e8
+verificado_commit: 76250a2
 verificado_fecha: 2026-10-11
 fuentes: [agente_minimo.py, voz.py, iniciar_cacao.py, modelo.py, muestreo_gramatica.py, config.json, herramientas.json]
 ---
@@ -34,8 +34,9 @@ proceso aparte, sin modelo.
    Después transcribe con faster-whisper.
 3. **`atender_con_memoria()`.** Atiende las frases de modo juego («estoy jugando», «ya terminé»), toma el cerrojo del
    planificador (que detiene la reflexión), refresca el prompt si cambió el índice de la wiki o los obstáculos y
-   llama a `atender()`.
-4. **`atender()`:** como máximo `max_pasos_por_tarea` = 15 pasos:
+   llama a `atender()`. En la pausa del modo juego solo atiende el volumen por el camino rápido, sin el modelo.
+4. **`atender()`:** antes del modelo, el [[camino-rapido]] (17 frases simples, por el mismo `ejecutar()`). Si no
+   entra, como máximo `max_pasos_por_tarea` = 15 pasos:
    - comprueba el atajo de emergencia;
    - `pedir_accion()`: `create_chat_completion` con `response_format` JSON y el esquema `ESQUEMA_ACCION`
      (temperatura 0,3, top_p 0,95, top_k 64, 512 tokens). Si el historial tiene una imagen, pasa por el handler de

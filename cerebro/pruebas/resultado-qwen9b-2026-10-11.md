@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: d95855d
+verificado_commit: 76250a2
 verificado_fecha: 2026-10-11
 fuentes: [comparacion_modelos/resumen_qwen9b_2026-10-11.json, comparacion_modelos/resumir_qwen9b.py, comparacion_modelos/ejecutar.py, comparacion_modelos/probar_swa_cache.py]
 ---

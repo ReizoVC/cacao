@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 77370e8
+verificado_commit: 76250a2
 verificado_fecha: 2026-10-11
 fuentes: [modo_juego.py, guardia_juego.py, deteccion.py, agente_minimo.py, config.json, SRS.md]
 ---
@@ -22,7 +22,8 @@ fuentes: [modo_juego.py, guardia_juego.py, deteccion.py, agente_minimo.py, confi
 - **Al entrar:** descarga el modelo del perfil activo (Gemma o Qwen), mmproj y Whisper (`descargar_modelos`) con el cerrojo del planificador; nunca a mitad
   de una tarea o de una reflexión. Al salir los recarga (`cargar_modelos`).
 - **En pausa:** responde sin modelo con un mensaje. «estoy jugando» y «ya terminé» fuerzan la entrada y la salida
-  (`comando_modo_juego`), reconocidas con el Whisper base de la CPU ([[voz]]).
+  (`comando_modo_juego`), reconocidas con el Whisper base de la CPU ([[voz]]). Desde fdf84d1, el volumen sí se
+  atiende por el [[camino-rapido]] (`atender(..., en_pausa=True)`), sin reservar ni cargar el modelo ni usar la GPU.
 - **Isla:** queda compacta y dormida.
 
 ## Guardia (`guardia_juego.py`)

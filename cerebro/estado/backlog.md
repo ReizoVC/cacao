@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 77370e8
+verificado_commit: 76250a2
 verificado_fecha: 2026-10-11
 fuentes: [entrenar_cacao.py, medir_arranque.py, config.json, modelo.py, agente_minimo.py, protecciones_ejecucion.py, comparacion_modelos/ejecutar.py, REPORTE_TRABAJO_CACAO.md, SRS.md, guia_instalacion_agente.md, resultados_swa_y_recursos.md]
 ---
@@ -44,18 +44,19 @@ Ordenados por el usuario en [[hoja-de-ruta]] (2026-10-11). La prueba de Qwen 9B 
 |---|---|---|---|
 | 12 | Mover WSL al disco D | hecho | existe `D:\WSL\Ubuntu-24.04` |
 | 13 | Perfil lean de Qwen3-TTS | hecho | `.comparacion-runtime/qwen3_tts_lean.yaml`, b7270b4 |
-| 14 | Lanzador supervisado en WSL conectado a Cacao | descartado (WSL) | producción no usa los puertos 18080 u 8091 |
-| 15 | Prueba prolongada en WSL | descartado (WSL) | — |
+| 14–15 | Lanzador y prueba prolongada en WSL | descartados (WSL) | — |
 | 16 | Migrar producción a llama.cpp servidor | descartado por ahora | [[motor-llama-cpp]] |
 | 17 | Sustituir Piper por Qwen3-TTS | pendiente: medir si cabe en Windows (RAM de 16 GB) | `config.voz.piper_voz` |
 | 18 | MTP | descartado por ahora | `mtp_probado: false` |
 | 19 | Gemma 26B A4B | descartado por ahora | sin datos |
 | 20 | Puntuar la evaluación a ciegas Gemma Q5 / Qwen Q5 | descartada por el usuario | la sustituye la prueba en producción |
 | 21 | Puntuar la evaluación a ciegas Q5 / Q4 | pendiente | `resultados_ciegas_q4.md`: 20 vacías, sin commit |
-| 22 | Reducir el margen de RAM en la recarga WSL (99,96 % de uso) | descartado (WSL) | `resultados_swa_y_recursos.md` |
+| 22 | Margen de RAM en la recarga WSL | descartado (WSL) | — |
 | 23 | Qwen 9B: banco 189/195; producción 173, 182 y 182 con contrato (no pasa) | **en uso real una semana** desde 5e9eee0, sin pasar el criterio | [[qwen-como-cerebro]]; `resumir_semana_qwen.py` |
 | 26 | El simulador de producción no mueve el foco al enfocar | candidata | `benchmark_gramatica.py:180` |
-| 28 | Camino rápido y filtrado de herramientas | propuestos (diseño, sin código) | [[camino-rapido]], [[filtrado-herramientas]] |
+| 28 | Camino rápido (17 frases, volumen en pausa) | **hecho** en fdf84d1; falta la 65 × 3 de los dos modelos | [[camino-rapido]] |
+| 29 | Caché por estados para Qwen (banco) | funciona (189/195); repetir tras arreglar la visión | [[prompt-y-cache]] |
+| 30 | Filtrado de herramientas | aparcado | [[filtrado-herramientas]] |
 
 ## Con el usuario delante
 
