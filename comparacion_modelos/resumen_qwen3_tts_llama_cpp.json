@@ -1,0 +1,926 @@
+{
+ "fecha": "2026-10-12",
+ "motor": "llama.cpp 81bc6b83f827df746eb129235488d325c49cae52 (el que fija KreutzM/qwen-3-tts PR #11, commit f6ccfacd3dfe14a4048b1e5256f0402cdbf2490e; MIT), llama-tts compilado con VS 2022 + Ninja, CUDA 13.4, sm_120. Banco propio banco_tts.cpp (mtmd gen_audio) para medir en caliente en un solo proceso",
+ "pesos": "Qwen/Qwen3-TTS-12Hz-0.6B-Base revision 5d83992 (los mismos de la fase A), convertidos con convert_hf_to_gguf.py de ese llama.cpp a Q8_0 (talker 646 MB) + mmproj Q8_0 (447 MB)",
+ "voz": "A1_equilibrada.wav; llama-tts recibe el audio de referencia (no un embedding guardado) y lo procesa en cada síntesis: set_input 0,03 s de media",
+ "muestreo": "seed 42, temperatura 0,9, top-k 50, top-p 1,0, -ngl 99, -c 4096",
+ "fase_a_llama_q8_0": {
+  "motor": "llama.cpp 81bc6b8 (KreutzM PR #11), banco_tts.exe",
+  "modelo": "Qwen3-TTS-12Hz-0.6B-Base-Q8_0.gguf",
+  "vram_total_mib": 16311,
+  "vram_antes_mib": 774,
+  "argumentos": [
+   "-ngl 99",
+   "-c 4096",
+   "seed 42",
+   "temp 0.9",
+   "top-k 50",
+   "top-p 1.0",
+   "tts-lang es"
+  ],
+  "carga_s": 1.572,
+  "codigo_salida": 0,
+  "primer_audio_frio_desde_inicio_s": 3.17,
+  "fria": {
+   "sintesis_s": 1.43,
+   "audio_s": 2.64
+  },
+  "frases": [
+   {
+    "n": 1,
+    "caracteres": 45,
+    "oraciones": 1,
+    "audio_s": 2.96,
+    "sintesis_s": 0.88,
+    "primer_audio_s": 0.88,
+    "rtf": 0.296,
+    "por_oracion": [
+     {
+      "sintesis_s": 0.876,
+      "audio_s": 2.96,
+      "set_input_s": 0.032,
+      "frames": 37
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "caracteres": 6,
+    "oraciones": 1,
+    "audio_s": 0.8,
+    "sintesis_s": 0.37,
+    "primer_audio_s": 0.37,
+    "rtf": 0.46,
+    "por_oracion": [
+     {
+      "sintesis_s": 0.368,
+      "audio_s": 0.8,
+      "set_input_s": 0.026,
+      "frames": 10
+     }
+    ]
+   },
+   {
+    "n": 3,
+    "caracteres": 20,
+    "oraciones": 1,
+    "audio_s": 1.84,
+    "sintesis_s": 0.61,
+    "primer_audio_s": 0.61,
+    "rtf": 0.33,
+    "por_oracion": [
+     {
+      "sintesis_s": 0.607,
+      "audio_s": 1.84,
+      "set_input_s": 0.028,
+      "frames": 23
+     }
+    ]
+   },
+   {
+    "n": 4,
+    "caracteres": 23,
+    "oraciones": 1,
+    "audio_s": 2.64,
+    "sintesis_s": 0.81,
+    "primer_audio_s": 0.81,
+    "rtf": 0.309,
+    "por_oracion": [
+     {
+      "sintesis_s": 0.815,
+      "audio_s": 2.64,
+      "set_input_s": 0.026,
+      "frames": 33
+     }
+    ]
+   },
+   {
+    "n": 5,
+    "caracteres": 62,
+    "oraciones": 2,
+    "audio_s": 4.24,
+    "sintesis_s": 1.39,
+    "primer_audio_s": 0.66,
+    "rtf": 0.327,
+    "por_oracion": [
+     {
+      "sintesis_s": 0.657,
+      "audio_s": 2.0,
+      "set_input_s": 0.027,
+      "frames": 25
+     },
+     {
+      "sintesis_s": 0.731,
+      "audio_s": 2.24,
+      "set_input_s": 0.027,
+      "frames": 28
+     }
+    ]
+   },
+   {
+    "n": 6,
+    "caracteres": 76,
+    "oraciones": 1,
+    "audio_s": 6.48,
+    "sintesis_s": 1.89,
+    "primer_audio_s": 1.89,
+    "rtf": 0.291,
+    "por_oracion": [
+     {
+      "sintesis_s": 1.885,
+      "audio_s": 6.48,
+      "set_input_s": 0.026,
+      "frames": 81
+     }
+    ]
+   },
+   {
+    "n": 7,
+    "caracteres": 66,
+    "oraciones": 2,
+    "audio_s": 4.64,
+    "sintesis_s": 1.64,
+    "primer_audio_s": 0.86,
+    "rtf": 0.353,
+    "por_oracion": [
+     {
+      "sintesis_s": 0.857,
+      "audio_s": 2.08,
+      "set_input_s": 0.027,
+      "frames": 26
+     },
+     {
+      "sintesis_s": 0.781,
+      "audio_s": 2.56,
+      "set_input_s": 0.027,
+      "frames": 32
+     }
+    ]
+   },
+   {
+    "n": 8,
+    "caracteres": 97,
+    "oraciones": 2,
+    "audio_s": 5.68,
+    "sintesis_s": 1.74,
+    "primer_audio_s": 1.09,
+    "rtf": 0.306,
+    "por_oracion": [
+     {
+      "sintesis_s": 1.095,
+      "audio_s": 3.76,
+      "set_input_s": 0.026,
+      "frames": 47
+     },
+     {
+      "sintesis_s": 0.643,
+      "audio_s": 1.92,
+      "set_input_s": 0.026,
+      "frames": 24
+     }
+    ]
+   },
+   {
+    "n": 9,
+    "caracteres": 97,
+    "oraciones": 1,
+    "audio_s": 7.28,
+    "sintesis_s": 2.1,
+    "primer_audio_s": 2.1,
+    "rtf": 0.289,
+    "por_oracion": [
+     {
+      "sintesis_s": 2.101,
+      "audio_s": 7.28,
+      "set_input_s": 0.044,
+      "frames": 91
+     }
+    ]
+   },
+   {
+    "n": 10,
+    "caracteres": 70,
+    "oraciones": 2,
+    "audio_s": 4.64,
+    "sintesis_s": 1.49,
+    "primer_audio_s": 0.39,
+    "rtf": 0.321,
+    "por_oracion": [
+     {
+      "sintesis_s": 0.39,
+      "audio_s": 0.88,
+      "set_input_s": 0.026,
+      "frames": 11
+     },
+     {
+      "sintesis_s": 1.101,
+      "audio_s": 3.76,
+      "set_input_s": 0.026,
+      "frames": 47
+     }
+    ]
+   },
+   {
+    "n": 11,
+    "caracteres": 137,
+    "oraciones": 2,
+    "audio_s": 7.92,
+    "sintesis_s": 2.26,
+    "primer_audio_s": 0.99,
+    "rtf": 0.286,
+    "por_oracion": [
+     {
+      "sintesis_s": 0.986,
+      "audio_s": 3.44,
+      "set_input_s": 0.026,
+      "frames": 43
+     },
+     {
+      "sintesis_s": 1.276,
+      "audio_s": 4.48,
+      "set_input_s": 0.027,
+      "frames": 56
+     }
+    ]
+   },
+   {
+    "n": 12,
+    "caracteres": 188,
+    "oraciones": 2,
+    "audio_s": 10.48,
+    "sintesis_s": 3.05,
+    "primer_audio_s": 1.1,
+    "rtf": 0.291,
+    "por_oracion": [
+     {
+      "sintesis_s": 1.098,
+      "audio_s": 3.76,
+      "set_input_s": 0.025,
+      "frames": 47
+     },
+     {
+      "sintesis_s": 1.954,
+      "audio_s": 6.72,
+      "set_input_s": 0.026,
+      "frames": 84
+     }
+    ]
+   }
+  ],
+  "rtf_total": 0.306,
+  "rtf_max": 0.46,
+  "primer_audio_caliente_mediana_s": 0.88,
+  "primer_audio_caliente_max_s": 2.1,
+  "vram_pico_mib": 4108,
+  "vram_pico_sobre_antes_mib": 3334,
+  "ram_pico_mb": 2034
+ },
+ "respuestas_largas": [
+  "Listo. Abrí el bloc de notas. Ya puedes escribir.",
+  "Revisé la carpeta de descargas. Hay doce archivos. El más grande es un video de dos gigas. ¿Quieres que lo mueva a otra carpeta?",
+  "No pude cerrar la calculadora. Tiene una ventana de confirmación abierta. Si quieres, la cierro yo. O puedes hacerlo tú cuando termines.",
+  "Encontré tres resultados sobre el clima. El primero dice que mañana lloverá por la tarde. El segundo habla de temperaturas bajas durante la noche. El tercero recomienda llevar paraguas. ¿Quieres que te lo recuerde por la mañana?"
+ ],
+ "respuestas_largas_llama_q8_0": {
+  "motor": "llama.cpp 81bc6b8 (KreutzM PR #11), banco_tts.exe",
+  "modelo": "Qwen3-TTS-12Hz-0.6B-Base-Q8_0.gguf",
+  "vram_total_mib": 16311,
+  "vram_antes_mib": 770,
+  "argumentos": [
+   "-ngl 99",
+   "-c 4096",
+   "seed 42",
+   "temp 0.9",
+   "top-k 50",
+   "top-p 1.0",
+   "tts-lang es"
+  ],
+  "carga_s": 1.545,
+  "codigo_salida": 0,
+  "primer_audio_frio_desde_inicio_s": 2.83,
+  "fria": {
+   "sintesis_s": 2.34,
+   "audio_s": 4.64
+  },
+  "frases": [
+   {
+    "n": 1,
+    "caracteres": 49,
+    "oraciones": 3,
+    "audio_s": 4.72,
+    "sintesis_s": 1.65,
+    "primer_audio_s": 0.46,
+    "rtf": 0.349,
+    "por_oracion": [
+     {
+      "sintesis_s": 0.457,
+      "audio_s": 1.2,
+      "set_input_s": 0.025,
+      "frames": 15
+     },
+     {
+      "sintesis_s": 0.645,
+      "audio_s": 2.0,
+      "set_input_s": 0.026,
+      "frames": 25
+     },
+     {
+      "sintesis_s": 0.546,
+      "audio_s": 1.52,
+      "set_input_s": 0.027,
+      "frames": 19
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "caracteres": 128,
+    "oraciones": 4,
+    "audio_s": 8.72,
+    "sintesis_s": 2.91,
+    "primer_audio_s": 0.75,
+    "rtf": 0.333,
+    "por_oracion": [
+     {
+      "sintesis_s": 0.75,
+      "audio_s": 2.24,
+      "set_input_s": 0.027,
+      "frames": 28
+     },
+     {
+      "sintesis_s": 0.571,
+      "audio_s": 1.6,
+      "set_input_s": 0.026,
+      "frames": 20
+     },
+     {
+      "sintesis_s": 0.879,
+      "audio_s": 2.8,
+      "set_input_s": 0.027,
+      "frames": 35
+     },
+     {
+      "sintesis_s": 0.707,
+      "audio_s": 2.08,
+      "set_input_s": 0.026,
+      "frames": 26
+     }
+    ]
+   },
+   {
+    "n": 3,
+    "caracteres": 136,
+    "oraciones": 4,
+    "audio_s": 9.36,
+    "sintesis_s": 3.05,
+    "primer_audio_s": 0.67,
+    "rtf": 0.326,
+    "por_oracion": [
+     {
+      "sintesis_s": 0.666,
+      "audio_s": 1.92,
+      "set_input_s": 0.028,
+      "frames": 24
+     },
+     {
+      "sintesis_s": 0.945,
+      "audio_s": 3.04,
+      "set_input_s": 0.025,
+      "frames": 38
+     },
+     {
+      "sintesis_s": 0.629,
+      "audio_s": 1.92,
+      "set_input_s": 0.027,
+      "frames": 24
+     },
+     {
+      "sintesis_s": 0.809,
+      "audio_s": 2.48,
+      "set_input_s": 0.025,
+      "frames": 31
+     }
+    ]
+   },
+   {
+    "n": 4,
+    "caracteres": 228,
+    "oraciones": 5,
+    "audio_s": 13.76,
+    "sintesis_s": 4.2,
+    "primer_audio_s": 0.71,
+    "rtf": 0.305,
+    "por_oracion": [
+     {
+      "sintesis_s": 0.708,
+      "audio_s": 2.24,
+      "set_input_s": 0.025,
+      "frames": 28
+     },
+     {
+      "sintesis_s": 0.914,
+      "audio_s": 3.12,
+      "set_input_s": 0.025,
+      "frames": 39
+     },
+     {
+      "sintesis_s": 1.04,
+      "audio_s": 3.6,
+      "set_input_s": 0.027,
+      "frames": 45
+     },
+     {
+      "sintesis_s": 0.789,
+      "audio_s": 2.56,
+      "set_input_s": 0.026,
+      "frames": 32
+     },
+     {
+      "sintesis_s": 0.745,
+      "audio_s": 2.24,
+      "set_input_s": 0.028,
+      "frames": 28
+     }
+    ]
+   }
+  ],
+  "rtf_total": 0.323,
+  "rtf_max": 0.349,
+  "primer_audio_caliente_mediana_s": 0.71,
+  "primer_audio_caliente_max_s": 0.75,
+  "vram_pico_mib": 4103,
+  "vram_pico_sobre_antes_mib": 3333,
+  "ram_pico_mb": 2018
+ },
+ "voz_por_frases_simulada": [
+  {
+   "origen": "faseA_llama_q8_0.log",
+   "simulacion": [
+    {
+     "n": 1,
+     "oraciones": 1,
+     "primer_audio_s": 0.88,
+     "huecos_s": [],
+     "hueco_max_s": 0.0,
+     "termina_s": 3.84
+    },
+    {
+     "n": 2,
+     "oraciones": 1,
+     "primer_audio_s": 0.37,
+     "huecos_s": [],
+     "hueco_max_s": 0.0,
+     "termina_s": 1.17
+    },
+    {
+     "n": 3,
+     "oraciones": 1,
+     "primer_audio_s": 0.61,
+     "huecos_s": [],
+     "hueco_max_s": 0.0,
+     "termina_s": 2.45
+    },
+    {
+     "n": 4,
+     "oraciones": 1,
+     "primer_audio_s": 0.81,
+     "huecos_s": [],
+     "hueco_max_s": 0.0,
+     "termina_s": 3.46
+    },
+    {
+     "n": 5,
+     "oraciones": 2,
+     "primer_audio_s": 0.66,
+     "huecos_s": [
+      0.0
+     ],
+     "hueco_max_s": 0.0,
+     "termina_s": 4.9
+    },
+    {
+     "n": 6,
+     "oraciones": 1,
+     "primer_audio_s": 1.89,
+     "huecos_s": [],
+     "hueco_max_s": 0.0,
+     "termina_s": 8.37
+    },
+    {
+     "n": 7,
+     "oraciones": 2,
+     "primer_audio_s": 0.86,
+     "huecos_s": [
+      0.0
+     ],
+     "hueco_max_s": 0.0,
+     "termina_s": 5.5
+    },
+    {
+     "n": 8,
+     "oraciones": 2,
+     "primer_audio_s": 1.09,
+     "huecos_s": [
+      0.0
+     ],
+     "hueco_max_s": 0.0,
+     "termina_s": 6.77
+    },
+    {
+     "n": 9,
+     "oraciones": 1,
+     "primer_audio_s": 2.1,
+     "huecos_s": [],
+     "hueco_max_s": 0.0,
+     "termina_s": 9.38
+    },
+    {
+     "n": 10,
+     "oraciones": 2,
+     "primer_audio_s": 0.39,
+     "huecos_s": [
+      0.22
+     ],
+     "hueco_max_s": 0.22,
+     "termina_s": 5.25
+    },
+    {
+     "n": 11,
+     "oraciones": 2,
+     "primer_audio_s": 0.99,
+     "huecos_s": [
+      0.0
+     ],
+     "hueco_max_s": 0.0,
+     "termina_s": 8.91
+    },
+    {
+     "n": 12,
+     "oraciones": 2,
+     "primer_audio_s": 1.1,
+     "huecos_s": [
+      0.0
+     ],
+     "hueco_max_s": 0.0,
+     "termina_s": 11.58
+    }
+   ]
+  },
+  {
+   "origen": "largas_llama_q8_0.log",
+   "simulacion": [
+    {
+     "n": 1,
+     "oraciones": 3,
+     "primer_audio_s": 0.46,
+     "huecos_s": [
+      0.0,
+      0.0
+     ],
+     "hueco_max_s": 0.0,
+     "termina_s": 5.18
+    },
+    {
+     "n": 2,
+     "oraciones": 4,
+     "primer_audio_s": 0.75,
+     "huecos_s": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "hueco_max_s": 0.0,
+     "termina_s": 9.47
+    },
+    {
+     "n": 3,
+     "oraciones": 4,
+     "primer_audio_s": 0.67,
+     "huecos_s": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "hueco_max_s": 0.0,
+     "termina_s": 10.03
+    },
+    {
+     "n": 4,
+     "oraciones": 5,
+     "primer_audio_s": 0.71,
+     "huecos_s": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "hueco_max_s": 0.0,
+     "termina_s": 14.47
+    }
+   ]
+  }
+ ],
+ "fase_b": {
+  "vram_total_mib": 16311,
+  "vram_base_mib": 776,
+  "modelo_activo": "qwen9b",
+  "modelo": "Qwen3.5-9B-UD-Q5_K_XL.gguf",
+  "perfil": {
+   "cache_estados": true,
+   "flash_attn": true,
+   "type_k": "q8_0",
+   "type_v": "q8_0",
+   "swa_full": false,
+   "use_mmap": false,
+   "n_ctx": 16384,
+   "contrato_ronda2": true
+  },
+  "cache_estados_activa": true,
+  "vram_modelo_mib": 7462,
+  "vram_modelo_whisper_mib": 8486,
+  "vram_calentado_mib": 8683,
+  "vram_con_tts_en_espera_mib": 12009,
+  "pedido_s": 0.0,
+  "vision_herramienta": "finalizar",
+  "vision_s": 11.39,
+  "vram_tras_vision_mib": 13253,
+  "pico_hasta_vision_mib": 13253,
+  "vram_pico_mib": 13264,
+  "libre_en_pico_mib": 3047,
+  "ram_cacao_working_set_mb": 2131,
+  "tts": {
+   "motor": "llama.cpp 81bc6b8 (KreutzM PR #11), banco_tts.exe",
+   "modelo": "Qwen3-TTS-12Hz-0.6B-Base-Q8_0.gguf",
+   "vram_total_mib": 16311,
+   "vram_antes_mib": 8683,
+   "argumentos": [
+    "-ngl 99",
+    "-c 4096",
+    "seed 42",
+    "temp 0.9",
+    "top-k 50",
+    "top-p 1.0",
+    "tts-lang es"
+   ],
+   "carga_s": 2.779,
+   "vram_en_espera_mib": 12009,
+   "vram_antes_caliente_mib": 13253,
+   "codigo_salida": 0,
+   "primer_audio_frio_desde_inicio_s": 4.53,
+   "fria": {
+    "sintesis_s": 1.56,
+    "audio_s": 2.72
+   },
+   "frases": [
+    {
+     "n": 1,
+     "caracteres": 45,
+     "oraciones": 1,
+     "audio_s": 2.96,
+     "sintesis_s": 1.21,
+     "primer_audio_s": 1.21,
+     "rtf": 0.41,
+     "por_oracion": [
+      {
+       "sintesis_s": 1.214,
+       "audio_s": 2.96,
+       "set_input_s": 0.033,
+       "frames": 37
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "caracteres": 6,
+     "oraciones": 1,
+     "audio_s": 2.48,
+     "sintesis_s": 0.87,
+     "primer_audio_s": 0.87,
+     "rtf": 0.35,
+     "por_oracion": [
+      {
+       "sintesis_s": 0.867,
+       "audio_s": 2.48,
+       "set_input_s": 0.029,
+       "frames": 31
+      }
+     ]
+    },
+    {
+     "n": 3,
+     "caracteres": 20,
+     "oraciones": 1,
+     "audio_s": 2.16,
+     "sintesis_s": 0.72,
+     "primer_audio_s": 0.72,
+     "rtf": 0.332,
+     "por_oracion": [
+      {
+       "sintesis_s": 0.717,
+       "audio_s": 2.16,
+       "set_input_s": 0.029,
+       "frames": 27
+      }
+     ]
+    },
+    {
+     "n": 4,
+     "caracteres": 23,
+     "oraciones": 1,
+     "audio_s": 2.56,
+     "sintesis_s": 0.82,
+     "primer_audio_s": 0.82,
+     "rtf": 0.32,
+     "por_oracion": [
+      {
+       "sintesis_s": 0.818,
+       "audio_s": 2.56,
+       "set_input_s": 0.026,
+       "frames": 32
+      }
+     ]
+    },
+    {
+     "n": 5,
+     "caracteres": 62,
+     "oraciones": 2,
+     "audio_s": 3.84,
+     "sintesis_s": 1.7,
+     "primer_audio_s": 0.86,
+     "rtf": 0.443,
+     "por_oracion": [
+      {
+       "sintesis_s": 0.865,
+       "audio_s": 1.92,
+       "set_input_s": 0.026,
+       "frames": 24
+      },
+      {
+       "sintesis_s": 0.837,
+       "audio_s": 1.92,
+       "set_input_s": 0.028,
+       "frames": 24
+      }
+     ]
+    },
+    {
+     "n": 6,
+     "caracteres": 76,
+     "oraciones": 1,
+     "audio_s": 4.88,
+     "sintesis_s": 1.74,
+     "primer_audio_s": 1.74,
+     "rtf": 0.356,
+     "por_oracion": [
+      {
+       "sintesis_s": 1.737,
+       "audio_s": 4.88,
+       "set_input_s": 0.026,
+       "frames": 61
+      }
+     ]
+    },
+    {
+     "n": 7,
+     "caracteres": 66,
+     "oraciones": 2,
+     "audio_s": 4.4,
+     "sintesis_s": 1.44,
+     "primer_audio_s": 0.68,
+     "rtf": 0.328,
+     "por_oracion": [
+      {
+       "sintesis_s": 0.676,
+       "audio_s": 2.08,
+       "set_input_s": 0.026,
+       "frames": 26
+      },
+      {
+       "sintesis_s": 0.768,
+       "audio_s": 2.32,
+       "set_input_s": 0.027,
+       "frames": 29
+      }
+     ]
+    },
+    {
+     "n": 8,
+     "caracteres": 97,
+     "oraciones": 2,
+     "audio_s": 5.12,
+     "sintesis_s": 1.85,
+     "primer_audio_s": 0.99,
+     "rtf": 0.362,
+     "por_oracion": [
+      {
+       "sintesis_s": 0.991,
+       "audio_s": 3.44,
+       "set_input_s": 0.026,
+       "frames": 43
+      },
+      {
+       "sintesis_s": 0.86,
+       "audio_s": 1.68,
+       "set_input_s": 0.03,
+       "frames": 21
+      }
+     ]
+    },
+    {
+     "n": 9,
+     "caracteres": 97,
+     "oraciones": 1,
+     "audio_s": 6.8,
+     "sintesis_s": 1.91,
+     "primer_audio_s": 1.91,
+     "rtf": 0.28,
+     "por_oracion": [
+      {
+       "sintesis_s": 1.906,
+       "audio_s": 6.8,
+       "set_input_s": 0.026,
+       "frames": 85
+      }
+     ]
+    },
+    {
+     "n": 10,
+     "caracteres": 70,
+     "oraciones": 2,
+     "audio_s": 5.04,
+     "sintesis_s": 1.65,
+     "primer_audio_s": 0.53,
+     "rtf": 0.327,
+     "por_oracion": [
+      {
+       "sintesis_s": 0.533,
+       "audio_s": 1.28,
+       "set_input_s": 0.027,
+       "frames": 16
+      },
+      {
+       "sintesis_s": 1.117,
+       "audio_s": 3.76,
+       "set_input_s": 0.026,
+       "frames": 47
+      }
+     ]
+    },
+    {
+     "n": 11,
+     "caracteres": 137,
+     "oraciones": 2,
+     "audio_s": 7.84,
+     "sintesis_s": 2.29,
+     "primer_audio_s": 1.05,
+     "rtf": 0.292,
+     "por_oracion": [
+      {
+       "sintesis_s": 1.055,
+       "audio_s": 3.6,
+       "set_input_s": 0.026,
+       "frames": 45
+      },
+      {
+       "sintesis_s": 1.234,
+       "audio_s": 4.24,
+       "set_input_s": 0.028,
+       "frames": 53
+      }
+     ]
+    },
+    {
+     "n": 12,
+     "caracteres": 188,
+     "oraciones": 2,
+     "audio_s": 12.08,
+     "sintesis_s": 3.71,
+     "primer_audio_s": 1.55,
+     "rtf": 0.307,
+     "por_oracion": [
+      {
+       "sintesis_s": 1.55,
+       "audio_s": 4.24,
+       "set_input_s": 0.027,
+       "frames": 53
+      },
+      {
+       "sintesis_s": 2.159,
+       "audio_s": 7.84,
+       "set_input_s": 0.026,
+       "frames": 98
+      }
+     ]
+    }
+   ],
+   "rtf_total": 0.331,
+   "rtf_max": 0.443,
+   "primer_audio_caliente_mediana_s": 0.99,
+   "primer_audio_caliente_max_s": 1.91,
+   "vram_pico_mib": 13264,
+   "vram_pico_sobre_antes_mib": 4581,
+   "ram_pico_mb": 2027
+  }
+ },
+ "q8_0_lento_en_qwen3_tts_cpp": "no es obvio: con GGML_SCHED_DEBUG=2, Q8_0 y F16 tienen las mismas particiones (6 en CPU, todas CONV_TRANSPOSE del vocoder); la generación no cae a la CPU. Sin investigar más (límite de 20 min)"
+}
