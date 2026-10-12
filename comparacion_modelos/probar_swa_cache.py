@@ -81,11 +81,14 @@ def reutilizados(llamada):
     return llamada["intento"] if llamada["seq_rm_ok"] and llamada["intento"] > 0 else 0
 
 
-def brazo(nombre, casos, semillas, etiqueta):
+def brazo(nombre, casos, semillas, etiqueta, perfil=None):
     swa_full, vaciar = BRAZOS[nombre]
     os.environ.update(SIN_REALES="1", CONFIRMAR="s")
     os.chdir(ROOT)
     import modelo
+    if perfil:  # el perfil pedido (gemma o qwen9b), sin tocar config.json
+        _aplicar = modelo.aplicar_perfil
+        modelo.aplicar_perfil = lambda config: _aplicar({**config, "modelo_activo": perfil})
     _cargar = modelo.cargar_config
 
     def cargar_config():
@@ -178,15 +181,18 @@ def casos_de(texto):
 if __name__ == "__main__":
     if os.environ.get("_BRAZO_HIJO") in BRAZOS:  # sin argumentos: evaluar_pruebas y benchmark leen sys.argv
         opciones = json.loads(os.environ["_OPCIONES"])
-        brazo(os.environ["_BRAZO_HIJO"], opciones["casos"], opciones["semillas"], opciones["etiqueta"])
+        brazo(os.environ["_BRAZO_HIJO"], opciones["casos"], opciones["semillas"], opciones["etiqueta"],
+              opciones.get("perfil"))
     else:
         parser = argparse.ArgumentParser()
         parser.add_argument("brazos", nargs="*", help="A, B o C (por defecto, los tres)")
         parser.add_argument("--casos", default="fallidos")
         parser.add_argument("--semillas", nargs="+", type=int, default=[11])
         parser.add_argument("--nombre", default="brazo")
+        parser.add_argument("--perfil", choices=("gemma", "qwen9b"), help="perfil de config.json (por defecto, el activo)")
         args = parser.parse_args()
-        opciones = {"casos": casos_de(args.casos), "semillas": args.semillas, "etiqueta": args.nombre}
+        opciones = {"casos": casos_de(args.casos), "semillas": args.semillas, "etiqueta": args.nombre,
+                    "perfil": args.perfil}
         if set(args.brazos) - set(BRAZOS):
             parser.error(f"brazos válidos: {sorted(BRAZOS)}")
         from guardia_juego import exigir_gpu_libre

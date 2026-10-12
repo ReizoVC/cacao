@@ -11,6 +11,8 @@ prompt empieza por esos mismos tokens; generate() ve entonces un prefijo ya eval
 - La restauración copia solo el estado de llama.cpp (llama_state_set_data) y los tokens; no copia la matriz scores
   de Llama.load_state (n_batch × vocabulario, cientos de MB con Qwen).
 - Si el prompt de sistema cambia (p. ej. una memoria nueva), el estado se vuelve a crear.
+- Si el estado ya contiene el prompt entero (la visión evalúa texto e imagen y luego llama a create_completion con
+  ese prompt), no se restaura: se borraría la imagen evaluada (fallo visto en #56 s22/s33 de la 65 × 3).
 - Si kv_cache_seq_rm también falla tras restaurar, generate() hace lo de siempre (todo el prompt): sin ahorro, pero
   correcto. Se anota.
 """
@@ -107,7 +109,13 @@ class CacheEstado:
         if self.datos is None or self.sistema() != self.texto:
             self.crear()
         p = len(self.prefijo)
-        self._ultima_restaurada = len(tokens) > p and tokens[:p] == self.prefijo
+        # si el estado ya tiene el prompt entero (p. ej. el manejador de visión acaba de evaluar el texto y la imagen
+        # y llama a create_completion con ese mismo prompt), no se toca: restaurar borraría lo evaluado
+        actual = self.llm.input_ids[:self.llm.n_tokens].tolist()
+        ya_evaluado = self.llm.n_tokens == len(tokens) and actual == tokens
+        if ya_evaluado:
+            self.stats["ya_evaluado"] = self.stats.get("ya_evaluado", 0) + 1
+        self._ultima_restaurada = not ya_evaluado and len(tokens) > p and tokens[:p] == self.prefijo
         if self._ultima_restaurada:
             self.restaurar()
         else:
