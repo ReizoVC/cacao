@@ -60,3 +60,9 @@ Entradas anteriores: [[log-2026-10-10]], [[log-2026-10-11-isla]], [[log-2026-10-
   carga 26/26). `isla-websocket`, `suites`, `isla-codex`, `hoja-de-ruta` y `permisos-y-bloqueos` al día;
   `compilar-isla` dividida en `compilar-isla-historial`. Re-sellados `entrada-fisica`, `arrancar-detener`,
   `mapa-datos`.
+
+## 2026-10-12: Qwen3-TTS 0.6B en Windows nativo (qwen3-tts.cpp)
+
+- Compila con VS 2022 + CUDA 13.4 (exportando símbolos). Fase A con A1_equilibrada: F16 RTF 0,74, primer audio en
+  caliente 2,4 s (mediana); Q8_0 RTF 5,09; Q4_K no existe. No pasa: fase B sin correr. Página `qwen3-tts-windows`;
+  resumen en `comparacion_modelos/resumen_qwen3_tts_windows.json` (e10b522).
