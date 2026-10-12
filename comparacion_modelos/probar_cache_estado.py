@@ -39,7 +39,8 @@ def brazo(nombre, casos, semilla, perfil):
 
     import modelo
     _aplicar = modelo.aplicar_perfil
-    modelo.aplicar_perfil = lambda config: _aplicar({**config, "modelo_activo": perfil})
+    # sin la caché de producción (cache_estados.py): aquí se compara con la del banco (cache_estado.py)
+    modelo.aplicar_perfil = lambda config: {**_aplicar({**config, "modelo_activo": perfil}), "cache_estados": False}
     base_vram = vram_mib()
     import evaluar_pruebas as ev  # carga el modelo (benchmark_gramatica)
     b = ev.b

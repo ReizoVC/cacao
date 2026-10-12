@@ -81,7 +81,7 @@ def reutilizados(llamada):
     return llamada["intento"] if llamada["seq_rm_ok"] and llamada["intento"] > 0 else 0
 
 
-def brazo(nombre, casos, semillas, etiqueta, perfil=None):
+def brazo(nombre, casos, semillas, etiqueta, perfil=None, sin_cache_estados=False):
     swa_full, vaciar = BRAZOS[nombre]
     os.environ.update(SIN_REALES="1", CONFIRMAR="s")
     os.chdir(ROOT)
@@ -95,12 +95,18 @@ def brazo(nombre, casos, semillas, etiqueta, perfil=None):
         config = {k: v for k, v in _cargar().items() if k != "swa_full"}
         if swa_full is not None:
             config["swa_full"] = swa_full
+        if sin_cache_estados:  # comparación estricta: el mismo código sin la caché por estados
+            config["cache_estados"] = False
         return config
 
     modelo.cargar_config = cargar_config
     base_vram = vram_mib()
     import evaluar_pruebas as ev  # carga el modelo (benchmark_gramatica) con la configuración de este brazo
     b = ev.b
+    # el pedido lleva la fecha y la hora (con_fecha): fija, para que dos corridas del mismo código den lo mismo
+    from datetime import datetime
+    fecha_fija, con_fecha = datetime(2026, 10, 12, 10, 0), b.ns["con_fecha"]
+    b.ns["con_fecha"] = lambda pedido, ahora=None: con_fecha(pedido, fecha_fija)
     cargado_vram = vram_mib()
     ventana = next((v for k, v in b.llm.metadata.items() if k.endswith("sliding_window")), None)
     registro = []
@@ -182,7 +188,7 @@ if __name__ == "__main__":
     if os.environ.get("_BRAZO_HIJO") in BRAZOS:  # sin argumentos: evaluar_pruebas y benchmark leen sys.argv
         opciones = json.loads(os.environ["_OPCIONES"])
         brazo(os.environ["_BRAZO_HIJO"], opciones["casos"], opciones["semillas"], opciones["etiqueta"],
-              opciones.get("perfil"))
+              opciones.get("perfil"), opciones.get("sin_cache_estados", False))
     else:
         parser = argparse.ArgumentParser()
         parser.add_argument("brazos", nargs="*", help="A, B o C (por defecto, los tres)")
@@ -190,9 +196,10 @@ if __name__ == "__main__":
         parser.add_argument("--semillas", nargs="+", type=int, default=[11])
         parser.add_argument("--nombre", default="brazo")
         parser.add_argument("--perfil", choices=("gemma", "qwen9b"), help="perfil de config.json (por defecto, el activo)")
+        parser.add_argument("--sin-cache-estados", action="store_true", help="apaga la caché por estados del perfil")
         args = parser.parse_args()
         opciones = {"casos": casos_de(args.casos), "semillas": args.semillas, "etiqueta": args.nombre,
-                    "perfil": args.perfil}
+                    "perfil": args.perfil, "sin_cache_estados": args.sin_cache_estados}
         if set(args.brazos) - set(BRAZOS):
             parser.error(f"brazos válidos: {sorted(BRAZOS)}")
         from guardia_juego import exigir_gpu_libre
