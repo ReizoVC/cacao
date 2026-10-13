@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: fcb1c7c
+verificado_commit: 97cea59
 verificado_fecha: 2026-10-13
 fuentes: [config.json, comparacion_modelos/ejecutar.py, cerebro/frescura.py]
 ---
@@ -35,7 +35,10 @@ La lista viene del usuario (estado del proyecto del 2026-10-11). Aquí cada punt
 | 7 | Camino rápido y caché por estados de Qwen | **hechos y activos** (fdf84d1, b056954); filtrado aparcado | [[camino-rapido]], [[cache-estados]] |
 | 8 | Voz Qwen3-TTS 0.6B (llama.cpp nativo, A1_equilibrada) | **activa en producción** con Piper de respaldo (c0945a6, a04c212); **el usuario la aprueba** (2026-10-13). Falta decidir el saludo (empezar antes con pausa o más tarde sin ella) | [[voz-qwen3]] |
 
-**Futuro:** adaptadores por app, memoria de experiencia (diseño aprobado), Jev en modo sombra, cerrar pestañas por
+**Memoria de experiencia: hecha** (97cea59; [[memoria-experiencia]]): 65 × 3 Gemma 195, Qwen 187. Falta la prueba
+presencial. **Siguiente: Spotify (#6).**
+
+**Futuro:** adaptadores por app, Jev en modo sombra, cerrar pestañas por
 nombre, Tailscale, especialista visual, SRS 1.3. Ninguno tiene código.
 
 **Solo el usuario:** las dos evaluaciones a ciegas (backlog #20 y #21) y tareas de seguridad personal que no se

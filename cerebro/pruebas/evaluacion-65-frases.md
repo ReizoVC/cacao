@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: f83dd1a
+verificado_commit: 97cea59
 verificado_fecha: 2026-10-13
 fuentes: [pruebas.json, evaluar_pruebas.py, benchmark_gramatica.py, comparacion_modelos/probar_swa_cache.py, comparacion_modelos/criterios.py, comparacion_modelos/integracion.py, SRS.md]
 ---
@@ -61,6 +61,8 @@ origen `comparacion_modelos/datos/swa_cache/resumen_65x3_C.json`, ignorado por G
 | `qwen9b`, 17bb46c (cierre rápido sin validar) | `resumen_qwen65x3_A.json` + `resumen_qwen65x3s2233_A.json` | 58 / 58 / 57 = 173 | 8 213 MiB |
 | `qwen9b`, d95855d (sin cierre rápido) | `resumen_qwen65x3cierre_A.json` | 59 / 61 / 62 = 182 | 8 214 MiB |
 | `gemma`, d95855d (`mensaje_final` validado, blindajes) | `resumen_gemma65x3cierre_C.json` | 65 / 65 / 65 = **195** | 12 940 MiB |
+| `gemma`, 97cea59 (memoria de experiencia) | `resumen_gemma65x3experiencia_C.json` | 65 / 65 / 65 = **195** | 12 300 MiB |
+| `qwen9b`, 97cea59 (memoria de experiencia, caché, hora fija) | `resumen_qwen65x3experiencia_A.json` | 62 / 64 / 61 = **187** | 7 588 MiB |
 
 **Con el camino rápido (fdf84d1)**, recalificado (62cd4fc): `gemma` 65/65/64 = 194 y `qwen9b` 62/58/60 = 180
 (`datos/swa_cache/recalificado_*rapido*.json`). Las 39 frases del camino rápido salen bien. Desde 180d71d `probar_swa_cache.py` fija la hora del pedido (dos corridas: 65/65 idénticas). Se queda activo: el #44

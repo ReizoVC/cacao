@@ -44,3 +44,9 @@ Entradas anteriores: [[log-2026-10-10]], [[log-2026-10-11-isla]], [[log-2026-10-
 - f83dd1a: `experiencia.py`, cinco alternativas, pedir la explicación de Reizo y `posicion_mouse` con
   `mouse(punto_senalado)`. `probar_experiencia.py` 50/50 y 8 mutaciones. Falta la 65 × 3 (GPU) y la prueba con el
   usuario. Página `memoria-experiencia`.
+
+## 2026-10-13: memoria de experiencia en `main`
+
+- 65 × 3 desde la rama: Gemma 195/195, Qwen 187/195 sin (c). Fusionada (97cea59) y suites sin modelo en `main`
+  (experiencia 50/50, segundo plano 23/23, fase 6 142/142). Falta la prueba presencial. `memoria-experiencia`,
+  `evaluacion-65-frases`, `hoja-de-ruta`.

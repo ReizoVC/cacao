@@ -1,16 +1,17 @@
 ---
-estado: sin verificar
-verificado_commit: f83dd1a
+estado: verificado
+verificado_commit: 97cea59
 verificado_fecha: 2026-10-13
 fuentes: [experiencia.py, agente_minimo.py, herramientas_grupo4.py, protecciones_ejecucion.py, herramientas.json, contrato_ronda2.py, benchmark_gramatica.py, probar_experiencia.py]
 ---
 # Memoria de experiencia, cinco alternativas y enseñar clics con el mouse
 
-**Estado: implementado en la rama `claude/experiencia` de Cacao (f83dd1a, 2026-10-13), sin fusionar.** Lo pidió el
+**Estado: en `main` (97cea59, 2026-10-13); activo al reiniciar Cacao.** Lo pidió el
 usuario antes de Spotify, con estas condiciones: hasta 5 intentos en lugar de 2; si no lo logra, que le pida que le
 explique cómo; y que pueda leer dónde está el mouse para enseñarle dónde hacer clic. Pidió también no priorizar tanto
-la seguridad («todo es local»). Está **sin verificar** porque cambia el prompt y el esquema: falta la 65 × 3 de los
-dos modelos, con la GPU, y la prueba con el usuario delante.
+la seguridad («todo es local»). **65 × 3** (datos en el worktree, `comparacion_modelos/datos/swa_cache/*experiencia*`): Gemma 195/195; Qwen
+187/195, sin casos (c), frente a 181 de su última corrida. Ningún caso llega a 5 alternativas. #58 llega a 16 pasos
+por el simulador de foco (backlog #26). Falta la prueba con el usuario delante.
 
 ## Qué hace
 
@@ -64,28 +65,18 @@ mucho 700 caracteres, solo cuando hay algo parecido.
 
 ## Pruebas
 
-- **`probar_experiencia.py`:** 50/50, sin modelo, con base temporal. Cubre:
-  - el registro;
-  - la búsqueda;
-  - la limpieza;
-  - el mouse señalado con sus protecciones;
-  - el flujo completo: rendirse → explicación → receta → la próxima vez el pedido la trae.
-  - 8/8 mutaciones detectadas.
-- **Ajustadas:** `probar_protecciones_ejecucion` 95/95, `probar_contrato_ronda2` 16/16 (nuevas huellas de Gemma, cambio
-  a propósito), `probar_obstaculos` 35/35, `probar_cierre_rapido` 13/13 y `probar_camino_rapido` 456/456.
-- **El resto de suites sin modelo pasan.** Dos fallan solo por el entorno del worktree: `probar_segundo_plano` busca
-  el `.venv` del worktree y `probar_fase6` necesita las carpetas reales de juegos.
-- **El banco (`benchmark_gramatica.py`):** lleva la experiencia apagada y `posicion_mouse` simulada.
+- **`probar_experiencia.py`:** 50/50 sin modelo (registro, búsqueda, limpieza, mouse señalado, flujo rendirse →
+  explicación → receta) y 8/8 mutaciones. Ajustadas: protecciones 95/95, contrato 16/16 (huellas nuevas de Gemma),
+  obstáculos 35/35, cierre rápido 13/13, camino rápido 456/456. En `main` pasan todas las suites sin modelo.
+- **El banco:** experiencia apagada y `posicion_mouse` simulada.
 
 ## Falta
 
-1. **La 65 × 3 de los dos perfiles con la GPU:** Cacao cerrado y sin juego. Criterio: Gemma 195/195; Qwen no peor
-   que 181 y sin casos (c).
-2. **Fusionar en `main`** y reiniciar Cacao.
-3. **Prueba con el usuario delante:**
+1. **Reiniciar Cacao** para que la cargue (hecho: 65 × 3 y fusión en `main`).
+2. **Prueba con el usuario delante:**
    - una tarea que falle cinco veces;
    - la explicación;
    - «haz clic aquí» con el mouse;
    - la misma tarea otra vez.
-4. **Después:** la vista en Markdown en la wiki (`python experiencia.py --exportar ruta`) y que la reflexión condense
+3. **Después:** la vista en Markdown en la wiki (`python experiencia.py --exportar ruta`) y que la reflexión condense
    las experiencias en lecciones ([[estrategia-recursos]]).
