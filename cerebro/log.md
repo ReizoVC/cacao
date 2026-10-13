@@ -30,3 +30,7 @@ Entradas anteriores: [[log-2026-10-10]], [[log-2026-10-11-isla]], [[log-2026-10-
   `index`.
 - a04c212: `config.json` con `voz.tts_motor: qwen3`, con permiso del usuario. Se nota al reiniciar Cacao.
 
+## 2026-10-13: isla compilada (b30e901, solo interfaz)
+
+- Línea con barras y bordes de color por modo, engranaje con borde, voz solo en la línea. Prueba física
+  parcial; fallo de «Contraer a línea» con el mouse dentro pedido a Codex. Página `compilar-isla`.

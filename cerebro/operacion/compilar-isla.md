@@ -25,7 +25,20 @@ La isla vive en `C:\asistente-ui` (otro repositorio). Cacao lanza `windows\targe
    El perfil release usa `lto = true` y `codegen-units = 1`: el enlace gasta memoria. Con las dependencias ya
    compiladas, solo se recompila la isla.
 
-## Última compilación (2026-10-11, isla 3bfef0f, protocolo v3)
+## Última compilación (2026-10-13, isla b30e901, solo interfaz)
+
+- Línea fina con 5 barras (voz solo en la línea), bordes de color por modo (ámbar sin confirmación, verde
+  escucha; línea y engranaje de la pequeña), «Sin confirmación» 4 s al encender, curvas de notch, seguimiento y
+  `State.cacaoHabla` (912abce). Sin cambios de Rust ni de protocolo.
+- Build en 140 s, mismos 8 avisos. Exe 6 201 344 bytes, SHA-256 `e814cc16…`, `island-CwkiApfP.js`. Respaldo del
+  anterior: `_prive/respaldos/asistente-ui-v3-3bfef0f.exe` (`bcdc268e…`).
+- Arnés 45/45, campo 18/18 tras compilar. **Prueba física:** colores del engranaje vistos con claridad; bandeja
+  («Pausar» con teclado no actúa, con clic sí) y armario tras reiniciar, bien según el usuario.
+  **Fallo:** «Contraer a línea» (⌃) en la pequeña no hace nada con el mouse dentro (`compactaManual` de
+  bf1e9f1); pedido a Codex. Sin probar en físico: tarjeta de confirmación y barras con voz (las órdenes se
+  escribieron en el campo de la isla; la próxima vez, `--escenario recorrido`).
+
+## Compilación anterior (2026-10-11, isla 3bfef0f, protocolo v3)
 
 - Contenido: música (invariante 11), rediseño de tres niveles de Codex, línea mínima, guardarropa, invariante 10 y
   panel de 800 px. Cacao, a la vez: fusión de `claude/musica-v3` (2797ba4).
