@@ -46,7 +46,7 @@ Ordenados por el usuario en [[hoja-de-ruta]] (2026-10-11). La prueba de Qwen 9B 
 | 13 | Perfil lean de Qwen3-TTS | hecho | `.comparacion-runtime/qwen3_tts_lean.yaml`, b7270b4 |
 | 14–15 | Lanzador y prueba prolongada en WSL | descartados (WSL) | — |
 | 16 | Migrar producción a llama.cpp servidor | descartado por ahora | [[motor-llama-cpp]] |
-| 17 | Sustituir Piper por Qwen3-TTS | pendiente: medir si cabe en Windows (RAM de 16 GB) | `config.voz.piper_voz` |
+| 17 | Sustituir Piper por Qwen3-TTS | **hecho**: activa, Piper de respaldo; aprobada por el usuario (2026-10-13) | [[voz-qwen3]] |
 | 18 | MTP | descartado por ahora | `mtp_probado: false` |
 | 19 | Gemma 26B A4B | descartado por ahora | sin datos |
 | 20 | Puntuar la evaluación a ciegas Gemma Q5 / Qwen Q5 | descartada por el usuario | la sustituye la prueba en producción |

@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: a04c212
-verificado_fecha: 2026-10-12
+verificado_commit: fcb1c7c
+verificado_fecha: 2026-10-13
 fuentes: [config.json, comparacion_modelos/ejecutar.py, cerebro/frescura.py]
 ---
 # Hoja de ruta del usuario, cruzada con el repositorio (2026-10-11)
@@ -26,14 +26,14 @@ La lista viene del usuario (estado del proyecto del 2026-10-11). Aquí cada punt
 
 | # | Punto | Estado | Quién |
 |---|---|---|---|
-| 1 | Verificar el cerebro y medir VRAM con `swa_full=False` | revertido (397d0a2). Producción sin la clave: 65 × 3 = 194/195 (base 193). Los 35/42 con false no se reproducen (brazo A 42/42): causa abierta ([[swa-full-false]]). En pausa hasta saber si Gemma sigue | Claude (backend) |
+| 1 | `swa_full=False` | cerrado: revertido en Gemma (397d0a2), solo en el perfil `qwen9b`, donde no cambia la VRAM ([[swa-full-false]], [[memoria-liberable]]) | — |
 | 2 | Prueba reversible de Qwen | Producción: 173 → 182 (cierre rápido arreglado) → 182 con el contrato de la ronda 2, con casos (c) de cierres no pedidos ([[qwen-como-cerebro]]). No pasa el criterio, pero **el usuario decide usarlo una semana (desde el 2026-10-11)**: se descarta si resulta molesto o impreciso. **Activo desde 5e9eee0**, con el freno nuevo de `cerrar_app` (98c763e). Al final, cifras con `resumir_semana_qwen.py --con-permiso`. Vuelta atrás: `"modelo_activo": "gemma"` y reiniciar | usuario; Claude (backend) |
-| 3 | Cierre rápido con `mensaje_final` | pendiente | usuario decide ([[cierre-rapido-mensaje-final]]) |
+| 3 | Cierre rápido con `mensaje_final` | hecho: validado en los dos modelos y apagado en Qwen (69297e4, d95855d) | [[cierre-rapido-mensaje-final]] |
 | 4 | Hook y skill para que cada chat use el cerebro | sin empezar | — |
 | 5 | Reorganizar archivos | después del 2 | — |
 | 6 | Spotify: teclas multimedia, Chromium, visión | sin empezar. Enlaza con la música de la isla ([[musica-isla]]) | — |
 | 7 | Camino rápido y caché por estados de Qwen | **hechos y activos** (fdf84d1, b056954); filtrado aparcado | [[camino-rapido]], [[cache-estados]] |
-| 8 | Qwen3-TTS 0.6B en Windows nativo (GGML), voz A1_equilibrada | elegido por el usuario; orden lista, sin medir | [[voz-candidatas]] |
+| 8 | Voz Qwen3-TTS 0.6B (llama.cpp nativo, A1_equilibrada) | **activa en producción** con Piper de respaldo (c0945a6, a04c212); **el usuario la aprueba** (2026-10-13). Falta decidir el saludo (empezar antes con pausa o más tarde sin ella) | [[voz-qwen3]] |
 
 **Futuro:** adaptadores por app, memoria de experiencia (diseño aprobado), Jev en modo sombra, cerrar pestañas por
 nombre, Tailscale, especialista visual, SRS 1.3. Ninguno tiene código.
