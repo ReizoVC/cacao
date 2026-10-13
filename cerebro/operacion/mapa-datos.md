@@ -10,7 +10,7 @@ fuentes: [.gitignore, config.json, memoria.py, wiki.py, habitos.py, voz.py, ui_i
 
 | Rol | Dónde (relativo a la raíz o según config) | Lo escribe |
 |---|---|---|
-| Memorias, obstáculos, sugerencias | `memoria.db` | `memoria.py`, `obstaculos.py`, `sugerencias.py` |
+| Memorias, obstáculos, sugerencias, experiencias | `memoria.db` | `memoria.py`, `obstaculos.py`, `sugerencias.py`, `experiencia.py` |
 | Hábitos (muestras y resúmenes) | `habitos.db` (`memoria_wiki.habitos_db`) | `registro_habitos.py` |
 | Wiki personal (vault con su propio git) | `memoria/` (`memoria_wiki.vault`) | `reflexion.py`, `lint.py`, el usuario |
 | Datos locales (apps de banco y otros) | `datos_locales.json` | el usuario |
