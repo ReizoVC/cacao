@@ -15,7 +15,7 @@ Los nombres son relativos a la raíz del repositorio. Actualiza esta página al 
 | Arranque | `iniciar_cacao.py`, `crear_acceso_directo.ps1`, `avisos_windows.py` |
 | Proceso principal (voz) | `voz.py`, `microfono.py`, `transcripcion.py`, `confirmacion_voz.py`, `seguimiento.py`, `palabra_activacion.py` |
 | Voz Qwen3-TTS ([[voz-qwen3]]) | `tts_qwen.py`; `tts_qwen_motor/` (`servidor.cpp`, `compilar.bat`, `hashes.json`); `probar_tts_qwen.py`; `comparacion_modelos/probar_tts_qwen_prolongada.py` |
-| Agente | `agente_minimo.py`, `modelo.py`, `muestreo_gramatica.py`, `protecciones_ejecucion.py`, `obstaculos.py`, `emergencia.py`, `pedidos.py`, `camino_rapido.py`, `contrato_ronda2.py`, `cache_estados.py` |
+| Agente | `agente_minimo.py`, `modelo.py`, `muestreo_gramatica.py`, `protecciones_ejecucion.py`, `obstaculos.py`, `emergencia.py`, `pedidos.py`, `camino_rapido.py`, `contrato_ronda2.py`, `cache_estados.py`, `experiencia.py` (tabla `experiencias` de `memoria.db`) |
 | Herramientas | `herramientas.json` (catálogo y límites), `herramientas_grupo1.py`, `herramientas_grupo4.py`, `herramientas_powershell.py`, `vision.py`, `autocompletar_login.py` |
 | Modos | `modo_directo.py`, `modo_juego.py`, `guardia_juego.py`, `deteccion.py` |
 | Isla y entrada | `ui_isla.py`, `entrada_fisica.py`, `entrada.py`; repositorio aparte `C:\asistente-ui` (`AGENTS.md`, `docs/protocolo.md`, `windows/arnes/`) |
@@ -26,7 +26,7 @@ Los nombres son relativos a la raíz del repositorio. Actualiza esta página al 
 
 | Rol | Archivos |
 |---|---|
-| Suites sin modelo | `probar_*.py` ([[suites]]); desde la Fase 1 también `probar_carga_modelo.py`, `probar_salida_utf8.py` y `probar_gramatica_json.py`; `probar_cierre_rapido.py` (69297e4), `probar_contrato_ronda2.py` (f21e746) , `probar_camino_rapido.py` (fdf84d1) y `probar_cache_estados.py` (b056954) |
+| Suites sin modelo | `probar_*.py` ([[suites]]); desde la Fase 1 también `probar_carga_modelo.py`, `probar_salida_utf8.py` y `probar_gramatica_json.py`; `probar_cierre_rapido.py` (69297e4), `probar_contrato_ronda2.py` (f21e746) , `probar_camino_rapido.py` (fdf84d1) `probar_cache_estados.py` (b056954) y `probar_experiencia.py` (f83dd1a) |
 | Evaluación con modelo | `evaluar_pruebas.py`, `benchmark_gramatica.py`, `pruebas.json` ([[evaluacion-65-frases]]) |
 | Pruebas reales o presenciales | `prueba_real.py`, `prueba_presencial_isla.py` |
 | Mediciones | `medir_*.py`, `validar_transcripcion.py`, `simular_habitos.py`; `comparacion_modelos/medir_memoria.py` (VRAM por opción, [[memoria-liberable]]) |
