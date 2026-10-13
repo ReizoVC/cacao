@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: 609cc9a
-verificado_fecha: 2026-10-12
+verificado_commit: f83dd1a
+verificado_fecha: 2026-10-13
 fuentes: [comparacion_modelos/resumen_qwen3_tts_llama_cpp.json, comparacion_modelos/medir_memoria.py, comparacion_modelos/datos/memoria/2026-10-11_1135.json, config.json, voz.py, transcripcion.py, cerebro/decisiones/qwen3-tts-vllm-omni.md]
 ---
 # Memoria liberable sin perder calidad (Qwen 9B, 2026-10-11)

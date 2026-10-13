@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
+verificado_commit: f83dd1a
+verificado_fecha: 2026-10-13
 fuentes: [protecciones_ejecucion.py, agente_minimo.py, herramientas_grupo4.py, probar_protecciones_ejecucion.py, probar_modo_directo.py, probar_grupo4.py, pruebas.json]
 ---
 # Frenos de cerrar_app y listar_controles

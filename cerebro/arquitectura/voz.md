@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: a04c212
-verificado_fecha: 2026-10-12
+verificado_commit: f83dd1a
+verificado_fecha: 2026-10-13
 fuentes: [voz.py, tts_qwen.py, agente_minimo.py, transcripcion.py, microfono.py, confirmacion_voz.py, config.json]
 ---
 # Voz

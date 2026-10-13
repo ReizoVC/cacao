@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: a04c212
-verificado_fecha: 2026-10-12
+verificado_commit: f83dd1a
+verificado_fecha: 2026-10-13
 fuentes: [cache_estados.py, modelo.py, agente_minimo.py, config.json, probar_cache_estados.py, comparacion_modelos/cache_estado.py, comparacion_modelos/probar_cache_estado.py, comparacion_modelos/probar_swa_cache.py, comparacion_modelos/comparar_corridas.py]
 ---
 # Caché por estados del prompt de sistema (Qwen 9B)

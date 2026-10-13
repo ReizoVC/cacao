@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
+verificado_commit: f83dd1a
+verificado_fecha: 2026-10-13
 fuentes: [cache_estados.py, modelo.py, comparacion_modelos/comparar_corridas.py, comparacion_modelos/cache_estado.py, comparacion_modelos/probar_cache_estado.py, comparacion_modelos/medir_prompt.py, comparacion_modelos/probar_swa_cache.py, comparacion_modelos/ejecutar.py, agente_minimo.py, contrato_ronda2.py]
 ---
 # Prompt de sistema y caché de prefijo (2026-10-11)
@@ -17,6 +17,9 @@ Medidas sin GPU y de las corridas ya hechas. Las usan [[filtrado-herramientas]] 
 | Reglas (+ ejemplo de `mensaje_final` en Gemma / RULES en Qwen) | 670 + 81 | 527 + 491 |
 | Las 21 herramientas | 3 023 (80 %) | 3 094 (75 %) |
 | Más pesadas: mouse, teclado, ver_pantalla, abrir_app | 287, 241, 226, 223 | 306, 240, 230, 221 |
+
+Medido antes de la rama `claude/experiencia`, que añade `posicion_mouse`, el parámetro `punto_senalado` y tres
+reglas: el prompt crece (sin medir; `comparacion_modelos/medir_prompt.py` lo mide) ([[memoria-experiencia]]).
 
 **Caché de prefijo, medida en las 65 × 3** (`datos/swa_cache/*.json`, campo `llamadas`):
 - **Gemma** reutiliza unos 3 965 tokens en el 100 % de las llamadas (449/449, `gemma65x3cierre_C`).

@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: 77370e8
-verificado_fecha: 2026-10-11
+verificado_commit: f83dd1a
+verificado_fecha: 2026-10-13
 fuentes: [SRS.md, protecciones_ejecucion.py, herramientas.json, herramientas_powershell.py, resultados_swa_y_recursos.md, muestreo_gramatica.py, wiki.py, herramientas_grupo1.py]
 ---
 # Riesgos vigentes

@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: 07123e7
-verificado_fecha: 2026-10-11
+verificado_commit: f83dd1a
+verificado_fecha: 2026-10-13
 fuentes: [ui_isla.py, herramientas_grupo4.py]
 ---
 # Traspaso de la isla a Codex (2026-10-11)

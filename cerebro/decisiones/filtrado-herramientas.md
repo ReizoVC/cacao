@@ -1,7 +1,7 @@
 ---
 estado: sin verificar
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
+verificado_commit: f83dd1a
+verificado_fecha: 2026-10-13
 fuentes: [agente_minimo.py, contrato_ronda2.py, comparacion_modelos/medir_prompt.py, comparacion_modelos/simular_filtrado.py, comparacion_modelos/probar_swa_cache.py]
 ---
 # Filtrado de herramientas por pedido

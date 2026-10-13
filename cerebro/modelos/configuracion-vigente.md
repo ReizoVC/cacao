@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: a04c212
-verificado_fecha: 2026-10-12
+verificado_commit: f83dd1a
+verificado_fecha: 2026-10-13
 fuentes: [config.json, modelo.py, vision.py, muestreo_gramatica.py, requirements.txt, agente_minimo.py, probar_carga_modelo.py]
 ---
 # Configuración vigente de producción

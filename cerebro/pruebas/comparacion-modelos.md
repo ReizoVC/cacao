@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: 76250a2
-verificado_fecha: 2026-10-11
+verificado_commit: f83dd1a
+verificado_fecha: 2026-10-13
 fuentes: [comparacion_modelos/ejecutar.py, comparacion_modelos/integracion.py, comparacion_modelos/criterios.py, comparacion_modelos/resumir_ronda3.py, comparacion_modelos/README.md, comparacion_modelos/verificar.py]
 ---
 # Banco de comparación de modelos (`comparacion_modelos/`)

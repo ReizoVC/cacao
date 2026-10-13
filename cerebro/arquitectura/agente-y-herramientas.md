@@ -1,14 +1,14 @@
 ---
 estado: verificado
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
+verificado_commit: f83dd1a
+verificado_fecha: 2026-10-13
 fuentes: [agente_minimo.py, herramientas.json, herramientas_grupo1.py, herramientas_grupo4.py, herramientas_powershell.py, vision.py, memoria.py, benchmark_gramatica.py]
 ---
 # Agente y herramientas
 
 ## Catálogo
 
-`herramientas.json` define 23 herramientas (nombre, descripción, parámetros y `permiso`) y los `limites`.
+`herramientas.json` define 24 herramientas (nombre, descripción, parámetros y `permiso`) y los `limites`.
 `agente_minimo.py` activa las que están en `ACTIVAS`:
 - `ver_pantalla` sale si no hay `mmproj`;
 - `autocompletar_login` solo entra con `config.autocompletar_login.activa` (hoy `false`).
@@ -18,7 +18,7 @@ fuentes: [agente_minimo.py, herramientas.json, herramientas_grupo1.py, herramien
 | Apps y sistema | listar_apps, abrir_app, volumen | `agente_minimo.py` |
 | Ventanas, archivos, web | listar_ventanas, enfocar_ventana, listar_carpeta, leer_archivo, buscar_web | `herramientas_grupo1.py` |
 | Visión | ver_pantalla | `vision.py` (Gemma4ChatHandler + mmproj) |
-| Interfaz y archivos con efecto | cerrar_app, mover_archivo, deshacer_movimiento, mouse, teclado, listar_controles | `herramientas_grupo4.py` |
+| Interfaz y archivos con efecto | cerrar_app, mover_archivo, deshacer_movimiento, mouse, teclado, listar_controles, posicion_mouse ([[memoria-experiencia]]) | `herramientas_grupo4.py` |
 | PowerShell | ejecutar_powershell | `herramientas_powershell.py` |
 | Memoria | recordar, consultar_memoria | `memoria.py` (+ `wiki.buscar`) |
 | Fase 6 | sugerencias, registro_habitos | `sugerencias.py`, `agente_minimo.registro_habitos` |

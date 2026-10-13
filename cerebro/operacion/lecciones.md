@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
+verificado_commit: f83dd1a
+verificado_fecha: 2026-10-13
 fuentes: [entrada.py, diagnostico_atajos3.py, modelo.py, muestreo_gramatica.py, comparacion_modelos/integracion.py, guia_instalacion_agente.md, resultados_comparacion_modelos.md, protecciones_ejecucion.py, guardia_juego.py, agente_minimo.py]
 ---
 # Lecciones aprendidas (fallos reales y su causa)

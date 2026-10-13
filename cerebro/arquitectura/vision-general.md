@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: a04c212
-verificado_fecha: 2026-10-12
+verificado_commit: f83dd1a
+verificado_fecha: 2026-10-13
 fuentes: [agente_minimo.py, voz.py, iniciar_cacao.py, modelo.py, muestreo_gramatica.py, config.json, herramientas.json]
 ---
 # Visión general y flujo de un pedido
@@ -36,7 +36,7 @@ proceso aparte, sin modelo.
    planificador (que detiene la reflexión), refresca el prompt si cambió el índice de la wiki o los obstáculos y
    llama a `atender()`. En la pausa del modo juego solo atiende el volumen por el camino rápido, sin el modelo.
 4. **`atender()`:** antes del modelo, el [[camino-rapido]] (17 frases simples, por el mismo `ejecutar()`). Si no
-   entra, como máximo `max_pasos_por_tarea` = 15 pasos:
+   entra, como máximo `max_pasos_por_tarea` = 25 pasos (15 antes de la rama `claude/experiencia`):
    - comprueba el atajo de emergencia;
    - `pedir_accion()`: `create_chat_completion` con `response_format` JSON y el esquema `ESQUEMA_ACCION`
      (temperatura 0,3, top_p 0,95, top_k 64, 512 tokens). Si el historial tiene una imagen, pasa por el handler de
@@ -45,7 +45,7 @@ proceso aparte, sin modelo.
      evidencia) y se devuelve el mensaje;
    - si no, llama a `ejecutar()`: permisos, planificadores sin efecto, confirmación física y luego la
      implementación. El resultado vuelve al historial como mensaje de usuario;
-   - `registrar_resultado()`: con dos alternativas fallidas corta y pregunta;
+   - `registrar_resultado()`: con cinco alternativas fallidas corta y pide la explicación de Reizo; las experiencias parecidas llegan en el mensaje del pedido ([[memoria-experiencia]]);
    - cierre rápido: si la acción trae `mensaje_final`, su efecto quedó verificado y `validar_finalizacion` lo
      acepta, termina sin otra llamada al modelo. El perfil `qwen9b` lo apaga ([[cierre-rapido-mensaje-final]]).
 5. **Respuesta.** La lee Piper, o Qwen3-TTS con `voz.tts_motor: qwen3` ([[voz-qwen3]]). El pensamiento y los pasos solo van al registro. Se añade una sugerencia si toca y

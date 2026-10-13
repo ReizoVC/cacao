@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: 9230d4d
-verificado_fecha: 2026-10-12
+verificado_commit: f83dd1a
+verificado_fecha: 2026-10-13
 fuentes: [agente_minimo.py, voz.py, tts_qwen.py, iniciar_cacao.py, .gitignore]
 ---
 # Mapa de archivos por rol

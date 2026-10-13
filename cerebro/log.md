@@ -38,3 +38,9 @@ Entradas anteriores: [[log-2026-10-10]], [[log-2026-10-11-isla]], [[log-2026-10-
 ## 2026-10-13: isla 9a648a3 compilada y prueba física completa
 
 - ⌃ a la línea, bordes de color, voz con barras y confirmación con clic físico, todo bien. `compilar-isla`.
+
+## 2026-10-13: memoria de experiencia (rama `claude/experiencia`, sin fusionar)
+
+- f83dd1a: `experiencia.py`, cinco alternativas, pedir la explicación de Reizo y `posicion_mouse` con
+  `mouse(punto_senalado)`. `probar_experiencia.py` 50/50 y 8 mutaciones. Falta la 65 × 3 (GPU) y la prueba con el
+  usuario. Página `memoria-experiencia`.

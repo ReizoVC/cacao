@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
+verificado_commit: f83dd1a
+verificado_fecha: 2026-10-13
 fuentes: [pruebas.json, comparacion_modelos/pruebas_nuevas_30.json, agente_minimo.py]
 ---
 # Frases simples de las 65 + 30 (para el camino rápido)

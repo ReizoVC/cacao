@@ -6,9 +6,9 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 ## Arquitectura
 - [[vision-general]]: piezas, flujo de un pedido y dónde se decide cada cosa
 - [[agente-y-herramientas]]: catálogo, estructuras del ejecutor y cómo añadir una herramienta
-- [[protecciones]]: sin evidencia no hay «hecho», dos alternativas, atajos estructurados, emergencia
+- [[protecciones]]: sin evidencia no hay «hecho», cinco alternativas, atajos estructurados, emergencia
 - [[frenos-cierre]]: frenos de cerrar_app y listar_controles
-- [[permisos-y-bloqueos]]: dónde se decide si se pregunta, bloqueos, confirmación física, modo sin confirmación
+- [[permisos-y-bloqueos]]: cuándo se pregunta, bloqueos, confirmación física, modo sin confirmación
 - [[voz]], [[voz-qwen3]]: entrada, frenos, Whisper, Piper o Qwen3-TTS y confirmaciones
 - [[palabra-activacion]]: detector «Cacao» y escucha de seguimiento
 - [[isla-websocket]]: protocolo con la isla (versión 2), protecciones y bandeja
@@ -55,6 +55,7 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 ## Estado
 - [[estrategia-recursos]]: mínimos recursos, herramientas antes que modelo, memoria de experiencia
 - [[camino-rapido]]: implementado: pedidos simples sin modelo
+- [[memoria-experiencia]]: experiencia, 5 alternativas, explicación y mouse señalado
 - [[filtrado-herramientas]]: aparcado: herramientas por pedido
 - [[hoja-de-ruta]]: la lista del usuario cruzada con el repositorio, diferencias y estado de Codex
 - [[backlog]]: pendientes verificados (hecho, pendiente o desconocido)
@@ -72,6 +73,6 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[mantenimiento]]: chequeo de frescura, formato y privacidad
 - [[log]]: registro cronológico de cambios del cerebro
 - [[log-2026-10-10]]: entradas archivadas del 2026-10-10
-- [[log-2026-10-11-isla]]: entradas archivadas del 2026-10-11 (isla: traspaso, bandeja y prueba física)
-- [[log-2026-10-11-b]]: entradas archivadas del 2026-10-11 (coordinación de Codex, Fase 1 medida y swa_full)
+- [[log-2026-10-11-isla]]: log archivado del 2026-10-11 (isla, bandeja, prueba física)
+- [[log-2026-10-11-b]]: log archivado del 2026-10-11 (Codex, Fase 1 y swa_full)
 - [[log-2026-10-11-c]], [[log-2026-10-11-d]], [[log-2026-10-11-e]]: entradas archivadas del 2026-10-11

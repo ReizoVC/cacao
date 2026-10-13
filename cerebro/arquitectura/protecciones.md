@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
+verificado_commit: f83dd1a
+verificado_fecha: 2026-10-13
 fuentes: [protecciones_ejecucion.py, probar_protecciones_ejecucion.py, probar_modo_directo.py, probar_grupo4.py, agente_minimo.py, herramientas_grupo4.py, obstaculos.py, emergencia.py, resultados_swa_y_recursos.md]
 ---
 # Protecciones del ejecutor
@@ -35,10 +35,10 @@ detector de afirmaciones se rehízo en c6a74f3.
 («La ventana que no respondía la cerré» no se detecta). Hay que tenerlo en cuenta si se amplía la lista de
 negadores.
 
-## 2. Dos alternativas fallidas, alto
+## 2. Cinco alternativas fallidas, alto y pedir la explicación
 
 `registrar_resultado()` acumula los fallos distintos de la tarea (no cuenta las lecturas, salvo listar_controles,
-ni los bloqueos o rechazos). Con 2, la tarea se corta: «Probé dos alternativas…».
+ni los bloqueos o rechazos). Con `MAX_ALTERNATIVAS` = 5 (antes 2; rama `claude/experiencia`), la tarea se corta y Cacao pide a Reizo que le explique cómo ([[memoria-experiencia]]).
 
 ## 3. Atajos solo estructurados
 

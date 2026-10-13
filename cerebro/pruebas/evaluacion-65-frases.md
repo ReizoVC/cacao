@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
+verificado_commit: f83dd1a
+verificado_fecha: 2026-10-13
 fuentes: [pruebas.json, evaluar_pruebas.py, benchmark_gramatica.py, comparacion_modelos/probar_swa_cache.py, comparacion_modelos/criterios.py, comparacion_modelos/integracion.py, SRS.md]
 ---
 # Evaluación con las 65 frases

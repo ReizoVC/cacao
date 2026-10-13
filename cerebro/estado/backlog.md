@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 9409902
+verificado_commit: f83dd1a
 verificado_fecha: 2026-10-13
 fuentes: [entrenar_cacao.py, medir_arranque.py, config.json, modelo.py, agente_minimo.py, protecciones_ejecucion.py, comparacion_modelos/ejecutar.py, REPORTE_TRABAJO_CACAO.md, SRS.md, guia_instalacion_agente.md, resultados_swa_y_recursos.md]
 ---

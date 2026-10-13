@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: 9230d4d
-verificado_fecha: 2026-10-12
+verificado_commit: f83dd1a
+verificado_fecha: 2026-10-13
 fuentes: [probar_tts_qwen.py, probar_protecciones_ejecucion.py, probar_obstaculos.py, probar_modo_directo.py, probar_fase6.py, probar_fase7.py, probar_campo_isla.py, probar_autocompletar_login.py, probar_confirmacion_voz.py, probar_modo_juego.py, probar_palabra_activacion.py, probar_seguimiento.py, probar_segundo_plano.py, probar_actividad_fisica.py, probar_powershell.py, probar_apps.py, probar_grupo4.py, probar_carga_modelo.py, probar_salida_utf8.py, probar_gramatica_json.py, agente_minimo.py, comparacion_modelos/verificar.py]
 ---
 # Suites de pruebas sin modelo
@@ -12,11 +12,11 @@ ejecución, con su commit; las salidas no se guardan ([[log]]).
 
 | Suite | Cubre | Baseline |
 |---|---|---|
-| `probar_protecciones_ejecucion.py` | Afirmaciones sin evidencia (también los falsos positivos), atajos como texto, dos alternativas, `forzar` no pedido | 66/66 (0a3ea28) |
+| `probar_protecciones_ejecucion.py` | Afirmaciones sin evidencia, atajos como texto, cinco alternativas, `forzar` no pedido | 95/95 (f83dd1a) |
 | `probar_obstaculos.py` | Efecto de clics y atajos, tabla de obstáculos | 35/35 |
 | `probar_modo_directo.py` | Política del modo sin confirmación; `forzar` en `ejecutar` | 140/140 |
 | `probar_fase6.py [seccion…]` | Hábitos, wiki, reflexión con modelo falso, sugerencias, lint (vault y bases temporales) | 142/142 |
-| `probar_fase7.py A` | Confirmaciones físicas e inyectadas (simuladas), WebSocket (protocolo v3: versión 4003, JSON que no es objeto, `musica` solo booleano), rechazo con el agente | 32/32 en 8a78d51 (≈40 s por esperas de 30 s) |
+| `probar_fase7.py A` | Confirmaciones físicas e inyectadas (simuladas), WebSocket v3, rechazo con el agente | 37/37 en 8a78d51 (≈40 s por esperas de 30 s) |
 | `probar_fase7.py B` / `C` | B: **isla real**. C: **clic inyectado de verdad** en la isla | no se corren sin permiso; últimas: 13/13 y 5/5 (491b45e / d80ea7f) |
 | `probar_campo_isla.py` | Campo de texto de la isla, lado del agente | 29/29 |
 | `probar_autocompletar_login.py` | Autocompletado con Chrome simulado | 46/46 |
@@ -33,11 +33,12 @@ ejecución, con su commit; las salidas no se guardan ([[log]]).
 | `probar_cierre_rapido.py` | `mensaje_final` validado y `cierre_rapido` por perfil | 13/13 (d95855d) |
 | `probar_contrato_ronda2.py` | Contrato de qwen9b igual al del banco; Gemma sin cambios | 16/16 (f21e746) |
 | `probar_camino_rapido.py` | Camino rápido: 17 frases, trampas, mismo ejecutor, modo juego y 8 mutaciones | 456/456 (fdf84d1) |
+| `probar_experiencia.py` | [[memoria-experiencia]] y 8 mutaciones | 50/50 (f83dd1a) |
 | `probar_cache_estados.py` | Caché por estados de producción: visión, modo juego, atajo | 13/13 (b056954) |
 | `probar_tts_qwen.py` | Voz Qwen3-TTS, servidor falso ([[voz-qwen3]]) | 92/92 |
 | `comparacion_modelos/probar_cache_estado_sin_modelo.py` | Caché por estados con un Llama falso | 7/7 (76250a2) |
 | `probar_salida_utf8.py` | UTF-8 en `voz.py` y en el modo texto sin el lanzador | 6/6 |
-| `probar_gramatica_json.py` | Regla `char` estricta: lee **solo el vocabulario** del GGUF (0 capas en la GPU) y pasa respuestas por la gramática | 11/11 |
+| `probar_gramatica_json.py` | Regla `char` estricta; lee **solo el vocabulario** del GGUF (0 capas en la GPU) | 11/11 |
 | `comparacion_modelos`: `probar_criterios` | Criterio oficial del banco (`python -m unittest`, desde esa carpeta) | 7/7 |
 | `comparacion_modelos`: `probar_integracion` | Contrato de las rondas 2 y 3; necesita `jsonschema` (`.venv-pruebas`) | 4/4 con `.venv-pruebas` |
 

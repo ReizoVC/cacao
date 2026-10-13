@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: a04c212
-verificado_fecha: 2026-10-12
+verificado_commit: f83dd1a
+verificado_fecha: 2026-10-13
 fuentes: [comparacion_modelos/probar_swa_cache.py, agente_minimo.py, config.json, protecciones_ejecucion.py, contrato_ronda2.py, benchmark_gramatica.py, comparacion_modelos/ejecutar.py]
 ---
 # Qwen 9B en producción (perfil `qwen9b`, 2026-10-11)

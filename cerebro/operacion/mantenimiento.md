@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: a57d633
-verificado_fecha: 2026-10-11
+verificado_commit: f83dd1a
+verificado_fecha: 2026-10-13
 fuentes: [CLAUDE.md, cerebro/frescura.py, wiki.py, memoria.py, herramientas_grupo1.py, herramientas.json]
 ---
 # Mantenimiento del cerebro
