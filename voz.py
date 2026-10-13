@@ -8,7 +8,8 @@ Modo voz del asistente: pulsar para hablar y respuesta hablada. El modo texto (a
 - Las herramientas de solo lectura van directas. Las que cambian algo (abrir, volumen, mover, cerrar, teclado...)
   piden confirmación: Enter = sí, Esc = no, los botones de la isla, o la frase "confirmo la instrucción" en una
   grabación aparte tras la pregunta (confirmacion_voz.py; "sí" solo no vale). Sin respuesta en 30 s = no.
-- La respuesta final (lo que devuelve atender) se lee con Piper. El pensamiento, los pasos y las confirmaciones
+- La respuesta final (lo que devuelve atender) se lee con Piper, o con Qwen3-TTS si config.json -> voz.tts_motor es
+  "qwen3" (tts_qwen.py; Piper queda de respaldo). El pensamiento, los pasos y las confirmaciones
   NUNCA se leen: solo se muestran en la consola. En modo voz el prompt pide 1 o 2 frases (agente_minimo.MODO_VOZ).
 - Cada comando queda en voz_registro/: el WAV y una línea en registro.jsonl (transcripción, frenos, confirmaciones,
   respuesta y latencias). La carpeta no va a git.
@@ -42,6 +43,7 @@ import agente_minimo as a
 import confirmacion_voz
 import palabra_activacion
 import seguimiento
+import tts_qwen
 from microfono import TASA, UMBRAL_VOZ, AtajoHablar, Microfono, analizar_audio
 from transcripcion import TranscriptorNativo, TranscriptorWhisper, a_wav, contar_palabras, transcripcion_plausible
 
@@ -50,7 +52,7 @@ REGISTRO = BASE / "voz_registro"
 POR_DEFECTO = {"atajo_hablar": "ctrl+espacio", "motor_transcripcion": "whisper", "whisper_modelo": "large-v3-turbo",
                "whisper_tipo": "int8_float16", "piper_voz": "modelos/piper/es_MX-claude-high.onnx", "velocidad": 1.0,
                "microfono": None, "min_voz_s": 0.15, "max_grabacion_s": 30, "confirmar_timeout_s": 30,
-               "ctx_transcripcion": 1024, "lote_transcripcion": 256}
+               "ctx_transcripcion": 1024, "lote_transcripcion": 256, "tts_motor": "piper"}
 CONFIG_VOZ = {**POR_DEFECTO, **a.CONFIG.get("voz", {})}
 # herramientas que solo leen: van directas. Cualquier otra (también las futuras) se confirma con Enter/Esc.
 SOLO_LECTURA = {"listar_apps", "listar_ventanas", "listar_carpeta", "leer_archivo", "consultar_memoria",
@@ -275,6 +277,7 @@ def preparar():
     transcriptor = crear_transcriptor()
     ruta_voz = Path(CONFIG_VOZ["piper_voz"])
     locutor = Locutor(ruta_voz if ruta_voz.is_absolute() else BASE / ruta_voz, CONFIG_VOZ["velocidad"])
+    locutor = tts_qwen.crear_locutor(locutor, CONFIG_VOZ, a.CONFIG)  # Piper, salvo voz.tts_motor = "qwen3"
     _piezas.update(atajo=atajo, microfono=microfono, transcriptor=transcriptor, locutor=locutor)
     _piezas["escucha"] = crear_escucha(microfono, locutor)
     # sin la escucha de "Cacao" (apagada en config.json) tampoco hay escucha de seguimiento
@@ -292,8 +295,12 @@ def preparar():
     a.llm.create_chat_completion(messages=historial + [{"role": "user", "content": "hola"}], max_tokens=1)
     transcriptor.transcribir(a_wav(np.zeros(TASA // 2, dtype=np.int16)))
     list(locutor.voz.synthesize("hola"))
+    if isinstance(locutor, tts_qwen.LocutorQwen):
+        locutor.iniciar()  # después del LLM y de Whisper; en un hilo, y mientras tanto habla Piper
+        a.EXTRAS_MODO_JUEGO.append((locutor.descargar, locutor.cargar))  # tras Whisper: vuelve con la VRAM libre
     print(f"Micrófono: {microfono.nombre}. Transcripción: {CONFIG_VOZ['motor_transcripcion']}. "
-          f"Voz: {ruta_voz.stem}.")
+          f"Voz: {'Qwen3-TTS (Piper de respaldo, ' if isinstance(locutor, tts_qwen.LocutorQwen) else ''}"
+          f"{ruta_voz.stem}{')' if isinstance(locutor, tts_qwen.LocutorQwen) else ''}.")
     return atajo, microfono, transcriptor, locutor, historial, planificador
 
 
@@ -506,7 +513,8 @@ def bucle(medir=0):
             latencias = {"transcribir_s": datos["transcribir_s"], "agente_s": round(t_respuesta - t_transcrito, 2),
                          "piper_s": round(empieza - t_respuesta, 2) if empieza else None,
                          "total_s": round(empieza - soltado, 2) if empieza else None,
-                         "salida_altavoz_s": round(locutor.salida.latency, 3)}
+                         "salida_altavoz_s": round(locutor.salida.latency, 3),
+                         "voz": getattr(locutor, "ultimo_motor", "piper")}
             confirmaciones = list(comando_actual.get("confirmaciones", []))
             registrar(n, audio, {**datos, "respuesta": respuesta, "confirmaciones": confirmaciones, **latencias})
             if medir:
@@ -533,6 +541,8 @@ def bucle(medir=0):
         microfono.cerrar()
         a.cerrar_isla()
         transcriptor.cerrar()
+        if hasattr(locutor, "cerrar"):
+            locutor.cerrar()
 
 
 if __name__ == "__main__":

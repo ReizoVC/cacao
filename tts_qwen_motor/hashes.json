@@ -1,0 +1,19 @@
+{
+ "llama_cpp": "81bc6b83f827df746eb129235488d325c49cae52",
+ "origen": "bin/: tts_qwen_motor/compilar.bat contra llama.cpp en ese commit (VS 2022, CUDA 13.4, sm_120, sin curl ni OpenSSL) y cuBLAS 13.4; modelos: Qwen/Qwen3-TTS-12Hz-0.6B-Base rev 5d83992 convertido a Q8_0 con convert_hf_to_gguf.py de ese commit; voz/A1_equilibrada.wav: voz sintética (INFORME_VALIDACION_SWA_GENERALIZACION.md §7)",
+ "archivos": {
+  "bin/cublas64_13.dll": "60bbba8868290311e9c1657b2193ddec667744eb555ff843f87acb7c039f9efa",
+  "bin/cublasLt64_13.dll": "cad63434448e7141629e240ea093ad596a7ef6a0f67b468ba9bc1df6e1eeee33",
+  "bin/ggml-base.dll": "d82149d2dffbcbd1aa0db54b0ba96e90e31b9d5b6f65349bda05d8a8a7cf6946",
+  "bin/ggml-cpu.dll": "f6824f375a10e32ab851b472020a35e4daea4439309a1d1131e2166cbeef0f13",
+  "bin/ggml-cuda.dll": "8d3a09bcf7607f5252850fc8ff144dae1508bf336a33f17c20faa890f3d3e903",
+  "bin/ggml.dll": "42c13ad3d37d1c5c475958605776195e680f0c8c8ec8d1f3b9a10450aac1288b",
+  "bin/llama-common.dll": "9160cbf500d7128726d0407549a9f7985bad7373745ad6ba669e1e496d255566",
+  "bin/llama.dll": "3c30eb5d6bfffe1c3d2adc8849636a03d6ce4cfd2fc165ee97a5a6af5095015a",
+  "bin/mtmd.dll": "9ee7af7c242d3b27013163b1e2652a69b34d5c04e7ae7f87b376026f180ef87e",
+  "bin/tts_qwen_servidor.exe": "bc5e518c4826303d3a5c2ba47a28b2338c57a73fe7af5f02674212c74c0dfd1c",
+  "mmproj-Qwen3-TTS-12Hz-0.6B-Base-Q8_0.gguf": "677d4a37bc656768d516a345272a698ce3d3efd93cb84b1cd6ce422cc863ec59",
+  "Qwen3-TTS-12Hz-0.6B-Base-Q8_0.gguf": "ee8dd95b2eae4cbfb95534f1da0415b10e97c0e1847649ce6eff80d9f1a72478",
+  "voz/A1_equilibrada.wav": "f0a7d615a81e27039db6dd1177aa24c59490b311942065683ef58b75431fa9e9"
+ }
+}
