@@ -4,7 +4,8 @@
 // Arranque: los argumentos de llama (-m, --mmproj, --tts-speaker-file, --tts-lang, -ngl, -c, --seed...). Carga el
 // modelo y la voz, sintetiza «hola» para calentar y escribe «LISTO <tasa>\n» en stdout.
 // Pedido (stdin, UTF-8, una línea): «<id>\t<texto>\n». Respuesta (stdout, binario):
-//   «A <id> <muestras> <tasa>\n» seguido de <muestras> int16 LE (mono), o «E <id> <motivo>\n».
+//   «A <id> <muestras> <tasa>\n» seguido de <muestras> int16 LE (mono), o «E <id> <motivo>\n». Con
+//   «E <id> limite_de_tramas» (generación desbocada: más de 25 + 2 tramas por carácter) el proceso sigue sano.
 // «SALIR\n» o el fin de stdin terminan el proceso. Los registros de llama van a stderr.
 #include "arg.h"
 #include "common.h"
@@ -14,6 +15,7 @@
 #include "mtmd.h"
 #include "mtmd-helper.h"
 
+#include <algorithm>
 #include <cmath>
 #include <cstdio>
 #include <iostream>
@@ -57,7 +59,11 @@ struct Motor {
         llama_token t = common_sampler_sample(smpl, lctx, -1);
         common_sampler_accept(smpl, t, true);
         const float * h = llama_get_embeddings_ith(lctx, -1);
-        const int max_new = params.n_predict > 0 ? params.n_predict : 600;
+        // tope por texto: el habla va a ~0,9 tramas (80 ms) por carácter; más del doble es una generación desbocada
+        size_t letras = 0;
+        for (unsigned char c : texto) letras += (c & 0xC0) != 0x80;
+        const int tope = 25 + 2 * (int) letras;
+        const int max_new = std::min(params.n_predict > 0 ? params.n_predict : 600, tope);
         int frames = 0;
         bool stop = false;
         while (!stop && frames < max_new) {

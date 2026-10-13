@@ -40,6 +40,8 @@ EXTRA_VISION_MIB = {"qwen9b": 1255}
 MARGEN_MIB = 500
 MAX_REARRANQUES = 3
 ESPERA_ARRANQUE_S = 120
+REGISTRO = BASE / "registro_tts_qwen.log"  # stderr del servidor, un bloque por arranque (*.log no va a Git)
+REGISTRO_MAX = 5 * 2**20  # al pasar de 5 MB se empieza de nuevo
 PRIMER_TROZO_MAX = 60  # caracteres: la primera oración más larga se parte también por comas
 TROZO_MIN = 20
 
@@ -119,11 +121,14 @@ def normalizar_texto(texto):
 
 
 def partir(texto):
-    """Trozos para la voz: oraciones; la primera, si es larga, también por comas (sin trozos de menos de
-    TROZO_MIN caracteres)."""
+    """Trozos para la voz: oraciones. Una primera muy corta («Buenos días.») se une a la siguiente: sonaría antes de
+    que la siguiente estuviera lista (hueco). La primera, si es larga, también se parte por comas (sin trozos de
+    menos de TROZO_MIN caracteres), para que el primer audio llegue antes."""
     oraciones = [o.strip() for o in re.split(r"(?<=[.!?…])\s+", texto.strip()) if o.strip()]
     if not oraciones:
         return []
+    if len(oraciones) > 1 and len(oraciones[0]) < TROZO_MIN:
+        oraciones[:2] = [oraciones[0] + " " + oraciones[1]]
     primera = oraciones[0]
     if len(primera) > PRIMER_TROZO_MAX:
         piezas = [p.strip() for p in re.split(r"(?<=[,;:])\s+", primera) if p.strip()]
@@ -185,14 +190,25 @@ def comando(carpeta=CARPETA):
 # ---------- proceso hijo ----------
 
 class FalloTTS(Exception):
-    pass
+    """leve: el proceso sigue sano (generación desbocada cortada por el servidor); no se mata ni se rearranca."""
+
+    def __init__(self, motivo, leve=False):
+        super().__init__(motivo)
+        self.leve = leve
 
 
 class ProcesoTTS:
     """El servidor por tubería. Un pedido a la vez; si no responde a tiempo, se mata."""
 
-    def __init__(self, cmd, espera_arranque=ESPERA_ARRANQUE_S, popen=subprocess.Popen):
-        self.proc = popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+    def __init__(self, cmd, espera_arranque=ESPERA_ARRANQUE_S, popen=subprocess.Popen, registro=REGISTRO):
+        self._registro = subprocess.DEVNULL
+        if registro:
+            registro = Path(registro)
+            nuevo = not registro.exists() or registro.stat().st_size > REGISTRO_MAX
+            self._registro = open(registro, "wb" if nuevo else "ab")
+            self._registro.write(f"\n===== arranque {time.strftime('%Y-%m-%d %H:%M:%S')} =====\n".encode())
+            self._registro.flush()
+        self.proc = popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=self._registro,
                           cwd=str(Path(cmd[0]).parent), creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
         self._respuestas = queue.Queue()
         self._lock = threading.Lock()
@@ -258,7 +274,7 @@ class ProcesoTTS:
                     self.matar()
                     raise FalloTTS("cayó")
                 if tipo == "error" and valor[0] == ident:
-                    raise FalloTTS(f"error: {valor[1]}")
+                    raise FalloTTS(f"error: {valor[1]}", leve=valor[1] == "limite_de_tramas")
                 if tipo == "audio" and valor[0] == ident:
                     return valor[1]
 
@@ -441,9 +457,15 @@ class LocutorQwen:
             for i, trozo in enumerate(trozos):
                 if parar():
                     break
+                t = time.perf_counter()
                 try:
-                    t = time.perf_counter()
-                    audio = proceso.sintetizar(normalizar_texto(trozo), tiempo_maximo(trozo))
+                    try:
+                        audio = proceso.sintetizar(normalizar_texto(trozo), tiempo_maximo(trozo))
+                    except FalloTTS as e:
+                        if not e.leve:
+                            raise
+                        self.anotar("desbocada", "reintento con Qwen")  # el muestreo cambia: suele salir bien
+                        audio = proceso.sintetizar(normalizar_texto(trozo), tiempo_maximo(trozo))
                     listos.put((i, audio, time.perf_counter() - t))
                 except FalloTTS as e:
                     listos.put((i, e, None))
@@ -467,7 +489,10 @@ class LocutorQwen:
             i, audio, _ = item
             if isinstance(audio, FalloTTS):
                 self.ultimo_motor = "qwen3+piper" if i else "piper"
-                self._fallo(str(audio))
+                if audio.leve:
+                    self.anotar("desbocada", f"{audio}; esta respuesta la sigue Piper")
+                else:
+                    self._fallo(str(audio))
                 resto = " ".join(trozos[i:])
                 if not parar():  # el resto de esta respuesta lo dice Piper
                     self.piper._callar.clear()

@@ -29,7 +29,8 @@ TASA = 24000
 # ---------- servidor falso (proceso hijo) ----------
 
 def servidor_falso(modo):
-    """Protocolo de servidor.cpp. Modos: normal, no_arranca, cae_en:N, cuelga_en:N, lento, error_en:N."""
+    """Protocolo de servidor.cpp. Modos: normal, no_arranca, cae_en:N, cuelga_en:N, lento, error_en:N,
+    desbocada_en:N (el pedido N sale desbocado: limite_de_tramas), desbocada_desde:N (todos desde el N)."""
     import numpy as np
     salida = sys.stdout.buffer
     if modo == "no_arranca":
@@ -49,6 +50,10 @@ def servidor_falso(modo):
             return
         if nombre == "cuelga_en" and pedidos >= n:
             time.sleep(3600)
+        if (nombre == "desbocada_en" and pedidos == n) or (nombre == "desbocada_desde" and pedidos >= n):
+            salida.write(f"E {ident} limite_de_tramas\n".encode())
+            salida.flush()
+            continue
         if nombre == "error_en" and pedidos >= n:
             salida.write(f"E {ident} step_gen\n".encode())
             salida.flush()
@@ -142,7 +147,8 @@ def locutor(modo="normal", perfil="qwen9b", libre=8000, juego=None, motor=None, 
 
     def crear():
         m = secuencia.pop(0) if len(secuencia) > 1 else secuencia[0]
-        p = tq.ProcesoTTS([sys.executable, str(Path(__file__).resolve()), "--falso", m], espera_arranque=10)
+        p = tq.ProcesoTTS([sys.executable, str(Path(__file__).resolve()), "--falso", m], espera_arranque=10,
+                          registro=None)  # el registro real es del servidor de verdad
         creados.append(p)
         return p
 
@@ -191,7 +197,10 @@ def pruebas_texto():
     n += not ok("número 100 y 115", (tq.numero_a_palabras(100), tq.numero_a_palabras(115)) == ("cien", "ciento quince"))
     trozos = {
         "Hecho.": ["Hecho."],
-        "Buenos días. Hoy es lunes.": ["Buenos días.", "Hoy es lunes."],
+        "Buenos días. Hoy es lunes.": ["Buenos días. Hoy es lunes."],  # primera corta: se une
+        "Listo, ya está todo. Hoy es lunes.": ["Listo, ya está todo.", "Hoy es lunes."],
+        "Hola. Encontré tres resultados sobre el clima de esta semana, todos parecidos. Abro el primero.":
+            ["Hola. Encontré tres resultados sobre el clima de esta semana, todos parecidos.", "Abro el primero."],
         "Tienes tres ventanas abiertas: el navegador, el bloc de notas y la terminal.":
             ["Tienes tres ventanas abiertas: el navegador,", "el bloc de notas y la terminal."],
         "En la carpeta de descargas hay doce archivos; el más reciente es un documento PDF de esta mañana.":
@@ -270,7 +279,7 @@ def pruebas_normal():
     return n
 
 
-def respaldo(modo, texto="Primera oración. Segunda oración.", **kw):
+def respaldo(modo, texto="La primera oración va aquí. Segunda oración.", **kw):
     loc, piper = locutor(modo, **kw)
     loc.iniciar()
     loc.esperar_carga(15)
@@ -285,7 +294,7 @@ def pruebas_respaldo():
     tq.tiempo_maximo = lambda texto: 0.6
     try:
         loc, piper, activo = respaldo("cae_en:1")
-        n += not ok("cae: lo dice Piper entero", activo and piper.dicho == ["Primera oración. Segunda oración."],
+        n += not ok("cae: lo dice Piper entero", activo and piper.dicho == ["La primera oración va aquí. Segunda oración."],
                     piper.dicho)
         n += not ok("cae: se anota el fallo", any(e["evento"] == "fallo" for e in loc.eventos))
         n += not ok("cae: rearranca solo", esperar(lambda: loc.estado == "activo") and loc.rearranques == 1)
@@ -304,6 +313,17 @@ def pruebas_respaldo():
 
         loc, piper, activo = respaldo("error_en:1")
         n += not ok("error del motor: Piper", activo and piper.dicho)
+        loc.cerrar()
+
+        loc, piper, activo = respaldo("desbocada_en:1")
+        n += not ok("desbocada una vez: se reintenta y la dice Qwen", activo and not piper.dicho
+                    and loc.ultimo_motor == "qwen3" and any(e["evento"] == "desbocada" for e in loc.eventos))
+        loc.cerrar()
+        loc, piper, activo = respaldo("desbocada_desde:1")
+        n += not ok("desbocada dos veces: Piper la dice", activo and piper.dicho == ["La primera oración va aquí. Segunda oración."],
+                    piper.dicho)
+        n += not ok("desbocada: el proceso sigue, sin rearranque", loc.estado == "activo" and loc.rearranques == 0
+                    and loc.creados[0].vivo())
         loc.cerrar()
 
         loc, piper, activo = respaldo("cae_en:2")

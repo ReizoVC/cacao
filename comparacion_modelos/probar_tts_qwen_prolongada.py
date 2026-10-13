@@ -64,12 +64,22 @@ def vram():
     return int(s.strip().splitlines()[0].split(",")[1])
 
 
+DESBOCADAS = {"reintentadas": 0}
+
+
 def decir(proceso, texto):
-    """Sintetiza los trozos en orden (como LocutorQwen) y simula la reproducción. FalloTTS sube."""
+    """Sintetiza los trozos en orden (como LocutorQwen: una desbocada se reintenta una vez) y simula la
+    reproducción. FalloTTS sube (con leve=True si también salió desbocado el reintento)."""
     listo, inicio, fin, huecos, trozos = 0.0, None, 0.0, [], []
     for trozo in tq.partir(texto):
         t = time.perf_counter()
-        audio = proceso.sintetizar(tq.normalizar_texto(trozo), tq.tiempo_maximo(trozo))
+        try:
+            audio = proceso.sintetizar(tq.normalizar_texto(trozo), tq.tiempo_maximo(trozo))
+        except tq.FalloTTS as e:
+            if not e.leve:
+                raise
+            DESBOCADAS["reintentadas"] += 1
+            audio = proceso.sintetizar(tq.normalizar_texto(trozo), tq.tiempo_maximo(trozo))
         s, dur = time.perf_counter() - t, len(audio) / proceso.tasa
         trozos.append({"caracteres": len(trozo), "sintesis_s": round(s, 3), "audio_s": round(dur, 3)})
         listo += s
@@ -118,7 +128,11 @@ def main():
                                     "sintesis_s": round(sum(t["sintesis_s"] for t in fila["trozos"]), 3),
                                     "audio_s": round(sum(t["audio_s"] for t in fila["trozos"]), 3)})
         except tq.FalloTTS as e:
-            r["fallos"].append({"t_min": round((time.monotonic() - inicio) / 60, 2), "motivo": str(e)})
+            r["fallos"].append({"t_min": round((time.monotonic() - inicio) / 60, 2), "motivo": str(e),
+                                "leve": e.leve})
+            if e.leve:  # Cacao lo diría con Piper; el proceso sigue
+                print(f"DESBOCADA dos veces: {e}", flush=True)
+                continue
             print(f"FALLO: {e}; rearranco", flush=True)
             proceso.matar()
             proceso = arrancar()
@@ -140,6 +154,8 @@ def main():
     rams = [m["ram_servidor_mb"] for m in r["muestras"]]
     r["resumen"] = {
         "respuestas": len(filas), "fallos": len(r["fallos"]),
+        "fallos_graves": sum(1 for f in r["fallos"] if not f["leve"]), "rearranques": len(r["arranques_s"]) - 1,
+        "desbocadas_reintentadas": DESBOCADAS["reintentadas"],
         "rtf_total": round(sum(f["sintesis_s"] for f in filas) / sum(f["audio_s"] for f in filas), 3),
         "primer_audio_mediana_s": primeros[len(primeros) // 2], "primer_audio_p95_s":
             primeros[int(len(primeros) * 0.95)], "primer_audio_max_s": primeros[-1],
