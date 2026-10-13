@@ -59,6 +59,7 @@ def cargar(guion, cierre_rapido=True):
                                        "detenido": staticmethod(lambda: False)})(),
           "notificar": lambda *a, **k: None, "enviar_modos": lambda: None, "compactar_historial": lambda h: None,
           "memoria": type("M", (), {"registrar_bloqueo": staticmethod(lambda *a: None)})(),
+          "experiencia_inicio": lambda pedido: "", "experiencia_paso": lambda *a: None, "experiencia_ayuda": lambda pedido: "Probé 5 caminos y ninguno funcionó.", "MAX_ALTERNATIVAS": 5,
           "pedir_accion": lambda historial: acciones.pop(0), "ejecutar": ejecutar}
     exec(compile(ast.Module(body=nodos, type_ignores=[]), "agente_minimo.py", "exec"), ns)
     return ns, llamadas

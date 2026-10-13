@@ -17,11 +17,11 @@ import tempfile
 from pathlib import Path
 
 BASE = Path(__file__).parent
-# perfil gemma antes de este cambio (d95855d), con memoria y wiki vacías
-ANTES_GEMMA = {"prompt": "8a3bea036dd7664b459d2e350b26ae55b551edf0d38f38b030b9588eb47783c8",
-               "prompt_voz": "37c39a391f44bbc570025019cc4c0c24d0c440087d38b9b1fcd64a9adbbcd73c",
-               "herramientas": "4cd7a441923753272374c46545a5450da9a3d9b36a1234403b14855b54b29026",
-               "esquema": "90971f7d1c74532fe59b28f99bc9f0e9cb0bfda05ca4b000b2cdc4ba4924c1b1"}
+# perfil gemma con la memoria de experiencia (posicion_mouse, cinco alternativas; 2026-10-13), con memoria y wiki vacías
+ANTES_GEMMA = {"prompt": "fe359f39f682bc01a17c3dcb64e445af61e1ddc419e142d96c7f28993afd951b",
+               "prompt_voz": "ff61c029613d1cf0c78a81b587cd543e9ce042a50a68d50c47383e660a361578",
+               "herramientas": "37d3ad22ccbee578095ba10d6cc5e5741ad7ff05e255b27fea98dd22df664ee6",
+               "esquema": "97747029b7c0f8f874bff0deae8b48156751d5b69c38685d9cab9ce96d707706"}
 fallos, ejecutadas = [], []
 
 

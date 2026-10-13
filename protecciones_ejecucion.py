@@ -4,7 +4,9 @@ import re
 import unicodedata
 
 LECTURAS = {"listar_apps", "listar_ventanas", "listar_carpeta", "leer_archivo", "buscar_web",
-            "consultar_memoria", "ver_pantalla", "listar_controles", "preguntar_usuario"}
+            "consultar_memoria", "ver_pantalla", "listar_controles", "preguntar_usuario", "posicion_mouse"}
+# caminos distintos que pueden fallar en una tarea antes de que el ejecutor pare y pida a Reizo que le explique cómo
+MAX_ALTERNATIVAS = 5
 _MOD = r"(?:ctrl|control|alt|shift|may[uú]s|win|windows)"
 _KEY = r"(?:[a-z0-9]|f(?:1[0-2]|[1-9])|enter|intro|tab|esc|escape|supr|delete|backspace|espacio|space|inicio|fin|home|end|repag|avpag|arriba|abajo|izquierda|derecha)"
 _SHORTCUT = re.compile(rf"^\s*{_MOD}(?:\s*\+\s*|\s+)(?:{_MOD}(?:\s*\+\s*|\s+))*{_KEY}\s*$", re.I)
@@ -176,7 +178,7 @@ def resultado_verificado(nombre, args, resultado):
     return bool(campos and all(c in resultado for c in campos))
 
 def registrar_resultado(estado, nombre, args, resultado):
-    """Registra evidencia; True al acumular dos alternativas fallidas en esta tarea."""
+    """Registra evidencia; True al acumular MAX_ALTERNATIVAS alternativas fallidas en esta tarea."""
     if resultado_verificado(nombre, args, resultado):
         estado["verificadas"].add(categoria(nombre, args))
         return False
@@ -184,7 +186,7 @@ def registrar_resultado(estado, nombre, args, resultado):
     if not fallo or nombre in LECTURAS - {"listar_controles"} or resultado.get("bloqueado") or resultado.get("rechazado"):
         return False
     estado["fallos"].add(nombre + ":" + json.dumps(args, sort_keys=True, ensure_ascii=False))
-    return len(estado["fallos"]) >= 2
+    return len(estado["fallos"]) >= MAX_ALTERNATIVAS
 
 def afirmaciones_sin_evidencia(mensaje, verificadas):
     texto = unicodedata.normalize("NFC", str(mensaje or ""))

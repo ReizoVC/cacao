@@ -9,7 +9,7 @@
   },
 
   "limites": {
-    "max_pasos_por_tarea": 15,
+    "max_pasos_por_tarea": 25,
     "max_reintentos_por_herramienta": 2,
     "timeout_powershell_seg": 30,
     "atajo_emergencia": "ctrl+alt+shift+q",
@@ -309,11 +309,22 @@
           "id_ventana": { "type": "integer", "description": "Ventana del control; por defecto, la que está al frente." },
           "x": { "type": "integer" },
           "y": { "type": "integer" },
-          "cantidad": { "type": "integer", "description": "Solo para desplazar: pasos de la rueda, de 1 a 10 (3 es lo habitual); positivo hacia arriba, negativo hacia abajo. No son píxeles." }
+          "cantidad": { "type": "integer", "description": "Solo para desplazar: pasos de la rueda, de 1 a 10 (3 es lo habitual); positivo hacia arriba, negativo hacia abajo. No son píxeles." },
+          "punto_senalado": { "type": "boolean", "description": "true: en el punto que Reizo señaló con el mouse (leído antes con posicion_mouse). No necesita x ni y." }
         },
         "required": ["accion"]
       },
       "retorno": "{ ok }."
+    },
+    {
+      "nombre": "posicion_mouse",
+      "permiso": "libre",
+      "descripcion": "Lee dónde señala Reizo con el mouse (dónde estaba al hacer el pedido): punto de la pantalla, app, ventana y el control que hay debajo. Úsala cuando Reizo te enseñe dónde hacer clic ('aquí', 'donde tengo el mouse'); después, mouse con punto_senalado=true.",
+      "parametros": {
+        "type": "object",
+        "properties": {}
+      },
+      "retorno": "{ ok, pantalla, app, ventana, control }."
     },
     {
       "nombre": "listar_controles",

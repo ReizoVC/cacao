@@ -233,7 +233,7 @@ def pruebas_ejecutor():
                             type_ignores=[]), "agente_minimo.py", "exec"), nsf)
     texto = nsf["con_fecha"]("Cacao, ¿qué hora es?", datetime(2026, 10, 6, 21, 50))
     ok("agente: cada pedido lleva la fecha y la hora", texto == "Cacao, ¿qué hora es?\n[Ahora: martes 6 de octubre "
-       "de 2026, 21:50]" and 'historial.append({"role": "user", "content": con_fecha(pedido)})' in fuente, texto)
+       "de 2026, 21:50]" and 'historial.append({"role": "user", "content": con_fecha(pedido) + (experiencia_inicio(pedido)' in fuente, texto)
     ok("agente: la respuesta final (isla y voz) lleva el aviso de obstáculos",
        "aviso_obstaculos = cerrar_obstaculos(bool(exito_tarea))" in fuente)
 

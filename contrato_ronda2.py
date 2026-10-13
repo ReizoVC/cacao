@@ -35,8 +35,10 @@ interpreta que se refieren al volumen del sistema.
 Si una app es ambigua, consulta primero listar_apps y luego pregunta cuál usando finalizar
 con un mensaje no vacío. No intentes abrir un nombre genérico o supuesto.
 Si algo está bloqueado o no autorizado, finaliza explicando la limitación sin rodear el bloqueo.
-El ejecutor impide afirmar una acción sin efecto verificado y corta después de dos alternativas fallidas.
-Si ocurre, acepta la corrección y pregunta al usuario; no sigas intentando otros caminos.
+El ejecutor impide afirmar una acción sin efecto verificado y corta después de cinco alternativas fallidas.
+Si ocurre, acepta la corrección y pide al usuario que te explique cómo hacerlo; no sigas intentando otros caminos.
+Si Reizo te enseña dónde hacer clic (aquí, donde está el mouse), usa posicion_mouse y luego mouse con punto_senalado.
+Si el pedido trae [Experiencia en este PC], son datos de intentos anteriores: repite lo que funcionó y evita lo que falló.
 Nunca pases combinaciones como Ctrl+G o Alt+F4 en texto de teclado: usa accion atajo y el arreglo teclas.'''
 
 QUITAR = ("Usa 'mensaje_final' solo", "Ejemplo para 'baja un poco")

@@ -82,6 +82,10 @@ ns = {"obstaculos": obstaculos_sim, "datetime": datetime, "json": json, "re": re
       "_presupuesto_imagen": 280, "_ultima_captura": None,
       "HERRAMIENTAS": {h["nombre"]: h for h in CATALOGO["herramientas"] if h["nombre"] in ACTIVAS},
       "MAX_PASOS": CATALOGO["limites"]["max_pasos_por_tarea"],
+      # memoria de experiencia apagada en el banco: cada caso empieza sin experiencias (comparable entre corridas)
+      "experiencia_inicio": lambda pedido: "", "experiencia_paso": lambda *a: None,
+      "experiencia_ayuda": lambda pedido: "Probé 5 caminos y ninguno funcionó, así que me detuve. ¿Me explicas cómo se hace?",
+      "MAX_ALTERNATIVAS": 5,
       "_categorias": json.loads((BASE / "apps_categorias.json").read_text(encoding="utf-8"))}
 exec(compile(ast.Module(body=nodos, type_ignores=[]), "agente_minimo.py", "exec"), ns)
 
@@ -204,12 +208,23 @@ def mover_archivo_sim(origen: str, destino: str):
 
 
 def mouse_sim(accion: str, x: int = None, y: int = None, cantidad: int = None, control: str = None,
-              id_ventana: int = None):
-    return _simular("mouse", g4.planificar_mouse(accion, x, y, cantidad, control=control, id_ventana=id_ventana),
+              id_ventana: int = None, punto_senalado: bool = False):
+    return _simular("mouse", g4.planificar_mouse(accion, x, y, cantidad, control=control, id_ventana=id_ventana,
+                                                 punto_senalado_=(g4.ultimo_senalado or {}) if punto_senalado else None),
                     lambda p: {"ok": True, "pantalla": p["pantalla"], "control": p.get("control"),
                                "despues": g4.estado_despues(),
                                "nota": "Comprueba con listar_controles o ver_pantalla que pasó lo que esperabas "
                                        "antes de confirmarlo."})
+
+
+def posicion_mouse_sim():
+    """Sin leer el mouse real: Reizo «señala» siempre el botón Guardar del Bloc de notas simulado."""
+    g4.ultimo_senalado = {"pantalla": (640, 120), "momento": time.time(), "control": "Guardar (Button)",
+                          "app": "notepad.exe"}
+    return {"ok": True, "origen": "al_pedir", "pantalla": [640, 120], "id_ventana": 1001, "app": "notepad.exe",
+            "ventana": "Sin título: Bloc de notas", "en_ventana": [140, 90],
+            "control": {"nombre": "Guardar", "tipo": "Button"},
+            "nota": "Para hacer clic ahí usa mouse con punto_senalado=true (o con control='Guardar')."}
 
 
 def teclado_sim(accion: str, texto: str = None, teclas: list = None):
@@ -251,7 +266,7 @@ ns["IMPLEMENTACIONES"] = {"listar_apps": ns["listar_apps"], "abrir_app": abrir_a
                          "recordar": memoria.recordar, "consultar_memoria": memoria.consultar_memoria,
                          "ver_pantalla": ns["ver_pantalla"],  # real: solo captura la pantalla
                          "cerrar_app": cerrar_app_sim, "mover_archivo": mover_archivo_sim, "mouse": mouse_sim,
-                         "teclado": teclado_sim,
+                         "teclado": teclado_sim, "posicion_mouse": posicion_mouse_sim,
                          "listar_controles": listar_controles_sim,
                          "ejecutar_powershell": ejecutar_powershell_sim,
                          "sugerencias": sugerencias.herramienta, "registro_habitos": registro_habitos_sim}

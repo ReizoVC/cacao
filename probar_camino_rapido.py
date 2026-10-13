@@ -184,6 +184,7 @@ def cargar(fuente=FUENTE, resultados=None, modelo=None, detenido=False, pulsa_at
           "memoria": type("M", (), {"registrar_bloqueo": staticmethod(lambda *a: None)})(),
           "obstaculos": type("O", (), {"consultar": staticmethod(lambda *a: None), "contar_uso": staticmethod(lambda *a: None),
                                         "nombre_atajo": staticmethod(lambda t: ""), "para_prompt": staticmethod(lambda: [])})(),
+          "experiencia_inicio": lambda pedido: "", "experiencia_paso": lambda *a: None, "experiencia_ayuda": lambda pedido: "Probé 5 caminos y ninguno funcionó.", "cerrar_experiencia": lambda exito: None, "MAX_ALTERNATIVAS": 5,
           "pedir_accion": pedir_accion, "_modo_juego": juego, "normalizar": cr.normalizar,
           "FRASES_TERMINE": ["ya termine"], "FRASES_JUGANDO": ["estoy jugando"], "_isla": None}
     exec(compile(ast.Module(body=nodos, type_ignores=[]), "agente_minimo.py", "exec"), ns)

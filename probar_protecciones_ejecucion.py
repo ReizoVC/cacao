@@ -2,7 +2,7 @@
 import sys
 
 import herramientas_grupo4 as g4
-from protecciones_ejecucion import (afirmaciones_sin_evidencia, cierre_no_pedido, nueva_proteccion, parece_atajo,
+from protecciones_ejecucion import (MAX_ALTERNATIVAS, afirmaciones_sin_evidencia, cierre_no_pedido, nueva_proteccion, parece_atajo,
                                     pide_cerrar, pide_forzar,
                                     quitar_forzar_no_pedido, registrar_resultado, resultado_verificado,
                                     validar_finalizacion)
@@ -104,7 +104,10 @@ repetido=registrar_resultado(estado,"teclado",{"accion":"atajo","teclas":["ctrl"
                              {"ok":True,"efecto_visible":False})
 segundo=registrar_resultado(estado,"ejecutar_powershell",{"comando":"fallo"},{"ok":False,"error":"no"})
 ok("un mismo camino repetido cuenta una vez",not primero and not repetido)
-ok("dos alternativas diferentes detienen",segundo,estado)
+ok("dos alternativas fallidas ya no detienen (el tope es 5)",not segundo and MAX_ALTERNATIVAS==5,estado)
+siguientes=[registrar_resultado(estado,"mouse",{"accion":"clic","control":f"Botón {i}"},
+                                {"ok":True,"efecto_visible":False}) for i in range(3)]
+ok("la quinta alternativa diferente detiene",siguientes==[False,False,True],estado)
 
 estado=nueva_proteccion()
 registrar_resultado(estado,"listar_carpeta",{"ruta":"x"},{"ok":False,"error":"no"})

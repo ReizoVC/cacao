@@ -652,14 +652,103 @@ def estado_despues():
             "id_ventana": hwnd}
 
 
+# ---------- el punto que señala Reizo con el mouse (memoria de experiencia: enseñar dónde hacer clic) ----------
+
+MAX_ANTIGUEDAD_PUNTO = 120  # s: un punto señalado más viejo ya no vale para hacer clic
+# dónde estaba el cursor cuando llegó el pedido (lo fija el agente al empezar cada tarea): «haz clic aquí»
+cursor_al_pedir = None  # {"pantalla": (x, y), "momento": time.time()}
+# el último punto que leyó posicion_mouse: mouse(punto_senalado=True) hace clic ahí
+ultimo_senalado = None  # {"pantalla": (x, y), "momento", "control": "Nombre (Tipo)" | None, "app"}
+
+
+def recordar_cursor(leer=None, ahora=None):
+    """Lo llama el agente al recibir un pedido: guarda dónde está el mouse en ese momento."""
+    global cursor_al_pedir
+    try:
+        punto = tuple((leer or win32api.GetCursorPos)())
+    except Exception:  # sin escritorio (sesión bloqueada): no hay punto
+        cursor_al_pedir = None
+        return None
+    cursor_al_pedir = {"pantalla": punto, "momento": ahora or time.time()}
+    return punto
+
+
+def control_en_punto(punto):
+    """El control de UI Automation bajo un punto de la pantalla: {'nombre', 'tipo'} o None. Sube por los padres hasta
+    uno con nombre y de un tipo que se pueda pulsar (un texto dentro de un botón da el botón)."""
+    try:
+        from pywinauto import Desktop
+        elemento = Desktop(backend="uia").from_point(*punto)
+    except Exception:
+        return None
+    for _ in range(6):
+        if elemento is None:
+            return None
+        info = elemento.element_info
+        if info.name and info.control_type in TIPOS_CONTROL:
+            return {"nombre": info.name.strip()[:60], "tipo": info.control_type}
+        try:
+            elemento = elemento.parent()
+        except Exception:
+            return None
+    return None
+
+
+def posicion_mouse(ahora=None, leer=None, control_en=None):
+    """Dónde señala Reizo con el mouse: el punto de cuando hizo el pedido (si no estaba sobre la isla) o, si no, el
+    de ahora. Devuelve la ventana, la app y el control que hay debajo, y lo guarda para mouse(punto_senalado=True)."""
+    global ultimo_senalado
+    ahora = ahora or time.time()
+    try:
+        actual = tuple((leer or win32api.GetCursorPos)())
+    except Exception:
+        return _error("No puedo leer la posición del mouse (¿pantalla bloqueada?).")[1]
+    origen, punto = "ahora", actual
+    if cursor_al_pedir and ahora - cursor_al_pedir["momento"] <= MAX_ANTIGUEDAD_PUNTO \
+            and not _en_la_isla(cursor_al_pedir["pantalla"]):
+        origen, punto = "al_pedir", tuple(cursor_al_pedir["pantalla"])
+    if _en_la_isla(punto):
+        return {"ok": False, "en_isla": True, "pantalla": list(punto),
+                "error": "El mouse está sobre la isla de Cacao: pídele a Reizo que lo ponga donde quiere el clic."}
+    hwnd = _raiz_en(punto)
+    app = proceso_de(hwnd)
+    titulo = titulo_para_el_modelo(win32gui.GetWindowText(hwnd), app)
+    if es_titulo_sensible(titulo):
+        titulo = "[título sensible]"
+    control = (control_en or control_en_punto)(punto) if not es_titulo_sensible(win32gui.GetWindowText(hwnd)) else None
+    try:
+        izquierda, arriba, _, _ = win32gui.GetWindowRect(hwnd)
+    except Exception:
+        izquierda, arriba = 0, 0
+    nombre_control = f"{control['nombre']} ({control['tipo']})" if control else None
+    ultimo_senalado = {"pantalla": punto, "momento": ahora, "control": nombre_control, "app": app}
+    resultado = {"ok": True, "origen": origen, "pantalla": list(punto), "id_ventana": hwnd, "app": app,
+                 "ventana": titulo, "en_ventana": [punto[0] - izquierda, punto[1] - arriba],
+                 "control": control,
+                 "nota": "Para hacer clic ahí usa mouse con punto_senalado=true" +
+                         (f" (o con control='{control['nombre']}')." if control else ".")}
+    motivo = prohibida_en_punto(punto)
+    if motivo:
+        resultado["prohibido"] = motivo
+    return resultado
+
+
 def planificar_mouse(accion, x=None, y=None, cantidad=None, captura=None, ahora=None, control=None,
-                     id_ventana=None):
+                     id_ventana=None, punto_senalado_=None):
     captura = captura or vision.ultima_captura
     necesita_punto = accion in ("clic", "doble_clic", "clic_derecho", "mover") or x is not None
     if accion not in ("clic", "doble_clic", "clic_derecho", "mover", "desplazar"):
         return _error(f"Acción de mouse desconocida: {accion}")
     plan = {"accion": accion, "pantalla": None, "cantidad": None}
-    if control:
+    if punto_senalado_ is not None:
+        # el punto que Reizo señaló con el mouse (posicion_mouse): coordenadas reales de la pantalla
+        if not punto_senalado_:
+            return _error("Primero usa posicion_mouse para leer dónde señala Reizo.")
+        if (ahora or time.time()) - punto_senalado_["momento"] > MAX_ANTIGUEDAD_PUNTO:
+            return _error("El punto señalado tiene más de 2 minutos; vuelve a usar posicion_mouse.")
+        plan.update(pantalla=tuple(punto_senalado_["pantalla"]), control=punto_senalado_.get("control"),
+                    senalado=True)
+    elif control:
         # por nombre (UI Automation): el centro del control ya está en píxeles de la pantalla real
         hwnd = id_ventana or win32gui.GetForegroundWindow()
         if es_de_la_isla(hwnd):
@@ -691,8 +780,9 @@ def planificar_mouse(accion, x=None, y=None, cantidad=None, captura=None, ahora=
 
 
 def mouse(accion: str, x: int = None, y: int = None, cantidad: int = None, control: str = None,
-          id_ventana: int = None):
-    plan, error = planificar_mouse(accion, x, y, cantidad, control=control, id_ventana=id_ventana)
+          id_ventana: int = None, punto_senalado: bool = False):
+    plan, error = planificar_mouse(accion, x, y, cantidad, control=control, id_ventana=id_ventana,
+                                   punto_senalado_=(ultimo_senalado or {}) if punto_senalado else None)
     if error:
         return error
     comprobar_emergencia()
