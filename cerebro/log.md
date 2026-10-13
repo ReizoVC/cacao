@@ -28,5 +28,5 @@ Entradas anteriores: [[log-2026-10-10]], [[log-2026-10-11-isla]], [[log-2026-10-
   memoria estable.
 - Página nueva: `voz-qwen3`. Actualizadas `voz`, `qwen3-tts-windows`, `vision-general`, los dos mapas, `suites` e
   `index`.
-- `config.json` no cambió: falta el permiso del usuario.
+- a04c212: `config.json` con `voz.tts_motor: qwen3`, con permiso del usuario. Se nota al reiniciar Cacao.
 

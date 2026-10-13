@@ -8,7 +8,7 @@ fuentes: [comparacion_modelos/resumen_tts_qwen_prolongada.json, tts_qwen.py, tts
 
 **Interruptor:** `config.json` → `voz.tts_motor`.
 - `"piper"`: el valor por defecto en el código.
-- `"qwen3"`: activa `tts_qwen.LocutorQwen`. El motor medido y su elección están en [[qwen3-tts-windows]].
+- `"qwen3"`: activa `tts_qwen.LocutorQwen`. **Activo desde a04c212** (2026-10-12, permiso del usuario). El motor medido y su elección están en [[qwen3-tts-windows]].
 
 ## Piezas
 
