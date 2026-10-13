@@ -1,0 +1,860 @@
+{
+ "prueba": "comparacion_modelos/probar_tts_qwen_prolongada.py: motor de producción (modelos/qwen3-tts, tts_qwen.ProcesoTTS), sin Cacao, sin LLM y sin altavoz; respuestas de 14 plantillas inventadas con seed 42, partidas y normalizadas como en voz",
+ "corrida_1_binario_c0945a6": {
+  "fecha": "2026-10-12 20:25",
+  "minutos": 30.0,
+  "vram_antes_mib": 1063,
+  "vram_cargado_mib": 4381,
+  "arranques_s": [
+   2.57,
+   2.47,
+   2.73,
+   2.8,
+   2.9,
+   2.48,
+   2.62,
+   2.73,
+   3.29,
+   2.47,
+   2.51,
+   3.11
+  ],
+  "fallos": [
+   {
+    "t_min": 3.2,
+    "motivo": "sin respuesta en 4.4 s"
+   },
+   {
+    "t_min": 3.75,
+    "motivo": "sin respuesta en 3.5 s"
+   },
+   {
+    "t_min": 4.59,
+    "motivo": "sin respuesta en 4.4 s"
+   },
+   {
+    "t_min": 6.29,
+    "motivo": "sin respuesta en 7.7 s"
+   },
+   {
+    "t_min": 10.33,
+    "motivo": "sin respuesta en 5.1 s"
+   },
+   {
+    "t_min": 11.94,
+    "motivo": "sin respuesta en 5.2 s"
+   },
+   {
+    "t_min": 12.95,
+    "motivo": "sin respuesta en 4.6 s"
+   },
+   {
+    "t_min": 13.36,
+    "motivo": "sin respuesta en 3.5 s"
+   },
+   {
+    "t_min": 18.29,
+    "motivo": "sin respuesta en 5.2 s"
+   },
+   {
+    "t_min": 20.21,
+    "motivo": "sin respuesta en 5.6 s"
+   },
+   {
+    "t_min": 23.27,
+    "motivo": "sin respuesta en 4.2 s"
+   }
+  ],
+  "resumen": {
+   "respuestas": 942,
+   "fallos": 11,
+   "rtf_total": 0.325,
+   "primer_audio_mediana_s": 0.838,
+   "primer_audio_p95_s": 1.415,
+   "primer_audio_max_s": 2.88,
+   "respuestas_con_hueco": 51,
+   "hueco_max_s": 0.874,
+   "vram_min_max_mib": [
+    4312,
+    4605
+   ],
+   "ram_servidor_primera_ultima_mb": [
+    2025,
+    2026
+   ],
+   "ram_servidor_max_mb": 2027,
+   "frases_6_y_9_primer_audio_s": {
+    "frase_6": [
+     1.093,
+     0.959,
+     0.858,
+     0.844,
+     0.915
+    ],
+    "frase_9": [
+     1.173,
+     0.807,
+     1.044,
+     1.007,
+     0.918
+    ]
+   }
+  },
+  "muestras": [
+   {
+    "t_min": 0.05,
+    "vram_mib": 4362,
+    "ram_servidor_mb": 2025,
+    "respuestas": 1
+   },
+   {
+    "t_min": 0.55,
+    "vram_mib": 4331,
+    "ram_servidor_mb": 2026,
+    "respuestas": 19
+   },
+   {
+    "t_min": 1.09,
+    "vram_mib": 4351,
+    "ram_servidor_mb": 2026,
+    "respuestas": 39
+   },
+   {
+    "t_min": 1.62,
+    "vram_mib": 4354,
+    "ram_servidor_mb": 2026,
+    "respuestas": 58
+   },
+   {
+    "t_min": 2.13,
+    "vram_mib": 4415,
+    "ram_servidor_mb": 2027,
+    "respuestas": 72
+   },
+   {
+    "t_min": 2.66,
+    "vram_mib": 4334,
+    "ram_servidor_mb": 2027,
+    "respuestas": 88
+   },
+   {
+    "t_min": 3.24,
+    "vram_mib": 4386,
+    "ram_servidor_mb": 1988,
+    "respuestas": 104
+   },
+   {
+    "t_min": 3.8,
+    "vram_mib": 4312,
+    "ram_servidor_mb": 1989,
+    "respuestas": 120
+   },
+   {
+    "t_min": 4.3,
+    "vram_mib": 4468,
+    "ram_servidor_mb": 2024,
+    "respuestas": 138
+   },
+   {
+    "t_min": 4.82,
+    "vram_mib": 4397,
+    "ram_servidor_mb": 2025,
+    "respuestas": 152
+   },
+   {
+    "t_min": 5.32,
+    "vram_mib": 4450,
+    "ram_servidor_mb": 2026,
+    "respuestas": 175
+   },
+   {
+    "t_min": 5.82,
+    "vram_mib": 4379,
+    "ram_servidor_mb": 2026,
+    "respuestas": 189
+   },
+   {
+    "t_min": 6.34,
+    "vram_mib": 4386,
+    "ram_servidor_mb": 1988,
+    "respuestas": 200
+   },
+   {
+    "t_min": 6.85,
+    "vram_mib": 4327,
+    "ram_servidor_mb": 2025,
+    "respuestas": 215
+   },
+   {
+    "t_min": 7.37,
+    "vram_mib": 4336,
+    "ram_servidor_mb": 2025,
+    "respuestas": 230
+   },
+   {
+    "t_min": 7.9,
+    "vram_mib": 4416,
+    "ram_servidor_mb": 2025,
+    "respuestas": 248
+   },
+   {
+    "t_min": 8.4,
+    "vram_mib": 4403,
+    "ram_servidor_mb": 2025,
+    "respuestas": 263
+   },
+   {
+    "t_min": 8.95,
+    "vram_mib": 4403,
+    "ram_servidor_mb": 2025,
+    "respuestas": 276
+   },
+   {
+    "t_min": 9.45,
+    "vram_mib": 4353,
+    "ram_servidor_mb": 2025,
+    "respuestas": 289
+   },
+   {
+    "t_min": 9.99,
+    "vram_mib": 4402,
+    "ram_servidor_mb": 2025,
+    "respuestas": 304
+   },
+   {
+    "t_min": 10.49,
+    "vram_mib": 4341,
+    "ram_servidor_mb": 2018,
+    "respuestas": 316
+   },
+   {
+    "t_min": 11.01,
+    "vram_mib": 4422,
+    "ram_servidor_mb": 2026,
+    "respuestas": 331
+   },
+   {
+    "t_min": 11.55,
+    "vram_mib": 4342,
+    "ram_servidor_mb": 2026,
+    "respuestas": 347
+   },
+   {
+    "t_min": 12.06,
+    "vram_mib": 4342,
+    "ram_servidor_mb": 2024,
+    "respuestas": 354
+   },
+   {
+    "t_min": 12.59,
+    "vram_mib": 4342,
+    "ram_servidor_mb": 2025,
+    "respuestas": 370
+   },
+   {
+    "t_min": 13.1,
+    "vram_mib": 4420,
+    "ram_servidor_mb": 2018,
+    "respuestas": 385
+   },
+   {
+    "t_min": 13.61,
+    "vram_mib": 4344,
+    "ram_servidor_mb": 2017,
+    "respuestas": 400
+   },
+   {
+    "t_min": 14.12,
+    "vram_mib": 4423,
+    "ram_servidor_mb": 2025,
+    "respuestas": 420
+   },
+   {
+    "t_min": 14.63,
+    "vram_mib": 4446,
+    "ram_servidor_mb": 2025,
+    "respuestas": 437
+   },
+   {
+    "t_min": 15.15,
+    "vram_mib": 4497,
+    "ram_servidor_mb": 2025,
+    "respuestas": 454
+   },
+   {
+    "t_min": 15.69,
+    "vram_mib": 4467,
+    "ram_servidor_mb": 2025,
+    "respuestas": 471
+   },
+   {
+    "t_min": 16.21,
+    "vram_mib": 4397,
+    "ram_servidor_mb": 2025,
+    "respuestas": 490
+   },
+   {
+    "t_min": 16.73,
+    "vram_mib": 4413,
+    "ram_servidor_mb": 2025,
+    "respuestas": 504
+   },
+   {
+    "t_min": 17.26,
+    "vram_mib": 4486,
+    "ram_servidor_mb": 2025,
+    "respuestas": 519
+   },
+   {
+    "t_min": 17.8,
+    "vram_mib": 4436,
+    "ram_servidor_mb": 2025,
+    "respuestas": 535
+   },
+   {
+    "t_min": 18.34,
+    "vram_mib": 4410,
+    "ram_servidor_mb": 1989,
+    "respuestas": 550
+   },
+   {
+    "t_min": 18.85,
+    "vram_mib": 4415,
+    "ram_servidor_mb": 2025,
+    "respuestas": 566
+   },
+   {
+    "t_min": 19.36,
+    "vram_mib": 4404,
+    "ram_servidor_mb": 2025,
+    "respuestas": 584
+   },
+   {
+    "t_min": 19.87,
+    "vram_mib": 4329,
+    "ram_servidor_mb": 2025,
+    "respuestas": 602
+   },
+   {
+    "t_min": 20.38,
+    "vram_mib": 4446,
+    "ram_servidor_mb": 2017,
+    "respuestas": 619
+   },
+   {
+    "t_min": 20.9,
+    "vram_mib": 4372,
+    "ram_servidor_mb": 2024,
+    "respuestas": 633
+   },
+   {
+    "t_min": 21.41,
+    "vram_mib": 4381,
+    "ram_servidor_mb": 2024,
+    "respuestas": 652
+   },
+   {
+    "t_min": 21.93,
+    "vram_mib": 4436,
+    "ram_servidor_mb": 2024,
+    "respuestas": 669
+   },
+   {
+    "t_min": 22.45,
+    "vram_mib": 4450,
+    "ram_servidor_mb": 2025,
+    "respuestas": 687
+   },
+   {
+    "t_min": 22.95,
+    "vram_mib": 4479,
+    "ram_servidor_mb": 2025,
+    "respuestas": 704
+   },
+   {
+    "t_min": 23.49,
+    "vram_mib": 4466,
+    "ram_servidor_mb": 2018,
+    "respuestas": 715
+   },
+   {
+    "t_min": 24.0,
+    "vram_mib": 4428,
+    "ram_servidor_mb": 2025,
+    "respuestas": 733
+   },
+   {
+    "t_min": 24.51,
+    "vram_mib": 4428,
+    "ram_servidor_mb": 2026,
+    "respuestas": 748
+   },
+   {
+    "t_min": 25.01,
+    "vram_mib": 4438,
+    "ram_servidor_mb": 2026,
+    "respuestas": 769
+   },
+   {
+    "t_min": 25.55,
+    "vram_mib": 4432,
+    "ram_servidor_mb": 2026,
+    "respuestas": 786
+   },
+   {
+    "t_min": 26.06,
+    "vram_mib": 4430,
+    "ram_servidor_mb": 2026,
+    "respuestas": 805
+   },
+   {
+    "t_min": 26.59,
+    "vram_mib": 4452,
+    "ram_servidor_mb": 2026,
+    "respuestas": 822
+   },
+   {
+    "t_min": 27.12,
+    "vram_mib": 4430,
+    "ram_servidor_mb": 2026,
+    "respuestas": 840
+   },
+   {
+    "t_min": 27.67,
+    "vram_mib": 4605,
+    "ram_servidor_mb": 2026,
+    "respuestas": 856
+   },
+   {
+    "t_min": 28.18,
+    "vram_mib": 4340,
+    "ram_servidor_mb": 2026,
+    "respuestas": 877
+   },
+   {
+    "t_min": 28.69,
+    "vram_mib": 4350,
+    "ram_servidor_mb": 2026,
+    "respuestas": 893
+   },
+   {
+    "t_min": 29.2,
+    "vram_mib": 4418,
+    "ram_servidor_mb": 2026,
+    "respuestas": 910
+   },
+   {
+    "t_min": 29.73,
+    "vram_mib": 4353,
+    "ram_servidor_mb": 2026,
+    "respuestas": 930
+   }
+  ],
+  "nota": "los 11 tiempos máximos eran generaciones desbocadas (comprobado aparte: «Listo, abrí Word.» llegó al tope de 600 tramas en 14,9 s); los 51 huecos, todos de la plantilla «Buenos días. Son las…» (primera oración corta)"
+ },
+ "corrida_2_binario_0b9eeed": {
+  "fecha": "2026-10-12 21:03",
+  "minutos": 30.0,
+  "vram_antes_mib": 1062,
+  "vram_cargado_mib": 4348,
+  "arranques_s": [
+   2.91
+  ],
+  "fallos": [
+   {
+    "t_min": 14.05,
+    "motivo": "error: limite_de_tramas",
+    "leve": true
+   }
+  ],
+  "resumen": {
+   "respuestas": 1051,
+   "fallos": 1,
+   "fallos_graves": 0,
+   "rearranques": 0,
+   "desbocadas_reintentadas": 13,
+   "rtf_total": 0.31,
+   "primer_audio_mediana_s": 0.937,
+   "primer_audio_p95_s": 1.385,
+   "primer_audio_max_s": 3.506,
+   "respuestas_con_hueco": 1,
+   "hueco_max_s": 0.174,
+   "vram_min_max_mib": [
+    4325,
+    4577
+   ],
+   "ram_servidor_primera_ultima_mb": [
+    2024,
+    2026
+   ],
+   "ram_servidor_max_mb": 2026,
+   "frases_6_y_9_primer_audio_s": {
+    "frase_6": [
+     1.15,
+     0.986,
+     1.194,
+     1.611,
+     1.506
+    ],
+    "frase_9": [
+     0.856,
+     0.993,
+     1.028,
+     0.969,
+     1.269
+    ]
+   }
+  },
+  "muestras": [
+   {
+    "t_min": 0.05,
+    "vram_mib": 4396,
+    "ram_servidor_mb": 2024,
+    "respuestas": 1
+   },
+   {
+    "t_min": 0.58,
+    "vram_mib": 4348,
+    "ram_servidor_mb": 2025,
+    "respuestas": 20
+   },
+   {
+    "t_min": 1.11,
+    "vram_mib": 4363,
+    "ram_servidor_mb": 2025,
+    "respuestas": 39
+   },
+   {
+    "t_min": 1.62,
+    "vram_mib": 4407,
+    "ram_servidor_mb": 2025,
+    "respuestas": 56
+   },
+   {
+    "t_min": 2.13,
+    "vram_mib": 4360,
+    "ram_servidor_mb": 2025,
+    "respuestas": 70
+   },
+   {
+    "t_min": 2.64,
+    "vram_mib": 4364,
+    "ram_servidor_mb": 2025,
+    "respuestas": 86
+   },
+   {
+    "t_min": 3.16,
+    "vram_mib": 4357,
+    "ram_servidor_mb": 2025,
+    "respuestas": 103
+   },
+   {
+    "t_min": 3.68,
+    "vram_mib": 4358,
+    "ram_servidor_mb": 2025,
+    "respuestas": 124
+   },
+   {
+    "t_min": 4.21,
+    "vram_mib": 4360,
+    "ram_servidor_mb": 2025,
+    "respuestas": 143
+   },
+   {
+    "t_min": 4.71,
+    "vram_mib": 4385,
+    "ram_servidor_mb": 2025,
+    "respuestas": 162
+   },
+   {
+    "t_min": 5.22,
+    "vram_mib": 4363,
+    "ram_servidor_mb": 2025,
+    "respuestas": 185
+   },
+   {
+    "t_min": 5.75,
+    "vram_mib": 4350,
+    "ram_servidor_mb": 2025,
+    "respuestas": 203
+   },
+   {
+    "t_min": 6.26,
+    "vram_mib": 4365,
+    "ram_servidor_mb": 2025,
+    "respuestas": 219
+   },
+   {
+    "t_min": 6.76,
+    "vram_mib": 4350,
+    "ram_servidor_mb": 2025,
+    "respuestas": 237
+   },
+   {
+    "t_min": 7.27,
+    "vram_mib": 4349,
+    "ram_servidor_mb": 2025,
+    "respuestas": 257
+   },
+   {
+    "t_min": 7.77,
+    "vram_mib": 4349,
+    "ram_servidor_mb": 2025,
+    "respuestas": 276
+   },
+   {
+    "t_min": 8.28,
+    "vram_mib": 4349,
+    "ram_servidor_mb": 2025,
+    "respuestas": 292
+   },
+   {
+    "t_min": 8.79,
+    "vram_mib": 4417,
+    "ram_servidor_mb": 2025,
+    "respuestas": 309
+   },
+   {
+    "t_min": 9.3,
+    "vram_mib": 4365,
+    "ram_servidor_mb": 2025,
+    "respuestas": 328
+   },
+   {
+    "t_min": 9.81,
+    "vram_mib": 4364,
+    "ram_servidor_mb": 2026,
+    "respuestas": 342
+   },
+   {
+    "t_min": 10.33,
+    "vram_mib": 4468,
+    "ram_servidor_mb": 2026,
+    "respuestas": 359
+   },
+   {
+    "t_min": 10.87,
+    "vram_mib": 4360,
+    "ram_servidor_mb": 2026,
+    "respuestas": 375
+   },
+   {
+    "t_min": 11.38,
+    "vram_mib": 4353,
+    "ram_servidor_mb": 2026,
+    "respuestas": 395
+   },
+   {
+    "t_min": 11.94,
+    "vram_mib": 4410,
+    "ram_servidor_mb": 2026,
+    "respuestas": 417
+   },
+   {
+    "t_min": 12.46,
+    "vram_mib": 4358,
+    "ram_servidor_mb": 2026,
+    "respuestas": 438
+   },
+   {
+    "t_min": 12.97,
+    "vram_mib": 4356,
+    "ram_servidor_mb": 2026,
+    "respuestas": 454
+   },
+   {
+    "t_min": 13.47,
+    "vram_mib": 4356,
+    "ram_servidor_mb": 2026,
+    "respuestas": 471
+   },
+   {
+    "t_min": 13.98,
+    "vram_mib": 4416,
+    "ram_servidor_mb": 2026,
+    "respuestas": 491
+   },
+   {
+    "t_min": 14.53,
+    "vram_mib": 4577,
+    "ram_servidor_mb": 2026,
+    "respuestas": 505
+   },
+   {
+    "t_min": 15.03,
+    "vram_mib": 4434,
+    "ram_servidor_mb": 2026,
+    "respuestas": 520
+   },
+   {
+    "t_min": 15.54,
+    "vram_mib": 4384,
+    "ram_servidor_mb": 2026,
+    "respuestas": 535
+   },
+   {
+    "t_min": 16.08,
+    "vram_mib": 4446,
+    "ram_servidor_mb": 2026,
+    "respuestas": 555
+   },
+   {
+    "t_min": 16.59,
+    "vram_mib": 4456,
+    "ram_servidor_mb": 2026,
+    "respuestas": 571
+   },
+   {
+    "t_min": 17.11,
+    "vram_mib": 4446,
+    "ram_servidor_mb": 2026,
+    "respuestas": 588
+   },
+   {
+    "t_min": 17.62,
+    "vram_mib": 4368,
+    "ram_servidor_mb": 2026,
+    "respuestas": 608
+   },
+   {
+    "t_min": 18.15,
+    "vram_mib": 4437,
+    "ram_servidor_mb": 2026,
+    "respuestas": 631
+   },
+   {
+    "t_min": 18.67,
+    "vram_mib": 4368,
+    "ram_servidor_mb": 2026,
+    "respuestas": 644
+   },
+   {
+    "t_min": 19.18,
+    "vram_mib": 4425,
+    "ram_servidor_mb": 2026,
+    "respuestas": 662
+   },
+   {
+    "t_min": 19.69,
+    "vram_mib": 4367,
+    "ram_servidor_mb": 2026,
+    "respuestas": 679
+   },
+   {
+    "t_min": 20.21,
+    "vram_mib": 4387,
+    "ram_servidor_mb": 2026,
+    "respuestas": 699
+   },
+   {
+    "t_min": 20.72,
+    "vram_mib": 4465,
+    "ram_servidor_mb": 2026,
+    "respuestas": 718
+   },
+   {
+    "t_min": 21.26,
+    "vram_mib": 4375,
+    "ram_servidor_mb": 2026,
+    "respuestas": 736
+   },
+   {
+    "t_min": 21.78,
+    "vram_mib": 4388,
+    "ram_servidor_mb": 2026,
+    "respuestas": 752
+   },
+   {
+    "t_min": 22.28,
+    "vram_mib": 4356,
+    "ram_servidor_mb": 2026,
+    "respuestas": 771
+   },
+   {
+    "t_min": 22.78,
+    "vram_mib": 4358,
+    "ram_servidor_mb": 2026,
+    "respuestas": 790
+   },
+   {
+    "t_min": 23.29,
+    "vram_mib": 4468,
+    "ram_servidor_mb": 2026,
+    "respuestas": 810
+   },
+   {
+    "t_min": 23.81,
+    "vram_mib": 4414,
+    "ram_servidor_mb": 2026,
+    "respuestas": 829
+   },
+   {
+    "t_min": 24.31,
+    "vram_mib": 4415,
+    "ram_servidor_mb": 2026,
+    "respuestas": 845
+   },
+   {
+    "t_min": 24.81,
+    "vram_mib": 4404,
+    "ram_servidor_mb": 2026,
+    "respuestas": 861
+   },
+   {
+    "t_min": 25.35,
+    "vram_mib": 4355,
+    "ram_servidor_mb": 2026,
+    "respuestas": 882
+   },
+   {
+    "t_min": 25.88,
+    "vram_mib": 4354,
+    "ram_servidor_mb": 2026,
+    "respuestas": 902
+   },
+   {
+    "t_min": 26.39,
+    "vram_mib": 4331,
+    "ram_servidor_mb": 2026,
+    "respuestas": 920
+   },
+   {
+    "t_min": 26.89,
+    "vram_mib": 4351,
+    "ram_servidor_mb": 2026,
+    "respuestas": 941
+   },
+   {
+    "t_min": 27.42,
+    "vram_mib": 4335,
+    "ram_servidor_mb": 2026,
+    "respuestas": 963
+   },
+   {
+    "t_min": 27.94,
+    "vram_mib": 4344,
+    "ram_servidor_mb": 2026,
+    "respuestas": 981
+   },
+   {
+    "t_min": 28.48,
+    "vram_mib": 4355,
+    "ram_servidor_mb": 2026,
+    "respuestas": 996
+   },
+   {
+    "t_min": 29.02,
+    "vram_mib": 4332,
+    "ram_servidor_mb": 2026,
+    "respuestas": 1015
+   },
+   {
+    "t_min": 29.52,
+    "vram_mib": 4325,
+    "ram_servidor_mb": 2026,
+    "respuestas": 1035
+   }
+  ],
+  "nota": "tope de 25 + 2 tramas por carácter con un reintento; primera oración de menos de 20 caracteres unida a la siguiente"
+ }
+}
