@@ -158,7 +158,8 @@ def cargar_voz_sin_modelo(transcripcion_pausa, transcripcion, en_pausa):
 
     agente = types.SimpleNamespace(_modo_juego=Modo(), normalizar=normalizar, FRASES_TERMINE=["ya termine"],
                                    FRASES_JUGANDO=["estoy jugando"], notificar=lambda e, d="": notificaciones.append(e), notificar_reposo=lambda: notificaciones.append("reposo"),
-                                   cola_pedidos=__import__("pedidos").ColaPedidos())
+                                   cola_pedidos=__import__("pedidos").ColaPedidos(),
+                                   CAMINO_RAPIDO=True, camino_rapido=__import__("camino_rapido"))  # filtrar() en pausa
 
     class Transcriptor:
         def transcribir(self, _wav):
