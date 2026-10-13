@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
+verificado_commit: a04c212
+verificado_fecha: 2026-10-12
 fuentes: [comparacion_modelos/resumen_convivencia_gemma_q4_qwen3_tts.json, comparacion_modelos/resumen_optimizacion_qwen3_tts.json, comparacion_modelos/resumen_convivencia_completa_wsl.json, config.json]
 ---
 # Qwen3-TTS 0.6B con vLLM-Omni (voz experimental)

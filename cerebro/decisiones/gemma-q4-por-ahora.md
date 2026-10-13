@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
+verificado_commit: a04c212
+verificado_fecha: 2026-10-12
 fuentes: [config.json, comparacion_modelos/resumen_gemma_q4_ronda3.json, comparacion_modelos/resumen_ronda3.json, resultados_swa_y_recursos.md, comparacion_modelos/motor_llama_cpp_b11429.json]
 ---
 # Gemma Q4 «por ahora»: solo en la pila experimental

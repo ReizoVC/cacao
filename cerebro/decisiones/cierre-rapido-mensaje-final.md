@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 9230d4d
+verificado_commit: a04c212
 verificado_fecha: 2026-10-12
 fuentes: [agente_minimo.py, config.json, probar_cierre_rapido.py, benchmark_gramatica.py, comparacion_modelos/integracion.py, resultados_comparacion_modelos.md, resultados_swa_y_recursos.md, iniciar_cacao.py, modelo.py, voz.py]
 ---

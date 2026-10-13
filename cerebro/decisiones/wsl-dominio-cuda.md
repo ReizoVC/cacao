@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
+verificado_commit: a04c212
+verificado_fecha: 2026-10-12
 fuentes: [resultados_comparacion_modelos.md, comparacion_modelos/resumen_convivencia_wsl.json, comparacion_modelos/resumen_convivencia_completa_wsl.json, resultados_swa_y_recursos.md, config.json]
 ---
 # Arquitectura experimental en WSL (un solo dominio CUDA)

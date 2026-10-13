@@ -1,6 +1,6 @@
 ---
 estado: sin verificar
-verificado_commit: e9084f7
+verificado_commit: a04c212
 verificado_fecha: 2026-10-12
 fuentes: [config.json, comparacion_modelos/resumen_qwen3_tts_windows.json, comparacion_modelos/resumen_qwen3_tts_llama_cpp.json]
 ---

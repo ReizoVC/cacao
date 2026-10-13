@@ -1,7 +1,7 @@
 ---
 estado: sin verificar
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
+verificado_commit: a04c212
+verificado_fecha: 2026-10-12
 fuentes: [comparacion_modelos/ronda3_protocolo.md, comparacion_modelos/resumir_ronda3.py, config.json]
 ---
 # Criterio para cambiar de modelo y para volver a Gemma Q5

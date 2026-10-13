@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 9230d4d
+verificado_commit: a04c212
 verificado_fecha: 2026-10-12
 fuentes: [agente_minimo.py, voz.py, iniciar_cacao.py, modelo.py, muestreo_gramatica.py, config.json, herramientas.json]
 ---

@@ -1,7 +1,7 @@
 ---
 estado: sin verificar
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
+verificado_commit: a04c212
+verificado_fecha: 2026-10-12
 fuentes: [guia_instalacion_agente.md, SRS.md, config.json]
 ---
 # Pendientes que necesitan al usuario frente al PC

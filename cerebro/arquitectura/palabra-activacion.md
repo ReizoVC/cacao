@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
+verificado_commit: a04c212
+verificado_fecha: 2026-10-12
 fuentes: [palabra_activacion.py, seguimiento.py, entrenar_cacao.py, config.json, SRS.md]
 ---
 # Palabra de activación «Cacao» y escucha de seguimiento

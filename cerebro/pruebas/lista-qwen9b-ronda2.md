@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
+verificado_commit: a04c212
+verificado_fecha: 2026-10-12
 fuentes: [comparacion_modelos/ejecutar.py, comparacion_modelos/resumir_qwen9b.py, comparacion_modelos/ronda2_protocolo.md, comparacion_modelos/resumir_ronda2.py, comparacion_modelos/resumen_ronda2.json, comparacion_modelos/resumen_ronda3.json, config.json]
 ---
 # Lista de comprobación: prueba de Qwen 3.5 9B Q5 (contrato de la ronda 2)

@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
+verificado_commit: a04c212
+verificado_fecha: 2026-10-12
 fuentes: [config.json, comparacion_modelos/resumen_convivencia_completa_wsl.json, comparacion_modelos/resumen_optimizacion_qwen3_tts.json]
 ---
 # No reducir Whisper ni el contexto para ganar VRAM

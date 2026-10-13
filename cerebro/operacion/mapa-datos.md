@@ -1,6 +1,6 @@
 ---
 estado: verificado
-verificado_commit: 9230d4d
+verificado_commit: a04c212
 verificado_fecha: 2026-10-12
 fuentes: [.gitignore, config.json, memoria.py, wiki.py, habitos.py, voz.py, ui_isla.py, iniciar_cacao.py]
 ---
