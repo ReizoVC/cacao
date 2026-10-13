@@ -42,6 +42,14 @@ dos modelos, con la GPU, y la prueba con el usuario delante.
   - devuelve la app, la ventana y el control de UI Automation que hay debajo;
   - `mouse(punto_senalado=true)` hace clic ahí.
 
+**Coste en tokens** (`comparacion_modelos/medir_prompt.py`, solo el vocabulario):
+- prompt de sistema de Gemma: 3 802 → 4 012;
+- prompt de sistema de Qwen: 4 141 → 4 418;
+- `posicion_mouse`: 83–85 tokens.
+
+Con la caché por estados, el prompt de Qwen se calcula una vez. El bloque de experiencia va en cada pedido: como
+mucho 700 caracteres, solo cuando hay algo parecido.
+
 ## Protecciones que siguen
 
 - **El clic en el punto señalado:** pasa por las mismas comprobaciones que cualquier otro clic:
