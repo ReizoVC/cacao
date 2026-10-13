@@ -25,7 +25,17 @@ La isla vive en `C:\asistente-ui` (otro repositorio). Cacao lanza `windows\targe
    El perfil release usa `lto = true` y `codegen-units = 1`: el enlace gasta memoria. Con las dependencias ya
    compiladas, solo se recompila la isla.
 
-## Última compilación (2026-10-13, isla b30e901, solo interfaz)
+## Última compilación (2026-10-13, isla 9a648a3, solo interfaz)
+
+- Arreglo: «Contraer a línea» (⌃) gana al mouse dentro (9a648a3). Build en 121 s; exe `df52e543…`,
+  `island-B4mC0mQY.js`; respaldo del anterior en `_prive/respaldos/asistente-ui-b30e901.exe`. Arnés 45/45, campo
+  18/18.
+- **Prueba física completa** (`mock_agente.py --escenario recorrido --paso 3`, usuario delante): ⌃ lleva a la
+  línea; bordes de color vistos; reconexión conserva la línea; respuesta hablada con barras en la línea; la
+  tarjeta de confirmación se vio sin tapar y la decisión llegó por el botón (`si: true`, clic físico).
+  Antes (b30e901): bandeja («Pausar» con teclado no actúa) y armario tras reiniciar, bien.
+
+## Compilación anterior (2026-10-13, isla b30e901, solo interfaz)
 
 - Línea fina con 5 barras (voz solo en la línea), bordes de color por modo (ámbar sin confirmación, verde
   escucha; línea y engranaje de la pequeña), «Sin confirmación» 4 s al encender, curvas de notch, seguimiento y
