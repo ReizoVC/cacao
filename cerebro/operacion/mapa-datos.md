@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: 07123e7
-verificado_fecha: 2026-10-11
+verificado_commit: 9230d4d
+verificado_fecha: 2026-10-12
 fuentes: [.gitignore, config.json, memoria.py, wiki.py, habitos.py, voz.py, ui_isla.py, iniciar_cacao.py]
 ---
 # Mapa de datos por rol
@@ -40,6 +40,7 @@ se añadieron a mano con `-f` y están sanitizados.
 |---|---|
 | LLM de producción y mmproj | `modelos/` (rutas en `config.json`) |
 | Piper y detector «Cacao» | `modelos/piper/`, `modelos/cacao/` (`cacao.npz` es el de producción) |
+| Voz Qwen3-TTS ([[voz-qwen3]]) | `modelos/qwen3-tts/`: `bin/` (servidor, DLL de llama.cpp 81bc6b8 y cuBLAS), modelo y mmproj Q8_0 del 0.6B, `voz/A1_equilibrada.wav` (sintética). SHA-256 en `tts_qwen_motor/hashes.json`; su stderr, en `registro_tts_qwen.log` |
 | Datos para entrenar «Cacao» (`acav_parcial.npy`, `validation_set_features.npy`, voces de `piper_cacao/`) | Movidos a `D:\Cacao\entrenamiento\` el 2026-10-10. `entrenar_cacao.py` todavía los busca en `modelos/` ([[backlog]]) |
 | Qwen 3.5 9B Q5 para la prueba | Copia en `modelos/comparacion_local/` (C:); `ejecutar.py` la usa |
 | Candidatos de comparación | `modelos/comparacion/` es una **unión (junction) a `D:\Cacao\ModelosComparacion`**: los GGUF viven solo en D: (disco duro), no ocupan C: |

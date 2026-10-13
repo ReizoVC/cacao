@@ -1,14 +1,15 @@
 ---
 estado: verificado
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
-fuentes: [voz.py, agente_minimo.py, transcripcion.py, microfono.py, confirmacion_voz.py, config.json]
+verificado_commit: 9230d4d
+verificado_fecha: 2026-10-12
+fuentes: [voz.py, tts_qwen.py, agente_minimo.py, transcripcion.py, microfono.py, confirmacion_voz.py, config.json]
 ---
 # Voz
 
 `voz.py` es el proceso principal en producción. El lanzador ejecuta `voz.py`, que importa `agente_minimo` (sin
 cargar el modelo). Al arrancar, `a.salida_utf8()` pone la salida en UTF-8 y `preparar()` llama primero a
-`a.cargar_modelo()` (el modelo del perfil activo y las apps del menú Inicio) y después a Whisper y Piper.
+`a.cargar_modelo()` (el modelo del perfil activo y las apps del menú Inicio) y después a Whisper y Piper. Con
+`voz.tts_motor: qwen3`, la voz Qwen3-TTS se carga al final, en un hilo ([[voz-qwen3]]).
 
 ## Entrada
 
@@ -33,8 +34,10 @@ Se descarta:
 
 ## Salida
 
-- Se lee con Piper (`voz.piper_voz`, una voz ONNX en `modelos/piper/`), y solo la respuesta final. El pensamiento,
-  los pasos y las confirmaciones nunca se leen.
+- Se lee solo la respuesta final; el pensamiento, los pasos y las confirmaciones nunca se leen.
+- Motor (`voz.tts_motor`): `piper` por defecto (`voz.piper_voz`, una voz ONNX en `modelos/piper/`), o `qwen3`
+  (Qwen3-TTS clonando A1_equilibrada, con Piper de respaldo: [[voz-qwen3]]). La clave `piper_s` del registro mide
+  el primer audio de cualquiera de los dos; `voz` dice cuál habló.
 - En modo voz, el prompt pide 1 o 2 frases (`agente_minimo.MODO_VOZ`).
 
 ## Confirmaciones en voz
@@ -59,4 +62,5 @@ latencias. La carpeta es personal y no va a Git: no la leas.
 
 ## Experimental (no está en producción)
 
-Qwen3-TTS 0.6B con vLLM-Omni en WSL ([[qwen3-tts-vllm-omni]], [[wsl-dominio-cuda]]).
+Qwen3-TTS 0.6B con vLLM-Omni en WSL ([[qwen3-tts-vllm-omni]], [[wsl-dominio-cuda]]), sustituido por el motor
+nativo de [[voz-qwen3]].

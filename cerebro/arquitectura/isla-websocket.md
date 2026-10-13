@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: 07123e7
-verificado_fecha: 2026-10-11
+verificado_commit: 9230d4d
+verificado_fecha: 2026-10-12
 fuentes: [ui_isla.py, herramientas_grupo4.py, pedidos.py, agente_minimo.py, voz.py, entrada_fisica.py, config.json, diseno_fase7.md, prueba_presencial_isla.py, medir_isla_juego.py]
 ---
 # Isla y WebSocket

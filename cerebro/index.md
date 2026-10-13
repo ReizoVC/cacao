@@ -9,7 +9,7 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[protecciones]]: sin evidencia no hay «hecho», dos alternativas, atajos estructurados, emergencia
 - [[frenos-cierre]]: frenos de cerrar_app y listar_controles
 - [[permisos-y-bloqueos]]: dónde se decide si se pregunta, bloqueos, confirmación física, modo sin confirmación
-- [[voz]]: entrada, frenos, Whisper, Piper y confirmaciones en voz
+- [[voz]], [[voz-qwen3]]: entrada, frenos, Whisper, Piper o Qwen3-TTS y confirmaciones
 - [[palabra-activacion]]: detector «Cacao» y escucha de seguimiento
 - [[isla-websocket]]: protocolo con la isla (versión 2), protecciones y bandeja
 - [[isla-codex]]: traspaso de la isla a Codex: rama, arnés, invariantes y datos personales
@@ -28,8 +28,7 @@ frontmatter. Frescura: `python -I cerebro/frescura.py`.
 - [[no-reducir-whisper-ni-contexto]]: 8K de contexto ahorra solo 81 MiB; recortar antes el TTS
 - [[swa-full-false]]: −2,5 GiB de VRAM sin perder tareas; no aplicado
 - [[qwen3-tts-vllm-omni]]: voz experimental; Piper sigue en producción
-- [[voz-candidatas]]: motores de voz para Windows nativo
-- [[qwen3-tts-windows]]: Qwen3-TTS en Windows: pasa con llama.cpp
+- [[voz-candidatas]], [[qwen3-tts-windows]]: motores de voz en Windows y su medición
 - [[motor-llama-cpp]]: 0.3.36 frente a b11429 y por qué migrar no es trivial
 - [[use-mmap-false]]: mmap apagado por la RAM
 - [[cierre-rapido-mensaje-final]]: diferencias entre producción y el banco de pruebas

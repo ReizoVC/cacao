@@ -1,8 +1,8 @@
 ---
 estado: verificado
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
-fuentes: [agente_minimo.py, voz.py, iniciar_cacao.py, .gitignore]
+verificado_commit: 9230d4d
+verificado_fecha: 2026-10-12
+fuentes: [agente_minimo.py, voz.py, tts_qwen.py, iniciar_cacao.py, .gitignore]
 ---
 # Mapa de archivos por rol
 
@@ -14,6 +14,7 @@ Los nombres son relativos a la raíz del repositorio. Actualiza esta página al 
 |---|---|
 | Arranque | `iniciar_cacao.py`, `crear_acceso_directo.ps1`, `avisos_windows.py` |
 | Proceso principal (voz) | `voz.py`, `microfono.py`, `transcripcion.py`, `confirmacion_voz.py`, `seguimiento.py`, `palabra_activacion.py` |
+| Voz Qwen3-TTS ([[voz-qwen3]]) | `tts_qwen.py`; `tts_qwen_motor/` (`servidor.cpp`, `compilar.bat`, `hashes.json`); `probar_tts_qwen.py`; `comparacion_modelos/probar_tts_qwen_prolongada.py` |
 | Agente | `agente_minimo.py`, `modelo.py`, `muestreo_gramatica.py`, `protecciones_ejecucion.py`, `obstaculos.py`, `emergencia.py`, `pedidos.py`, `camino_rapido.py`, `contrato_ronda2.py`, `cache_estados.py` |
 | Herramientas | `herramientas.json` (catálogo y límites), `herramientas_grupo1.py`, `herramientas_grupo4.py`, `herramientas_powershell.py`, `vision.py`, `autocompletar_login.py` |
 | Modos | `modo_directo.py`, `modo_juego.py`, `guardia_juego.py`, `deteccion.py` |

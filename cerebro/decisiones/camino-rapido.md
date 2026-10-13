@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
+verificado_commit: 9230d4d
+verificado_fecha: 2026-10-12
 fuentes: [camino_rapido.py, agente_minimo.py, voz.py, benchmark_gramatica.py, probar_camino_rapido.py, pruebas.json, comparacion_modelos/pruebas_nuevas_30.json]
 ---
 # Camino rápido: pedidos simples sin el modelo

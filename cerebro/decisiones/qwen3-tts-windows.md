@@ -1,13 +1,13 @@
 ---
 estado: verificado
-verificado_commit: e9084f7
+verificado_commit: 9230d4d
 verificado_fecha: 2026-10-12
 fuentes: [comparacion_modelos/resumen_qwen3_tts_windows.json, comparacion_modelos/resumen_qwen3_tts_llama_cpp.json]
 ---
 # Qwen3-TTS 0.6B en Windows nativo (2026-10-12)
 
 **Resultado: llama.cpp cumple el criterio de «prometedor»; qwen3-tts.cpp no.** El usuario aprobó la calidad de
-`faseA_f16` (qwen3-tts.cpp); la de llama.cpp está pendiente de escuchar. Es solo banco: nada se conecta a Cacao y
+los dos motores (`faseA_f16` y luego la de llama.cpp). Es solo banco: nada se conecta a Cacao y
 Piper sigue en producción ([[qwen3-tts-vllm-omni]], [[voz-candidatas]]).
 
 Montaje común:
@@ -76,8 +76,7 @@ Con Qwen cargado, el TTS da RTF 0,33 (máx. 0,44) y un primer audio en caliente 
 - ≥ 500 MiB libres con visión ✓ (3 047);
 - calidad: falta escuchar llama.cpp.
 
-## Qué queda
+## Integración (2026-10-12)
 
-- Escuchar `qwen3-tts-kreutzm/salida/faseA_llama_q8_0/frase_*.wav`, `largas_llama_q8_0/` y `faseB_tts/`.
-- Para bajar el primer audio en frases de una oración larga: partir también por comas (sin medir).
-- Integrarlo exige un lanzador supervisado y una prueba prolongada ([[backlog]]); decide el coordinador.
+El usuario aprobó la calidad de llama.cpp. Está integrado en Cacao con Piper de respaldo, apagado por defecto
+(`voz.tts_motor`). La partición por comas y la prueba prolongada están en [[voz-qwen3]].

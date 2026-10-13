@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
+verificado_commit: 9230d4d
+verificado_fecha: 2026-10-12
 fuentes: [agente_minimo.py, voz.py, iniciar_cacao.py, modelo.py, muestreo_gramatica.py, config.json, herramientas.json]
 ---
 # Visión general y flujo de un pedido
@@ -48,7 +48,7 @@ proceso aparte, sin modelo.
    - `registrar_resultado()`: con dos alternativas fallidas corta y pregunta;
    - cierre rápido: si la acción trae `mensaje_final`, su efecto quedó verificado y `validar_finalizacion` lo
      acepta, termina sin otra llamada al modelo. El perfil `qwen9b` lo apaga ([[cierre-rapido-mensaje-final]]).
-5. **Respuesta.** La lee Piper. El pensamiento y los pasos solo van al registro. Se añade una sugerencia si toca y
+5. **Respuesta.** La lee Piper, o Qwen3-TTS con `voz.tts_motor: qwen3` ([[voz-qwen3]]). El pensamiento y los pasos solo van al registro. Se añade una sugerencia si toca y
    se notifica el estado a la isla.
 
 En modo texto (`agente_minimo.py` sin voz) el flujo es el mismo, sin audio.

@@ -1,7 +1,7 @@
 ---
 estado: verificado
-verificado_commit: c297bcb
-verificado_fecha: 2026-10-11
+verificado_commit: 9230d4d
+verificado_fecha: 2026-10-12
 fuentes: [agente_minimo.py, config.json, probar_cierre_rapido.py, benchmark_gramatica.py, comparacion_modelos/integracion.py, resultados_comparacion_modelos.md, resultados_swa_y_recursos.md, iniciar_cacao.py, modelo.py, voz.py]
 ---
 # Cierre rápido con mensaje_final y contrato de las rondas 2 y 3

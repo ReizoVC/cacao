@@ -1,8 +1,8 @@
 ---
 estado: verificado
-verificado_commit: bedf068
-verificado_fecha: 2026-10-11
-fuentes: [comparacion_modelos/medir_memoria.py, comparacion_modelos/datos/memoria/2026-10-11_1135.json, config.json, voz.py, transcripcion.py, cerebro/decisiones/qwen3-tts-vllm-omni.md]
+verificado_commit: 9230d4d
+verificado_fecha: 2026-10-12
+fuentes: [comparacion_modelos/resumen_qwen3_tts_llama_cpp.json, comparacion_modelos/medir_memoria.py, comparacion_modelos/datos/memoria/2026-10-11_1135.json, config.json, voz.py, transcripcion.py, cerebro/decisiones/qwen3-tts-vllm-omni.md]
 ---
 # Memoria liberable sin perder calidad (Qwen 9B, 2026-10-11)
 
@@ -48,4 +48,5 @@ El perfil lean de Qwen3-TTS tuvo un pico de 5 250 MiB, medido en WSL con vLLM-Om
 - Con Qwen + Whisper en el pico con visión quedan 5 887 MiB libres: **cabría con ≈ 640 MiB de margen**, justo.
 - Sin usar la visión quedan ≈ 7 100 MiB (16 311 − 9 202).
 
-El TTS no se ha medido en Windows, ni junto con Cacao.
+Ya medido en Windows nativo junto a Cacao (llama.cpp, [[qwen3-tts-windows]]): pico de 13 264 MiB con visión,
+3 047 libres. Umbral de carga en [[voz-qwen3]].
