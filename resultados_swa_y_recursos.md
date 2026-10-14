@@ -173,7 +173,7 @@ Fuera de los 374 s quedan otros tiempos medidos:
 | Binario de llama-server | `/mnt/d/cacao-pruebas/llama.cpp-b11429-linux/` | D: |
 | TTS: pesos, audio de referencia y configuración | `/mnt/d/cacao voz/qwen-diseno/…` | D:; vLLM informa «Filesystem type for checkpoints: 9P» y desactiva la precarga |
 | mmproj | `/mnt/c/asistente/modelos/mmproj/mmproj-F16.gguf` | C: (/mnt/c, también 9P) |
-| Whisper | `/mnt/c/Users/reizo/.cache/huggingface/…` | C: (/mnt/c, también 9P) |
+| Whisper | `/mnt/c/Users/<usuario>/.cache/huggingface/…` | C: (/mnt/c, también 9P) |
 
 Solo los entornos de Python (`/opt/vllm-omni-test` y `/opt/whisper-test`) están dentro de WSL.
 

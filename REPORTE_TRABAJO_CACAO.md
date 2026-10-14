@@ -124,11 +124,11 @@ También existe `Qwen3-TTS-12Hz-1.7B-VoiceDesign`, pero el perfil acreditado par
 
 Ruta Windows:
 
-`C:\Users\reizo\.cache\huggingface\hub\models--mobiuslabsgmbh--faster-whisper-large-v3-turbo\snapshots\0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf`
+`%USERPROFILE%\.cache\huggingface\hub\models--mobiuslabsgmbh--faster-whisper-large-v3-turbo\snapshots\0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf`
 
 Ruta equivalente en WSL:
 
-`/mnt/c/Users/reizo/.cache/huggingface/hub/models--mobiuslabsgmbh--faster-whisper-large-v3-turbo/snapshots/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf`
+`/mnt/c/Users/<usuario>/.cache/huggingface/hub/models--mobiuslabsgmbh--faster-whisper-large-v3-turbo/snapshots/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf`
 
 ## 5. Método de comparación
 
